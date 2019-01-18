@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Vin&#39;s Blog</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2018-05-10T10:38:11.695Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Entropy</title>
+    <link href="http://yoursite.com/2018/05/10/Entropy/"/>
+    <id>http://yoursite.com/2018/05/10/Entropy/</id>
+    <published>2018-05-10T09:15:21.000Z</published>
+    <updated>2018-05-10T10:38:11.695Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Cross-Entropy"><a href="#Cross-Entropy" class="headerlink" title="Cross Entropy"></a>Cross Entropy</h1><h2 id="H-y-i-sum-i-y-ilog-frac-1-y-i-sum-iy-ilog-y-i"><a href="#H-y-i-sum-i-y-ilog-frac-1-y-i-sum-iy-ilog-y-i" class="headerlink" title="$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$"></a>$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$</h2><p>例子：现在有两枚硬币，抛出有四种情况，正正、正负、负正、负负。如果用熵来计算需要几为表示信息的话，计算如下：</p><ul><li>2进制<br>$H(y_i) = 4.({\frac{1}{4}.log_24}) = 2$，即00，01，10，11就可表示</li><li>4进制<br>$H(y_i) = 4.({\frac{1}{4}.log_44}) = 1$，即1，2，3，4就可表示</li></ul><p><a href="http://blog.csdn.net/lanchunhui/article/details/50970625" target="_blank" rel="noopener">交叉熵代价函数</a></p><p>交叉熵理论</p><p>交叉熵与熵相对，如同协方差与方差。</p><p>熵考察的是单个的信息（分布）的期望：</p><p>$H(p)=-\sum_{i=1}^n p(x_i)\log p(x_i)$<br>交叉熵考察的是两个的信息（分布）的期望： </p><p>$H(p,q)=-\sum_{i=1}^np(x_i)\log q(x_i)$</p><p>详见 wiki Cross entropy<br>交叉熵代价函数</p><p>$L_H(\mathbf x,\mathbf z)=-\sum_{k=1}^dx_k\log z_k+(1-x_k)\log(1-z_k)$</p><p>x 表示原始信号，z 表示重构信号，以向量形式表示长度均为 d，又可轻易地将其改造为向量内积的形式。<br>神经网络中的交叉熵代价函数</p><p>为神经网络引入交叉熵代价函数，是为了弥补 sigmoid 型函数的导数形式易发生饱和（saturate，梯度更新的较慢）的缺陷。</p><p>首先来看平方误差函数（squared-loss function），对于一个神经元（单输入单输出），定义其代价函数： </p><p>$C=(a−y)22$</p><p>其中 a=σ(z),z=wx+b，然后根据对权值（w）和偏置（b）的偏导（为说明问题的需要，不妨将 x=1,y=0）：<br>$∂C∂w=(a−y)σ′(z)x=aσ′(z)∂C∂b=(a−y)σ′(z)=aσ′(z)$<br>根据偏导计算权值和偏置的更新： </p><p>$w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)$<br>无论如何简化，sigmoid 型函数的导数形式 σ′(z) 始终阴魂不散，上文说了 σ′(z) 较容易达到饱和，这会严重降低参数更新的效率。</p><p>为了解决参数更新效率下降这一问题，我们使用交叉熵代价函数替换传统的平方误差函数。</p><p>对于多输入单输出的神经元结构而言，如下图所示： </p><p>这里写图片描述<br>我们将其损失函数定义为： </p><p>C=−1n∑xylna+(1−y)ln(1−a)</p><p>其中 a=σ(z),z=∑jwjxj+b<br>最终求导得： </p><p>∂C∂w=1n∑xxj(σ(z)−y)∂C∂b=1n∑x(σ(z)−y)<br>就避免了 σ′(z) 参与参数更新、影响更新效率的问题；</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Cross-Entropy&quot;&gt;&lt;a href=&quot;#Cross-Entropy&quot; class=&quot;headerlink&quot; title=&quot;Cross Entropy&quot;&gt;&lt;/a&gt;Cross Entropy&lt;/h1&gt;&lt;h2 id=&quot;H-y-i-sum-i-y-ilog-fr
+      
+    
+    </summary>
+    
+    
+      <category term="机器学习 数学" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>First Blog</title>
+    <link href="http://yoursite.com/2018/05/10/First-Blog/"/>
+    <id>http://yoursite.com/2018/05/10/First-Blog/</id>
+    <published>2018-05-10T06:44:24.000Z</published>
+    <updated>2018-05-10T06:44:24.598Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2018/05/09/hello-world/"/>
+    <id>http://yoursite.com/2018/05/09/hello-world/</id>
+    <published>2018-05-09T03:36:04.714Z</published>
+    <updated>2018-05-09T03:36:04.714Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
