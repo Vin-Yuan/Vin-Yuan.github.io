@@ -2,23 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+<<<<<<< HEAD
     <loc>http://yoursite.com/2018/05/10/Entropy/</loc>
     
     <lastmod>2018-05-10T10:38:11.695Z</lastmod>
+=======
+    <loc>http://yoursite.com/2019/01/18/Bayesian-Estimation/</loc>
+    
+    <lastmod>2019-01-19T07:24:17.700Z</lastmod>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
+    
+  </url>
+  
+  <url>
+<<<<<<< HEAD
+    <loc>http://yoursite.com/2018/05/10/First-Blog/</loc>
+    
+    <lastmod>2018-05-10T06:44:24.598Z</lastmod>
+=======
+    <loc>http://yoursite.com/2018/05/10/hello-world/</loc>
+    
+    <lastmod>2019-01-19T05:11:26.327Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2019-01-19T03:10:46.360Z</lastmod>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
+    
+  </url>
+  
+  <url>
+<<<<<<< HEAD
+    <loc>http://yoursite.com/2018/05/09/hello-world/</loc>
+    
+    <lastmod>2018-05-09T03:36:04.714Z</lastmod>
+=======
+    <loc>http://yoursite.com/categories/index.html</loc>
+    
+    <lastmod>2019-01-19T03:05:42.808Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/05/10/Entropy/</loc>
+    
+    <lastmod>2019-01-19T02:22:54.958Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2018/05/10/First-Blog/</loc>
     
-    <lastmod>2018-05-10T06:44:24.598Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/05/09/hello-world/</loc>
-    
-    <lastmod>2018-05-09T03:36:04.714Z</lastmod>
+    <lastmod>2019-01-19T02:17:34.339Z</lastmod>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
     
   </url>
   

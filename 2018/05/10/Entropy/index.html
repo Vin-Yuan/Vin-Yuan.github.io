@@ -5,7 +5,11 @@
   
 
 
+<<<<<<< HEAD
 <html class="theme-next mist use-motion" lang="">
+=======
+<html class="theme-next muse use-motion" lang="">
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,8 +77,11 @@
 
 
 
+<<<<<<< HEAD
   
 
+=======
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
 
   <link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
 
@@ -91,7 +98,11 @@
 <meta property="og:site_name" content="Vin&#39;s Blog">
 <meta property="og:description" content="Cross Entropy$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$例子：现在有两枚硬币，抛出有四种情况，正正、正负、负正、负负。如果用熵来计算需要几为表示信息的话，计算如下：  2进制$H(y_i) = 4.({\frac{1}{4}.log_24}) = 2$，即00，01，10，11就可表示 4进制$H(y_i)">
 <meta property="og:locale" content="default">
+<<<<<<< HEAD
 <meta property="og:updated_time" content="2018-05-10T10:38:11.695Z">
+=======
+<meta property="og:updated_time" content="2019-01-19T02:22:54.958Z">
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Entropy">
 <meta name="twitter:description" content="Cross Entropy$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$例子：现在有两枚硬币，抛出有四种情况，正正、正负、负正、负负。如果用熵来计算需要几为表示信息的话，计算如下：  2进制$H(y_i) = 4.({\frac{1}{4}.log_24}) = 2$，即00，01，10，11就可表示 4进制$H(y_i)">
@@ -102,12 +113,20 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
+<<<<<<< HEAD
     scheme: 'Mist',
+=======
+    scheme: 'Muse',
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
+<<<<<<< HEAD
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+=======
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
     duoshuo: {
       userId: '0',
       author: 'Author'
@@ -342,6 +361,7 @@
 <p>首先来看平方误差函数（squared-loss function），对于一个神经元（单输入单输出），定义其代价函数： </p>
 <p>$C=(a−y)22$</p>
 <p>其中 a=σ(z),z=wx+b，然后根据对权值（w）和偏置（b）的偏导（为说明问题的需要，不妨将 x=1,y=0）：<br>$∂C∂w=(a−y)σ′(z)x=aσ′(z)∂C∂b=(a−y)σ′(z)=aσ′(z)$<br>根据偏导计算权值和偏置的更新： </p>
+<<<<<<< HEAD
 <p>$w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)$<br>无论如何简化，sigmoid 型函数的导数形式 σ′(z) 始终阴魂不散，上文说了 σ′(z) 较容易达到饱和，这会严重降低参数更新的效率。</p>
 <p>为了解决参数更新效率下降这一问题，我们使用交叉熵代价函数替换传统的平方误差函数。</p>
 <p>对于多输入单输出的神经元结构而言，如下图所示： </p>
@@ -349,6 +369,15 @@
 <p>C=−1n∑xylna+(1−y)ln(1−a)</p>
 <p>其中 a=σ(z),z=∑jwjxj+b<br>最终求导得： </p>
 <p>∂C∂w=1n∑xxj(σ(z)−y)∂C∂b=1n∑x(σ(z)−y)<br>就避免了 σ′(z) 参与参数更新、影响更新效率的问题；</p>
+=======
+<p>$w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)​$<br>无论如何简化，sigmoid 型函数的导数形式 σ′(z) 始终阴魂不散，上文说了 σ′(z) 较容易达到饱和，这会严重降低参数更新的效率。</p>
+<p>为了解决参数更新效率下降这一问题，我们使用交叉熵代价函数替换传统的平方误差函数。</p>
+<p>对于多输入单输出的神经元结构而言，如下图所示： </p>
+<p>这里写图片描述<br>我们将其损失函数定义为： </p>
+<p>$C=-\frac1n\sum_xy\ln a+(1-y)\ln(1-a)​$</p>
+<p>其中 $a=\sigma(z),\;z=\sum_jw_jx_j+b$<br>最终求导得： </p>
+<p>$\frac{\partial\,C}{\partial\,w}=\frac1n\sum_xx_j(\sigma(z)-y)\ \frac{\partial\,C}{\partial\,b}=\frac1n\sum_x(\sigma(z)-y)$<br>就避免了 σ′(z) 参与参数更新、影响更新效率的问题；</p>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
 
       
     </div>
@@ -389,6 +418,13 @@
 
           <div class="post-nav-prev post-nav-item">
             
+<<<<<<< HEAD
+=======
+              <a href="/2019/01/18/Bayesian-Estimation/" rel="prev" title="Bayesian Estimation">
+                Bayesian Estimation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
           </div>
         </div>
       
@@ -453,8 +489,11 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
+<<<<<<< HEAD
               <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="John Doe">
             
+=======
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
               <p class="site-author-name" itemprop="name">John Doe</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -466,22 +505,45 @@
               
                 <a href="/archives/">
               
+<<<<<<< HEAD
                   <span class="site-state-item-count">3</span>
+=======
+                  <span class="site-state-item-count">4</span>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
 
             
+<<<<<<< HEAD
+=======
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
 
             
               
               
               <div class="site-state-item site-state-tags">
+<<<<<<< HEAD
                 
                   <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">tags</span>
                 
+=======
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
               </div>
             
 
@@ -497,6 +559,25 @@
           
 
           
+<<<<<<< HEAD
+=======
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Vin-Yuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yuanww1992@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
 
           
           
@@ -557,7 +638,11 @@
 
 
 
+<<<<<<< HEAD
   <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+=======
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
 
 
 

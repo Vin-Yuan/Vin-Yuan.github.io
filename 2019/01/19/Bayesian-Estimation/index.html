@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Vin&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="layout: poststitle: Bayesian Estimationdate: 2019-01-18 14:00:00categories: 概率论tags: 机器学习 数学 Bayesian Estimation参考文献：https://newonlinecourses.science.psu.edu/stat414/node/241/ 频率派和贝叶斯派对于参数$\theta$ 的态度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vin&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/2019/01/19/Bayesian-Estimation/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="layout: poststitle: Bayesian Estimationdate: 2019-01-18 14:00:00categories: 概率论tags: 机器学习 数学 Bayesian Estimation参考文献：https://newonlinecourses.science.psu.edu/stat414/node/241/ 频率派和贝叶斯派对于参数$\theta$ 的态度">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-19T03:09:55.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vin&#39;s Blog">
+<meta name="twitter:description" content="layout: poststitle: Bayesian Estimationdate: 2019-01-18 14:00:00categories: 概率论tags: 机器学习 数学 Bayesian Estimation参考文献：https://newonlinecourses.science.psu.edu/stat414/node/241/ 频率派和贝叶斯派对于参数$\theta$ 的态度">
+  
+    <link rel="alternate" href="/atom.xml" title="Vin&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Vin&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Bayesian-Estimation" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/19/Bayesian-Estimation/" class="article-date">
+  <time datetime="2019-01-19T03:09:55.363Z" itemprop="datePublished">2019-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>layout: posts<br>title: Bayesian Estimation<br>date: 2019-01-18 14:00:00<br>categories: 概率论<br>tags: 机器学习 数学</p>
+<h1 id="Bayesian-Estimation"><a href="#Bayesian-Estimation" class="headerlink" title="Bayesian Estimation"></a>Bayesian Estimation</h1><p>参考文献：<a href="https://newonlinecourses.science.psu.edu/stat414/node/241/" target="_blank" rel="noopener">https://newonlinecourses.science.psu.edu/stat414/node/241/</a></p>
+<p>频率派和贝叶斯派对于参数$\theta$ 的态度区别是：</p>
+<p>频率派：$\theta$ 是一个未知的常量</p>
+<p>贝叶斯派：$\theta$ 是一个随机变量</p>
+<p>贝叶斯估计通过一个example引入：</p>
+<p>考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，可以用到的概率模型是泊松分布。</p>
+<p>如果交通控制工程师认为通过这一区域平均数（mean rate) $\lambda$ 为3 或5。prior 于收集数据之前，工程师认为$\lambda = 3$ 比 $\lambda = 5$ 更可能发生，先验概率是：</p>
+<p>$P(\lambda = 3) = 0.7$ 和 $P(\lambda = 5) = 0.3$</p>
+<p>莫一天，工程师在随机的一个时段T观察到$x = 7$ 辆车通过指定区域。<strong>在这个观察结果下</strong>（即条件概率下），$\lambda = 3$ 和 $\lambda = 5$ 的概率是多少？</p>
+<p>通过条件概率我们知道：</p>
+<p> $P(\lambda=3 | X=7) = \frac{P(\lambda=3, X=7)}{P(X=7)}$ </p>
+<p>贝叶斯展开如下：</p>
+<p>$P(\lambda=3 | X=7) = \frac{P(\lambda=3)P(X=7| \lambda=3)}{P(\lambda=3)P(X=7| \lambda=3)+P(\lambda=5)P(X=7| \lambda=5)}$</p>
+<p>通过查询Possion累计分布函数，得到如下结果：</p>
+<p>$P(X=7|\lambda=3)=0.988-0.966=0.022$ 和 $P(X=7|\lambda=5)=0.867-0.762=0.105$</p>
+<p>最后目标后验概率：</p>
+<p>$P(\lambda=3 | X=7)=\frac{(0.7)(0.022)}{(0.7)(0.022)+(0.3)(0.105)}=\frac{0.0154}{0.0154+0.0315}=0.328 $</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/19/Bayesian-Estimation/" data-id="cjr2wdaeb000144nng7ppseep" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/19/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习-数学/">机器学习 数学</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/机器学习-数学/" style="font-size: 10px;">机器学习 数学</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/19/Bayesian-Estimation/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/10/Entropy/">Entropy</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/10/First-Blog/">First Blog</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
