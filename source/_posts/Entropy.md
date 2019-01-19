@@ -48,7 +48,7 @@ $C=(a−y)22$
 $∂C∂w=(a−y)σ′(z)x=aσ′(z)∂C∂b=(a−y)σ′(z)=aσ′(z)$
 根据偏导计算权值和偏置的更新： 
 
-$w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)$
+$w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)​$
 无论如何简化，sigmoid 型函数的导数形式 σ′(z) 始终阴魂不散，上文说了 σ′(z) 较容易达到饱和，这会严重降低参数更新的效率。
 
 为了解决参数更新效率下降这一问题，我们使用交叉熵代价函数替换传统的平方误差函数。
@@ -58,13 +58,13 @@ $w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)$
 这里写图片描述 
 我们将其损失函数定义为： 
 
-C=−1n∑xylna+(1−y)ln(1−a)
+$C=-\frac1n\sum_xy\ln a+(1-y)\ln(1-a)​$
 
-其中 a=σ(z),z=∑jwjxj+b
+其中 $a=\sigma(z),\;z=\sum_jw_jx_j+b$
 最终求导得： 
 
-∂C∂w=1n∑xxj(σ(z)−y)∂C∂b=1n∑x(σ(z)−y)
+$\frac{\partial\,C}{\partial\,w}=\frac1n\sum_xx_j(\sigma(z)-y)\\ \frac{\partial\,C}{\partial\,b}=\frac1n\sum_x(\sigma(z)-y)$
 就避免了 σ′(z) 参与参数更新、影响更新效率的问题；
 
 
-  [1]: http://blog.csdn.net/lanchunhui/article/details/50970625
+[1]: http://blog.csdn.net/lanchunhui/article/details/50970625
