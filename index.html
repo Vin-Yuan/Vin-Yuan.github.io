@@ -345,14 +345,18 @@
         
           
           Bayesian Estimation频率派和贝叶斯派对于参数$\theta$ 的态度区别是：
-频率派：$\theta​$ 是一个未知的常量
-贝叶斯派：$\theta$ 是一个随机变量
+
+频率派：$\theta$ 是一个未知的常量
+
+贝叶斯派：$\theta​$ 是一个随机变量
+
+
 贝叶斯估计通过一个example引入：
 
 考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。
-如果交通控制工程师认为通过这一区域平均数（mean rate) $\lambda$ 为3 或5。工程师在收集数据之前可能认为$\lambda = 3$ 比 $\lambda = 5$ 更可能发生先于（这是一个先验知识），先验概率是：
-$P(\lambda = 3) = 0.7​$ 和 $P(\lambda = 5) = 0.3​$
-莫一天，工程师在随机的一个时段T观察到$
+泊松分布（Poisson distribution）：
+​                 $$ P( \textrm {k  events in interval}) = e^{-r}\frac{\lambda^k}{k!} $$
+其中：$\lambda$ 是平均个事件发生次数 per interval，可以看到这一模型只有一个参数$\theta = \lamb
           ...
           <!--noindex-->
           <div class="post-button text-center">
