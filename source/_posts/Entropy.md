@@ -1,4 +1,5 @@
 ---
+layout: posts
 title: Entropy
 date: 2018-05-10 17:15:21
 tags: 机器学习 数学
