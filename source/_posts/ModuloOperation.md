@@ -45,7 +45,7 @@ C 和 JAVA 使用的是 truncate 的方式，所以计算 -6 % 5如下：
 
 <u>Python 中 "%" 是取模运算</u>。
 
-​		$ r = a = n\lfloor \frac{a}{n} \rfloor​$
+​		$ r = a - n\lfloor \frac{a}{n} \rfloor​$
 
 比如：3/2 = 1 -3/2 = -2
 
