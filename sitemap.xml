@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/01/20/ModuloOperation/</loc>
+    
+    <lastmod>2019-01-20T05:15:11.550Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/01/18/Bayesian-Estimation/</loc>
     
-    <lastmod>2019-01-19T08:13:51.253Z</lastmod>
+    <lastmod>2019-01-20T05:07:39.893Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/05/10/Entropy/</loc>
+    
+    <lastmod>2019-01-20T05:07:38.725Z</lastmod>
     
   </url>
   
@@ -26,13 +40,6 @@
     <loc>http://yoursite.com/categories/index.html</loc>
     
     <lastmod>2019-01-19T03:05:42.808Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/05/10/Entropy/</loc>
-    
-    <lastmod>2019-01-19T02:22:54.958Z</lastmod>
     
   </url>
   
