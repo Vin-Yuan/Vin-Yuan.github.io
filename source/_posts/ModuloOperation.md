@@ -31,7 +31,7 @@ mathjax: true
 
 截断小数部分，取整数部分，<u>C/C++，JAVA， C#等语言中，"%"是取余运算</u>。
 
-​		$r = a - n\  \textrm{trunc}(\frac{a}{b})​$
+​		$r = a - n\  \textrm{trunc}(\frac{a}{n})​$
 
 比如3/2 = 1 , -3/2 = -1
 
