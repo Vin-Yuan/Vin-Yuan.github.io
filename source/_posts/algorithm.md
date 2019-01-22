@@ -5,7 +5,7 @@ categories:
 tags:
 ---
 
-## 一个十进制数分成左右两部分
+## 十进制数分成左右两部分
 
 Palindrome[[1]]回文应用：左右镜像
 
@@ -27,5 +27,24 @@ while revertHalfNum < x:
 * 整数为基数位数字
 * 提前过滤关键整数：3， 10， 0等
 
+
+
+## 列出数学式子
+
+有些时候列出数学表达式可以更明了的解决问题
+
+对于罗马数字[[2]]这道题：
+
+XCVII = 97 = -10 + 100 + 5 + 1 + 1
+
+很明了，循环到当前字符s[i]，查询对应数字如果：
+
+roma[s[i]] > roma[s[i+1]]， + roma[s[i]]
+
+roma[s[i]] < roma[s[i+1]]，  - roma[s[i]]
+
+
+
 [1]: https://leetcode.com/problems/palindrome-number/	"palindrome"
+[2]: https://leetcode.com/problems/roman-to-integer/
 
