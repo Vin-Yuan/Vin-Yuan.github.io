@@ -1,10 +1,9 @@
 ---
 title: statistics
 date: 2019-02-19 12:22:07
-categories:statistic
-tags:statistic
+categories: statistic
+tags: statistic
 ---
-
 ## 1.期望 
 
 李航统计与机器学习书中理论模型中的风险函数 (risk function)定义如下，代表一种理想情况下计算误差代价的方法。
