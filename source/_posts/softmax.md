@@ -3,6 +3,7 @@ title: softmax
 date: 2019-03-27 11:30:22
 categories:
 tags: machine learning
+mathjax: true
 ---
 
 # Softmax 与梯度下降
@@ -12,6 +13,8 @@ tags: machine learning
 
 
 ![](http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg)
+
+<!-- more -->
 
 参考上图的网络结构，输入层，输出层。
 

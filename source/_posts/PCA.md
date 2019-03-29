@@ -3,9 +3,8 @@ title: PCA
 date: 2019-03-20 20:51:27
 categories: machine learning
 tags: pac
+mathjax: true
 ---
-
-PCA算法：
 
 -----------------
 
@@ -26,6 +25,8 @@ PCA算法：
 输出：投影矩阵 $W=(w_1, w_2, ... , w_{d'})$.
 
 -----------------
+
+<!-- more -->
 
 将维后低维空间的维度$d'$通常是由用户事先指定的
 

@@ -3,6 +3,7 @@ title: hands-on-machine-learning
 date: 2019-03-03 16:58:25
 categories:
 tags:
+mathjax: true
 ---
 
 # 03 classification
@@ -15,6 +16,8 @@ tags:
 - **Precision** and **Recall**
 
   ![IMG_2551](https://ws3.sinaimg.cn/large/006tKfTcly1g0pvjp780ij30jg08fgm6.jpg)
+
+<!-- more -->
 
 recall“召回率”这个含义很好理解，例如召回有质量问题汽车这一情况，算法在判别有问题时偏重检测了发动机，因此最后的结果只召回了发动机有问题的样本，而其他零件有问题的没有召回，最后在统计召回率这一指标中便可发现问题。
 

@@ -18,11 +18,15 @@ mathjax: true
 
 ![柏松分部 统计出现车辆数](https://newonlinecourses.science.psu.edu/stat414/sites/onlinecourses.science.psu.edu.stat414/files/lesson52/147882_traffic/index.jpg)
 
+
+
 考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。
 
 泊松分布（Poisson distribution）：
 
 ​				 $$ P( \textrm {k  events in interval}) = e^{-r}\frac{\lambda^k}{k!} $$
+
+<!-- more -->
 
 其中：$\lambda$ 是平均个事件发生次数 per interval，可以看到这一模型只有**一个参数**$\theta = \lambda$，只要确定了$\lambda$ 就确定了模型。泊松分布有如下性质:
 

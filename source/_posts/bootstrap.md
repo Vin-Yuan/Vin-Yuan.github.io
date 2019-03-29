@@ -13,6 +13,8 @@ tags: machine learning
 
 关于为什么Bagging方法有 0.368 是**oob**  (out of bagging)？
 
+<!-- more -->
+
 Bootstrap Sampling 过程伪代码：定义D为原数据集， D`为抽样的数据集：
 
 initialize D' as an empty set
