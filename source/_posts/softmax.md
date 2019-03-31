@@ -104,7 +104,7 @@ for i in range(1000):
 
 ```cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))```
 
-这里面的reduce_mean, 第二个参数是reduction_indices，可以这样理解，0 代表对第一个维度规约，即$\sum\limits_{i=0}^m a_{i,j}$ ,1则代表对第二个维度规约$\sum\limits_{j=0}^n a_{i,j}$，以下是tensorflow的官方文档示例：
+- 这里面的reduce_mean, 第二个参数是reduction_indices，可以这样理解，0 代表对第一个维度规约，即$\sum\limits_{i=0}^m a_{i,j}$ ,1则代表对第二个维度规约$\sum\limits_{j=0}^n a_{i,j}$，以下是tensorflow的官方文档示例：
 
 ```
 # 'x' is [[1,1,1],
@@ -115,4 +115,6 @@ tf.reduce_sum(x, 1) = [3,3]
 tf.reduce_sum(x, 1, keep_dims=True) = [[3], [3]]
 tf.reduce_sum(x, [0,1]) = 6
 ```
+
+- 这里的y_ * tf.log(y) 是两个 （m, 10)的矩阵 “点乘” ，区别于矩阵乘法，这里是对应元素相乘。具体参考 [2] [Python 之 numpy 和 tensorflow 中的各种乘法（点乘和矩阵乘）](https://www.cnblogs.com/liuq/p/9330134.html)
 
