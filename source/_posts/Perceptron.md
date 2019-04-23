@@ -6,7 +6,7 @@ tags: perceptron
 mathjax: true
 ---
 
-![](http://ww1.sinaimg.cn/thumbnail/6bf0a364ly1g2bd89fz9lj20kf0e4q36.jpg)
+![](http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg)
 
 感知器的分类函数为 $f(x) = sign(wx + b) $，在阅读书籍时发现有两种update rule：
 $$
