@@ -3,6 +3,7 @@ title: statistics
 date: 2019-02-19 12:22:07
 categories: statistic
 tags: statistic
+mathjax: true
 ---
 ## 1.期望 
 

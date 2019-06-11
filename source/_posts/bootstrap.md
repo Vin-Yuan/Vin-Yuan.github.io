@@ -3,6 +3,7 @@ title: bootstrap
 date: 2019-03-16 16:21:22
 categories:
 tags: machine learning
+mathjax: true
 ---
 
 
