@@ -6,16 +6,14 @@ categories: mathmatic, notation
 tags: mathmatic
 ---
 
-  
-
-参考：https://www.mathsisfun.com/definitions/parameter.html
-
-参考：https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition
+  What's the meaning of ";" in $f(x;\theta)$?[^2]
 
 A value that is already "built in" to a function. 
 
+<!-- more -->
 
-Example: imagine a function that works out the height of a tree:
+
+Example: imagine a function that works out the height of a tree[^1]:
 
 **h(year) = 20 × year**
 
@@ -31,3 +29,6 @@ We could even make it more general by writing
 **h(age; rate) = rate × age**
 
 and in this case a semicolon (;) is used to separate the variable(s) from the parameters(s)  
+
+[^1]:https://www.mathsisfun.com/definitions/parameter.html
+[^2]: https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition
