@@ -10,45 +10,57 @@ tags: em
 
 最大似然方法：
 $$
-p(X | \theta) =	\prod_{i=1}^{N}p(x_i|\theta) = L(\theta|X)
+\begin{equation}
+p(X | \theta) =\prod_{i=1}^{N}p(x_i|\theta) = L(\theta|X)
+\end{equation}
 $$
 其中，样本: $X = {x_1,...,x_N}$。
 
-左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（density function)
+左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（density function)，**注意这是条件概率**
 
-右边的$L(\theta|X)$是关于参数 $\theta$ 的likelihood（在给定数据$X$的情况下)。
+右边的$L(\theta|X)$是关于参数 $\theta$ 的likelihood（在给定数据$X$的情况下)，**注意这是函数**
 
 从公式中可以看出，在给定 $\theta$ (假设参数）的情况下，**对已观测的实验结果用参数形式描述其概率**，在做这一步的时候用到了一个假设，即样本之间的出现是相互独立无关的（**i.i.d**)。鉴于其已经出现在现实世界中，我们有理由相信（无论是大数定律还是什么的）这种可能性是最大的，所以，如何让这种观测结果出现的可能性最大变成主要目标，这就是我们的使用的max likelihood 的本质。
 
-更具贝叶斯公式会有如下：
-
+根据贝叶斯公式会有如下：
 $$
+\begin{equation}
 P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
+\end{equation}
 $$
 
 $P(\theta|x)$ : 	**posterior probabiity** 后验概率
 $P(X|\theta)$ :	**likelihood** 似然
 $P(\theta)$ : 		**prior** 先验概率
 
-## 2. Gussian Mixture
+<!-- more-->
+
+## 2 Gussian Mixture
 
 参照讲解[^1]，里面有一高斯混合的例子。（有几个峰值并不代表有几个高斯模型，如下图）
 
 高斯混合模型的讲解[^3 ]
 
-### single Gussian Model
+### 2.1. Single Gussian Model
 
 对于单个高斯模型:
+
 $$
-\mathop{\arg\min}_\theta L(\theta|X) = \mathop{\arg\min}_{\theta}[\sum_{i=1}^Nlog(N(x_i|\mu,\sigma))]
+\begin{equation}
+\arg\min_\theta L(\theta|X) = \arg\min_{\theta}[\sum_{i=1}^Nlog(N(x_i|\mu,\sigma))]
+\end{equation}
 $$
+
+
 参数是 $\theta = \{\mu, \sigma\}$, 我们对$log$似然函数(log likelihood)求极值后便可得到最大似然估计：
 
 $\mu_{MLE}  = \frac{\partial L(\mu, \sigma|X)}{\partial \mu} 0$	
 
-### Gussian Mixture Model
+### 2.2. Gussian Mixture Model
 
 对于多个高斯的混合模型：
+
+
 $$
 \begin{equation}
 \begin{gathered}
@@ -65,13 +77,65 @@ $$
 
 对于gussian 混合模型，我们可以看到，对于含有隐变量的问题来讲，$\alpha_k$便是隐变量，这样一来，参数就是如下：
 
-$\theta  = \{\mu_1\cdot\cdot\cdot\mu_k,  \sigma_1\cdot\cdot\cdot\sigma_k, \alpha_1\cdot\cdot\cdot\alpha_{k-1}\}$ ，这里考虑一下为什么$\alpha$是只到$\alpha_{k-1}$，即$\alpha$ 自由度是k-1？
+$\theta  = \{\mu_1\cdot\cdot\cdot\mu_k,  \sigma_1\cdot\cdot\cdot\sigma_k, \alpha_1\cdot\cdot\cdot\alpha_{k-1}\}$ ，这里考虑一下为什么$\alpha$是只到$\alpha_{k-1}$，即$\alpha$ 自由度是k-1？[^2]
+
 $$
-\theta_{MLE} =\mathop{\arg\min}_{\theta}L(\theta|X) = \mathop{\arg\min}_{\theta} \sum_{i=1}^{N}log[\sum_{j=1}^K \alpha_jN(X|\mu_j, \sigma_j)]
+\begin{equation}
+\theta_{MLE} =\arg\min_{\theta}L(\theta|X) = \arg\min_{\theta} \sum_{i=1}^{N}log[\sum_{j=1}^K \alpha_jN(X|\mu_j, \sigma_j)]
+\end{equation}
 $$
+
 这是后我们发现如果用极大似然求解会非常麻烦，不能得到close-form的解析解，因为log likelihood中出现了高斯模型的加和$log(A+B+C)$。
 
 基于此，我们采用了迭代求解的方式，即我们提到的EM算法。
+
+### 2.3 Gussian 混合模型求解
+
+参照板书[^3 ]，采用迭代的方式，就要构建上一次和这次迭代的“关系”:
+$$
+\theta^{(i+1)} = \arg \min_{\theta} \int \log P(X,Z|\theta)\cdot P(Z|X,\theta^{(i)})
+$$
+对于这个式子，我们引入了隐变量$Z$，引入隐变量的原则有一条：**对其边缘概率（margin）积分后不影响原概率**，其起到隐藏、辅助的功能：
+
+$$
+P(x_i) = \int_{z_i}P_{\theta}(x_i|z_i)\cdot P_{\theta}(z_i)d{z_i}
+$$
+
+放到高斯混合模型的问题上(上面公式$P_{\theta}..$代表受参数$\theta$ 支配）：
+$$
+= \sum_{z_i}^k \alpha_{z_i}N(x_i|\mu_{z_i},\sigma_{z_i})
+$$
+发现正好是混合模型的样子，所以这个隐变量$Z $（即$\alpha$ ）是可行的。
+
+对于普通的问题，我们有最大似然方式求解，现在要换成EM算法，我们要寻求等效。我们的目的是求：
+$$
+\begin{gather}
+
+\hat{\theta}_{MLE}= \arg\min_{\theta}\log P(X|\theta) \\
+
+\log P(X|\theta) =\log P(X,Z|\theta) - log P(Z|X,\theta)
+\end{gather}
+$$
+
+原本使用最大似然 （9）即可求解，但由于无法求解，所以我们寻求与其相等的等式（10）来寻求突破，公式（10）来自于Bayes公式。
+
+对（10）两遍求期望，求期望的时候我们要考虑**基于哪个分布**，在这里我们使用$P(Z|X,\theta)$，为什么呢？这是因为左边基于此概率求期望不改变原表达式，因为其不含$Z$，直接积分为1。
+$$
+E_z(\log P(X|\theta)) = \log P(X|\theta)\cdot\int_zP(z|X,\theta)dz = \log P(X|\theta)\cdot1
+$$
+同时，对右边求期望：
+$$
+\begin{aligned}
+ &= \int_z\log P(X,z|\theta)\cdot P(z|X,\theta^{(i)})dz-\int_z\log P(z|X,\theta)\cdot P(z|X,\theta))dz \\
+ &= Q(\theta, \theta^{(i)}) - H(\theta,\theta^{(i)})
+ \end{aligned}
+$$
+
+
+现在我们将其分解为两部分：$Q$和$H$，总体目的是求得使似然函数最大的$\theta$ ，如果我们能证明在迭代中：$Q \uparrow、 H \downarrow$, 那就完美的解决了问题， **并且，得到这样的证明后，我们可以只最大化$Q$, 而不去理会$H$。**由于我们的算法本质是最大化Q函数，所以只需证明H随着变小即可。
+
+### 2.4 终极目的证明H(i+1) < H(i)
+
 
 
 ## 3. EM algorithm
@@ -89,9 +153,11 @@ $\bar{A}$ ：选择B硬币
 ### E-Step
 
 在E- step: 我们使用Bayes公式获取latent varible（隐变量）的估计值：
+
 $$
-P(A|E) = \frac{P(E,A)}{P(E)} = \frac{P(E|A)*P(A)}{P(E,A) + P(E,\bar{A})} = \frac{P(E|A) * P(A)}{P(E|A)*P(A) + P(E|\bar{A})*P(\bar{A})}
+P(A|E) = \frac{P(E,A)}{P(E)} = \frac{P(E|A)*P(A)}{P(E,A) + P(E,\bar{A})}= \frac{P(E|A) * P(A)}{P(E|A)*P(A) + P(E|\bar{A})*P(\bar{A})}
 $$
+
 $P(E|A)$ 是什么？
 
 在选择A硬币的情况下，出现E这个evidence的概率，即用A模型生成E这种观测结果，什么样子的呢：
@@ -110,5 +176,50 @@ $P(A)$和$P(\bar{A})$ 这里假设相等，为 0.5，选A选B是随机。
 
 在max likelihood阶段，按照上文所说，最大似然就是让概率模型偏向于最能呈现实验现象的方法。对最大似然求解后便会得到公式 $\hat{\theta} = \frac{H}{H+T} $，计算就不细说了，图中有说明。
 
+## 附录
+
+图1代码：
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy.stats as stats
+N = 100
+mu_1 = 3
+mu_2 = 3.5
+sigma_1 = 0.3
+sigma_2 = 0.5
+scape = 3
+np.random.seed(0)
+x1 = np.random.normal(mu_1, sigma_1, N)
+x2 = np.random.normal(mu_2, sigma_2, N)
+y1 = np.zeros(N)
+y2 = np.zeros(N) + 0.1
+# guass 1
+plt.scatter(x1, y1, alpha = 0.9, marker = "x", label = r"$\mu = {}, \sigma = {}$".format(mu_1, sigma_1))
+plt.legend()
+guass1 = stats.norm.pdf(np.linspace(mu_1-scape*sigma_1,mu_1+scape*sigma,100), loc = mu_1, scale = sigma_1)
+plt.plot(np.linspace(mu_1-scape*sigma_1,mu_1+scape*sigma_1,100),guass1) 
+# guass 2
+plt.scatter(x2, y2, alpha = 0.9, marker = "*", label = r"$\mu = {}, \sigma = {}$".format(mu_2, sigma_2))
+plt.legend()
+guass2 = stats.norm.pdf(np.linspace(mu_2-scape*sigma_2,mu_2+scape*sigma_2,100), loc = mu_2, scale = sigma_2)
+plt.plot(np.linspace(mu_2-scape*sigma_2,mu_2+scape*sigma_2,N), guass2) 
+# sum
+sum = guass1 + guass2
+plt.plot(np.linspace(mu_1-scape*sigma_1,mu_2+scape*sigma_2,N),sum, label="sum")
+plt.legend()
+plt.show()
+```
+
+
+
+## 为什么使用loglikelihood?
+参看图片[^4]
+
+![](http://ww1.sinaimg.cn/mw690/6bf0a364ly1g4lbkgqm6cj20k907xjrm.jpg)
+
+
 [^1]: 清华大学 公开课《数据挖掘：理论与算法》
 [^3 ]: 徐亦达机器学习：Expectation Maximization EM算法 【2015年版-全集】
+[^4]:https://www.cnblogs.com/en-heng/p/5994192.html
