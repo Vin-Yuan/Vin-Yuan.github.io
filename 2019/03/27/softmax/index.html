@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="machine learning,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Softmax 与梯度下降参考1：http://dlsys.cs.washington.edu/schedule lecture3">
+<meta name="keywords" content="machine learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="softmax">
+<meta property="og:url" content="http://yoursite.com/2019/03/27/softmax/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="Softmax 与梯度下降参考1：http://dlsys.cs.washington.edu/schedule lecture3">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg">
+<meta property="og:updated_time" content="2019-03-31T12:36:22.607Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="softmax">
+<meta name="twitter:description" content="Softmax 与梯度下降参考1：http://dlsys.cs.washington.edu/schedule lecture3">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/27/softmax/">
+
+
+
+
+
+  <title>softmax | Vin's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/27/softmax/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">softmax</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-27T11:30:22+08:00">
+                2019-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Softmax-与梯度下降"><a href="#Softmax-与梯度下降" class="headerlink" title="Softmax 与梯度下降"></a>Softmax 与梯度下降</h1><p>参考1：<a href="http://dlsys.cs.washington.edu/schedule" target="_blank" rel="noopener">http://dlsys.cs.washington.edu/schedule</a> lecture3</p>
+<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg" alt=""></p>
+<a id="more"></a>
+<p>参考上图的网络结构，输入层，输出层。</p>
+<p>$W_{i,j}$的含义：输出神经元 $a_i$ 关联的第 $j$ 个权重，要从输出神经元的角度去理解，这样比较清楚。</p>
+<p>神经元的构造如下：</p>
+<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg" alt=""></p>
+<p>$z_i = w_i \cdot x \rightarrow z_i = \sum_j w_{i,j} \cdot x_j $ ，意味着$a_i$ 的每一个权重和输入$x$的相应feature相乘</p>
+<p>$W^T = \begin{bmatrix} -&amp;-&amp; -\-&amp;w_i&amp;- \-&amp;-&amp;- \end{bmatrix} ​$，$x = \begin{bmatrix} | \ x_j\| \end{bmatrix} ​$</p>
+<p>logic regression 的损失函数为</p>
+<p>$$\begin{equation} C = -\sum_i y_i lna_i  \end{equation}​$$ ，注意这里表达的含义，softmax有k个输出，准确的表达式应该是$C = -\sum_k y_k ln(\hat{a}_k) ​$，即对当前输入$x​$，其label为第 $i​$ 个类，则 $y_i​$ 为1，其它为0。所有样本的损失函数如下：</p>
+<p>$J(\theta) = -\frac{1}{m}\sum\limits_{i=1}^m \sum\limits_{k=1}^K y^{(i)}_k log(\hat{p}^{(i)}_k) \tag{1}​$</p>
+<p> $\hat{p}^{(i)}_k$ 为 $softmax(x^{(i)})$的第$k$个输出，</p>
+<p>$\hat{p}_k = \sigma(Z(x))_k = \frac{exp(z_k(x))}{\sum\limits_{j=1}^{K} exp(z_j(x))} \tag{2}$</p>
+<p>$$\begin{equation} \frac{\partial C}{\partial z_i} = a_i - y_i \end{equation}  ​$$</p>
+<p>损失函数对每个权重$w_{i,j}​$的导数：</p>
+<p>$\frac{\partial C}{\partial w_{i,j}} = \frac{\partial C}{\partial z_i} \cdot \frac{\partial z_i}{\partial w_{i,j}} = （a_i - y_i)\cdot x_j ​$</p>
+<p>loss function对每个参数的导数构成梯度向量，即<strong>标量对矩阵的求导</strong>：$\frac {\partial L}{\partial W}​$</p>
+<p>在下面的代码中，<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$X = \begin&#123;bmatrix&#125; -&amp;-&amp; -\\-&amp;x_i&amp;- \\-&amp;-&amp;- \end&#123;bmatrix&#125; $，其中 $x_i$为行向量$(x_&#123;i,1&#125;, x_&#123;i,2&#125;, ... , x_&#123;i,n&#125;)$ （备注：也可以写为 $x_1^&#123;(i)&#125;$，取决于样本 $i$ 的表示方式，用数组numpy表达时为前者）。Loss function是对**所有的本批次样本计算**的，所以 $Loss = \sum_i loss(f(x^i)， y^i)$ ，其中 ​$i$ 为batch_size , 综合(1) 和（2）可以得出Loss要对所有样本loss1 + loss2 + loss3+ ...求梯度，所以是一个加和。</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">import numpy as np</span><br><span class="line">from tinyflow.datasets import get_mnist</span><br><span class="line">def softmax(x):</span><br><span class="line">x = x - np.max(x, axis=1, keepdims=True)</span><br><span class="line">x = np.exp(x)</span><br><span class="line">x = x / np.sum(x, axis=1, keepdims=True)</span><br><span class="line">return x</span><br><span class="line"># get the mnist dataset</span><br><span class="line">mnist = get_mnist(flatten=True, onehot=True)</span><br><span class="line">learning_rate = 0.5 / 100</span><br><span class="line">W = np.zeros((784, 10))</span><br><span class="line">for i in range(1000):</span><br><span class="line">batch_xs, batch_ys = mnist.train.next_batch(100)</span><br><span class="line"># forward</span><br><span class="line">y = softmax(np.dot(batch_xs, W))</span><br><span class="line"># backward</span><br><span class="line">y_grad = y - batch_ys</span><br><span class="line">W_grad = np.dot(batch_xs.T, y_grad)</span><br><span class="line"># update</span><br><span class="line">W = W - learning_rate * W_grad</span><br></pre></td></tr></table></figure></p>
+<p>重构程 tensorflow API 方式代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tinyflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tinyflow.datasets <span class="keyword">import</span> get_mnist</span><br><span class="line"><span class="comment"># Create the model</span></span><br><span class="line">x = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">784</span>])</span><br><span class="line">W = tf.Variable(tf.zeros([<span class="number">784</span>, <span class="number">10</span>]))</span><br><span class="line">y = tf.nn.softmax(tf.matmul(x, W))</span><br><span class="line"><span class="comment"># Define loss and optimizer</span></span><br><span class="line">y_ = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">10</span>])</span><br><span class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[<span class="number">1</span>]))</span><br><span class="line"><span class="comment"># Update rule</span></span><br><span class="line">learning_rate = <span class="number">0.5</span></span><br><span class="line">W_grad = tf.gradients(cross_entropy, [W])[<span class="number">0</span>]</span><br><span class="line">train_step = tf.assign(W, W - learning_rate * W_grad)</span><br><span class="line"><span class="comment"># Training Loop</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.initialize_all_variables())</span><br><span class="line">mnist = get_mnist(flatten=<span class="keyword">True</span>, onehot=<span class="keyword">True</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">	batch_xs, batch_ys = mnist.train.next_batch(<span class="number">100</span>)</span><br><span class="line">	sess.run(train_step, feed_dict=&#123;x: batch_xs, y_:batch_ys&#125;) <span class="comment">#Real execution happens here</span></span><br></pre></td></tr></table></figure>
+<p>注释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 这里面的reduce_mean, 第二个参数是reduction_indices，可以这样理解，0 代表对第一个维度规约，即$\sum\limits_&#123;i=0&#125;^m a_&#123;i,j&#125;$ ,1则代表对第二个维度规约$\sum\limits_&#123;j=0&#125;^n a_&#123;i,j&#125;$，以下是tensorflow的官方文档示例：</span><br></pre></td></tr></table></figure>
+<h1 id="‘x’-is-1-1-1"><a href="#‘x’-is-1-1-1" class="headerlink" title="‘x’ is [[1,1,1],"></a>‘x’ is [[1,1,1],</h1><pre><code>[1,1,1]]
+</code></pre><p>tf.reduce_sum(x) = 6<br>tf.reduce_sum(x, 0) = [2, 2, 2]<br>tf.reduce_sum(x, 1) = [3,3]<br>tf.reduce_sum(x, 1, keep_dims=True) = [[3], [3]]<br>tf.reduce_sum(x, [0,1]) = 6<br><code>`</code></p>
+<ul>
+<li>这里的y_ * tf.log(y) 是两个 （m, 10)的矩阵 “点乘” ，区别于矩阵乘法，这里是对应元素相乘。具体参考 [2] <a href="https://www.cnblogs.com/liuq/p/9330134.html" target="_blank" rel="noopener">Python 之 numpy 和 tensorflow 中的各种乘法（点乘和矩阵乘）</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/20/PCA/" rel="next" title="PCA">
+                <i class="fa fa-chevron-left"></i> PCA
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/28/CSE599G1/" rel="prev" title="CSE599G1">
+                CSE599G1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Vin-Yuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yuanww1992@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Softmax-与梯度下降"><span class="nav-number">1.</span> <span class="nav-text">Softmax 与梯度下降</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#‘x’-is-1-1-1"><span class="nav-number">2.</span> <span class="nav-text">‘x’ is [[1,1,1],</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
