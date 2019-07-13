@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-13T12:42:19.934Z</updated>
+  <updated>2019-07-13T15:04:09.854Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Style tranform</title>
+    <link href="http://yoursite.com/2019/07/13/style-transform/"/>
+    <id>http://yoursite.com/2019/07/13/style-transform/</id>
+    <published>2019-07-13T14:08:05.000Z</published>
+    <updated>2019-07-13T15:04:09.854Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Overview <a href="https://towardsdatascience.com/neural-networks-intuitions-2-dot-product-gram-matrix-and-neural-style-transfer-5d39653e7916" target="_blank" rel="noopener">^1</a>:</strong> </p><ol><li><p>Create a random input image</p></li><li><p>Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).</p></li><li><p>Calculate loss and compute the <strong>gradients w.r.t input image pixels.</strong>Hence only the input pixels are adjusted whereas the weights remain constant.</p></li></ol><p>注意几点：卷积神经网络只是用来提取image特征，起embedding作用。所以作为主干的卷积神经网络并不用来训练，我们更多的是反向传播更改输入的random图像。</p><p>最终我们生成的图片需要达到两个目的：</p><ul><li><p>包含 content image 的<strong>内容</strong>，比如说有狗，猫，或是固定的建筑物等，至于物体的纹理、颜色等特征我们是不需要保持等，这一部分是风格来保证。</p></li><li><p>包含 style image 的<strong>风格</strong>，比如说画家的绘画手法，竖条纹理喜欢用热烈的橘色，波浪形的线条习惯画的很浓重且颜色为冷色调等。</p></li></ul><h2 id="Learning-Content"><a href="#Learning-Content" class="headerlink" title="Learning Content"></a>Learning Content</h2><p>对于内容学习：我们要如何设计target和input才能保证只学到“内容”而不拷贝“风格”？这一点很关键，所以这里使用了<strong>feature Map</strong>:</p><blockquote><p>Convolutional feature maps are generally a very good representation of input image’s features. They capture <strong>spatial information</strong> of an image without containing the style information(if a feature map is used as it is), which is what we need. <strong>And this is the reason we keep the backbone weights fixed during backpropagation</strong>.</p></blockquote><p>卷积层的选择：</p><blockquote><p>Using feature maps of early conv layers represent the content much better, as they are closer to the input, hence using features of conv2, conv4 and conv7.</p></blockquote><h2 id="Learning-Style"><a href="#Learning-Style" class="headerlink" title="Learning Style"></a>Learning Style</h2><p>这里用到Gram矩阵，其会衡量k个向量之间的关系。说到两个向量的度量，向量积的含义需要提一下：</p><p><img src="https://miro.medium.com/max/490/1*H1UW3bwrhqkRUJ11Xg6gGA.png" alt="avatar"></p><blockquote><p>In a more intuitive way, <strong>dot product can be seen as how similar two vectors actually are</strong>.</p></blockquote><p>当我们把某个卷积层的feature Map展开(<strong>flat</strong>)成vector时，其就可以看作一个feature vector，这样如果对于[width, height, channel] = [w, h, c] 这样一个卷积层，我们会得到c个feature vector，如果图片记作$X$,<br>$$<br>f(X) = \left {\alpha_1, \alpha_2, … , \alpha_c\right}<br>$$</p><p>这样一来，每一对向量之间作向量点乘就会衡量不同特征之间的关系，比如说一个向量代表冷色调，另一个代表粗线条，这两个向量的点乘约大说明约相近，可以理解为这两种特征经常一起出现，即代表一种风格。</p><blockquote><p>Consider two vectors(<strong><em>more specifically 2 flattened feature vectors from a convolutional feature map of depth C</em></strong>) representing features of the input space, and their dot product give us the information about the relation between them. The lesser the product the more different the learned features are and greater the product, the more correlated the features are. In other words, the lesser the product,<em> <strong>the lesser the two features co-occur</strong> </em>and the greater it is,<em> <strong>the more they occur together.</strong> </em>This in a sense gives information about an image’s style(texture) and zero information about its spatial structure, since we already flatten the feature and perform dot product on top of it.*</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;Overview &lt;a href=&quot;https://towardsdatascience.com/neural-networks-intuitions-2-dot-product-gram-matrix-and-neural-style-transfer-5
+      
+    
+    </summary>
+    
+    
+      <category term="cnn, deep_learning" scheme="http://yoursite.com/tags/cnn-deep-learning/"/>
+    
+  </entry>
   
   <entry>
     <title>covariance and correlation</title>
@@ -244,28 +267,6 @@
   </entry>
   
   <entry>
-    <title>bootstrap</title>
-    <link href="http://yoursite.com/2019/03/16/bootstrap/"/>
-    <id>http://yoursite.com/2019/03/16/bootstrap/</id>
-    <published>2019-03-16T08:21:22.000Z</published>
-    <updated>2019-06-11T15:05:30.171Z</updated>
-    
-    <content type="html"><![CDATA[<p>一些机器学习方法对数据的变更比较敏感，Bagging是一种减少variace的方法（why?)。Bagging依赖于多次boostrap，然后用一种分类器在多个这样bootstrap生成的训练集上训练。将最终得到的多个分类器ensemble，从而对新数据进行投票方式预测。</p><p><strong>Bagging = (Bootstrap Aggregating)</strong></p><p>关于为什么Bagging方法有 0.368 是<strong>oob</strong>  (out of bagging)？</p><a id="more"></a><p>Bootstrap Sampling 过程伪代码：定义D为原数据集， D`为抽样的数据集：</p><p>initialize D’ as an empty set</p><p>repeat N times:</p><p>​    random select an instance x from D</p><p>​    add x to D’</p><p>注意到所有抽样实例都是从原数据D集抽取，即 sampling with <strong>replacement </strong>（放回抽样）。因为是放回抽样，每次抽样时样本总体都是一样的，所以每个实例x没被抽中的概率时 P = (N-1)/N。因为时抽样了N次。</p><p>let $A$ = 实例 $x$ 在 $N$ 次实验中均没被抽中</p><p>$P(A) = (1-1/N)^N = 1/e  \approx 0.368$ .</p><p>$P(\overline{A}) = 1-0.368=0.632$</p><p>为什么Bagging 起作用：</p><ul><li><p>分类器自身内在的”bias”，例如：其错误率 error rate 当测试集无穷大时保持不变，这是一钟算法or分类器本身的偏差bias。</p></li><li><p>在数据集有限的情况下，数据集本身的方差variance。</p><p>分类器的错误率是上述两部分相加造成的</p></li></ul><p>[1]. <a href="http://www.cs.bc.edu/~alvarez/ML/bagging.html" target="_blank" rel="noopener">http://www.cs.bc.edu/~alvarez/ML/bagging.html</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一些机器学习方法对数据的变更比较敏感，Bagging是一种减少variace的方法（why?)。Bagging依赖于多次boostrap，然后用一种分类器在多个这样bootstrap生成的训练集上训练。将最终得到的多个分类器ensemble，从而对新数据进行投票方式预测。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Bagging = (Bootstrap Aggregating)&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;关于为什么Bagging方法有 0.368 是&lt;strong&gt;oob&lt;/strong&gt;  (out of bagging)？&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="machine learning" scheme="http://yoursite.com/tags/machine-learning/"/>
-    
-  </entry>
-  
-  <entry>
     <title>GAN</title>
     <link href="http://yoursite.com/2019/03/16/GAN_explaination/"/>
     <id>http://yoursite.com/2019/03/16/GAN_explaination/</id>
@@ -280,6 +281,28 @@
       
         &lt;h1 id=&quot;机器之心GitHub项目：GAN完整理论推导与实现，Perfect！&quot;&gt;&lt;a href=&quot;#机器之心GitHub项目：GAN完整理论推导与实现，Perfect！&quot; class=&quot;headerlink&quot; title=&quot;机器之心GitHub项目：GAN完整理论推导与实
       
+    
+    </summary>
+    
+    
+      <category term="machine learning" scheme="http://yoursite.com/tags/machine-learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>bootstrap</title>
+    <link href="http://yoursite.com/2019/03/16/bootstrap/"/>
+    <id>http://yoursite.com/2019/03/16/bootstrap/</id>
+    <published>2019-03-16T08:21:22.000Z</published>
+    <updated>2019-06-11T15:05:30.171Z</updated>
+    
+    <content type="html"><![CDATA[<p>一些机器学习方法对数据的变更比较敏感，Bagging是一种减少variace的方法（why?)。Bagging依赖于多次boostrap，然后用一种分类器在多个这样bootstrap生成的训练集上训练。将最终得到的多个分类器ensemble，从而对新数据进行投票方式预测。</p><p><strong>Bagging = (Bootstrap Aggregating)</strong></p><p>关于为什么Bagging方法有 0.368 是<strong>oob</strong>  (out of bagging)？</p><a id="more"></a><p>Bootstrap Sampling 过程伪代码：定义D为原数据集， D`为抽样的数据集：</p><p>initialize D’ as an empty set</p><p>repeat N times:</p><p>​    random select an instance x from D</p><p>​    add x to D’</p><p>注意到所有抽样实例都是从原数据D集抽取，即 sampling with <strong>replacement </strong>（放回抽样）。因为是放回抽样，每次抽样时样本总体都是一样的，所以每个实例x没被抽中的概率时 P = (N-1)/N。因为时抽样了N次。</p><p>let $A$ = 实例 $x$ 在 $N$ 次实验中均没被抽中</p><p>$P(A) = (1-1/N)^N = 1/e  \approx 0.368$ .</p><p>$P(\overline{A}) = 1-0.368=0.632$</p><p>为什么Bagging 起作用：</p><ul><li><p>分类器自身内在的”bias”，例如：其错误率 error rate 当测试集无穷大时保持不变，这是一钟算法or分类器本身的偏差bias。</p></li><li><p>在数据集有限的情况下，数据集本身的方差variance。</p><p>分类器的错误率是上述两部分相加造成的</p></li></ul><p>[1]. <a href="http://www.cs.bc.edu/~alvarez/ML/bagging.html" target="_blank" rel="noopener">http://www.cs.bc.edu/~alvarez/ML/bagging.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一些机器学习方法对数据的变更比较敏感，Bagging是一种减少variace的方法（why?)。Bagging依赖于多次boostrap，然后用一种分类器在多个这样bootstrap生成的训练集上训练。将最终得到的多个分类器ensemble，从而对新数据进行投票方式预测。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bagging = (Bootstrap Aggregating)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;关于为什么Bagging方法有 0.368 是&lt;strong&gt;oob&lt;/strong&gt;  (out of bagging)？&lt;/p&gt;
     
     </summary>
     
@@ -472,34 +495,6 @@
     
     
       <category term="机器学习 数学" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2018/05/10/hello-world/"/>
-    <id>http://yoursite.com/2018/05/10/hello-world/</id>
-    <published>2018-05-10T06:44:24.000Z</published>
-    <updated>2019-06-11T15:05:30.172Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server -p 5000</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p><a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server -p 5000&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="machine learning" scheme="http://yoursite.com/tags/machine-learning/"/>
     
   </entry>
   
