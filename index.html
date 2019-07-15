@@ -321,18 +321,17 @@
 
       
         
-          
-          Overview ^1: 
-
-Create a random input image
-
-Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).
-
-Calculate loss and compute the gradients w.r.t input image pixels.Hence only the input pixels are adjusted whereas the weights remain constant.
-
-
-注意几点：卷积神经网络只是用来提
-          ...
+          <p>##图像风格迁移</p>
+<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg" alt="avatar"></p>
+<p>Overview <a href="https://towardsdatascience.com/neural-networks-intuitions-2-dot-product-gram-matrix-and-neural-style-transfer-5d39653e7916" target="_blank" rel="noopener">^1</a>:</p>
+<ol>
+<li><p>Create a random input image</p>
+</li>
+<li><p>Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).</p>
+</li>
+<li><p>Calculate loss and compute the <strong>gradients w.r.t input image pixels.</strong>Hence only the input pixels are adjusted whereas the weights remain constant.</p>
+</li>
+</ol>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/07/13/style-transform/#more" rel="contents">
@@ -456,17 +455,14 @@ Calculate loss and compute the gradients w.r.t input image pixels.Hence only the
 
       
         
-          
-          covariance协方差：
-
-还要考虑一点，每个点的概率是不一样的，因此各个矩形的面积并非是平等的，或者说权重是不一样的，所以需要对面积和进行加权平均，也就是对面积和计算数学期望，这就得到了：
-
-$$Cov(X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$$
-VarianceVariance是covariance的特例：$$Var(X) = Cov(X, X)$$
-correlation$$\rho_{X,Y} = \frac{Cov(X,Y)}{\sigma(X) \sigma(Y)}$$
-对于分母下面的形式，通常我们都知道是消除scale影响的系数，但是为什么这样scale就一样了？
-资料^1很好的解释了原因，高中物理就经常用到这种消除单位的因素，进而比较两个变量的
-          ...
+          <h2 id="covariance"><a href="#covariance" class="headerlink" title="covariance"></a>covariance</h2><p>协方差：</p>
+<blockquote>
+<p>还要考虑一点，每个点的概率是不一样的，因此各个矩形的面积并非是平等的，或者说权重是不一样的，所以需要对面积和进行加权平均，也就是对面积和计算数学期望，这就得到了：</p>
+</blockquote>
+<p>$$<br>Cov(X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]<br>$$</p>
+<h2 id="Variance"><a href="#Variance" class="headerlink" title="Variance"></a>Variance</h2><p>Variance是covariance的特例：<br>$$<br>Var(X) = Cov(X, X)<br>$$</p>
+<h2 id="correlation"><a href="#correlation" class="headerlink" title="correlation"></a>correlation</h2><p>$$<br>\rho_{X,Y} = \frac{Cov(X,Y)}{\sigma(X) \sigma(Y)}<br>$$</p>
+<p>对于分母下面的形式，通常我们都知道是消除scale影响的系数，但是为什么这样scale就一样了？</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/07/13/covariance/#more" rel="contents">
@@ -741,12 +737,10 @@ correlation$$\rho_{X,Y} = \frac{Cov(X,Y)}{\sigma(X) \sigma(Y)}$$
 
       
         
-          
-          在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？
-对于这个问题，需要先了解最小二乘法法的原理：
-最小二乘法的由来 ^1 ：
-法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的%22%20aria-hidden%3D%22true%22%3E%0A%3Cg%20class%3D%22mjx-svg-mrow%22%3E%0A%3Cg%20class%3D%22mjx-svg-mi%22%3E%0A%20%3Cuse%20xlink%3Ahref%3D%22%23E1-MJMATHI-79%22%3E%3C%2Fuse%3E%0A%3C%2Fg%3E%0A%3C%2Fg%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E)就
-          ...
+          <p>在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？</p>
+<p>对于这个问题，需要先了解最小二乘法法的原理：</p>
+<p>最小二乘法的由来 <a href="www.matongxue.com/madocs/818.html">^1 </a>：</p>
+<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<a href="https://blog.csdn.net/u011893609/article/details/80016915" target="_blank" rel="noopener">^2 </a><br>$$<br>J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}<br>$$<br>令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <a href="www.matongxue.com/madocs/818.html">^1 </a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/14/least-square-method/#more" rel="contents">
@@ -892,15 +886,17 @@ correlation$$\rho_{X,Y} = \frac{Cov(X,Y)}{\sigma(X) \sigma(Y)}$$
 
       
         
-          
-          参考：https://www.mathsisfun.com/definitions/parameter.html
-参考：https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition
-A value that is already “built in” to a function. 
-Example: imagine a function that works out the height of a tree:
-h(year) = 20 × year
-then “20” is a parameter.
-Parameters can be changed 
-          ...
+          <p>参考：<a href="https://www.mathsisfun.com/definitions/parameter.html" target="_blank" rel="noopener">https://www.mathsisfun.com/definitions/parameter.html</a></p>
+<p>参考：<a href="https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition" target="_blank" rel="noopener">https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition</a></p>
+<p>A value that is already “built in” to a function. </p>
+<p>Example: imagine a function that works out the height of a tree:</p>
+<p><strong>h(year) = 20 × year</strong></p>
+<p>then “20” is a parameter.</p>
+<p>Parameters can be changed so that the function can be used for other things. </p>
+<p>Example: A different tree’s growth rate is 30 cm per year, so its function is <strong>h(year) = 30 × year</strong></p>
+<p>We could even make it more general by writing</p>
+<p><strong>h(age; rate) = rate × age</strong></p>
+<p>and in this case a semicolon (;) is used to separate the variable(s) from the parameters(s)  </p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/09/function-notaition/#more" rel="contents">

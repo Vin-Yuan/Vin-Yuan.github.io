@@ -81,20 +81,21 @@
 
 
 
-<meta name="description" content="Overview ^1:   Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Calculate lo">
+<meta name="description" content="##图像风格迁移  Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Cal">
 <meta name="keywords" content="cnn, deep_learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Style tranform">
 <meta property="og:url" content="http://yoursite.com/2019/07/13/style-transform/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="Overview ^1:   Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Calculate lo">
+<meta property="og:description" content="##图像风格迁移  Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Cal">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg">
 <meta property="og:image" content="https://miro.medium.com/max/490/1*H1UW3bwrhqkRUJ11Xg6gGA.png">
-<meta property="og:updated_time" content="2019-07-13T15:04:09.854Z">
+<meta property="og:updated_time" content="2019-07-14T12:58:12.922Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Style tranform">
-<meta name="twitter:description" content="Overview ^1:   Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Calculate lo">
-<meta name="twitter:image" content="https://miro.medium.com/max/490/1*H1UW3bwrhqkRUJ11Xg6gGA.png">
+<meta name="twitter:description" content="##图像风格迁移  Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Cal">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg">
 
 
 
@@ -324,7 +325,9 @@
       
 
       
-        <p><strong>Overview <a href="https://towardsdatascience.com/neural-networks-intuitions-2-dot-product-gram-matrix-and-neural-style-transfer-5d39653e7916" target="_blank" rel="noopener">^1</a>:</strong> </p>
+        <p>##图像风格迁移</p>
+<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg" alt="avatar"></p>
+<p>Overview <a href="https://towardsdatascience.com/neural-networks-intuitions-2-dot-product-gram-matrix-and-neural-style-transfer-5d39653e7916" target="_blank" rel="noopener">^1</a>:</p>
 <ol>
 <li><p>Create a random input image</p>
 </li>
@@ -333,6 +336,7 @@
 <li><p>Calculate loss and compute the <strong>gradients w.r.t input image pixels.</strong>Hence only the input pixels are adjusted whereas the weights remain constant.</p>
 </li>
 </ol>
+<a id="more"></a>
 <p>注意几点：卷积神经网络只是用来提取image特征，起embedding作用。所以作为主干的卷积神经网络并不用来训练，我们更多的是反向传播更改输入的random图像。</p>
 <p>最终我们生成的图片需要达到两个目的：</p>
 <ul>
@@ -359,6 +363,10 @@
 <blockquote>
 <p>Consider two vectors(<strong><em>more specifically 2 flattened feature vectors from a convolutional feature map of depth C</em></strong>) representing features of the input space, and their dot product give us the information about the relation between them. The lesser the product the more different the learned features are and greater the product, the more correlated the features are. In other words, the lesser the product,<em> <strong>the lesser the two features co-occur</strong> </em>and the greater it is,<em> <strong>the more they occur together.</strong> </em>This in a sense gives information about an image’s style(texture) and zero information about its spatial structure, since we already flatten the feature and perform dot product on top of it.*</p>
 </blockquote>
+<p>格拉姆矩阵可以看做feature之间的偏心协方差矩阵（即没有减去均值的协方差矩阵），在feature map中，每个数字都来自于一个特定滤波器在特定位置的卷积，因此每个数字代表一个特征的强度，而Gram计算的实际上是两两特征之间的相关性，哪两个特征是同时出现的，哪两个是此消彼长的等等，同时，Gram的对角线元素，还体现了每个特征在图像中出现的量，因此，Gram有助于把握整个图像的大体风格。有了表示风格的Gram Matrix，要度量两个图像风格的差异，只需比较他们Gram Matrix的差异即可<a href="https://blog.csdn.net/wangyang20170901/article/details/79037867" target="_blank" rel="noopener">^2</a>。</p>
+<p>总之， 格拉姆矩阵用于度量各个维度自己的特性以及各个维度之间的关系。内积之后得到的多尺度矩阵中，对角线元素提供了不同特征图各自的信息，其余元素提供了不同特征图之间的相关信息。这样一个矩阵，既能体现出有哪些特征，又能体现出不同特征间的紧密程度<a href="https://blog.csdn.net/wangyang20170901/article/details/79037867" target="_blank" rel="noopener">^2</a>。</p>
+<h3 id="gram矩阵："><a href="#gram矩阵：" class="headerlink" title="gram矩阵："></a>gram矩阵：</h3><p>定义：$n$ 维欧氏空间中任意$k(k \le n)$ 个向量$\alpha_1, \alpha_2, … ,\alpha_k$ 的内积所组成的矩阵<br>$$<br>\begin{equation}<br>\Delta\left(\alpha_{1}, \alpha_{2}, \ldots, \alpha_{k}\right)=\left(\begin{array}{cccc}{\left(\alpha_{1}, \alpha_{1}\right)} &amp; {\left(\alpha_{1}, \alpha_{2}\right)} &amp; {\dots} &amp; {\left(\alpha_{1}, \alpha_{k}\right)} \ {\left(\alpha_{2}, \alpha_{1}\right)} &amp; {\left(\alpha_{2}, \alpha_{2}\right)} &amp; {\ldots} &amp; {\left(\alpha_{2}, \alpha_{k}\right)} \ {\cdots} &amp; {\cdots} &amp; {\cdots} &amp; {\ldots} \ {\left(\alpha_{k}, \alpha_{1}\right)} &amp; {\left(\alpha_{k}, \alpha_{2}\right)} &amp; {\ldots} &amp; {\left(\alpha_{k}, \alpha_{k}\right)}\end{array}\right)<br>\end{equation}<br>$$</p>
+<p>称为$k$个向量的格拉姆矩阵（Gram matrix)，其行列式称为Gram行列式。</p>
 
       
     </div>
@@ -552,7 +560,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Content"><span class="nav-number">1.</span> <span class="nav-text">Learning Content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Style"><span class="nav-number">2.</span> <span class="nav-text">Learning Style</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Content"><span class="nav-number">1.</span> <span class="nav-text">Learning Content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Style"><span class="nav-number">2.</span> <span class="nav-text">Learning Style</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gram矩阵："><span class="nav-number">2.1.</span> <span class="nav-text">gram矩阵：</span></a></li></ol></li></ol></div>
             
 
           </div>
