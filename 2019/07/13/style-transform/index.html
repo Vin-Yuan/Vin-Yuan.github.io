@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="##图像风格迁移  Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Cal">
+<meta name="description" content="图像风格迁移 Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Calcul">
 <meta name="keywords" content="cnn, deep_learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Style tranform">
 <meta property="og:url" content="http://yoursite.com/2019/07/13/style-transform/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="##图像风格迁移  Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Cal">
+<meta property="og:description" content="图像风格迁移 Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Calcul">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg">
 <meta property="og:image" content="https://miro.medium.com/max/490/1*H1UW3bwrhqkRUJ11Xg6gGA.png">
-<meta property="og:updated_time" content="2019-07-14T12:58:12.922Z">
+<meta property="og:updated_time" content="2019-07-15T12:47:52.685Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Style tranform">
-<meta name="twitter:description" content="##图像风格迁移  Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Cal">
+<meta name="twitter:description" content="图像风格迁移 Overview ^1:  Create a random input image  Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).  Calcul">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg">
 
 
@@ -325,8 +325,7 @@
       
 
       
-        <p>##图像风格迁移</p>
-<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg" alt="avatar"></p>
+        <h2 id="图像风格迁移"><a href="#图像风格迁移" class="headerlink" title="图像风格迁移"></a>图像风格迁移</h2><p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg" alt="avatar"></p>
 <p>Overview <a href="https://towardsdatascience.com/neural-networks-intuitions-2-dot-product-gram-matrix-and-neural-style-transfer-5d39653e7916" target="_blank" rel="noopener">^1</a>:</p>
 <ol>
 <li><p>Create a random input image</p>
@@ -358,7 +357,8 @@
 <blockquote>
 <p>In a more intuitive way, <strong>dot product can be seen as how similar two vectors actually are</strong>.</p>
 </blockquote>
-<p>当我们把某个卷积层的feature Map展开(<strong>flat</strong>)成vector时，其就可以看作一个feature vector，这样如果对于[width, height, channel] = [w, h, c] 这样一个卷积层，我们会得到c个feature vector，如果图片记作$X$,<br>$$<br>f(X) = \left {\alpha_1, \alpha_2, … , \alpha_c\right}<br>$$</p>
+<p>当我们把某个卷积层的feature Map展开(<strong>flat</strong>)成vector时，其就可以看作一个feature vector，这样如果对于[width, height, channel] = [w, h, c] 这样一个卷积层，我们会得到c个feature vector，如果图片记作$X$, </p>
+<p>$$<br>f(X) = \alpha_1, \alpha_2, … , \alpha_c<br>$$</p>
 <p>这样一来，每一对向量之间作向量点乘就会衡量不同特征之间的关系，比如说一个向量代表冷色调，另一个代表粗线条，这两个向量的点乘约大说明约相近，可以理解为这两种特征经常一起出现，即代表一种风格。</p>
 <blockquote>
 <p>Consider two vectors(<strong><em>more specifically 2 flattened feature vectors from a convolutional feature map of depth C</em></strong>) representing features of the input space, and their dot product give us the information about the relation between them. The lesser the product the more different the learned features are and greater the product, the more correlated the features are. In other words, the lesser the product,<em> <strong>the lesser the two features co-occur</strong> </em>and the greater it is,<em> <strong>the more they occur together.</strong> </em>This in a sense gives information about an image’s style(texture) and zero information about its spatial structure, since we already flatten the feature and perform dot product on top of it.*</p>
@@ -560,7 +560,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Content"><span class="nav-number">1.</span> <span class="nav-text">Learning Content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Style"><span class="nav-number">2.</span> <span class="nav-text">Learning Style</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gram矩阵："><span class="nav-number">2.1.</span> <span class="nav-text">gram矩阵：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像风格迁移"><span class="nav-number">1.</span> <span class="nav-text">图像风格迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Content"><span class="nav-number">2.</span> <span class="nav-text">Learning Content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Style"><span class="nav-number">3.</span> <span class="nav-text">Learning Style</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gram矩阵："><span class="nav-number">3.1.</span> <span class="nav-text">gram矩阵：</span></a></li></ol></li></ol></div>
             
 
           </div>

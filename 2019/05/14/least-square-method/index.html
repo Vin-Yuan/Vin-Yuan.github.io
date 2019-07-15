@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="Vin&#39;s Blog">
 <meta property="og:description" content="在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？ 对于这个问题，需要先了解最小二乘法法的原理： 最小二乘法的由来 ^1 ： 法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：^2 $$J(\theta)=\frac{1}{2">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-14T14:06:44.741Z">
+<meta property="og:updated_time" content="2019-07-15T12:51:15.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最小二乘法">
 <meta name="twitter:description" content="在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？ 对于这个问题，需要先了解最小二乘法法的原理： 最小二乘法的由来 ^1 ： 法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：^2 $$J(\theta)=\frac{1}{2">
@@ -346,10 +346,10 @@
       
         <p>在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？</p>
 <p>对于这个问题，需要先了解最小二乘法法的原理：</p>
-<p>最小二乘法的由来 <a href="www.matongxue.com/madocs/818.html">^1 </a>：</p>
-<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<a href="https://blog.csdn.net/u011893609/article/details/80016915" target="_blank" rel="noopener">^2 </a><br>$$<br>J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}<br>$$<br>令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <a href="www.matongxue.com/madocs/818.html">^1 </a></p>
+<p>最小二乘法的由来 <a href="https://www.matongxue.com/madocs/818.htm" target="_blank" rel="noopener">^1 </a>：</p>
+<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<a href="https://blog.csdn.net/u011893609/article/details/80016915" target="_blank" rel="noopener">^2 </a><br>$$<br>J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}<br>$$<br>令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <a href="https://www.matongxue.com/madocs/818.htm" target="_blank" rel="noopener">^1 </a></p>
 <a id="more"></a>
-<p>高斯通过概率的角度补充了这个假设：所有偏离真实值的误差都是符合高斯分布的。需要拟合的数据都是我们观测到的，那么它出现的概率就应该是最大的（极大似然的角度），具体阅读参考 <a href="www.matongxue.com/madocs/818.html">^1 </a></p>
+<p>高斯通过概率的角度补充了这个假设：所有偏离真实值的误差都是符合高斯分布的。需要拟合的数据都是我们观测到的，那么它出现的概率就应该是最大的（极大似然的角度），具体阅读参考 <a href="https://www.matongxue.com/madocs/818.htm" target="_blank" rel="noopener">^1 </a></p>
 <p>最小二乘法就是对上面的式子求解，通过矩阵方式得到解析解，或者说正规方程的解（<strong>Normal Equation</strong>)，其结果正是 Ng Andrew的《机器学习》教程中的正规方程。<br>$$<br>\begin{equation}<br>\begin{aligned} \frac{\partial J(\theta)}{\partial \theta} &amp;=\frac{1}{2} \cdot \frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} X \theta-\theta^{T} X^{T} Y-Y^{T} X \theta+Y^{T} Y\right)}{\partial \theta} \ &amp;=\frac{1}{2} \cdot\left[\frac{\partial \operatorname{tr}\left(\theta I \theta^{T} X^{T} X\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} Y\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta Y^{T} X\right)}{\partial \theta}\right] \ &amp;=\frac{1}{2} \cdot\left[X^{T} X \theta I+\left(X^{T} X\right)^{T} \theta I^{T}-X^{T} Y-\left(Y^{T} X\right)^{T}\right] \ &amp;=X^{T} X \theta-X^{T} Y \end{aligned}<br>\end{equation} \tag{2}<br>$$</p>
 <p>令上式为0，得到解析解，Normal Equation，</p>
 <p>$$<br>\theta= {\left( {X^TX} \right)^{ - 1}}{X^T}Y \tag{3}<br>$$</p>
