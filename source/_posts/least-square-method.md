@@ -12,7 +12,7 @@ tags: machine_learning, math
 
 最小二乘法的由来 [^1 ]：
 
-法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：[^2 ]
+法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的$y$就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：[^2 ]
 $$
 J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}
 $$
@@ -25,7 +25,7 @@ $$
 最小二乘法就是对上面的式子求解，通过矩阵方式得到解析解，或者说正规方程的解（**Normal Equation**)，其结果正是 Ng Andrew的《机器学习》教程中的正规方程。
 $$
 \begin{equation}
-\begin{aligned} \frac{\partial J(\theta)}{\partial \theta} &=\frac{1}{2} \cdot \frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} X \theta-\theta^{T} X^{T} Y-Y^{T} X \theta+Y^{T} Y\right)}{\partial \theta} \\ &=\frac{1}{2} \cdot\left[\frac{\partial \operatorname{tr}\left(\theta I \theta^{T} X^{T} X\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} Y\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta Y^{T} X\right)}{\partial \theta}\right] \\ &=\frac{1}{2} \cdot\left[X^{T} X \theta I+\left(X^{T} X\right)^{T} \theta I^{T}-X^{T} Y-\left(Y^{T} X\right)^{T}\right] \\ &=X^{T} X \theta-X^{T} Y \end{aligned}
+\begin{aligned} \frac{\partial J(\theta)}{\partial \theta} &=\frac{1}{2} \cdot \frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} X \theta-\theta^{T} X^{T} Y-Y^{T} X \theta+Y^{T} Y\right)}{\partial \theta} \\\\ &=\frac{1}{2} \cdot\left[\frac{\partial \operatorname{tr}\left(\theta I \theta^{T} X^{T} X\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} Y\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta Y^{T} X\right)}{\partial \theta}\right] \\\\ &=\frac{1}{2} \cdot\left[X^{T} X \theta I+\left(X^{T} X\right)^{T} \theta I^{T}-X^{T} Y-\left(Y^{T} X\right)^{T}\right] \\\\ &=X^{T} X \theta-X^{T} Y \end{aligned}
 \end{equation} \tag{2}
 $$
 
@@ -58,15 +58,15 @@ consider a model:
 
 $y_i = b_0+b_1 x^{n_1}_i + \cdots+ b_px^{n_p}_i + \epsilon_i.$
 
-This can bex rewritten as:
+This can be rewritten as:
 $$
 y = 
-X b + \epsilon;\\
+X b + \epsilon;\\\\
 X= \begin{pmatrix}
-  1 & x_{1}^{n_1} & \cdots & x_{1}^{n_p} \\
-  1 & x_{2}^{n_1} & \cdots & x_{2}^{n_p} \\
-  \vdots  & \vdots  & \ddots & \vdots  \\
-  1 & x_{n}^{n_1} & \cdots & x_{n}^{n_p} \\
+  1 & x_{1}^{n_1} & \cdots & x_{1}^{n_p} \\\\
+  1 & x_{2}^{n_1} & \cdots & x_{2}^{n_p} \\\\
+  \vdots  & \vdots  & \ddots & \vdots  \\\\
+  1 & x_{n}^{n_1} & \cdots & x_{n}^{n_p} \\\\
  \end{pmatrix}.
 $$
 这也是一种线性模型：polynomial regression is considered a special case of multiple linear regression [^4 ]
