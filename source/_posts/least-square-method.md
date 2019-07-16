@@ -12,11 +12,13 @@ tags: machine_learning, math
 
 最小二乘法的由来 [^1 ]：
 
-法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的![y](data:image/svg+xml;utf8,%3Csvg%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20class%3D%22mjx-svg-math%22%20width%3D%221.155ex%22%20height%3D%222.009ex%22%20style%3D%22font-size%3A14px%3Bvertical-align%3A%20-0.671ex%3B%22%20viewBox%3D%220%20-576.1%20497.5%20865.1%22%20role%3D%22img%22%20focusable%3D%22false%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20aria-labelledby%3D%22MathJax-SVG-1-Title%22%3E%0A%3Ctitle%20id%3D%22MathJax-SVG-1-Title%22%3Ey%3C%2Ftitle%3E%0A%3Cdefs%20aria-hidden%3D%22true%22%3E%0A%3Cpath%20stroke-width%3D%221%22%20id%3D%22E1-MJMATHI-79%22%20d%3D%22M21%20287Q21%20301%2036%20335T84%20406T158%20442Q199%20442%20224%20419T250%20355Q248%20336%20247%20334Q247%20331%20231%20288T198%20191T182%20105Q182%2062%20196%2045T238%2027Q261%2027%20281%2038T312%2061T339%2094Q339%2095%20344%20114T358%20173T377%20247Q415%20397%20419%20404Q432%20431%20462%20431Q475%20431%20483%20424T494%20412T496%20403Q496%20390%20447%20193T391%20-23Q363%20-106%20294%20-155T156%20-205Q111%20-205%2077%20-183T43%20-117Q43%20-95%2050%20-80T69%20-58T89%20-48T106%20-45Q150%20-45%20150%20-87Q150%20-107%20138%20-122T115%20-142T102%20-147L99%20-148Q101%20-153%20118%20-160T152%20-167H160Q177%20-167%20186%20-165Q219%20-156%20247%20-127T290%20-65T313%20-9T321%2021L315%2017Q309%2013%20296%206T270%20-6Q250%20-11%20231%20-11Q185%20-11%20150%2011T104%2082Q103%2089%20103%20113Q103%20170%20138%20262T173%20379Q173%20380%20173%20381Q173%20390%20173%20393T169%20400T158%20404H154Q131%20404%20112%20385T82%20344T65%20302T57%20280Q55%20278%2041%20278H27Q21%20284%2021%20287Z%22%3E%3C%2Fpath%3E%0A%3C%2Fdefs%3E%0A%3Cg%20stroke%3D%22currentColor%22%20fill%3D%22currentColor%22%20stroke-width%3D%220%22%20transform%3D%22matrix(1%200%200%20-1%200%200)%22%20aria-hidden%3D%22true%22%3E%0A%3Cg%20class%3D%22mjx-svg-mrow%22%3E%0A%3Cg%20class%3D%22mjx-svg-mi%22%3E%0A%20%3Cuse%20xlink%3Ahref%3D%22%23E1-MJMATHI-79%22%3E%3C%2Fuse%3E%0A%3C%2Fg%3E%0A%3C%2Fg%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E)就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：[^2 ]
+法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：[^2 ]
 $$
 J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}
 $$
 令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ [^1 ]
+
+<!-- more -->
 
 高斯通过概率的角度补充了这个假设：所有偏离真实值的误差都是符合高斯分布的。需要拟合的数据都是我们观测到的，那么它出现的概率就应该是最大的（极大似然的角度），具体阅读参考 [^1 ]
 
@@ -105,12 +107,11 @@ $$
 
 
 
-[^1 ]:www.matongxue.com/madocs/818.html
-
+[^1 ]: <https://www.matongxue.com/madocs/818.htm>
 [^2 ]:<https://blog.csdn.net/u011893609/article/details/80016915>
 [^3 ]: <https://www.cnblogs.com/wangkundentisy/p/7505487.html>
 [^4 ]: <https://stats.stackexchange.com/questions/92065/why-is-polynomial-regression-considered-a-special-case-of-multiple-linear-regres> 
 [^5]: <https://en.wikipedia.org/wiki/Closed-form_expression>
 [^6]: <https://www.cnblogs.com/zzy0471/p/polynomial_regression.html>
-[^7]: https://www.jianshu.com/p/eac4c7928b56
+[^7]: <https://www.jianshu.com/p/eac4c7928b56>
 [^8]: <https://blog.csdn.net/tsinghuahui/article/details/80229299>

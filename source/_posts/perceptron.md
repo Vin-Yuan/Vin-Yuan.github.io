@@ -1,45 +1,66 @@
 ---
-title: 感知器和逻辑回归的思考
+title: Perceptron
+date: 2019-04-22 10:56:44
+categories: machine learning
+tags: perceptron
 mathjax: true
-date: 2019-04-21 12:34:25
-categories:
-tags: perceptron, logistic regression
 ---
 
-感知器的学习算法是误分类驱动的，更新规则如下
-$$
-w_{i,j} = w_{i,j} + \eta(\hat{y_j} - y_j)x_i
-$$
-看起来很简单。但是这个结果是怎么得到的呢？其实源自随机梯度下降法（stochastic gradient descent)。
+![](http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg)
 
-根据《统计机器学习》中所述，具体的，假设所有样本集合为 $D = \{(x_i, y_i)| x_i \in train\ set\}$, **误分类样本**集合$M = \{(x_i, y_i)|x_i \in 误分类样本\}$
-
-- 基于误分类驱动的
-
-loss function: 
+感知器的分类函数为 $f(x) = sign(wx + b) $，在阅读书籍时发现有两种update rule：
 $$
-L(w,b) = -\sum\limits_{x_i \in M} y_i(wx_i+b)
+\triangle w = \eta y_ix_i \tag{1}
 $$
 
-
-最小化$L(w,b)$是优化目标，求导后：
 $$
-\triangledown_{w}L(w,b) = -\sum\limits_{x_i\in M}y_ix_i
+\triangle w = \eta(\hat{y_i}-y_i)x_i \tag{2}
 $$
 
-- 基于所有训练样本的
+为什么会产生两种形式呢？
 
-变得到如上答案。
+<!--more-->
 
-这里要说明的是感知器的step function 是 {-1, 1}​ 的情况，当step function是{0, 1}的情况时，我们可以修改 loss function: $L(w,b) = -\sum\limits_{x\in D}[y_i(wx_i+b) + (1-y_i)(1-(wx_i+b))]​$
+- 第一种其实是误分类驱动的，对于错误集 $M =\lbrace x_i | f(x_i) \ne y_i \rbrace $， 其损失函数为：
 
-对比逻辑回归到loss function:
 $$
-J(\theta) = -\frac{1}{m}\sum\limits_{i=1}^{m}[y^{i}log(\hat{p}^{i})+(1-y^{i})log(1-\hat{p}^{i})]
+\triangledown_w L(w,b) = -\sum\limits_{x_i \in M} y_ix_i
+$$
+
+我们采用随机梯度下降法，**每次随机选取一个误分类点$(x_i, y_i)$** ,得到更新法则(1)。这种对错误分类结果进行修正的方法可以通过迭代解释。假设有误分类实例 $x_i$，更新前$w^{t}$，更新后$w^{t+1}$，迭代前后的函数关系为：
+
+
+$$
+\begin{equation}
+\begin{aligned}  
+f^{(t+1)}(x_i) &=  w^{(t+1)}x_i + b \\\\
+&= (w^{i}+\eta y_ix_i)x_i+b \\\\
+&= w^ix_i + \eta y_i||x_i||_2 + b \\\\
+&= f^t(x_i) +  \eta y_i||x_i||_2 \\\\
+&= f^t(x_i) + \eta y_i \delta
+\end{aligned}
+\end{equation}
 $$
 
 
-发现两者有相似之处，对其求导后：
-$$
-\frac{\partial}{\partial \theta_j} = \frac{1}{m}\sum\limits_{i=1}^{m}(\sigma(\theta^Tx^{i})-y^{i})x_j^{i}
-$$
+
+其中$\delta > 0$，现在分情况讨论：
+
+1. $y_i = +1, f^t(x_i) = -1$
+
+   修正后函数值向+1方向改变
+
+2. $y_i = -1, f^t(x_i) = +1$
+
+   修正后函数值向-1方向改变
+
+   
+
+- 第二种是MSE推理得到的，，也被称作*Hebb's rule*，考虑损失函数：
+  $$
+  L(w,b) = \frac{1}{m} \sum\limits_{i=1}^m (\hat{y_i} - y_i)^2
+  $$
+  
+
+求导后使用**随机梯度下降法**更新便得到式子(2)
+
