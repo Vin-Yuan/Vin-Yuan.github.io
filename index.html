@@ -251,6 +251,138 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/svm/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/16/svm/" itemprop="url">svm</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T09:28:31+08:00">
+                2019-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          svm 随时感想：
+以前常会疑惑：$$w^T\cdot x + b = 0$$
+ 为什么他可以确定一条直线，以及为什么其作为分割面后 &gt; 0 和 &lt;0 就可以作为分类？
+首先我们考虑如何确定一条直线，给定一个法向量$w$，会有无数个直线与其垂直正交，我们要的那一条怎么唯一表示呢？其实很简单，找一个点就行，只需要这一个点，再加这一个法向量，一条直线就完全确定了。
+假设$x$, $a = (a_1, a_2，a_3)^T$ 是三维空间的一个点:$$w^T\cdot (x-a) = 0$$
+可以确定一条直线，这是两个向量的乘积。$w$和$a$都是常量，所以展开后会生成一个常熟项，即 $b$, 最后形式就是 (1)。
+值得注意的是：n维空间的一个分割超平面是n-1维的，即3维立体空间-分
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/16/svm/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/style-transform/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -585,12 +717,19 @@
 
       
         
-          
-          1. MLE (Maximum-likelihood-estimation)最大似然方法：$$p(X | \theta) =    \prod_{i=1}^{N}p(x_i|\theta) = L(\theta|X)$$其中，样本: $X = {x_1,…,x_N}$。
-左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（density function)
-右边的$L(\theta|X)$是关于参数 $\theta$ 的likelihood（在给定数据$X$的情况下)，也可以这样理解，随着数据样本集$X$的变动，$\theta$ 是随之变动的，是一个变量，所以”|”这个符号意味着$\theta$ 受 $X$ 支配。
-从公式中可以看出，在给定 $\theta$ (假设参数）
-          ...
+          <h2 id="1-MLE-Maximum-likelihood-estimation"><a href="#1-MLE-Maximum-likelihood-estimation" class="headerlink" title="1. MLE (Maximum-likelihood-estimation)"></a>1. MLE (Maximum-likelihood-estimation)</h2><p>最大似然方法：<br>$$<br>\begin{equation}<br>p(X | \theta) =\prod_{i=1}^{N}p(x_i|\theta) = L(\theta|X)<br>\end{equation}<br>$$<br>其中，样本: $X = {x_1,…,x_N}$。</p>
+<p>左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（density function)，<strong>注意这是条件概率</strong></p>
+<p>右边的$L(\theta|X)$是关于参数 $\theta$ 的likelihood（在给定数据$X$的情况下)，<strong>注意这是函数</strong></p>
+<p>从公式中可以看出，在给定 $\theta$ (假设参数）的情况下，<strong>对已观测的实验结果用参数形式描述其概率</strong>，在做这一步的时候用到了一个假设，即样本之间的出现是相互独立无关的（<strong>i.i.d</strong>)。鉴于其已经出现在现实世界中，我们有理由相信（无论是大数定律还是什么的）这种可能性是最大的，所以，如何让这种观测结果出 大变成主要目标，这就是我们的使用的max likelihood 的本质。</p>
+<p>最大化（1）便得到最大似然的式子<br>$$<br>L(\theta) = \mathop{\arg\max}_{\theta} L(\theta|X)<br>$$</p>
+<p>这里通常会用log函数替换，因为可以使得函数</p>
+<h2 id="2-MAP-Maximum-A-posterior-estimation"><a href="#2-MAP-Maximum-A-posterior-estimation" class="headerlink" title="2. MAP (Maximum A posterior estimation)"></a>2. MAP (Maximum A posterior estimation)</h2><p>根据<strong>Bayes</strong>公式，我们可以得到如下结论<br>$$<br>P(\theta|X) \propto P(X|\theta) \cdot P(\theta)<br>$$<br>上面的表达式分别是：</p>
+<p>$P(\theta|X)$:    <strong>posterior</strong> 后验概率</p>
+<p>$P(X|\theta)$:    <strong>likelihood</strong> 似然</p>
+<p>$P(\theta)$:         <strong>prior</strong> 先验概率</p>
+<p>即相比较MLE，<strong>在似然后面乘上prior</strong>，然后求最大，便是MAP[^2 ]</p>
+<p>根据贝叶斯公式会有如下：<br>$$<br>\begin{equation}<br>P(\theta|X) \propto P(X|\theta) \cdot P(\theta)<br>\end{equation}<br>$$</p>
+<p>$P(\theta|x)$ :     <strong>posterior probabiity</strong> 后验概率<br>$P(X|\theta)$ :    <strong>likelihood</strong> 似然<br>$P(\theta)$ :         <strong>prior</strong> 先验概率</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/06/10/EM-algorithm/#more" rel="contents">
@@ -739,7 +878,7 @@
           <p>在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？</p>
 <p>对于这个问题，需要先了解最小二乘法法的原理：</p>
 <p>最小二乘法的由来 <a href="https://www.matongxue.com/madocs/818.htm" target="_blank" rel="noopener">^1 </a>：</p>
-<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<a href="https://blog.csdn.net/u011893609/article/details/80016915" target="_blank" rel="noopener">^2 </a><br>$$<br>J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}<br>$$<br>令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <a href="https://www.matongxue.com/madocs/818.htm" target="_blank" rel="noopener">^1 </a></p>
+<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的$y$就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<a href="https://blog.csdn.net/u011893609/article/details/80016915" target="_blank" rel="noopener">^2 </a><br>$$<br>J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}<br>$$<br>令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <a href="https://www.matongxue.com/madocs/818.htm" target="_blank" rel="noopener">^1 </a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/14/least-square-method/#more" rel="contents">
@@ -885,15 +1024,8 @@
 
       
         
-          <p>A value that is already “built in” to a function. </p>
-<p>Example: imagine a function that works out the height of a tree:</p>
-<p><strong>h(year) = 20 × year</strong></p>
-<p>then “20” is a parameter.</p>
-<p>Parameters can be changed so that the function can be used for other things.<br>Example: A different tree’s growth rate is 30 cm per year, so its function is <strong>h(year) = 30 × year</strong></p>
-<p>We could even make it more general by writing</p>
-<p><strong>h(age; rate) = rate × age</strong></p>
-<p>and in this case a semicolon (;) is used to separate the variable(s) from the parameters(s)  </p>
-<p>参考:<a href="https://www.mathsisfun.com/definitions/parameter.html" target="_blank" rel="noopener">https://www.mathsisfun.com/definitions/parameter.html</a><br>参考:<a href="https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition" target="_blank" rel="noopener">https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition</a><br>
+          <p>  What’s the meaning of “;” in $f(x;\theta)$?<a href="https://math.stackexchange.com/questions/342268/what-does-the-semicolon-mean-in-a-function-definition" target="_blank" rel="noopener">^2</a></p>
+<p>A value that is already “built in” to a function. </p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/09/function-notaition/#more" rel="contents">
@@ -903,7 +1035,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
     
     
     
@@ -1461,167 +1593,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/20/PCA/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/20/PCA/" itemprop="url">PCA</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-20T20:51:27+08:00">
-                2019-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
-                    <span itemprop="name">machine learning</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <hr>
-<p>输入：样本集 $D = \lbrace x_1, x_2, … ,x_m\rbrace$;</p>
-<p>​        低维空间维度 $d’$.</p>
-<p>过程：</p>
-<ol>
-<li><p>对所有样本进行centering中心化： $x_i \leftarrow x_i - \frac{1}{m}\sum_{i=1}^m x_i$;</p>
-</li>
-<li><p>计算所有样本的协方差矩阵 $XX^T$;</p>
-</li>
-<li><p>对协方差矩阵$XX^T$做特征值分解；</p>
-</li>
-<li><p>取最大的 $d’$ 个特征值对应的特征向量 $w_1, w_2, … , w_{d’}$.</p>
-</li>
-</ol>
-<p>输出：投影矩阵 $W=(w_1, w_2, … , w_{d’})$.</p>
-<hr>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/20/PCA/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1672,7 +1643,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1694,7 +1665,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
