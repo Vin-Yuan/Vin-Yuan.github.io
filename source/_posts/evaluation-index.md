@@ -6,7 +6,7 @@ categories: machine_learning
 tags: ROC,  AUC, PR
 ---
 
-![precision and recall](http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg)
+![](http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg)
 以下术语可以参照图[^1]，一目了然：
 
 - Precision(查准率):  $\text{Precision} = \frac{TP}{TP+FP}$
@@ -25,6 +25,8 @@ tags: ROC,  AUC, PR
 例如你有一个行人识别的分类器，来了50个object，你将10个识别为行人，而ground truth中这10个也确定是行人，从准确率来说你会觉得很赞，100%耶:smile:。但是，实际情况是这50个都是行人，如果这是一个自动驾驶的识别系统的话，:scream:那就很糟糕了。形成这样的原因很可能是模型过拟合了。
 
 往往对于一个问题我们的关注点不同，侧重的指标也就不同。
+
+<!--more-->
 
 垃圾邮件的识别过滤，有时候会更关注查全率，再加之与用户甄别。但如果准确率太低，把重要邮件过滤掉，那就不妙了:joy:
 
