@@ -9,7 +9,7 @@ tags:  object_detection
 ## Fast-RCNN 中region of interest的映射
 
 首先在原图上用selective search得到某个推荐框，假设推荐目标在一个区域内，这个区域的左上点坐标为（x1,y1），右下角坐标为（x2,y2）。那么按照ZF-5的网络模型
-求出$S=2*2*2*2$ (所有stride的连续乘积，在conv5之前，包括conv5) [^1] 
+求出 $$S=2*2*2*2$$ ( 所有stride的连续乘积，在conv5之前，包括conv5 ) [^1] 
 所以具体落实到feature map上，就应该是（(x1/16)+1,(y1/16)+1）;（(x2/16)-1,(y2/16)-1）。
 
 ### Caffe中的实现

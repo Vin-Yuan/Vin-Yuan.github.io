@@ -44,7 +44,7 @@ $K^M$ 是指条件概率的condition排列组合的可能个数。
 
 ![](http://ww1.sinaimg.cn/large/6bf0a364ly1g54yi60wrvj20k0069t8y.jpg)
 
-该类模型的关键是隐藏变量之间满足如下条件独立性，即在给定$z_n$时，$z_{n-1}$和$z_{n+1}$条件独立（条件独立参见附录)：
+该类模型的关键是隐藏变量之间满足如下条件独立性，即在给定$z_n$时，$z_{n-1}$和$z_{n+1}$ 条件独立 <条件独立参见附录> ：
 $$
 p(z_{n+1}|z_{n-1}, z_n) = p(z_{n+1}|z_n) \\
 \mathbf{z}_{n+1} \perp \mathbf{z}_{n-1} | \mathbf{z}_{n}
@@ -54,6 +54,8 @@ $$
 $$
 p\left(\boldsymbol{x}_{1}, \cdots, \boldsymbol{x}_{N}, \boldsymbol{z}_{1}, \cdots, \boldsymbol{z}_{N}\right)=p\left(\boldsymbol{z}_{1}\right)\left[\prod_{n=2}^{N} p\left(\boldsymbol{z}_{\boldsymbol{n}} | \boldsymbol{z}_{n-1}\right)\right]\left[\prod_{n=1}^{N} p\left(\boldsymbol{x}_{n} | \boldsymbol{z}_{\boldsymbol{n}}\right)\right]
 $$
+
+<!-- more -->
 
 ## 附录
 
