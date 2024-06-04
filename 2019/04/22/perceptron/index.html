@@ -341,7 +341,7 @@ L(w,b) = \frac{1}{m} \sum\limits_{i=1}^m (\hat{y_i} - y_i)^2</script></li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -352,7 +352,7 @@ L(w,b) = \frac{1}{m} \sum\limits_{i=1}^m (\hat{y_i} - y_i)^2</script></li>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -444,6 +444,7 @@ L(w,b) = \frac{1}{m} \sum\limits_{i=1}^m (\hat{y_i} - y_i)^2</script></li>
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       loader: {
+          load: ['[tex]/mhchem'],
         source: {
           '[tex]/amsCd': '[tex]/amscd',
           '[tex]/AMScd': '[tex]/amscd'
@@ -451,6 +452,7 @@ L(w,b) = \frac{1}{m} \sum\limits_{i=1}^m (\hat{y_i} - y_i)^2</script></li>
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
       options: {

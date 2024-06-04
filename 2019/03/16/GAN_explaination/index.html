@@ -537,7 +537,7 @@ Minimize \quad L=-\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)-\frac{1}{m
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -548,7 +548,7 @@ Minimize \quad L=-\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)-\frac{1}{m
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -640,6 +640,7 @@ Minimize \quad L=-\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)-\frac{1}{m
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       loader: {
+          load: ['[tex]/mhchem'],
         source: {
           '[tex]/amsCd': '[tex]/amscd',
           '[tex]/AMScd': '[tex]/amscd'
@@ -647,6 +648,7 @@ Minimize \quad L=-\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)-\frac{1}{m
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
       options: {

@@ -351,7 +351,7 @@ f(X) = \alpha_1, \alpha_2, … , \alpha_c</script><p>这样一来，每一对向
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -362,7 +362,7 @@ f(X) = \alpha_1, \alpha_2, … , \alpha_c</script><p>这样一来，每一对向
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -454,6 +454,7 @@ f(X) = \alpha_1, \alpha_2, … , \alpha_c</script><p>这样一来，每一对向
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       loader: {
+          load: ['[tex]/mhchem'],
         source: {
           '[tex]/amsCd': '[tex]/amscd',
           '[tex]/AMScd': '[tex]/amscd'
@@ -461,6 +462,7 @@ f(X) = \alpha_1, \alpha_2, … , \alpha_c</script><p>这样一来，每一对向
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
       options: {

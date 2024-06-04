@@ -337,7 +337,7 @@ $$\begin{equation} \frac{\partial C}{\partial z_i} = a_i - y_i \end{equation}  â
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -348,7 +348,7 @@ $$\begin{equation} \frac{\partial C}{\partial z_i} = a_i - y_i \end{equation}  â
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -440,6 +440,7 @@ $$\begin{equation} \frac{\partial C}{\partial z_i} = a_i - y_i \end{equation}  â
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       loader: {
+          load: ['[tex]/mhchem'],
         source: {
           '[tex]/amsCd': '[tex]/amscd',
           '[tex]/AMScd': '[tex]/amscd'
@@ -447,6 +448,7 @@ $$\begin{equation} \frac{\partial C}{\partial z_i} = a_i - y_i \end{equation}  â
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
       options: {
