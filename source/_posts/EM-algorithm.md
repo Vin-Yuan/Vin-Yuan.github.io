@@ -18,9 +18,7 @@ $$
 
 左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（density function)，**注意这是条件概率**
 
-
 右边的$L(\theta|X)$是关于参数 $\theta$ 的likelihood（在给定数据$X$的情况下)，**注意这是函数**
-
 
 从公式中可以看出，在给定 $\theta$ (假设参数）的情况下，**对已观测的实验结果用参数形式描述其概率**，在做这一步的时候用到了一个假设，即样本之间的出现是相互独立无关的（**i.i.d**)。鉴于其已经出现在现实世界中，我们有理由相信（无论是大数定律还是什么的）这种可能性是最大的，所以，如何让这种观测结果出 大变成主要目标，这就是我们的使用的max likelihood 的本质。
 
@@ -39,11 +37,11 @@ P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
 $$
 上面的表达式分别是：
 
-$P(\theta|X)$:	**posterior** 后验概率
+$P(\theta|X)$:**posterior** 后验概率
 
-$P(X|\theta)$:	**likelihood** 似然
+$P(X|\theta)$:**likelihood** 似然
 
-$P(\theta)$:		 **prior** 先验概率
+$P(\theta)$:**prior** 先验概率
 
 即相比较MLE，**在似然后面乘上prior**，然后求最大，便是MAP[^2 ]
 
@@ -54,9 +52,9 @@ P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
 \end{equation}
 $$
 
-$P(\theta|x)$ : 	**posterior probabiity** 后验概率
-$P(X|\theta)$ :	**likelihood** 似然
-$P(\theta)$ : 		**prior** 先验概率
+$P(\theta|x)$ :**posterior probabiity** 后验概率
+$P(X|\theta)$ :**likelihood** 似然
+$P(\theta)$ :**prior** 先验概率
 
 <!-- more-->
 
@@ -76,15 +74,13 @@ $$
 \end{equation}
 $$
 
-
 参数是 $\theta = \{\mu, \sigma\}$, 我们对$log$似然函数(log likelihood)求极值后便可得到最大似然估计：
 
-$\mu_{MLE}  = \frac{\partial L(\mu, \sigma|X)}{\partial \mu} 0$	
+$\mu_{MLE}  = \frac{\partial L(\mu, \sigma|X)}{\partial \mu} 0$
 
 ### 2.2. Gussian Mixture Model
 
 对于多个高斯的混合模型：
-
 
 $$
 \begin{equation}
@@ -95,8 +91,6 @@ P(X|\theta) = \sum_{k=1}^{K}\alpha_{k}N(X|\mu_k, \sigma_k) \ ,\\
 \end{equation}
 $$
 需要指出，为什么使用$\alpha_k$这种形式来构建混合模型，而非使用$\frac{1}{k}$着各种形式？
-
-![](http://ww1.sinaimg.cn/mw690/6bf0a364ly1g3zigk9996j20am070q3a.jpg)
 
 参照上图，加上数据由两个高斯模型混合而成，这是后使用$\frac{1}{k}$ 直接的效果是均分了每一个高斯的贡献度，这是不合理的，从图中看出对于3.5处的点，很明显第二个模型贡献的概率大一些。所以，基于此，我们采用了$\alpha_k$ 这种结构，同时约束$\sum_{k=1}^K \alpha_k = 1$
 
@@ -156,22 +150,17 @@ $$
  \end{aligned}
 $$
 
-
 现在我们将其分解为两部分：$Q$和$H$，总体目的是求得使似然函数最大的$\theta$ ，如果我们能证明在迭代中：$Q \uparrow、 H \downarrow$, 那就完美的解决了问题， **并且，得到这样的证明后，我们可以只最大化$Q$, 而不去理会$H$。**由于我们的算法本质是最大化Q函数，所以只需证明H随着变小即可。
 
 ### 2.4 终极目的证明H(i+1) < H(i)
-
-
 
 ## 3. EM algorithm
 
 首先看常用的一个图（来自于Chuong B Do & Serafim Batzoglou, What is the expectation maximization algorithm?)，硬币实验的一个例子。
 
-![](http://ww1.sinaimg.cn/mw690/6bf0a364ly1g3x1kv0o7fj20j10dt79h.jpg)
-
 $E$ (Evidence）: 我们已经观察到的结果
 
-$A$ : 选择A硬币 
+$A$ : 选择A硬币
 
 $\bar{A}$ ：选择B硬币
 
@@ -204,6 +193,7 @@ $P(A)$和$P(\bar{A})$ 这里假设相等，为 0.5，选A选B是随机。
 ## 附录
 
 图1代码：
+
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -236,15 +226,9 @@ plt.legend()
 plt.show()
 ```
 
-
-
 ## 为什么使用loglikelihood?
+
 参看图片[^4]
-
-![](http://ww1.sinaimg.cn/mw690/6bf0a364ly1g4lbkgqm6cj20k907xjrm.jpg)
-
-
 [^1]: 清华大学 公开课《数据挖掘：理论与算法》
 [^3 ]: 徐亦达机器学习：Expectation Maximization EM算法 【2015年版-全集】
-[^4]:https://www.cnblogs.com/en-heng/p/5994192.html
->>>>>>> 3229282e84c92b5aa47b4cadfa32aecf717c6c3a
+[^4]:<https://www.cnblogs.com/en-heng/p/5994192.html>

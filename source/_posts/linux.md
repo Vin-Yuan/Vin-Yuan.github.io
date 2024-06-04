@@ -32,6 +32,7 @@ echo ${#str}
 <!-- more -->
 
 ### 将command结果存入数组(不受空格影响)
+
 <https://stackoverflow.com/questions/11426529/reading-output-of-a-command-into-an-array-in-bash>
 The other answers will break if output of command contains spaces (which is rather frequent) or glob characters like *, ?, [...].
 
@@ -70,6 +71,7 @@ echo "$IFS" | od -b
 ```
 
 ### set命令
+
 <http://www.ruanyifeng.com/blog/2017/11/bash-set.html>
 
 ```shell
@@ -156,6 +158,7 @@ done
 ## 分割文件
 
 ### Split文件
+
 <https://www.cnblogs.com/OliverQin/p/10240222.html>
 
 ```
@@ -227,6 +230,7 @@ numRows=`cat file.txt | grep "numRows" | tr -cd [0-9]`
 echo -e 可以输出'\t
 
 #### 打印一条线
+
 <https://blog.csdn.net/u013670453/article/details/113462422>
 
 ```
@@ -262,12 +266,15 @@ head -n 1000：显示前面1000行
  -n, --quiet, --silent: suppress automatic printing of pattern space
 
 ### linux sort,uniq,cut,wc命令详解
+
 <https://www.cnblogs.com/ggjucheng/archive/2013/01/13/2858385.html>)
 
 #### cut
+
 <https://www.cnblogs.com/f-ck-need-u/p/7521357.html>
 
 #### sort
+
 <https://www.cnblogs.com/ding2016/p/9668425.html>
 sort可以对行进行排序，包括按数字，以及按照split后某一列排序等
 常见一种情况，例如目录有如下文件：
@@ -420,6 +427,7 @@ grep -rn --include='*.sh' "kill command"
 ```
 
 ### 比较两个文件夹内容
+
 <https://www.tecmint.com/compare-find-difference-between-two-directories-in-linux/>
 
 ```
@@ -437,6 +445,7 @@ vimdiff <(sed -n '7088,7122p' /user/vinyuan/a.txt) <(sed -n '9022,9043p' /user/v
 ```
 
 ### 文件名称替换
+
 <https://www.cnblogs.com/xiaomai333/p/9760304.html>
 
 ```bash
@@ -538,9 +547,11 @@ echo ${stringZ%%b*c}     # a
 |`${string/%substring/replacement}` |如果`$string`的后缀匹配`$substring`, 那么就用`$replacement`来代替匹配到的`$substring`|
 
 ### sed
+
 <https://www.cnblogs.com/zhangzongjian/p/10708222.html>
 
 #### 先检索指定位置，然后替换（非全局替换）
+
 <https://www.golinuxhub.com/2017/09/sed-perform-search-and-replace-only-on/>
 
 ```
@@ -1060,6 +1071,7 @@ syntax on
 ```
 
 ### vim & vi 配置
+
 <https://www.dazhuanlan.com/2019/10/02/5d94884599d6c/>
 
 在vimrc中加入:
@@ -1118,6 +1130,7 @@ hi CursorLine term=bold cterm=bold ctermbg=237
 ```
 
 ### 空格替换tab
+
 <https://blog.csdn.net/jiang1013nan/article/details/6298727>
 在.vimrc中添加以下代码后，重启vim即可实现按TAB产生4个空格：
 
@@ -1361,6 +1374,7 @@ init─┬─Xvnc
 而使用了 screen 后就不同了，此时 bash 是 screen 的子进程，而 screen 是 init（PID为1）的子进程。那么当 ssh 断开连接时，HUP 信号自然不会影响到 screen 下面的子进程了。
 
 ## TOP 命令
+
 <https://www.binarytides.com/linux-top-command/>
 <https://www.zhihu.com/question/378345922/answer/1069674567>
 
@@ -1491,9 +1505,11 @@ fi
 ```
 
 ### if 条件判断大括号，中括号，圆括号
+
 <https://www.jianshu.com/p/3e1eaaa3fee8>
 
 ### 判断文件、文件夹是否存在
+
 <https://www.cnblogs.com/emanlee/p/3583769.html>
 
 ```
@@ -1549,6 +1565,7 @@ find /etc -iname "*.service" 2> /dev/null
 ```
 
 ## 重定向与文件操作符
+
 <https://www.zhihu.com/question/53295083/answer/135258024>
 
 ```
@@ -1559,6 +1576,7 @@ cmd > output.txt 2>&1
 cmd &> output.txt
 cmd >& output.txt  # 两个表达式效果一样哒~
 ```
+
 <https://zhuanlan.zhihu.com/p/58419951>
 find /etc -iname "*.service" 2>&1 1>services.txt
 这是因为 Bash 从左到右处理 find 的每个结果。这样想：当 Bash 到达 2>&1 时，stdout （1）仍然是指向终端的通道。如果 find 给 Bash 的结果包含一个错误，它将被弹出到 2，转移到 1，然后留在终端！
@@ -1642,3 +1660,48 @@ done < file.txt
 （3）||分隔符：前后命令有逻辑关联，与&&相反，前面的命令执行失败后才能执行后面的命令。
 
   [3]: <https://blog.csdn.net/cooperdoctor/article/details/84333686>"
+
+## selenium
+
+```python
+from selenium import webdriver
+import selenium
+import time
+import sys
+
+
+
+def auto_check():
+ 
+ driverOptions = webdriver.ChromeOptions()
+ driverOptions.add_argument(r"user-data-dir=C:\Users\yuanwenwu3\AppData\Local\Google\Chrome\User Data")
+ driverOptions.add_argument("--log-level=3")
+ driver = webdriver.Chrome("chromedriver",0,driverOptions)
+ 
+ '''
+ ProfilesIni allProfiles = new ProfilesIni();
+    FirefoxProfile profile = allProfiles.getProfile("default"); 
+    WebDriever driver  = new FirefoxDriver(profile)
+ '''
+
+
+ #driver.get("http://erp.jd.com/portal/navMenu/subPage?menuId=50570")
+
+ #driver.find_element_by_css_selector("#subDiv > div.aside > div.jquery-accordion-menu.jdskin > div > ul > li:nth-child(5) > a").click()
+
+ driver.get("http://kaoqin.jd.com/")
+
+ time.sleep(3)
+
+ try:
+  driver.find_element_by_css_selector("body > div > div > div > div.login_pop_inner.login_withpc.eye-protector-processed > form > div.login_form_row.formsubmit > input").click()
+  driver.find_element_by_css_selector("#clockIn").click()
+ except selenium.common.exceptions.NoSuchElementException as e:
+  driver.find_element_by_css_selector("#clockIn").click()
+
+ time.sleep(3) 
+
+if __name__ == '__main__':
+ auto_check()
+
+```

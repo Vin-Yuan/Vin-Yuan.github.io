@@ -15,6 +15,7 @@ tags:
 &emsp;pyplot负责绘制图像，修饰图像figure。此处应强调的是，其保持matlab的风格，总是跟踪当前figure,绘制函数直接指向当前axes.
 &emsp;figure()函数负责创建一个图像，默认不用调用此函数，并且一个subplot(111)也会默认被创建如果不手动指定axes的话。figure(i)创建标号为i的figure
 
+<!-- more -->
 ### 结构知识
 
 [plt, axes, figure之间的关系](https://zhuanlan.zhihu.com/p/93423829)
@@ -27,6 +28,7 @@ tags:
 <https://blog.csdn.net/You_are_my_dream/article/details/53439518>
 dataFrame绘制在子图上
 <https://blog.csdn.net/htuhxf/article/details/82986440?spm=1001.2014.3001.5502>
+
 
 ```python
 fig, ax = plt.subplots(figsize=(10,10))
