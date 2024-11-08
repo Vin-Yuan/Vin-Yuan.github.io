@@ -3,7 +3,7 @@ title: hexoNote
 mathjax: true
 date: 2024-02-20 12:44:32
 categories:
-tags:
+tags: hexo
 ---
 
 ## 常用hexo 命令
@@ -34,11 +34,28 @@ hexo --debug
 hexo generate
 ```
 
+## clone whole repository in a new machine
+
+<https://iphysresearch.github.io/blog/post/programing/git/git_submodule/>
+since there is submodule in main repository ( the theme/next)
+
+```shell
+git clone xxxx (main repository)
+git submodule init # 初始化子模块
+git submodule update # 更新子模块
+npm install
+hexo generate or hexo s
+```
+
 <https://hexo.io/zh-cn/docs/commands.html>
 
-## 参考链接
 <!-- more -->
-整体配置： <https://learnku.com/articles/45697>
-latex:  <https://www.jianshu.com/p/d95a4795f3a8?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation>
+## 参考链接
+
+整体配置：<https://learnku.com/articles/45697>
+
+latex: (<https://www.jianshu.com/p/d95a4795f3a8?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation>)
+
 hexo: <https://github.com/next-theme/hexo-theme-next>
-hexo post settings:  <https://theme-next.js.org/docs/theme-settings/posts>
+
+hexo post settings: <https://theme-next.js.org/docs/theme-settings/posts>
