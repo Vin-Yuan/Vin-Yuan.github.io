@@ -59,3 +59,14 @@ latex: (<https://www.jianshu.com/p/d95a4795f3a8?utm_campaign=maleskine&utm_conte
 hexo: <https://github.com/next-theme/hexo-theme-next>
 
 hexo post settings: <https://theme-next.js.org/docs/theme-settings/posts>
+
+
+## Q&A
+hexo generate编译出错记录
+markdown 文件有不合法的link, 比如:
+```python
+感叹号+[柏松分部 统计出现车辆数](https://newonlinecourses.science.psu.edu/stat414/sites/onlinecourses.science.psu.edu.stat414/files/lesson52/147882_traffic/index.jpg)
+[1]. <https://newonlinecourses.science.psu.edu/stat414/node/241/>
+大概率是大括号的问题
+<200b>符号
+```
