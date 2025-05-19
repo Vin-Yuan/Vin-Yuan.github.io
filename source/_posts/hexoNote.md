@@ -23,7 +23,7 @@ hexo d -g # 生成并上传
 ```
 ## 预览部分文字
 
-Use < !-- more -- > in your article to break your article manually, which is recommended by Hexo.
+< !-- more -- > in your article to break your article manually, which is recommended by Hexo.
 
 ## 遇到hexo generation 出错处理
 
