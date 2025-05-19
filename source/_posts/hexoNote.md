@@ -7,19 +7,20 @@ tags: hexo
 ---
 
 ## 常用hexo 命令
-
+```
 hexo new xxx ==> hexo n xxx, #新建文章
 hexo generate ==> hexo g,  #生成静态页面至public目录
 hexo server ==> hexo s,  #开启预览访问端口
 hexo deploy ==> hexo d,  #部署到GitHub
 hexo help  #查看帮助
 hexo version  #查看Hexo的版本
+```
 
 ## 组合命令
-
+```
 hexo s -g # 生成本地预览
 hexo d -g # 生成并上传
-
+```
 ## 预览部分文字
 
 Use < !-- more -- > in your article to break your article manually, which is recommended by Hexo.
