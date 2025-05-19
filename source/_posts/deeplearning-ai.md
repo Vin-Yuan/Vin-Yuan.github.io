@@ -395,7 +395,7 @@ $x^{(i)}_j := x^{(i)}_j - \mu^{(i)}$, for all $\textstyle j$
 
 $2^{k-1}$
 
-```
+```c++
 
 class Point
 {

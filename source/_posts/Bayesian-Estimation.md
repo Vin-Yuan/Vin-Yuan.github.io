@@ -30,7 +30,7 @@ $$ P( \textrm {k  events in interval}) = e^{-r}\frac{\lambda^k}{k!} $$
 
 $\lambda = E(X) = Var(X)$
 
-如果交通控制工程师认为通过这一区域平均数（mean rate) $\lambda$ 为3 或5。工程师在收集数据之前可能认为$\lambda = 3$ 比 $\lambda = 5$ 更可能发生先于（这是一个先验知识），先验概率是：
+如果交通控制工程师认为通过这一区域平均数mean rate $\lambda$ 为3 或5。工程师在收集数据之前可能认为$\lambda = 3$ 比 $\lambda = 5$ 更可能发生先于（这是一个先验知识），先验概率是：
 
 $P(\lambda = 3) = 0.7$ 和 $P(\lambda = 5) = 0.3$
 
@@ -50,7 +50,7 @@ $P(X=7|\lambda=3)=0.988-0.966=0.022$  和
 
 $P(X=7|\lambda=5)=0.867-0.762=0.105$
 
-最后计算得到目标后验概率（**posterior probability**)：
+最后计算得到目标后验概率 **posterior probability**：
 
 $P(\lambda=3 | X=7)=\frac{(0.7)(0.022)}{(0.7)(0.022)+(0.3)(0.105)}=\frac{0.0154}{0.0154+0.0315}=0.328 $
 
