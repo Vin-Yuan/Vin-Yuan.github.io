@@ -1,5 +1,5 @@
 ---
-title: Pytorch
+title: Pytorch常用例子
 mathjax: true
 date: 2025-02-19 18:34:58
 categories:
