@@ -23,6 +23,8 @@ $$
   
 [![LayerNomr](https://docs.pytorch.org/docs/stable/_images/layer_norm.jpg)](https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html)
 
+<!-- more -->
+
 对于这两个偏移参数如何更新，探究了一下底层实现
 ```python
 import torch
