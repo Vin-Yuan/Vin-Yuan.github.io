@@ -32,4 +32,6 @@ hexo clean && hexo generate && hexo deploy
 ### can't git add
 when use git add .
 fatal: CRLF would be replaced by LF in source/_posts/hexoNote.md
+```
 git config --global core.safecrlf false
+```
