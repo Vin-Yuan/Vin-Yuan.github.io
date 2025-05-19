@@ -6,6 +6,8 @@ access url: https://vin-yuan.github.io/
 git clone xxxx (main repository)
 git submodule init # 初始化子模块
 git submodule update # 更新子模块
+or
+git clone --recurse-submodules (main repository)
 npm install
 hexo generate or hexo s
 #调试的时候遇到问题，可以安装pandoc, https://pandoc.org/installing.html
