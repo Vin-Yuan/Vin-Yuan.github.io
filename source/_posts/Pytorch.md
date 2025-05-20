@@ -15,6 +15,8 @@ import torch
 torch.zeros(3, 4)           # shape=(3, 4)
 torch.ones(2, 3)
 torch.full((2, 2), 7.0)
+x = torch.randn(10,8,4)
+y = torch.ones_like(x)   # 复制shape
 
 # 2. 随机数据
 torch.randn(5, 10)          # 标准正态分布 N(0,1)
