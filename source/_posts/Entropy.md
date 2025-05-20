@@ -163,5 +163,59 @@ $$
 $$
 这个结果与通过最大似然估计方法求出来的结果一致。
 
+## 关于pytorch里面的交叉熵损失函数
+参照：https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.cross_entropy.html#torch.nn.functional.cross_entropy
+里面提到input:
+$(C), (N,C) or (N,C,d_1,d_2,...,d_K) with K \geq 1$
+这一点点理解：
+```python
+import torch
+import torch.nn as nn
+
+# Example parameters
+batch_size = 2
+seq_len = 5
+vocab_size = 10
+
+# Dummy logits from model (random example)
+logits = torch.randn(batch_size, seq_len, vocab_size)  # (N, T, V)
+
+# Dummy target: token indices (should be in 0 to vocab_size-1)
+target = torch.randint(0, vocab_size, (batch_size, seq_len))  # (N, T)
+
+# Reshape for CrossEntropyLoss:
+# CrossEntropyLoss expects input shape (N, C) and target shape (N),
+# so we flatten batch and time dimensions.
+logits_flat = logits.view(-1, vocab_size)  # (N*T, V)
+target_flat = target.view(-1)              # (N*T,)
+
+# Define loss
+loss_fn = nn.CrossEntropyLoss()
+loss = loss_fn(logits_flat, target_flat)
+
+print("Loss:", loss.item())
+
+```
+Cross_Entropy函数输入和target主要分几种情况
+
+1.Standard 2D Case (Common Case):
+For classification with a batch of inputs, the usual input and target shapes are:
+input (logits): shape (N, C)
+N: batch size
+C: number of classes
+target: shape (N,) with class indices in [0, C-1]
+
+2.K-dimensional Case (Higher-Dimensional Inputs):
+If the input has more dimensions, e.g.:
+input: shape (N, C, d1, d2, ..., dK)
+target: shape (N, d1, d2, ..., dK)
+
+Then you're doing per-pixel or per-position classification. For example:
+
+In semantic segmentation, each pixel in an image gets a class label.
+In sequence tasks, each time step or token might get a label.
+This is called the K-dimensional case (K ≥ 1), because there are K extra dimensions after the class dimension C.
+
+
 [1]: http://blog.csdn.net/lanchunhui/article/details/50970625
 [2]: https://blog.csdn.net/rtygbwwwerr/article/details/50778098
