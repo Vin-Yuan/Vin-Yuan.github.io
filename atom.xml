@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Vin&#39;s Blog</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+<<<<<<< HEAD
+  <updated>2018-05-10T10:38:11.695Z</updated>
+=======
+  <updated>2019-01-19T07:24:17.700Z</updated>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+<<<<<<< HEAD
+=======
+    <title>Bayesian Estimation</title>
+    <link href="http://yoursite.com/2019/01/18/Bayesian-Estimation/"/>
+    <id>http://yoursite.com/2019/01/18/Bayesian-Estimation/</id>
+    <published>2019-01-18T06:00:00.000Z</published>
+    <updated>2019-01-19T07:24:17.700Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Bayesian-Estimation"><a href="#Bayesian-Estimation" class="headerlink" title="Bayesian Estimation"></a>Bayesian Estimation</h1><p>频率派和贝叶斯派对于参数$\theta$ 的态度区别是：</p><p>频率派：$\theta​$ 是一个未知的常量</p><p>贝叶斯派：$\theta$ 是一个随机变量</p><p>贝叶斯估计通过一个example引入：</p><p><img src="https://newonlinecourses.science.psu.edu/stat414/sites/onlinecourses.science.psu.edu.stat414/files/lesson52/147882_traffic/index.jpg" alt="柏松分部 统计出现车辆数"></p><p>考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。</p><p>如果交通控制工程师认为通过这一区域平均数（mean rate) $\lambda$ 为3 或5。工程师在收集数据之前可能认为$\lambda = 3$ 比 $\lambda = 5$ 更可能发生先于（这是一个先验知识），先验概率是：</p><p>$P(\lambda = 3) = 0.7​$ 和 $P(\lambda = 5) = 0.3​$</p><p>莫一天，工程师在随机的一个时段T观察到$x = 7$ 辆车通过指定区域。<strong>在这个观察结果下</strong>（即条件概率下），$\lambda = 3$ 和 $\lambda = 5$ 的概率是多少？</p><p>通过条件概率我们知道：</p><p> $P(\lambda=3 | X=7) = \frac{P(\lambda=3, X=7)}{P(X=7)}$ </p><p>贝叶斯展开如下：</p><p>$P(\lambda=3 | X=7) = \frac{P(\lambda=3)P(X=7| \lambda=3)}{P(\lambda=3)P(X=7| \lambda=3)+P(\lambda=5)P(X=7| \lambda=5)}$</p><p>通过查询Possion累计分布函数，得到如下结果：</p><p>$P(X=7|\lambda=3)=0.988-0.966=0.022$ 和 $P(X=7|\lambda=5)=0.867-0.762=0.105$</p><p>最后计算得到目标后验概率（<strong>posterior probability</strong>)：</p><p>$P(\lambda=3 | X=7)=\frac{(0.7)(0.022)}{(0.7)(0.022)+(0.3)(0.105)}=\frac{0.0154}{0.0154+0.0315}=0.328 $</p><p>同样得到：</p><p>$P(\lambda=5 | X=7)=\frac{(0.3)(0.105)}{(0.7)(0.022)+(0.3)(0.105)}=\frac{0.0315}{0.0154+0.0315}=0.672$</p><p>对比上面的$P(\lambda = 3) = 0.7​$  和 $P(\lambda = 5) = 0.3​$ 我们发现，贝叶斯估计“修正“了先验知识，平均出现5辆的可能性更大。</p><p>上面我们关于$p(\lambda) = \widehat{\lambda}$ 的假设就是先验概率$p(\theta)$ , 在这个问题中 $\theta$ 被当作变量来看待，$p(\theta)$是一个关于变量$\theta $ 的p.m.f（离散概率）。$p(\theta) * p(D|\theta) = p(X, \theta)$ ，这是一个联合一个关于变量 $\theta$ 和 $X$ 的joint p.d.f（联合概率分布），通过对$\theta$ 积分，我们可以获取$X$ 的概率分布：</p><p>$p(x)=\int_{-\infty}^{\infty}p(y,\theta)d\theta=\int_{-\infty}^{\infty}p(y|\theta)p(\theta)d\theta​$</p><p>通过Bayes’s theorem我们可以得到$\theta​$的后验概率：</p><p>$p(\theta|y)=\frac{p(y, \theta)}{p(y)}=\frac{p(y|\theta)p(\theta)}{p(y)}$</p><p>参考文献：</p><p>[1]. <a href="https://newonlinecourses.science.psu.edu/stat414/node/241/" target="_blank" rel="noopener">https://newonlinecourses.science.psu.edu/stat414/node/241/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Bayesian-Estimation&quot;&gt;&lt;a href=&quot;#Bayesian-Estimation&quot; class=&quot;headerlink&quot; title=&quot;Bayesian Estimation&quot;&gt;&lt;/a&gt;Bayesian Estimation&lt;/h1&gt;&lt;p&gt;频率
+      
+    
+    </summary>
+    
+      <category term="概率论" scheme="http://yoursite.com/categories/%E6%A6%82%E7%8E%87%E8%AE%BA/"/>
+    
+    
+      <category term="机器学习 数学" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
+    <title>Entropy</title>
+    <link href="http://yoursite.com/2018/05/10/Entropy/"/>
+    <id>http://yoursite.com/2018/05/10/Entropy/</id>
+    <published>2018-05-10T09:15:21.000Z</published>
+<<<<<<< HEAD
+    <updated>2018-05-10T10:38:11.695Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Cross-Entropy"><a href="#Cross-Entropy" class="headerlink" title="Cross Entropy"></a>Cross Entropy</h1><h2 id="H-y-i-sum-i-y-ilog-frac-1-y-i-sum-iy-ilog-y-i"><a href="#H-y-i-sum-i-y-ilog-frac-1-y-i-sum-iy-ilog-y-i" class="headerlink" title="$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$"></a>$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$</h2><p>例子：现在有两枚硬币，抛出有四种情况，正正、正负、负正、负负。如果用熵来计算需要几为表示信息的话，计算如下：</p><ul><li>2进制<br>$H(y_i) = 4.({\frac{1}{4}.log_24}) = 2$，即00，01，10，11就可表示</li><li>4进制<br>$H(y_i) = 4.({\frac{1}{4}.log_44}) = 1$，即1，2，3，4就可表示</li></ul><p><a href="http://blog.csdn.net/lanchunhui/article/details/50970625" target="_blank" rel="noopener">交叉熵代价函数</a></p><p>交叉熵理论</p><p>交叉熵与熵相对，如同协方差与方差。</p><p>熵考察的是单个的信息（分布）的期望：</p><p>$H(p)=-\sum_{i=1}^n p(x_i)\log p(x_i)$<br>交叉熵考察的是两个的信息（分布）的期望： </p><p>$H(p,q)=-\sum_{i=1}^np(x_i)\log q(x_i)$</p><p>详见 wiki Cross entropy<br>交叉熵代价函数</p><p>$L_H(\mathbf x,\mathbf z)=-\sum_{k=1}^dx_k\log z_k+(1-x_k)\log(1-z_k)$</p><p>x 表示原始信号，z 表示重构信号，以向量形式表示长度均为 d，又可轻易地将其改造为向量内积的形式。<br>神经网络中的交叉熵代价函数</p><p>为神经网络引入交叉熵代价函数，是为了弥补 sigmoid 型函数的导数形式易发生饱和（saturate，梯度更新的较慢）的缺陷。</p><p>首先来看平方误差函数（squared-loss function），对于一个神经元（单输入单输出），定义其代价函数： </p><p>$C=(a−y)22$</p><p>其中 a=σ(z),z=wx+b，然后根据对权值（w）和偏置（b）的偏导（为说明问题的需要，不妨将 x=1,y=0）：<br>$∂C∂w=(a−y)σ′(z)x=aσ′(z)∂C∂b=(a−y)σ′(z)=aσ′(z)$<br>根据偏导计算权值和偏置的更新： </p><p>$w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)$<br>无论如何简化，sigmoid 型函数的导数形式 σ′(z) 始终阴魂不散，上文说了 σ′(z) 较容易达到饱和，这会严重降低参数更新的效率。</p><p>为了解决参数更新效率下降这一问题，我们使用交叉熵代价函数替换传统的平方误差函数。</p><p>对于多输入单输出的神经元结构而言，如下图所示： </p><p>这里写图片描述<br>我们将其损失函数定义为： </p><p>C=−1n∑xylna+(1−y)ln(1−a)</p><p>其中 a=σ(z),z=∑jwjxj+b<br>最终求导得： </p><p>∂C∂w=1n∑xxj(σ(z)−y)∂C∂b=1n∑x(σ(z)−y)<br>就避免了 σ′(z) 参与参数更新、影响更新效率的问题；</p>]]></content>
+=======
+    <updated>2019-01-19T02:22:54.958Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Cross-Entropy"><a href="#Cross-Entropy" class="headerlink" title="Cross Entropy"></a>Cross Entropy</h1><h2 id="H-y-i-sum-i-y-ilog-frac-1-y-i-sum-iy-ilog-y-i"><a href="#H-y-i-sum-i-y-ilog-frac-1-y-i-sum-iy-ilog-y-i" class="headerlink" title="$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$"></a>$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$</h2><p>例子：现在有两枚硬币，抛出有四种情况，正正、正负、负正、负负。如果用熵来计算需要几为表示信息的话，计算如下：</p><ul><li>2进制<br>$H(y_i) = 4.({\frac{1}{4}.log_24}) = 2$，即00，01，10，11就可表示</li><li>4进制<br>$H(y_i) = 4.({\frac{1}{4}.log_44}) = 1$，即1，2，3，4就可表示</li></ul><p><a href="http://blog.csdn.net/lanchunhui/article/details/50970625" target="_blank" rel="noopener">交叉熵代价函数</a></p><p>交叉熵理论</p><p>交叉熵与熵相对，如同协方差与方差。</p><p>熵考察的是单个的信息（分布）的期望：</p><p>$H(p)=-\sum_{i=1}^n p(x_i)\log p(x_i)$<br>交叉熵考察的是两个的信息（分布）的期望： </p><p>$H(p,q)=-\sum_{i=1}^np(x_i)\log q(x_i)$</p><p>详见 wiki Cross entropy<br>交叉熵代价函数</p><p>$L_H(\mathbf x,\mathbf z)=-\sum_{k=1}^dx_k\log z_k+(1-x_k)\log(1-z_k)$</p><p>x 表示原始信号，z 表示重构信号，以向量形式表示长度均为 d，又可轻易地将其改造为向量内积的形式。<br>神经网络中的交叉熵代价函数</p><p>为神经网络引入交叉熵代价函数，是为了弥补 sigmoid 型函数的导数形式易发生饱和（saturate，梯度更新的较慢）的缺陷。</p><p>首先来看平方误差函数（squared-loss function），对于一个神经元（单输入单输出），定义其代价函数： </p><p>$C=(a−y)22$</p><p>其中 a=σ(z),z=wx+b，然后根据对权值（w）和偏置（b）的偏导（为说明问题的需要，不妨将 x=1,y=0）：<br>$∂C∂w=(a−y)σ′(z)x=aσ′(z)∂C∂b=(a−y)σ′(z)=aσ′(z)$<br>根据偏导计算权值和偏置的更新： </p><p>$w=w−η∂C∂w=w−ηaσ′(z)b=b−η∂C∂b=b−ηaσ′(z)​$<br>无论如何简化，sigmoid 型函数的导数形式 σ′(z) 始终阴魂不散，上文说了 σ′(z) 较容易达到饱和，这会严重降低参数更新的效率。</p><p>为了解决参数更新效率下降这一问题，我们使用交叉熵代价函数替换传统的平方误差函数。</p><p>对于多输入单输出的神经元结构而言，如下图所示： </p><p>这里写图片描述<br>我们将其损失函数定义为： </p><p>$C=-\frac1n\sum_xy\ln a+(1-y)\ln(1-a)​$</p><p>其中 $a=\sigma(z),\;z=\sum_jw_jx_j+b$<br>最终求导得： </p><p>$\frac{\partial\,C}{\partial\,w}=\frac1n\sum_xx_j(\sigma(z)-y)\ \frac{\partial\,C}{\partial\,b}=\frac1n\sum_x(\sigma(z)-y)$<br>就避免了 σ′(z) 参与参数更新、影响更新效率的问题；</p>]]></content>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Cross-Entropy&quot;&gt;&lt;a href=&quot;#Cross-Entropy&quot; class=&quot;headerlink&quot; title=&quot;Cross Entropy&quot;&gt;&lt;/a&gt;Cross Entropy&lt;/h1&gt;&lt;h2 id=&quot;H-y-i-sum-i-y-ilog-fr
+      
+    
+    </summary>
+    
+    
+      <category term="机器学习 数学" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>First Blog</title>
+    <link href="http://yoursite.com/2018/05/10/First-Blog/"/>
+    <id>http://yoursite.com/2018/05/10/First-Blog/</id>
+    <published>2018-05-10T06:44:24.000Z</published>
+<<<<<<< HEAD
+    <updated>2018-05-10T06:44:24.598Z</updated>
+=======
+    <updated>2019-01-19T02:17:34.339Z</updated>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+<<<<<<< HEAD
+    <link href="http://yoursite.com/2018/05/09/hello-world/"/>
+    <id>http://yoursite.com/2018/05/09/hello-world/</id>
+    <published>2018-05-09T03:36:04.714Z</published>
+    <updated>2018-05-09T03:36:04.714Z</updated>
+=======
+    <link href="http://yoursite.com/2018/05/10/hello-world/"/>
+    <id>http://yoursite.com/2018/05/10/hello-world/</id>
+    <published>2018-05-10T06:44:24.000Z</published>
+    <updated>2019-01-19T05:11:26.327Z</updated>
+>>>>>>> 88963a219837e23af7f73d437425c0ea39448ec4
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
