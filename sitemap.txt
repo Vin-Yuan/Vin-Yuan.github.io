@@ -1,4 +1,3 @@
-http://yoursite.com/2025/05/21/GPT/
 http://yoursite.com/2018/05/10/Entropy/
 http://yoursite.com/2025/05/19/Normlization/
 http://yoursite.com/2025/02/19/Pytorch/

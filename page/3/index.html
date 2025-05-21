@@ -150,103 +150,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/20/evaluation-index/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vin's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/20/evaluation-index/" class="post-title-link" itemprop="url">机器学习评价指标</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-07-20 13:40:09" itemprop="dateCreated datePublished" datetime="2019-07-20T13:40:09+08:00">2019-07-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-19 21:38:29" itemprop="dateModified" datetime="2025-05-19T21:38:29+08:00">2025-05-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine_learning</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg" alt=""><br>以下术语可以参照图<sup><a href="#fn_1" id="reffn_1">1</a></sup>，一目了然：</p>
-<ul>
-<li>Precision(查准率):  $\text{Precision} = \frac{TP}{TP+FP}$</li>
-<li>Recall(查全率):  $\text{Recall} = \frac{TP}{TP+FN} = \text{TPR}$</li>
-<li>AUC : area under curve</li>
-<li>ROC : receiver operating characteristic (<strong>TPR</strong> vs FPR)<ul>
-<li>$TPR = \frac{TP}{TP+FN}$ 图[1] 左半部分</li>
-<li>$FPR=\frac{FP}{FP+TN}$ 图[1]右半部分</li>
-<li>$TNR = 1-FPR = \frac{TN}{TN+FP}$</li>
-</ul>
-</li>
-<li>PR: precision vs recall</li>
-</ul>
-<p>如果有人和你说他的model 准确率有91%，那你最好问一下他recall多少！</p>
-<p>查全率的大小也是一个很重要的指标，如果一个分类器准确率很高查全率却很低的是没有意义的。</p>
-<p>例如你有一个行人识别的分类器，来了50个object，你将10个识别为行人，而ground truth中这10个也确定是行人，从准确率来说你会觉得很赞，100%耶:smile:。但是，实际情况是这50个都是行人，如果这是一个自动驾驶的识别系统的话，:scream:那就很糟糕了。形成这样的原因很可能是模型过拟合了。</p>
-<p>往往对于一个问题我们的关注点不同，侧重的指标也就不同。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/20/evaluation-index/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/19/HMM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1009,6 +912,80 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/28/CSE599G1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/28/CSE599G1/" class="post-title-link" itemprop="url">CSE599G1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-28 16:02:42" itemprop="dateCreated datePublished" datetime="2019-03-28T16:02:42+08:00">2019-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-19 21:38:29" itemprop="dateModified" datetime="2025-05-19T21:38:29+08:00">2025-05-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="lecture-1"><a href="#lecture-1" class="headerlink" title="lecture 1"></a>lecture 1</h1><p>在多层神经网络里，大多会有梯度消失和梯度爆炸的现象，如下图：</p>
+<p>设想当所有$W$都相同的时候，输入数据 $x$ 在$W &gt; 1$ ，$W &lt; 1$ 会指数级别的变化，导致输入数据被“稀释”or“膨胀”，对于激活函数来说，无论是Sigmoid、tanh 在$x$特别大和特别小的时候梯度会变为0。</p>
+<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1ikl4ph78j20w50e5my0.jpg" alt=""></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/28/CSE599G1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1078,7 +1055,7 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
