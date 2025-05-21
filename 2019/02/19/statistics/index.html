@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.期望李航统计与机器学习书中理论模型中的风险函数 (risk function)定义如下，代表一种理想情况下计算误差代价的方法。 ​              $R{exp}(f) &#x3D; E[Y, L(X)] &#x3D; \sum{X,Y}L(y, f(x))P(x, y) &#x3D; \int_{X,Y}L(y,f(x))P(x,y)dxdy$ 而在4.1.2 章后验概率最大化的地方有个公式： ​">
+<meta property="og:type" content="article">
+<meta property="og:title" content="statistics">
+<meta property="og:url" content="http://yoursite.com/2019/02/19/statistics/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="1.期望李航统计与机器学习书中理论模型中的风险函数 (risk function)定义如下，代表一种理想情况下计算误差代价的方法。 ​              $R{exp}(f) &#x3D; E[Y, L(X)] &#x3D; \sum{X,Y}L(y, f(x))P(x, y) &#x3D; \int_{X,Y}L(y,f(x))P(x,y)dxdy$ 而在4.1.2 章后验概率最大化的地方有个公式： ​">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://upload.wikimedia.org/math/5/5/7/5570b43693f45e8bba75ba5702a8fea5.png">
+<meta property="og:image" content="http://upload.wikimedia.org/math/5/5/7/5570b43693f45e8bba75ba5702a8fea5.png">
+<meta property="og:image" content="http://upload.wikimedia.org/math/b/0/5/b05d66203821b091ba1ea862fe8ee898.png">
+<meta property="article:published_time" content="2019-02-19T04:22:07.000Z">
+<meta property="article:modified_time" content="2025-05-19T13:38:29.896Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="statistic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload.wikimedia.org/math/5/5/7/5570b43693f45e8bba75ba5702a8fea5.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/02/19/statistics/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>statistics | Vin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/statistics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          statistics
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-19 12:22:07" itemprop="dateCreated datePublished" datetime="2019-02-19T12:22:07+08:00">2019-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-19 21:38:29" itemprop="dateModified" datetime="2025-05-19T21:38:29+08:00">2025-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/statistic/" itemprop="url" rel="index"><span itemprop="name">statistic</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-期望"><a href="#1-期望" class="headerlink" title="1.期望"></a>1.期望</h2><p>李航统计与机器学习书中理论模型中的风险函数 (risk function)定义如下，代表一种理想情况下计算误差代价的方法。</p>
+<p>​              $R<em>{exp}(f) = E[Y, L(X)] = \sum</em>{X,Y}L(y, f(x))P(x, y) = \int_{X,Y}L(y,f(x))P(x,y)dxdy$</p>
+<p>而在4.1.2 章后验概率最大化的地方有个公式：</p>
+<p>​               $R<em>{exp}(f) = E_x \sum</em>{i=1}^K[L(c_k, f(X))]P(c_k|X)$</p>
+<p>初看比较费解，怎么变成条件概率了？</p>
+<span id="more"></span>
+<p>其实这个公式要从多重积分的角度考虑就明显了，相当于：</p>
+<p>​                             $\int_X[\int_Y f(x,y)p(x,y)dy]dx$.</p>
+<p>在对$y$积分的时候，$x$相当于一个常量，从这一角度考虑，正好就是 $p(y|x)$ ，即一个条件概率形式。</p>
+<h2 id="2-Estimator-估计量"><a href="#2-Estimator-估计量" class="headerlink" title="2.Estimator 估计量"></a>2.Estimator 估计量</h2><p> a function of the data that is used to infer the value of an unknown parameter in a statistical model,can be writed like $\hat{\theta}(X)$.”估计量”是样本空间映射到样本估计值的一个函数 (Then an estimator is a function that maps the sample space to a set of sample estimates.)估计量用来估计未知总体的参数，它有时也被称为估计子；一次估计是指把这个函数应用在一组已知的数据集上，求函数的结果。对于给定的参数，可以有许多不同的估计量。</p>
+<h3 id="Estimand"><a href="#Estimand" class="headerlink" title="Estimand"></a>Estimand</h3><p> The parameter being estimated,like $\theta$.<br> Estimate: a particular realization of this random variable $\hat{\theta}(X)$  is called the “estimate”,like $\hat{\theta}(x)$.</p>
+<p>Bias: The bias of $\widehat{\theta}$ is defined as <script type="math/tex">B(\widehat{ \theta }) = \operatorname{ E }(\widehat{ \theta }) - \theta</script>.<br>It is the distance between the average of the collection of estimates, and the single parameter being estimated. It also is the expected value of the error, since</p>
+<script type="math/tex; mode=display">\operatorname{E}(\widehat{\theta}) - \theta = \operatorname{E}(\widehat{ \theta } - \theta)</script><p>The estimator $\widehat{\theta}$ is an unbiased estimator of  $\theta$  if and only if $B(\widehat{ \theta }) = 0$.<em>example</em>: If the parameter is the bull’s-eye of a target, and the arrows are estimates, then a relatively high absolute value for the bias means the average position of the arrows is off-target, and a relatively low absolute bias means the average position of the arrows is on target. They may be dispersed, or may be clustered.</p>
+<h3 id="Variance-方差"><a href="#Variance-方差" class="headerlink" title="Variance(方差)"></a>Variance(方差)</h3><p> The variance of $\widehat{\theta}$ is simply the expected value of the squared sampling deviations; that is, <script type="math/tex">\operatorname{var}(\widehat{ \theta }) = \operatorname{E}[(\widehat{ \theta } - \operatorname{E}(\widehat{\theta}) )^2]</script>. It is used to indicate how far, on average, the collection of estimates are from the expected value(期望) of the estimates.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><p>If the parameter is the bull’s-eye of a target, and the arrows are estimates, then a relatively high variance means the arrows are dispersed, and a relatively low variance means the arrows are clustered. Some things to note: even if the variance is low, the cluster of arrows may still be far off-target, and even if the variance is high, the diffuse collection of arrows may still be unbiased. Finally, note that even if all arrows grossly miss the target, if they nevertheless all hit the same point, the variance is zero.<br>The relationship between bias and variance is analogous to the relationship between accuracy and precision.</p>
+<p> note:the sample mean ${\overline{X}}=\frac{1}{N}\sum_{i=1}^{N}{X}_i$ is an unbiased estimator of $μ$,and the sample variance</p>
+<p>$s^2=\frac{1}{n-1}\sum<em>{i=1}^n(X_i-\overline{X}\,)^2$ is an unbiased estimator of $σ^2$,(not the<br>$S^2=\frac{1}{n}\sum</em>{i=1}^n\left(X_i-\overline{X}\right)^2$,it’s a baised estimator of $σ^2$,proof is <a href="http://upload.wikimedia.org/math/5/5/7/5570b43693f45e8bba75ba5702a8fea5.png">here</a>)</p>
+<h3 id="Mean-squared-error"><a href="#Mean-squared-error" class="headerlink" title="Mean squared error"></a>Mean squared error</h3><p>In statistics, the mean squared error (MSE) of an estimator measures the average of the squares of the “errors”, that is, the difference between the estimator and what is estimated.MSE is a risk function, corresponding to the expected value of the squared error loss or quadratic loss.(损失函数or代价函数？)<br>$\operatorname{MSE}(\hat{\theta})=\operatorname{Var}(\hat{\theta})+ \left(\operatorname{Bias}(\hat{\theta},\theta)\right)^2$<br>$=\operatorname{E}[(\widehat{\theta} - \operatorname{E}(\widehat{\theta}) )^2]+ {\left( \operatorname{E}(\widehat{\theta}) - \theta\right)}^2$<br><a href="http://upload.wikimedia.org/math/b/0/5/b05d66203821b091ba1ea862fe8ee898.png">proof</a><br>ps:<br>In statistics, the bias (or bias function) of an estimator is the difference between this estimator’s expected value and the true value of the parameter being estimated. An estimator or decision rule with zero bias is called unbiased. Otherwise the estimator is said to be biased.</p>
+<p>$n = mq + r $<br>$a = b + c$<br>$b \equiv r_1 \pmod{9} $<br>$c \equiv r_2 \pmod{9} $<br>$a \equiv r_1 + r_2\pmod{9}$</p>
+<h3 id="Analytical-Bias-and-Variance"><a href="#Analytical-Bias-and-Variance" class="headerlink" title="Analytical Bias and Variance"></a>Analytical Bias and Variance</h3><p>&emsp;In the case of k-Nearest Neighbors we can derive an explicit analytical expression for the total error as a summation of bias and variance:</p>
+<script type="math/tex; mode=display">Err(x) = \left(f(x)-\frac{1}{k}\sum\limits_{i=1}^k f(x_i)\right)^2+\frac{\sigma_\epsilon^2}{k} + \sigma_\epsilon^2</script><script type="math/tex; mode=display">Err(x) = \mathrm{Bias}^2 + \mathrm{Variance} + \mathrm{Irreducible\ Error}</script><p>&emsp;The variance term is a function of the irreducible error and k with the variance error steadily falling as k increases. The bias term is a function of how rough the model space is (e.g. how quickly in reality do values change as we move through the space of different wealths and religiosities). The rougher the space, the faster the bias term will increase as further away neighbors are brought into estimates.</p>
+<p><img src="http://upload.wikimedia.org/math/5/5/7/5570b43693f45e8bba75ba5702a8fea5.png" alt="此处输入图片的描述"></p>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/139327267">基尼系数解析</a><br>此曲线的得出方式：</p>
+<ul>
+<li>首先把一个被调查区域的人口，按照财富的高低由低到高进行排序；</li>
+<li>然后每累进一个人，其财富就加到累积收入/财富中去；</li>
+<li>最后得到了这样的曲线。</li>
+</ul>
+<p>那么根据如上绘图方式，可以得到如下结论:</p>
+<ul>
+<li>如果这个区域绝对的贫富均衡，每个人的财富相同，那么每累进一人，其累进的财富也是相等的，那么“洛伦茨曲线”是“绝对平等线”。</li>
+<li>如果贫富不均衡，那么贫困的人累进一人，其财富仅累进很小的一点，纵轴变化小；而富有的人累进一人，其财富累进的就很多，纵轴变化大。</li>
+</ul>
+<p>比如图中，在财富不均衡情况下，横轴同样的累进x个单位，其纵轴的变化y和z相差很大。设A为红色曲线之上的面积，B为红色曲线之下的面积，那么基尼系数计算公式为:             Gini = A/(A+B)</p>
+<blockquote>
+<p>推荐系统本身就是通过挖掘长尾内容减缓马太效应<br>马太效应在推荐系统领域可以理解为头部的热门内容吸引了用户大部分注意力，<strong>系统也以为这是用户喜欢的从而加强了效应</strong>，好的东西无法让用户发现，导致内容千篇一律，平台越大，就越明显越难以处理。所以当前头部平台都会探索解决长尾问题</p>
+</blockquote>
+<p>一直好奇，正态分布为什么叫做 <strong>normal distribution</strong>，直到最近看到：www.mathsisfun.com 的一篇教程时，恍然大悟，链接附上<a href="https://www.mathsisfun.com/data/standard-deviation.html">Standard Deviation and Variance</a></p>
+<p><img src="http://upload.wikimedia.org/math/5/5/7/5570b43693f45e8bba75ba5702a8fea5.png" alt="此处输入图片的描述"></p>
+<p>比如现在有5只狗，身高不同，你需要区分或者分类，哪那些是比较高的，那些是比较矮的，怎么界定呢？当然，一眼看上去，哪些高哪些矮还是可以看出来的，但凡事需要有个标准。既然已经提到哪些高矮了，我们可以反过来考虑，为什么不确定哪些为正常身高的呢？一旦确定了正常身高的范围，我们就可以这样分类了：大于这一范围的便是“高的”，小于这一范围的便是“矮的”的。<br>好了，进入正题，参考上面的图，对于上面的图，我们可以这几只狗的均值和方差（标准差）：<br><strong>Mean</strong> =<br>$<br>\mu = \sum<em>{i=1}^m X_i = \frac{600 + 470 + 170 + 430 + 300}{5} = 394<br>$<br><strong>Variance</strong><br>$<br>\sigma^2 = \frac{1}{m}\sum</em>{i=1}(X_i - \mu)^2 = \frac{206^2 + 76^2 + (−224)^2 + 36^2 + (−94)^2}{5} = 21704<br>$<br><strong>Standard Deviation</strong><br>$<br>\sigma \approx 147<br>$<br>这里，当标准差得到后，我们就可以用其做一些事情了：查看哪些狗位于均值上下一个标准差范围里（$ \mu \pm \sigma$）即：$394 \pm 147$, 位于$[247, 451]$之间的，我们可以将这一部分的身高称作normal的，其他的则为abnormal，比如，高的，矮的，类似下图：</p>
+<blockquote>
+<p>“Rottweilers are tall dogs. And Dachshunds are a bit short”</p>
+</blockquote>
+<p><img src="http://upload.wikimedia.org/math/b/0/5/b05d66203821b091ba1ea862fe8ee898.png" alt="此处输入图片的描述"></p>
+<p>这里，标准差（standard deviation) 给了我们一准标准方式去区分哪些是normal, 哪些是extra large, 哪些是extra smalle。</p>
+<p>Tutorial里还有关于为什么标准差使用平方计算，以及样本和总体的标准差是除以 $n$ 还是 $n-1$ 的讨论。</p>
+<p>  <a href="http://upload.wikimedia.org/math/b/0/5/b05d66203821b091ba1ea862fe8ee898.png">2</a>: <a href="https://www.mathsisfun.com/data/images/statistics-standard-deviation.gif">https://www.mathsisfun.com/data/images/statistics-standard-deviation.gif</a> 2019-12-09 18:43:30</p>
+<h2 id="期望"><a href="#期望" class="headerlink" title="期望"></a>期望</h2><script type="math/tex; mode=display">
+E(X) = \sum_i^mp_i*x_i</script><p>如果现在有三个数字1，2，3的转盘，我们估算平均转到的数字是多大？<br>最自然的想法是求平均，直接(1+2+3)/3 = 2。但如果1,2,3出现的概率不一样呢，比如说:0.5, 0.3, 0.2，那么其均值如何计算？<br>从合理角度来讲，我们可能需要对每一个出现的数字做一下<strong>“加权”</strong>：0.5<em>1+0.3</em>2+0.2*3 = 1.7。<br>回到上面得到2的结果可以发现，我们默认三个数字出现的概率一样，所以自然而然除以了3，这是基于我们的假设，更或者说我们在未试验之前对系统的一个假设，认为它机会公平。<br>另外，从上面的表达式可以看出，如果我们手里有一个数据集，比如说6000个样本，要求其期望，我们无需估计每个样本的出现的概率是多少，直接:</p>
+<script type="math/tex; mode=display">
+E(X) = \frac{\sum_i^mx_i}{m}</script><p>即可，如果样本$x_i$有重复，在sum以及除n的效果下，等效于统计了概率。<br>换一种说法：如果样本有m个，$x_i$取值有k个(k &lt; m)，根据鸽巢原理，势必会有在每个离散取值的桶里放入了相同元素，垒起来正好是其频次，形似直方图的桶，这样一来再除以总数，正好对应统计上试验得到的频率。</p>
+<h2 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h2><script type="math/tex; mode=display">
+\begin{equation}
+\begin{array}{l}
+\operatorname{Cov}(X, Y)=E[(X-E[X])(Y-E[Y])] \\
+\operatorname{Cov}(X, Y)=E[X Y]-E[X] E[Y]
+\end{array}
+\end{equation}</script><p>参照上面数据集中期望的算法，可以直接理解为样本的均值，虽然这个均值的实际效果是期望。那么上面</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/statistic/" rel="tag"># statistic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/22/algorithm/" rel="prev" title="algorithm">
+      <i class="fa fa-chevron-left"></i> algorithm
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/03/hands-on-machine-learning/" rel="next" title="hands-on-machine-learning">
+      hands-on-machine-learning <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9C%9F%E6%9C%9B"><span class="nav-number">1.</span> <span class="nav-text">1.期望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Estimator-%E4%BC%B0%E8%AE%A1%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">2.Estimator 估计量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Estimand"><span class="nav-number">2.1.</span> <span class="nav-text">Estimand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variance-%E6%96%B9%E5%B7%AE"><span class="nav-number">2.2.</span> <span class="nav-text">Variance(方差)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#example"><span class="nav-number">2.2.1.</span> <span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mean-squared-error"><span class="nav-number">2.3.</span> <span class="nav-text">Mean squared error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Analytical-Bias-and-Variance"><span class="nav-number">2.4.</span> <span class="nav-text">Analytical Bias and Variance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%9F%E6%9C%9B"><span class="nav-number">3.</span> <span class="nav-text">期望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E6%96%B9%E5%B7%AE"><span class="nav-number">4.</span> <span class="nav-text">协方差</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

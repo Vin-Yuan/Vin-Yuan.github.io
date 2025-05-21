@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="机器之心GitHub项目：GAN完整理论推导与实现，Perfect！ 本文是机器之心第二个 GitHub 实现项目，上一个 GitHub 实现项目为从头开始构建卷积神经网络。在本文中，我们将从原论文出发，借助 Goodfellow 在 NIPS 2016 的演讲和台大李宏毅的解释，而完成原 GAN 的推导与证明。本文主要分四部分，第一部分是描述 GAN 的直观概念，第二部分描述概念与优化的形式化表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GAN">
+<meta property="og:url" content="http://yoursite.com/2019/03/16/GAN_explaination/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="机器之心GitHub项目：GAN完整理论推导与实现，Perfect！ 本文是机器之心第二个 GitHub 实现项目，上一个 GitHub 实现项目为从头开始构建卷积神经网络。在本文中，我们将从原论文出发，借助 Goodfellow 在 NIPS 2016 的演讲和台大李宏毅的解释，而完成原 GAN 的推导与证明。本文主要分四部分，第一部分是描述 GAN 的直观概念，第二部分描述概念与优化的形式化表">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/24307image.png">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/52960image%20(1">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/29837image%20(2">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/53394image%20(3">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/74077image%20(4">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/10759image%20(5">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/36731image%20(6">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/72972image%20(7">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/05150image%20(8">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/32595image%20(8">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/56239image%20(9">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/72295image%20(10">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/07326image%20(11">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/30228image%20(12">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/92642image%20(13">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/28796image%20(14">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/22020%E7%B2%98%E8%B4%B4%E5%9B%BE%E7%89%87_20170930194024.jpg">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/03195image%20(15">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/70934image%20(16">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/98621image%20(16">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/46879image%20(17">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/85286image%20(18">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/09657image%20(19">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/24515image%20(20">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/51044image%20(21">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/75323image%20(22">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/25267image%20(23">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/68126image%20(24">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/88447image%20(25">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/59249image%20(26">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/85412image%20(27">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/25220image%20(28">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/48004image%20(29">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/68250image%20(30">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/99310image%20(31">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/35494image%20(32">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/15268image%20(39">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/99121image%20(39">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/13589image%20(40">
+<meta property="article:published_time" content="2019-03-16T08:21:22.000Z">
+<meta property="article:modified_time" content="2025-05-19T13:38:29.884Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/24307image.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/03/16/GAN_explaination/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>GAN | Vin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/16/GAN_explaination/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GAN
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-16 16:21:22" itemprop="dateCreated datePublished" datetime="2019-03-16T16:21:22+08:00">2019-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-19 21:38:29" itemprop="dateModified" datetime="2025-05-19T21:38:29+08:00">2025-05-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="机器之心GitHub项目：GAN完整理论推导与实现，Perfect！"><a href="#机器之心GitHub项目：GAN完整理论推导与实现，Perfect！" class="headerlink" title="机器之心GitHub项目：GAN完整理论推导与实现，Perfect！"></a>机器之心GitHub项目：GAN完整理论推导与实现，Perfect！</h1><blockquote>
+<p>本文是机器之心第二个 GitHub 实现项目，上一个 GitHub 实现项目为从头开始构建卷积神经网络。在本文中，我们将从原论文出发，借助 Goodfellow 在 NIPS 2016 的演讲和台大李宏毅的解释，而完成原 GAN 的推导与证明。本文主要分四部分，第一部分是描述 GAN 的直观概念，第二部分描述概念与优化的形式化表达，第三部分将对 GAN 进行详细的理论推导与分析，最后我们将实现前面的理论分析。</p>
+</blockquote>
+<p>GitHub 实现地址：<a href="https://github.com/jiqizhixin/ML-Tutorial-Experiment">https://github.com/jiqizhixin/ML-Tutorial-Experiment</a></p>
+<p>本文更注重理论与推导，更多生成对抗网络的概念与应用前查看：</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650730721&amp;idx=2&amp;sn=95b97b80188f507c409f4c72bd0a2767&amp;chksm=871b349fb06cbd891771f72d77563f77986afc9b144f42c8232db44c7c56c1d2bc019458c4e4&amp;scene=21#wechat_redirect">生成对抗网络初学入门：一文读懂GAN的基本原理</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650730028&amp;idx=1&amp;sn=21d57cf54f257aeab15ebd4058671a2b&amp;chksm=871b2a52b06ca3449f255549a914e8ab8d85bb4d43e0487a95fd9ffd97e708d9eac7a1f9943b&amp;scene=21#wechat_redirect">深入浅出：GAN原理与应用入门介绍</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650729957&amp;idx=4&amp;sn=bdeb666588a1e926e2802b2daf3c2836&amp;chksm=871b299bb06ca08db37816a9b8bce1d38ddf957f25f37bd39fb6e9ce2da5c1120373a2a1e888&amp;scene=21#wechat_redirect">宅男的福音：用GAN自动生成二次元萌妹子</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650724769&amp;idx=2&amp;sn=6fa540106cf6a5fd55fc39d057092888&amp;chksm=871b1ddfb06c94c9e11d3a8281f60c0fce06a4e021fcd8eaab858c7f08ab9c939c4ad130e4b2&amp;scene=21#wechat_redirect">一文帮你发现各种出色的GAN变体</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650723168&amp;idx=2&amp;sn=68b21b815688443a0dd7caa115cc13fa&amp;chksm=871b171eb06c9e085ab0f2223e6bab04d2eecfa430ca071b19d5c377d909d46724269126dbf3&amp;scene=21#wechat_redirect">直观理解GAN背后的原理：以人脸图像生成为例</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650728794&amp;idx=2&amp;sn=426052e5cd7d952902b6623e40df16de&amp;chksm=871b2d24b06ca4323d055668db51590703c45966149e0849d1dd92771bc28d2b5e24c1b4ec5d&amp;scene=21#wechat_redirect">萌物生成器：如何使用四种GAN制造猫图</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650721284&amp;idx=1&amp;sn=427e7f45c8253ab22a3960978409f5d1&amp;chksm=871b087ab06c816c424ad03810be3e1b3aa9d6e99a5f325047796f110d178a07736f667d1a10&amp;scene=21#wechat_redirect">GAN之父NIPS 2016演讲现场直击：全方位解读生成对抗网络的原理及未来</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650723168&amp;idx=3&amp;sn=41fcf2fb0408c7b6a9b82d55d91c2b9c&amp;chksm=871b171eb06c9e082c4083ff32748104a617e5cb1e6bd4d296b4db431358b8a41f40908ea8a5&amp;scene=21#wechat_redirect">看穿机器学习（W-GAN模型）的黑箱</a></li>
+</ul>
+<h3 id="生成对抗网络基本概念"><a href="#生成对抗网络基本概念" class="headerlink" title="生成对抗网络基本概念"></a>生成对抗网络基本概念</h3><p>要理解生成对抗模型（GAN），首先要了解生成对抗模型可以拆分为两个模块：一个是判别模型，另一个是生成模型。简单来说就是：两个人比赛，看是 A 的矛厉害，还是 B 的盾厉害。比如，我们有一些真实数据，同时也有一把随机生成的假数据。A 拼命地把随手拿过来的假数据模仿成真实数据，并揉进真实数据里。B 则拼命地想把真实数据和假数据区分开。</p>
+<p>这里，A 就是一个生成模型，类似于造假币的，一个劲地学习如何骗过 B。而 B 则是一个判别模型，类似于稽查警察，一个劲地学习如何分辨出 A 的造假技巧。</p>
+<p>如此这般，随着 B 的鉴别技巧的越来越厉害，A 的造假技巧也是越来越纯熟，而一个一流的假币制造者就是我们所需要的。虽然 GAN 背后的思想十分直观与朴素，但我们需要更进一步了解该理论背后的证明与推导。</p>
+<p>总地来说，Goodfellow 等人提出来的 GAN 是通过对抗过程估计生成模型的新框架。在这种框架下，我们需要同时训练两个模型，即一个能捕获数据分布的生成模型 G 和一个能估计数据来源于真实样本概率的判别模型 D。生成器 G 的训练过程是最大化判别器犯错误的概率，即判别器误以为数据是真实样本而不是生成器生成的假样本。因此，这一框架就对应于两个参与者的极小极大博弈（minimax game）。在所有可能的函数 G 和 D 中，我们可以求出唯一均衡解，即 G 可以生成与训练样本相同的分布，而 D 判断的概率处处为 1/2，这一过程的推导与证明将在后文详细解释。</p>
+<p>当模型都为多层感知机时，对抗性建模框架可以最直接地应用。为了学习到生成器在数据 $x$ 上的分布 $P_g$，我们先定义一个先验的输入噪声变量 $P_z(z)$，然后根据 $G(z;θ_g)$ 将其映射到数据空间中，其中 $G$ 为多层感知机所表征的可微函数。我们同样需要定义第二个多层感知机 $D(s;θ_d)$，它的输出为单个标量。$D(x)$ 表示 $x$ 来源于真实数据而不是 $P_g$ 的概率。我们训练 $D$ 以最大化正确分配真实样本和生成样本的概率，因此我们就可以通过最小化 $log(1-D(G(z)))$ 而同时训练 $G$。也就是说判别器 $D$ 和生成器对价值函数 $V(G,D)$ 进行了极小极大化博弈：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/24307image.png" alt="img"></p>
+<p>我们后一部分会对对抗网络进行理论上的分析，该理论分析本质上可以表明如果 $G$ 和 $D$ 的模型复杂度足够（即在非参数限制下），那么对抗网络就能生成数据分布。此外，Goodfellow 等人在论文中使用如下案例为我们简要介绍了基本概念。</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/52960image%20(1" alt="img">.png)</p>
+<p>如上图所示，生成对抗网络会训练并更新判别分布（即 $D$，蓝色的虚线），更新判别器后就能将数据真实分布（黑点组成的线）从生成分布 $P_g(G)$（绿色实线）中判别出来。下方的水平线代表采样域 $Z$，其中等距线表示 $Z$ 中的样本为均匀分布，上方的水平线代表真实数据 $X$ 中的一部分。向上的箭头表示映射 $x=G(z)$ 如何对噪声样本（均匀采样）施加一个不均匀的分布 $P_g$。</p>
+<ul>
+<li><p>（a）考虑在收敛点附近的对抗训练：$P<em>g$ 和 $P</em>{data}$ 已经十分相似，$D$ 是一个局部准确的分类器。</p>
+</li>
+<li><p>（b）在算法内部循环中训练 $D$ 以从数据中判别出真实样本，该循环最终会收敛到:$D(x)=P<em>{data}(x)/(P</em>{data}(x)+P_g(x))$。</p>
+</li>
+<li><p>（c）随后固定判别器并训练生成器，在更新 $G$ 之后，$D$ 的梯度会引导 $G(z)$流向更可能被 $D$ 分类为真实数据的方向。</p>
+</li>
+<li><p>（d）经过若干次训练后，如果 $G$ 和 $D$ 有足够的复杂度，那么它们就会到达一个均衡点。这个时候 $P<em>g=P</em>{data}$，即生成器的概率密度函数等于真实数据的概率密度函数，也即生成的数据和真实数据是一样的。在均衡点上 $D$ 和 $G$ 都不能得到进一步提升，并且判别器无法判断数据到底是来自真实样本还是伪造的数据，即 $D(x)= 1/2$。</p>
+</li>
+</ul>
+<p>上面是比较精简地介绍了生成对抗网络的基本概念，下一节将会把这些概念形式化，并描述优化的大致过程。</p>
+<h3 id="概念与过程的形式化"><a href="#概念与过程的形式化" class="headerlink" title="概念与过程的形式化"></a>概念与过程的形式化</h3><h4 id="理论完美的生成器"><a href="#理论完美的生成器" class="headerlink" title="理论完美的生成器"></a>理论完美的生成器</h4><p>该算法的目标是令生成器生成与真实数据几乎没有区别的样本，即一个造假一流的 A，就是我们想要的生成模型。数学上，即将随机变量生成为某一种概率分布，也可以说概率密度函数为相等的：$P<em>G(x)=P</em>{data}(x)$。这正是数学上证明生成器高效性的策略：即定义一个最优化问题，其中最优生成器 $G$ 满足 $P<em>G(x)=P</em>{data}(x)$。如果我们知道求解的 $G$ 最后会满足该关系，那么我们就可以合理地期望神经网络通过典型的 SGD 训练就能得到最优的 $G$。</p>
+<h4 id="最优化问题"><a href="#最优化问题" class="headerlink" title="最优化问题"></a>最优化问题</h4><p>正如最开始我们了解的警察与造假者案例，定义最优化问题的方法就可以由以下两部分组成。首先我们需要定义一个判别器$ D$ 以判别样本是不是从 $P_{data}(x)$ 分布中取出来的，因此有：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/29837image%20(2" alt="img">.png)</p>
+<p>其中 $E$ 指代取期望。这一项是根据「正类」（即辨别出 x 属于真实数据 data）的对数损失函数而构建的。最大化这一项相当于令判别器$ D$ 在 $x$ 服从于 data 的概率密度时能准确地预测$ D(x)=1$，即：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/53394image%20(3" alt="img">.png)</p>
+<p>另外一项是企图欺骗判别器的生成器$ G$。该项根据「负类」的对数损失函数而构建，即：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/74077image%20(4" alt="img">.png)</p>
+<p>因为 $x&lt;1$ 的对数为负，那么如果最大化该项的值，则需要令均值 $D(G(z))≈0$，因此 $G$ 并没有欺骗 $D$。为了结合这两个概念，判别器的目标为最大化：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/10759image%20(5" alt="img">.png)</p>
+<p>给定生成器 $G$，其代表了判别器 $D$ 正确地识别了真实和伪造数据点。给定一个生成器 $G$，上式所得出来的最优判别器可以表示为 <img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/36731image%20(6" alt="img">.png) （下文用 $D_G^*$表示）。定义价值函数为：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/72972image%20(7" alt="img">.png)</p>
+<p>然后我们可以将最优化问题表述为：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/05150image%20(8" alt="img">.png)<img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/32595image%20(8" alt="img">.png)</p>
+<p>现在 $G$  的目标已经相反了，当 $D=D_G^*$ 时，最优的 $G$ 为最小化前面的等式。在论文中，作者更喜欢求解最优化价值函的 $G$ 和 $ D $ 以求解极小极大博弈：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/56239image%20(9" alt="img">.png)</p>
+<p>对于 $D$ 而言要尽量使公式最大化（识别能力强），而对于 $G$ 又想使之最小（生成的数据接近实际数据）。整个训练是一个迭代过程。其实极小极大化博弈可以分开理解，即在给定 G 的情况下先最大化 V(D,G) 而取 D，然后固定 $D$，并最小化 $V(D,G)$ 而得到 G。其中，给定 $G$，最大化 $V(D,G)$ 评估了 $P<em>G$ 和 $P</em>{data}$ 之间的差异或距离。</p>
+<p>最后，我们可以将最优化问题表达为：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/72295image%20(10" alt="img">.png)</p>
+<p>上文给出了 GAN 概念和优化过程的形式化表达。通过这些表达，我们可以理解整个生成对抗网络的基本过程与优化方法。当然，有了这些概念我们完全可以直接在 GitHub 上找一段 GAN 代码稍加修改并很好地运行它。但如果我们希望更加透彻地理解 GAN，更加全面地理解实现代码，那么我们还需要知道很多推导过程。比如什么时候 D 能令价值函数 $V(D,G) $取最大值、$G$ 能令 $V(D,G)$ 取最小值，而 $D$ 和 $G$ 该用什么样的神经网络（或函数），它们的损失函数又需要用什么等等。总之，还有很多理论细节与推导过程需要我们进一步挖掘。</p>
+<h3 id="理论推导"><a href="#理论推导" class="headerlink" title="理论推导"></a>理论推导</h3><p>在原 GAN 论文中，度量生成分布与真实分布之间差异或距离的方法是 $JS$ 散度，而 $JS$ 散度是我们在推导训练过程中使用 $KL$ 散度所构建出来的。所以这一部分将从理论基础出发再进一步推导最优判别器和生成器所需要满足的条件，最后我们将利用推导结果在数学上重述训练过程。这一部分为我们下一部分理解具体实现提供了强大的理论支持。</p>
+<h4 id="KL-散度"><a href="#KL-散度" class="headerlink" title="KL 散度"></a>KL 散度</h4><p>在信息论中，我们可以使用香农熵（Shannon entropy）来对整个概率分布中的不确定性总量进行量化：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/07326image%20(11" alt="img">.png)</p>
+<p>如果我们对于同一个随机变量 x 有两个单独的概率分布 $P(x)$ 和 $Q(x)$，我们可 以使用 $KL$ 散度（Kullback-Leibler divergence）来衡量这两个分布的差异：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/30228image%20(12" alt="img">.png)</p>
+<p>在离散型变量的情况下，$KL$ 散度衡量的是，当我们使用一种被设计成能够使 得概率分布 $Q$ 产生的消息的长度最小的编码，发送包含由概率分布 $P$ 产生的符号 的消息时，所需要的额外信息量。</p>
+<p>KL 散度有很多有用的性质，最重要的是它是非负的。$KL$ 散度为 0 当且仅当 P 和 Q 在离散型变量的情况下是相同的分布，或者在连续型变量的情况下是 『几乎 处处』 相同的。因为 KL 散度是非负的并且衡量的是两个分布之间的差异，它经常 被用作分布之间的某种距离。然而，它并不是真的距离因为它不是对称的：对于某 些 P 和 Q，$D<em>{KL}(P||Q)$ 不等于 $D</em>{KL}(Q||P)$。这种非对称性意味着选择 $D<em>{KL}(P||Q)$ 还是 $D</em>{KL}(Q||P)$ 影响很大。</p>
+<p>在李弘毅的讲解中，KL 散度可以从极大似然估计中推导而出。若给定一个样本数据的分布 $P<em>{data}(x)$ 和生成的数据分布 $P_G(x;θ)$，那么 GAN 希望能找到一组参数θ使分布 $P_g(x;θ)$ 和 $P</em>{data}(x)$ 之间的距离最短，也就是找到一组生成器参数而使得生成器能生成十分逼真的图片。</p>
+<p>现在我们可以从训练集抽取一组真实图片来训练 $P<em>G(x;θ)$ 分布中的参数θ使其能逼近于真实分布。因此，现在从 $P</em>{data}(x)$ 中抽取 m 个真实样本 ${𝑥^1,𝑥^2,…,𝑥^𝑚}$，上标$i$代表第 $i$ 个样本。对于每一个真实样本，我们可以计算 $P_G(x^i;θ)$，即在由θ确定的生成分布中，$x^i$ 样本所出现的概率。因此，我们就可以构建似然函数：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/92642image%20(13" alt="img">.png)</p>
+<p>其中 $∏$ 代表累乘、$P<em>G(x^i;θ)$ 代表第 i 个样本在生成分布出现的概率。从该似然函数可知，我们抽取的 $m$ 个真实样本在 $P_G(x;θ)$ 分布中全部出现的概率值可以表达为 $L$。又因为若 $P_G(x;θ)$ 分布和 $P</em>{data}(x)$ 分布相似，那么真实数据很可能就会出现在 $P_G(x;θ)$ 分布中，因此 $m$ 个样本都出现在 $P_G(x;θ)$ 分布中的概率就会十分大。</p>
+<p>下面我们就可以最大化似然函数 $L$ 而求得离真实分布最近的生成分布（即最优的参数$θ$）：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/28796image%20(14" alt="img">.png)</p>
+<p>在上面的推导中，我们希望最大化似然函数 L。若对似然函数取对数，那么累乘∏就能转化为累加 $∑$，并且这一过程并不会改变最优化的结果。因此我们可以将极大似然估计化为求令 $log[P<em>G(x;θ)]$ 期望最大化的$θ$，而期望$ E[logP_G(x;θ)]$ 可以展开为在 $x$ 上的积分形式：$∫P</em>{data}(x)logP<em>G(x;θ)dx$。又因为该最优化过程是针对θ的，所以我们添加一项不含θ的积分并不影响最优化效果，即可添加 $-∫P</em>{data}(x)logP_{data}(x)dx$。添加该积分后，我们可以合并这两个积分并构建类似 $KL$ 散度的形式。该过程如下：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/22020%E7%B2%98%E8%B4%B4%E5%9B%BE%E7%89%87_20170930194024.jpg" alt="img"></p>
+<p>这一个积分就是 $KL$ 散度的积分形式，因此，如果我们需要求令生成分布 $P<em>G(x;θ)$ 尽可能靠近真实分布 P</em>{data}(x) 的参数$\theta$，那么我们只需要求令 $KL$ 散度最小的参数$θ$。若取得最优参数$θ$，那么生成器生成的图像将显得非常真实。</p>
+<h4 id="推导存在的问题"><a href="#推导存在的问题" class="headerlink" title="推导存在的问题"></a>推导存在的问题</h4><p>下面，我们必须证明该最优化问题有唯一解 $G*$，并且该唯一解满足 $P<em>G=P</em>{data}$。不过在开始推导最优判别器和最优生成器之前，我们需要了解 Scott Rome 对原论文推导的观点，他认为原论文忽略了可逆条件，因此最优解的推导不够完美。</p>
+<p>在 GAN 原论文中，有一个思想和其它很多方法都不同，即生成器 $G$ 不需要满足可逆条件。Scott Rome 认为这一点非常重要，因为实践中 $G$ 就是不可逆的。而很多证明笔记都忽略了这一点，他们在证明时错误地使用了积分换元公式，而积分换元却又恰好基于 $G$ 的可逆条件。Scott 认为证明只能基于以下等式的成立性：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/03195image%20(15" alt="img">.png)</p>
+<p>该等式来源于测度论中的 Radon-Nikodym 定理，它展示在原论文的命题 1 中，并且表达为以下等式：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/70934image%20(16" alt="img">.png)</p>
+<p>我们看到该讲义使用了积分换元公式，但进行积分换元就必须计算 $G^{(-1)}$，而 $G$ 的逆却并没有假定为存在。并且在神经网络的实践中，它也并不存在。可能这个方法在机器学习和统计学文献中太常见了，因此我们忽略了它。</p>
+<h4 id="最优判别器"><a href="#最优判别器" class="headerlink" title="最优判别器"></a>最优判别器</h4><p>在极小极大博弈的第一步中，给定生成器 $G$，最大化 $V(D,G)$ 而得出最优判别器 $D$。其中，最大化 $V(D,G)$ 评估了 $P<em>G$ 和 $P</em>{data}$ 之间的差异或距离。因为在原论文中价值函数可写为在 $x$ 上的积分，即将数学期望展开为积分形式：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/98621image%20(16" alt="img">1.png)</p>
+<p>其实求积分的最大值可以转化为求被积函数的最大值。而求被积函数的最大值是为了求得最优判别器 D，因此不涉及判别器的项都可以看作为常数项。如下所示，$P_{data(x)}$ 和 $P_G(x)$ 都为标量，因此被积函数可表示为 $a<em>D(x)+b</em>log(1-D(x))$。</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/46879image%20(17" alt="img">.png)</p>
+<p>若令判别器 $D(x)$ 等于 $y$，那么被积函数可以写为：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/85286image%20(18" alt="img">.png)</p>
+<p>为了找到最优的极值点，如果 $a+b≠0$，我们可以用以下一阶导求解：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/09657image%20(19" alt="img">.png)</p>
+<p>如果我们继续求表达式 $f(y)$ 在驻点的二阶导：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/24515image%20(20" alt="img">.png)</p>
+<p>其中 $a,b∈(0,1)$。因为一阶导等于零、二阶导小于零，所以我们知道 a/(a+b) 为极大值。若将 $a=P<em>{data}(x)$、$b=P_G(x)$ 代入该极值，那么最优判别器 $D(x)=P</em>{data}(x)/(P_{data}(x)+P_G(x))$。</p>
+<p>最后我们可以将价值函数表达式写为：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/51044image%20(21" alt="img">.png)</p>
+<p>如果我们令 $D(x)=P<em>{data}/(P</em>{data}+p_G)$，那么我们就可以令价值函数 $V(G,D)$ 取极大值。因为 f(y) 在定义域内有唯一的极大值，最优 $D$ 也是唯一的，并且没有其它的 $D$ 能实现极大值。</p>
+<p>其实该最优的 $D$ 在实践中并不是可计算的，但在数学上十分重要。我们并不知道先验的 $P_{data(x)}$，所以我们在训练中永远不会用到它。另一方面，它的存在令我们可以证明最优的 $G$ 是存在的，并且在训练中我们只需要逼近 $D$。</p>
+<h4 id="最优生成器"><a href="#最优生成器" class="headerlink" title="最优生成器"></a>最优生成器</h4><p>当然 GAN 过程的目标是令 $P<em>G=P</em>{data}$。这对最优的 $D$ 意味着什么呢？我们可以将这一等式代入 $D_G^*$的表达式中：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/75323image%20(22" alt="img">.png)</p>
+<p>这意味着判别器已经完全困惑了，它完全分辨不出 $P<em>{data}$ 和 $P_G$ 的区别，即判断样本来自 P</em>{data} 和 P_G 的概率都为 1/2。基于这一观点，GAN 作者证明了 $G$ 就是极小极大博弈的解。该定理如下：</p>
+<p>「当且仅当 $P<em>G=P</em>{data}$，训练标准 $C(G)=maxV(G,D)$ 的全局最小点可以达到。</p>
+<p>以上定理即极大极小博弈的第二步，求令 $V(G,D<em>)$ 最小的生成器 $G$（其中 $G</em>$代表最优的判别器）。之所以当 $P<em>G(x)=P</em>{data}(x)$ 可以令价值函数最小化，是因为这时候两个分布的 $JS$ 散度$ [JSD(P_{data}(x) || P_G(x))]$ 等于零，这一过程的详细解释如下。</p>
+<p>原论文中的这一定理是「当且仅当」声明，所以我们需要从两个方向证明。首先我们先从反向逼近并证明 $C(G)$ 的取值，然后再利用由反向获得的新知识从正向证明。设 $P<em>G$=$P</em>{data}$（反向指预先知道最优条件并做推导），我们可以反向推出：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/25267image%20(23" alt="img">.png)</p>
+<p>该值是全局最小值的候选，因为它只有在 $P<em>{data}$ 的时候才出现。我们现在需要从正向证明这一个值常常为最小值，也就是同时满足「当」和「仅当」的条件。现在放弃 $P_G=P</em>{data}$ 的假设，对任意一个 $G$，我们可以将上一步求出的最优判别器 $D*$ 代入到 $C(G)=maxV(G,D)$ 中： </p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/68126image%20(24" alt="img">.png)</p>
+<p>因为已知 $-log4$ 为全局最小候选值，所以我们希望构造某个值以使方程式中出现 $log2$。因此我们可以在每个积分中加上或减去 $log2$，并乘上概率密度。这是一个十分常见并且不会改变等式的数学证明技巧，因为本质上我们只是在方程加上了 0。</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/88447image%20(25" alt="img">.png)</p>
+<p>采用该技巧主要是希望能够构建成含 log2 和 JS 散度的形式，上式化简后可以得到以下表达式：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/59249image%20(26" alt="img">.png)</p>
+<p>因为概率密度的定义，$P<em>G$ 和 $P</em>{data}$ 在它们积分域上的积分等于 1，即：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/85412image%20(27" alt="img">.png)</p>
+<p>此外，根据对数的定义，我们有：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/25220image%20(28" alt="img">.png)</p>
+<p>因此代入该等式，我们可以写为：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/48004image%20(29" alt="img">.png)</p>
+<p>现在，如果读者阅读了前文的 KL 散度（Kullback-Leibler divergence），那么我们就会发现每一个积分正好就是它。具体来说：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/68250image%20(30" alt="img">.png)</p>
+<p>$KL$ 散度是非负的，所以我们马上就能看出来-log4 为 $C(G)$ 的全局最小值。</p>
+<p>如果我们进一步证明只有一个 $G$ 能达到这一个值，因为 $P<em>G=P</em>{data}$ 将会成为令 $C(G)=−log4$ 的唯一点，所以整个证明就能完成了。</p>
+<p>从前文可知 $KL$ 散度是非对称的，所以 $C(G)$ 中的 $KL(P<em>{data} || (P</em>{data}+P<em>G)/2)$ 左右两项是不能交换的，但如果同时加上另一项 $KL(P_G || (P</em>{data}+P_G)/2)$，它们的和就能变成对称项。这两项 $KL$ 散度的和即可以表示为 $JS$ 散度（Jenson-Shannon divergence）：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/99310image%20(31" alt="img">.png)</p>
+<p> 假设存在两个分布 $P$ 和 $Q$，且这两个分布的平均分布 $M=(P+Q)/2$，那么这两个分布之间的 $JS$ 散度为 $P$ 与 $M$ 之间的 $KL$ 散度加上 $Q$ 与 $M$ 之间的 $KL$ 散度再除以 2。</p>
+<p>$JS$ 散度的取值为 0 到 $log2$。若两个分布完全没有交集，那么 JS 散度取最大值 $log2$；若两个分布完全一样，那么 $JS$ 散度取最小值 0。</p>
+<p>因此 $C(G)$ 可以根据 $JS$ 散度的定义改写为：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/35494image%20(32" alt="img">.png)</p>
+<p>这一散度其实就是 Jenson-Shannon 距离度量的平方。根据它的属性：当 $P<em>G=P</em>{data}$ 时，$JSD(P_{data}||P_G)$为 $0$。综上所述，生成分布当且仅当等于真实数据分布式时，我们可以取得最优生成器。</p>
+<h4 id="收敛"><a href="#收敛" class="headerlink" title="收敛"></a>收敛</h4><p>现在，该论文的主要部分已经得到了证明：即 $P<em>G=P</em>{data}$ 为 $maxV(G,D)$ 的最优点。此外，原论文还有额外的证明白表示：给定足够的训练数据和正确的环境，训练过程将收敛到最优 $G$，我们并不详细讨论这一块。</p>
+<h4 id="重述训练过程"><a href="#重述训练过程" class="headerlink" title="重述训练过程"></a>重述训练过程</h4><p>下面是推导的最后一步，我们会重述整个参数优化过程，并简要介绍实际训练中涉及的各个过程。</p>
+<p>1.参数优化过程</p>
+<p>若我们需要寻找最优的生成器，那么给定一个判别器 $D$，我们可以将 $maxV(G,D)$ 看作训练生成器的损失函数$ L(G)$。既然设定了损失函数，那么我们就能使用 SGD、Adam 等优化算法更新生成器 $G$ 的参数，梯度下降的参数优化过程如下：</p>
+<script type="math/tex; mode=display">
+\theta_{G} \leftarrow \theta_{G}-\eta \partial L(G) / \partial \theta_{G}</script><p>其中求 $L(G)$ 对$θ_G$ 的偏导数涉及到求 $max{V(G,D)}$ 的偏导数，这种对 max 函数求微分的方式是存在且可用的。</p>
+<p>现在给定一个初始 $G<em>0$，我们需要找到令 $V(G_0,D)$ 最大的 $D_0*$，因此判别器更新的过程也就可以看作损失函数为-$V(G,D)$ 的训练过程。并且由前面的推导可知，$V(G,D)$ 实际上与分布 $P</em>{data}(x)$ 和 $P_G(x)$ 之间的 $JS$ 散度只差了一个常数项。因此这样一个循环对抗的过程就能表述为：</p>
+<ul>
+<li>给定 $G<em>0$，最大化 $V(G_0,D)$ 以求得 $D_0^*$，即 $max[JSD(P</em>{data}(x)||P_{G_0}(x)]$；</li>
+<li>固定 $D_0^<em>$，计算 $\theta G_1 \leftarrow \theta G_0 - \eta \frac{ \partial(G, D_0^</em>)}{\partial \theta_G}$  以求得更新后的 $G_1$；</li>
+<li>固定 $G<em>1$，最大化 $V(G_1,D_0^<em>)$ 以求得 $D_1^</em>$，即 $max[JSD(P</em>{data}(x)||P_{G_1}(x)]$；</li>
+<li>固定 $D_1^<em>$，计算 $\theta G_2 \leftarrow \theta G_1 - \eta \frac{\partial V(G, D_0^</em>)}{\partial \theta_G} $ 以求得更新后的 $G_2$；</li>
+<li>……</li>
+</ul>
+<p>2.实际训练过程</p>
+<p>根据前面价值函数 $V(G,D)$ 的定义，我们需要求两个数学期望，即 E[log(D(x))] 和 E[log(1-D(G(z)))]，其中 $x$ 服从真实数据分布，$z$ 服从初始化分布。但在实践中，我们是没有办法利用积分求这两个数学期望的，所以一般我们能从无穷的真实数据和无穷的生成器中做采样以逼近真实的数学期望。</p>
+<p>若现在给定生成器 $G$，并希望计算 $maxV(G,D)$ 以求得判别器 $D$，那么我们首先需要从 $P_{data}(x)$ 采样 m 个样本$ {𝑥^1,𝑥^2,…,𝑥^𝑚}$，从生成器 $P_G(x)$ 采样 $m$ 个样本 $\left{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\right}$。因此最大化价值函数 $V(G,D)$ 就可以使用以下表达式近似替代：</p>
+<script type="math/tex; mode=display">
+Maxmize \quad \tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right)</script><p> 若我们需要计算上述的极大化过程，可以采用等价形式的训练方法。若我们有一个二元分类器 $D$（参数为 $θ<em>d$），当然该分类器可以是深度神经网络，那么极大化过程的输出就为该分类器 $D(x)$。现在我们从 $P</em>{data}(x)$ 抽取样本作为正样本，从 $P_G(x)$ 抽取样本作为负样本，同时将逼近负 $V(G,D)$ 的函数作为损失函数，因此我们就将其表述为一个标准的二元分类器的训练过程：</p>
+<script type="math/tex; mode=display">
+\left\{x^{1}, x^{2}, \ldots, x^{m}\right\} \text { from } P_{\text {data}}(x) \rightarrow 正样本</script><script type="math/tex; mode=display">
+\left\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\right\} \text { from } P_{G}(x) \rightarrow 负样本</script><script type="math/tex; mode=display">
+Minimize \quad L=-\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)-\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right)</script><p>在实践中，我们必须使用迭代和数值计算的方法实现极小极大化博弈过程。在训练的内部循环中完整地优化 D 在计算上是不允许的，并且有限的数据集也会导致过拟合。因此我们可以在 k 个优化 D 的步骤和一个优化 G 的步骤间交替进行。那么我们只需慢慢地更新 G，D 就会一直处于最优解的附近，这种策略类似于 SML/PCD 训练的方式。</p>
+<p>综上，我们可以描述整个训练过程，对于每一次迭代：</p>
+<ul>
+<li>从真实数据分布 $P_{data}$ 抽取 m 个样本</li>
+<li>从先验分布$P_{prior}(z)$ 抽取 m 个噪声样本</li>
+<li>将噪声样本投入 G 而生成数据：$\left{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\right}, \tilde{x}^{i}=G\left(z^{i}\right)$ ，通过最大化 $V$ 的近似而更新判别器参数$θ<em>d$，即极大化 $\tilde{V}=\frac{1}{m} \sum</em>{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum<em>{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right)$ ，且判别器参数的更新迭代式为$\theta</em>{d} \leftarrow \theta<em>{d}+\eta \nabla \tilde{V}\left(\theta</em>{d}\right)$</li>
+</ul>
+<p>以上是学习判别器 $D$ 的过程。因为学习 $D$ 的过程是计算 $JS$ 散度的过程，并且我们希望能最大化价值函数，所以该步骤会重复 $k$ 次。</p>
+<ul>
+<li><p>从先验分布 $P_{prior}(z)$ 中抽取另外 m 个噪声样本 ${z^1,…,z^m}$</p>
+</li>
+<li><p>通过极小化 $\widetilde{V}$ 而更新生成器参数$θ_g$，即极小化 </p>
+<script type="math/tex; mode=display">
+\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(G\left(z^{i}\right)\right)\right)</script><p>且生成器参数的更新迭代式为</p>
+<script type="math/tex; mode=display">
+\theta_{g} \leftarrow \theta_{g}-\eta \nabla \tilde{V}\left(\theta_{g}\right)</script></li>
+</ul>
+<p>以上是学习生成器参数的过程，这一过程在一次迭代中只会进行一次，因此可以避免更新太多而令$ JS$ 散度上升。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>在上一期机器之心 GitHub 项目中，我们<a href="https://www.jiqizhixin.com/articles/2017-08-29-14">从零开始使用 TensorFlow 实现了简单的 CNN</a>，我们不仅介绍了 TensorFlow 基本的操作，并从全连接神经网络开始简单地实现了 LeNet-5。在第一期 GitHub 实现中，我们陆续上传了三段实现代码，第二次上传补充的是全连接网络进行 MNIST 图像识别，我们逐行注释了该模型的所有代码。第三次上传补充的是使用 Keras 构建简单的 CNN，我们同样添加了大量注释。本文是第二期 GitHub 实现，首先提供的是 GAN 实现代码与注释，随后我们会将以上的理论分析与实现代码相结合并展示在 Jupyter Notebook 中。虽然首次实现使用的是比较简单的高级 API（Keras），但后面我们会补充使用 TensorFlow 构建 GAN 的代码与注释。</p>
+<p>GitHub 实现地址：<a href="https://github.com/jiqizhixin/ML-Tutorial-Experiment">https://github.com/jiqizhixin/ML-Tutorial-Experiment</a></p>
+<p>机器之心首先使用基于 TensorFlow 后端的 Keras 实现了该生成对抗网络，并且我们在 MNIST 数据集上对模型进行训练并生成了一系列手写字体。这一章节只简要解释部分实现代码，更完整与详细的注释请查看 GitHub 项目地址。</p>
+<h4 id="生成模型"><a href="#生成模型" class="headerlink" title="生成模型"></a>生成模型</h4><p>首先需要定义一个生成器 $G$，该生成器需要将输入的随机噪声变换为图像。以下是定义的生成模型，该模型首先输入有 100 个元素的向量，该向量随机生成于某分布。随后利用两个全连接层接连将该输入向量扩展到 1024 维和 128<em>7</em>7 维，后面就开始将全连接层所产生的一维张量重新塑造成二维张量，即 MNIST 中的灰度图。我们注意到该模型采用的激活函数为 tanh，所以也尝试过将其转换为 relu 函数，但发现生成模型如果转化为 relu 函数，那么它的输出就会成为一片灰色。</p>
+<p>由全连接传递的数据会经过几个上采样层和卷积层，我们注意到最后一个卷积层所采用的卷积核为 1，所以经过最后卷积层所生成的图像是一张二维灰度图像，更详细的分析请查看机器之心 GitHub 项目。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">def generator_model():</span><br><span class="line">    #下面搭建生成器的架构，首先导入序贯模型（sequential），即多个网络层的线性堆叠</span><br><span class="line">    model = Sequential()</span><br><span class="line">    #添加一个全连接层，输入为100维向量，输出为1024维</span><br><span class="line">    model.add(Dense(input_dim=100, output_dim=1024))</span><br><span class="line">    #添加一个激活函数tanh</span><br><span class="line">    model.add(Activation(&#x27;tanh&#x27;))</span><br><span class="line">    #添加一个全连接层，输出为128×7×7维度</span><br><span class="line">    model.add(Dense(128*7*7))</span><br><span class="line">    #添加一个批量归一化层，该层在每个batch上将前一层的激活值重新规范化，即使得其输出数据的均值接近0，其标准差接近1</span><br><span class="line">    model.add(BatchNormalization())</span><br><span class="line">    model.add(Activation(&#x27;tanh&#x27;))</span><br><span class="line">    #Reshape层用来将输入shape转换为特定的shape，将含有128*7*7个元素的向量转化为7×7×128张量</span><br><span class="line">    model.add(Reshape((7, 7, 128), input_shape=(128*7*7,)))</span><br><span class="line">    #2维上采样层，即将数据的行和列分别重复2次</span><br><span class="line">    model.add(UpSampling2D(size=(2, 2)))</span><br><span class="line">    #添加一个2维卷积层，卷积核大小为5×5，激活函数为tanh，共64个卷积核，并采用padding以保持图像尺寸不变</span><br><span class="line">    model.add(Conv2D(64, (5, 5), padding=&#x27;same&#x27;))</span><br><span class="line">    model.add(Activation(&#x27;tanh&#x27;))</span><br><span class="line">    model.add(UpSampling2D(size=(2, 2)))</span><br><span class="line">    #卷积核设为1即输出图像的维度</span><br><span class="line">    model.add(Conv2D(1, (5, 5), padding=&#x27;same&#x27;))</span><br><span class="line">    model.add(Activation(&#x27;tanh&#x27;))</span><br><span class="line">    return model</span><br></pre></td></tr></table></figure>
+<h4 id="拼接"><a href="#拼接" class="headerlink" title="拼接"></a>拼接</h4><p>前面定义的是可生成图像的模型 $G(z;θ_g)$，而我们在训练生成模型时，需要固定判别模型 D 以极小化价值函数而寻求更好的生成模型，这就意味着我们需要将生成模型与判别模型拼接在一起，并固定 D 的权重以训练 G 的权重。下面就定义了这一过程，我们先添加前面定义的生成模型，再将定义的判别模型拼接在生成模型下方，并且我们将判别模型设置为不可训练。因此，训练这个组合模型才能真正更新生成模型的参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def generator_containing_discriminator(g, d):</span><br><span class="line">    #将前面定义的生成器架构和判别器架构组拼接成一个大的神经网络，用于判别生成的图片</span><br><span class="line">    model = Sequential()</span><br><span class="line">    #先添加生成器架构，再令d不可训练，即固定d</span><br><span class="line">    #因此在给定d的情况下训练生成器，即通过将生成的结果投入到判别器进行辨别而优化生成器</span><br><span class="line">    model.add(g)</span><br><span class="line">    d.trainable = False</span><br><span class="line">    model.add(d)</span><br><span class="line">    return model</span><br></pre></td></tr></table></figure>
+<h4 id="判别模型"><a href="#判别模型" class="headerlink" title="判别模型"></a>判别模型</h4><p>判别模型相对来说就是比较传统的图像识别模型，前面我们可以按照经典的方法采用几个卷积层与最大池化层，而后再展开为一维张量并采用几个全连接层作为架构。我们尝试了将 tanh 激活函数改为 relu 激活函数，在前两个 epoch 基本上没有什么明显的变化。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">def discriminator_model():</span><br><span class="line">    #下面搭建判别器架构，同样采用序贯模型</span><br><span class="line">    model = Sequential()</span><br><span class="line">    </span><br><span class="line">    #添加2维卷积层，卷积核大小为5×5，激活函数为tanh，输入shape在‘channels_first’模式下为（samples,channels，rows，cols）</span><br><span class="line">    #在‘channels_last’模式下为（samples,rows,cols,channels），输出为64维</span><br><span class="line">    model.add(</span><br><span class="line">            Conv2D(64, (5, 5),</span><br><span class="line">            padding=&#x27;same&#x27;,</span><br><span class="line">            input_shape=(28, 28, 1))</span><br><span class="line">            )</span><br><span class="line">    model.add(Activation(&#x27;tanh&#x27;))</span><br><span class="line">    #为空域信号施加最大值池化，pool_size取（2，2）代表使图片在两个维度上均变为原长的一半</span><br><span class="line">    model.add(MaxPooling2D(pool_size=(2, 2)))</span><br><span class="line">    model.add(Conv2D(128, (5, 5)))</span><br><span class="line">    model.add(Activation(&#x27;tanh&#x27;))</span><br><span class="line">    model.add(MaxPooling2D(pool_size=(2, 2)))</span><br><span class="line">    #Flatten层把多维输入一维化，常用在从卷积层到全连接层的过渡</span><br><span class="line">    model.add(Flatten())</span><br><span class="line">    model.add(Dense(1024))</span><br><span class="line">    model.add(Activation(&#x27;tanh&#x27;))</span><br><span class="line">    #一个结点进行二值分类，并采用sigmoid函数的输出作为概念</span><br><span class="line">    model.add(Dense(1))</span><br><span class="line">    model.add(Activation(&#x27;sigmoid&#x27;))</span><br><span class="line">    return model</span><br></pre></td></tr></table></figure>
+<h4 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h4><p>训练这一部分比较长，也值得我们进行详细的探讨。总的来说，以下训练过程可简述为：</p>
+<ul>
+<li>加载 MNIST 数据</li>
+<li>将数据分割为训练与测试集，并赋值给变量</li>
+<li>设置训练模型的超参数</li>
+<li>编译模型的训练过程</li>
+<li>在每一次迭代内，抽取生成图像与真实图像，并打上标注</li>
+<li>随后将数据投入到判别模型中，并进行训练与计算损失</li>
+<li>固定判别模型，训练生成模型并计算损失，结束这一次迭代</li>
+</ul>
+<p>以上是下面训练过程的简要介绍，我们将结合上文的理论推导在 GitHub 中展示更详细的分析。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">def train(BATCH_SIZE):</span><br><span class="line">    </span><br><span class="line">    # 国内好像不能直接导入数据集，我们试了几次都不行，后来将数据集下载到本地&#x27;~/.keras/datasets/&#x27;，也就是当前目录（我的是用户文件夹下）下的.keras文件夹中。</span><br><span class="line">    #下载的地址为：https://s3.amazonaws.com/img-datasets/mnist.npz</span><br><span class="line">    (X_train, y_train), (X_test, y_test) = mnist.load_data()</span><br><span class="line">    #iamge_data_format选择&quot;channels_last&quot;或&quot;channels_first&quot;，该选项指定了Keras将要使用的维度顺序。</span><br><span class="line">    #&quot;channels_first&quot;假定2D数据的维度顺序为(channels, rows, cols)，3D数据的维度顺序为(channels, conv_dim1, conv_dim2, conv_dim3)</span><br><span class="line">    </span><br><span class="line">    #转换字段类型，并将数据导入变量中</span><br><span class="line">    X_train = (X_train.astype(np.float32) - 127.5)/127.5</span><br><span class="line">    X_train = X_train[:, :, :, None]</span><br><span class="line">    X_test = X_test[:, :, :, None]</span><br><span class="line">    # X_train = X_train.reshape((X_train.shape, 1) + X_train.shape[1:])</span><br><span class="line">    </span><br><span class="line">    #将定义好的模型架构赋值给特定的变量</span><br><span class="line">    d = discriminator_model()</span><br><span class="line">    g = generator_model()</span><br><span class="line">    d_on_g = generator_containing_discriminator(g, d)</span><br><span class="line">    </span><br><span class="line">    #定义生成器模型判别器模型更新所使用的优化算法及超参数</span><br><span class="line">    d_optim = SGD(lr=0.001, momentum=0.9, nesterov=True)</span><br><span class="line">    g_optim = SGD(lr=0.001, momentum=0.9, nesterov=True)</span><br><span class="line">    </span><br><span class="line">    #编译三个神经网络并设置损失函数和优化算法，其中损失函数都是用的是二元分类交叉熵函数。编译是用来配置模型学习过程的</span><br><span class="line">    g.compile(loss=&#x27;binary_crossentropy&#x27;, optimizer=&quot;SGD&quot;)</span><br><span class="line">    d_on_g.compile(loss=&#x27;binary_crossentropy&#x27;, optimizer=g_optim)</span><br><span class="line">    </span><br><span class="line">    #前一个架构在固定判别器的情况下训练了生成器，所以在训练判别器之前先要设定其为可训练。</span><br><span class="line">    d.trainable = True</span><br><span class="line">    d.compile(loss=&#x27;binary_crossentropy&#x27;, optimizer=d_optim)</span><br><span class="line">    </span><br><span class="line">    #下面在满足epoch条件下进行训练</span><br><span class="line">    for epoch in range(30):</span><br><span class="line">        print(&quot;Epoch is&quot;, epoch)</span><br><span class="line">        </span><br><span class="line">        #计算一个epoch所需要的迭代数量，即训练样本数除批量大小数的值取整；其中shape[0]就是读取矩阵第一维度的长度</span><br><span class="line">        print(&quot;Number of batches&quot;, int(X_train.shape[0]/BATCH_SIZE))</span><br><span class="line">        </span><br><span class="line">        #在一个epoch内进行迭代训练</span><br><span class="line">        for index in range(int(X_train.shape[0]/BATCH_SIZE)):</span><br><span class="line">            </span><br><span class="line">            #随机生成的噪声服从均匀分布，且采样下界为-1、采样上界为1，输出BATCH_SIZE×100个样本；即抽取一个批量的随机样本</span><br><span class="line">            noise = np.random.uniform(-1, 1, size=(BATCH_SIZE, 100))</span><br><span class="line">            </span><br><span class="line">            #抽取一个批量的真实图片</span><br><span class="line">            image_batch = X_train[index*BATCH_SIZE:(index+1)*BATCH_SIZE]</span><br><span class="line">            </span><br><span class="line">            #生成的图片使用生成器对随机噪声进行推断；verbose为日志显示，0为不在标准输出流输出日志信息，1为输出进度条记录</span><br><span class="line">            generated_images = g.predict(noise, verbose=0)</span><br><span class="line">            </span><br><span class="line">            #每经过100次迭代输出一张生成的图片</span><br><span class="line">            if index % 100 == 0:</span><br><span class="line">                image = combine_images(generated_images)</span><br><span class="line">                image = image*127.5+127.5</span><br><span class="line">                Image.fromarray(image.astype(np.uint8)).save(</span><br><span class="line">                    &quot;./GAN/&quot;+str(epoch)+&quot;_&quot;+str(index)+&quot;.png&quot;)</span><br><span class="line">            </span><br><span class="line">            #将真实的图片和生成的图片以多维数组的形式拼接在一起，真实图片在上，生成图片在下</span><br><span class="line">            X = np.concatenate((image_batch, generated_images))</span><br><span class="line">            </span><br><span class="line">            #生成图片真假标签，即一个包含两倍批量大小的列表；前一个批量大小都是1，代表真实图片，后一个批量大小都是0，代表伪造图片</span><br><span class="line">            y = [1] * BATCH_SIZE + [0] * BATCH_SIZE</span><br><span class="line">            </span><br><span class="line">            #判别器的损失；在一个batch的数据上进行一次参数更新</span><br><span class="line">            d_loss = d.train_on_batch(X, y)</span><br><span class="line">            print(&quot;batch %d d_loss : %f&quot; % (index, d_loss))</span><br><span class="line">            </span><br><span class="line">            #随机生成的噪声服从均匀分布</span><br><span class="line">            noise = np.random.uniform(-1, 1, (BATCH_SIZE, 100))</span><br><span class="line">            </span><br><span class="line">            #固定判别器</span><br><span class="line">            d.trainable = False</span><br><span class="line">            </span><br><span class="line">            #计算生成器损失；在一个batch的数据上进行一次参数更新</span><br><span class="line">            g_loss = d_on_g.train_on_batch(noise, [1] * BATCH_SIZE)</span><br><span class="line">            </span><br><span class="line">            #令判别器可训练</span><br><span class="line">            d.trainable = True</span><br><span class="line">            print(&quot;batch %d g_loss : %f&quot; % (index, g_loss))</span><br><span class="line">            </span><br><span class="line">            #每100次迭代保存一次生成器和判别器的权重</span><br><span class="line">            if index % 100 == 9:</span><br><span class="line">                g.save_weights(&#x27;generator&#x27;, True)</span><br><span class="line">                d.save_weights(&#x27;discriminator&#x27;, True)</span><br></pre></td></tr></table></figure>
+<h4 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h4><p>在实践中，我们训练 30 个 epoch 后能得到如下不错的生成结果：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/15268image%20(39" alt="img">1.png)</p>
+<p>当然，中间我们还发现很多训练上的问题，比如说学习率、批量大小、激活函数等。学习率一般我们设置为 0.001 到 0.0005，其它的学习率还有很多没有测试。批量大小我们使用的比较小，例如 16、32、64 等，较小的批量大小可能训练的 epoch 数就不需要那么多。我们发现若将生成模型的激活函数修改为 relu，那么生成的图像很可能会显示为一片灰色，生成模型和判别模型的训练损失可能会表现为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#batch_size=32</span><br><span class="line">batch 2000 d_loss : 0.000318</span><br><span class="line">batch 2000 g_loss : 7.618911</span><br></pre></td></tr></table></figure>
+<p>以上是在迭代 2000 次后所出现的情况，判别模型的损失一直在下降，而生成模型的损失一直在上升。而正常情况下，我发现生成模型的损失和判别模型的损失会在一定范围内交替上升与下降，而迭代 2000 次后训练损失情况为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#batch_size=36</span><br><span class="line">batch 2000 g_loss : 1.663281</span><br><span class="line">batch 2000 d_loss : 0.483616</span><br></pre></td></tr></table></figure>
+<p>此外，我们还发现很多出现问题的生成模式，比如说如下生成结果更多是倾向于 0 与 1：</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/99121image%20(39" alt="img">2.png)</p>
+<p>最后，附上我们结束训练的标志。</p>
+<p><img src="https://image.jiqizhixin.com/uploads/wangeditor/a9b99e30-7d09-49fc-a400-79a57434c20d/13589image%20(40" alt="img">.png)</p>
+<p>参考文献：</p>
+<ul>
+<li>生成对抗网络原论文：<a href="https://arxiv.org/pdf/1406.2661.pdf">https://arxiv.org/pdf/1406.2661.pdf</a></li>
+<li>Goodfellow NIPS 2016 Tutorial：<a href="https://arxiv.org/abs/1701.00160">https://arxiv.org/abs/1701.00160</a></li>
+<li>李宏毅 MLDS17：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_MLDS17.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_MLDS17.html</a></li>
+<li>Scott Rome GAN 推导：<a href="http://srome.github.io//An-Annotated-Proof-of-Generative-Adversarial-Networks-with-Implementation-Notes/">http://srome.github.io//An-Annotated-Proof-of-Generative-Adversarial-Networks-with-Implementation-Notes/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/16/bootstrap/" rel="prev" title="bootstrap">
+      <i class="fa fa-chevron-left"></i> bootstrap
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/20/PCA/" rel="next" title="PCA">
+      PCA <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E4%B9%8B%E5%BF%83GitHub%E9%A1%B9%E7%9B%AE%EF%BC%9AGAN%E5%AE%8C%E6%95%B4%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0%EF%BC%8CPerfect%EF%BC%81"><span class="nav-number">1.</span> <span class="nav-text">机器之心GitHub项目：GAN完整理论推导与实现，Perfect！</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.0.1.</span> <span class="nav-text">生成对抗网络基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%E4%B8%8E%E8%BF%87%E7%A8%8B%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8C%96"><span class="nav-number">1.0.2.</span> <span class="nav-text">概念与过程的形式化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E5%AE%8C%E7%BE%8E%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">理论完美的生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">最优化问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.0.3.</span> <span class="nav-text">理论推导</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#KL-%E6%95%A3%E5%BA%A6"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">KL 散度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A8%E5%AF%BC%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">推导存在的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E4%BC%98%E5%88%A4%E5%88%AB%E5%99%A8"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">最优判别器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E4%BC%98%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">最优生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%B6%E6%95%9B"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">收敛</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E8%BF%B0%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">重述训练过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.0.4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">生成模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">拼接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.0.4.3.</span> <span class="nav-text">判别模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83"><span class="nav-number">1.0.4.4.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%95%E9%AA%8C"><span class="nav-number">1.0.4.5.</span> <span class="nav-text">试验</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

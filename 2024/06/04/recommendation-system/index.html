@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用Embedding策略在各种任务场景中提取用户信息的paper《Modeling User Activities on the Web using Paragraph Vector》:用户在浏览网页的时候会留下来一系列的行为，比方说网页浏览，搜索问题，点击广告等，设用户$i$留下的 $T$个行为表示为$(a{i,1},a{i,2}….,a_{i,Ti})$ )。我们希望根据所有的用户行为数据，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="recommendation_system">
+<meta property="og:url" content="http://yoursite.com/2024/06/04/recommendation-system/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="使用Embedding策略在各种任务场景中提取用户信息的paper《Modeling User Activities on the Web using Paragraph Vector》:用户在浏览网页的时候会留下来一系列的行为，比方说网页浏览，搜索问题，点击广告等，设用户$i$留下的 $T$个行为表示为$(a{i,1},a{i,2}….,a_{i,Ti})$ )。我们希望根据所有的用户行为数据，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-06-04T07:13:36.000Z">
+<meta property="article:modified_time" content="2025-05-19T13:38:29.895Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2024/06/04/recommendation-system/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>recommendation_system | Vin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/06/04/recommendation-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          recommendation_system
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-04 15:13:36" itemprop="dateCreated datePublished" datetime="2024-06-04T15:13:36+08:00">2024-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-19 21:38:29" itemprop="dateModified" datetime="2025-05-19T21:38:29+08:00">2025-05-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>使用Embedding策略在各种任务场景中提取用户信息的paper<br>《Modeling User Activities on the Web using Paragraph Vector》<br>:用户在浏览网页的时候会留下来一系列的行为，比方说网页浏览，搜索问题，点击广告等，设用户$i$留下的 $T$个行为表示为$(a<em>{i,1},a</em>{i,2}….,a_{i,Ti})$<br> )。我们希望根据所有的用户行为数据，生成表征每一个用户的向量，使具有相同行为序列的用户被映射到相似的向量空间之中。我们希望根据所有的用户行为数据，生成表征每一个用户的向量，使具有相同行为序列的用户被映射到相似的向量空间之中。<br>该论文借鉴了skip-gram 的思想</p>
+<h2 id="Deep-amp-Cross-Network-for-Ad-Click-Predictions"><a href="#Deep-amp-Cross-Network-for-Ad-Click-Predictions" class="headerlink" title="Deep &amp; Cross Network for Ad Click Predictions"></a>Deep &amp; Cross Network for Ad Click Predictions</h2><p><a href="https://blog.csdn.net/Dby_freedom/article/details/86502623">https://blog.csdn.net/Dby_freedom/article/details/86502623</a><br><a href="https://blog.csdn.net/qq_40778406/article/details/105009989">https://blog.csdn.net/qq_40778406/article/details/105009989</a><br><a href="https://www.cnblogs.com/LuckPsyduck/p/11995230.html">https://www.cnblogs.com/LuckPsyduck/p/11995230.html</a><br><a href="https://zhuanlan.zhihu.com/p/96010464">https://zhuanlan.zhihu.com/p/96010464</a></p>
+<span id="more"></span>
+<h2 id="RankNet"><a href="#RankNet" class="headerlink" title="RankNet"></a>RankNet</h2><p><a href="https://www.cnblogs.com/kemaswill/p/kemaswill.html">https://www.cnblogs.com/kemaswill/p/kemaswill.html</a></p>
+<script type="math/tex; mode=display">C_{i j}=-\bar{P}_{i j} o_{i j}+\log \left(1+e^{o_{i j}}\right)</script><p> 2019-09-06 15:37:39<br>vin word2vec # word2vec</p>
+<p>标签（空格分隔）： word2vec</p>
+<hr>
+<p>![word2word][1]<br>对于上图，以前直觉对于skip-gram模型，有这样一个疑问<br>比如：<br>词汇表有V个，所以我们的输入是V-dimension的向量，对于句子：<br>“what are you doing now”<br>对于skip-gram方式：<br>输入 x 是 you 的one-hot向量，<br>输出 y 是 V 维度向量，这个向量可以直接把what, are, doing, now四个词的index位置点亮唯1，然后计算损失函数，这样的方式不是更好吗？</p>
+<p>某天回看word2vec模型结构图突然明白，这是不合理的，因为context是有“序”的信息的，如果类似bag-of-words的方式处理，所达到的效果<strong>只关注word是否出现，而丢掉了序的信息</strong>。<br>所以正确的网络结构应该是这样的：<br>![skip-gram][2]</p>
+<p>  [2]: <a href="https://pic1.zhimg.com/80/v2-ca81e19caa378cee6d4ba6d867f4fc7c_hd.jpg">https://pic1.zhimg.com/80/v2-ca81e19caa378cee6d4ba6d867f4fc7c_hd.jpg</a> 2019-09-12 10:25:43</p>
+<h2 id="CTR"><a href="#CTR" class="headerlink" title="CTR"></a>CTR</h2><h3 id="Deep-Interest-Network"><a href="#Deep-Interest-Network" class="headerlink" title="Deep Interest Network"></a>Deep Interest Network</h3><p>《Deep Interest Network for Click-Through Rate Prediction》<br><a href="https://mp.weixin.qq.com/s/V6tjQzfzsekXuoXhbXbKSQ">【传送门】</a></p>
+<p><strong>总结</strong>：</p>
+<ol>
+<li><p>用户有多个兴趣爱好，访问了多个 good_id，shop_id。为了降低纬度并使得商品店铺间的算术运算有意义，我们先对其进行 Embedding 嵌入。那么我们如何对用户多种多样的兴趣建模那？使用 Pooling 对 Embedding Vector 求和或者求平均。同时这也解决了不同用户输入长度不同的问题，得到了一个固定长度的向量。这个向量就是用户表示，是用户兴趣的代表。</p>
+</li>
+<li><p>但是，直接求 sum 或 average 损失了很多信息。所以稍加改进，针对不同的 behavior id 赋予不同的权重，这个权重是由当前 behavior id 和候选广告共同决定的。这就是 Attention 机制，实现了 Local Activation。</p>
+</li>
+<li><p>DIN 使用 <strong>activation unit</strong> 来捕获 <strong>local activation</strong> 的特征，使用 <strong>weighted sum pooling</strong> 来捕获 <strong>diversity</strong> 结构。</p>
+</li>
+<li><p>在模型学习优化上，DIN 提出了 Dice 激活函数、自适应正则 ，显著的提升了模型性能与收敛速度。</p>
+</li>
+</ol>
+<p>参考资料</p>
+<ol>
+<li><p>Deep Interest Network for Click-Through Rate Prediction</p>
+</li>
+<li><p>Learning piece-wise linear models from large scale data for ad click prediction</p>
+</li>
+<li><p><a href="https://www.leiphone.com/news/201707/t0AT4sIgyWS2QWVU.html">https://www.leiphone.com/news/201707/t0AT4sIgyWS2QWVU.html</a></p>
+</li>
+<li><p><a href="https://www.leiphone.com/news/201706/pDfOAoMYp8mqNKEC.html">https://www.leiphone.com/news/201706/pDfOAoMYp8mqNKEC.html</a></p>
+</li>
+<li><p>盖坤的分享视频 <a href="http://www.itdks.com/dakalive/detail/3166">http://www.itdks.com/dakalive/detail/3166</a></p>
+</li>
+</ol>
+<h2 id="BPR"><a href="#BPR" class="headerlink" title="BPR"></a>BPR</h2><script type="math/tex; mode=display">
+\begin{aligned}
+\text { BPR-OPT } &:=\ln p\left(\Theta \mid>_{u}\right) \\
+&=\ln p\left(>_{u} \mid \Theta\right) p(\Theta) \\
+&=\ln \prod_{(u, i, j) \in D_{S}} \sigma\left(\hat{x}_{u i j}\right) p(\Theta) \\
+&=\sum_{(u, i, j) \in D_{S}} \ln \sigma\left(\hat{x}_{u i j}\right)+\ln p(\Theta) \\
+&=\sum_{(u, i, j) \in D_{S}} \ln \sigma\left(\hat{x}_{u i j}\right)-\lambda_{\Theta}\|\Theta\|^{2}
+\end{aligned}</script><p>Here $\hat{x}_{u i j}(\Theta)$ is an arbitrary real-valued function of<br>the model parameter vector $\Theta$ which captures the special relationship between user $u$, item $i$ and item $j$.</p>
+<p>Here,$&gt;u$  is the desired but latent preference structure<br>for user u. All users are presumed to act independently<br>of each other.</p>
+<p><a href="https://cloud.tencent.com/developer/article/1164759">https://cloud.tencent.com/developer/article/1164759</a><br>排序推荐算法大体上可以分为三类，第一类排序算法类别是点对方法(Pointwise Approach)，这类算法将排序问题被转化为分类、回归之类的问题，并使用现有分类、回归等方法进行实现。第二类排序算法是成对方法(Pairwise Approach)，在序列方法中，排序被转化为对序列分类或对序列回归。所谓的pair就是成对的排序，比如(a,b)一组表明a比b排的靠前。第三类排序算法是列表方法(Listwise Approach)，它采用更加直接的方法对排序问题进行了处理。它在学习和预测过程中都将排序列表作为一个样本。排序的组结构被保持<br>我们构造的训练数据是<u,i,j>的三元组，i可以根据刚才生成的用户评分字典得到，j可以利用负采样的思想，认为用户没有看过的电影都是负样本：</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1.BPR是基于矩阵分解的一种排序算法，它不是做全局的评分优化，而是针对每一个用户自己的商品喜好分贝做排序优化。<br>2.它是一种<strong>pairwise</strong>的排序算法，对于每一个三元组<u,i,j>，模型希望能够使用户u对物品i和j的差异更明显。<br>3.同时，引入了<strong>贝叶斯先验</strong>，假设参数服从正态分布，在转换后变为了L2正则，减小了模型的过拟合</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/04/hive/" rel="prev" title="hive">
+      <i class="fa fa-chevron-left"></i> hive
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/04/tensorflow/" rel="next" title="tensorflow">
+      tensorflow <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-amp-Cross-Network-for-Ad-Click-Predictions"><span class="nav-number">1.</span> <span class="nav-text">Deep &amp; Cross Network for Ad Click Predictions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RankNet"><span class="nav-number">2.</span> <span class="nav-text">RankNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CTR"><span class="nav-number">3.</span> <span class="nav-text">CTR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-Interest-Network"><span class="nav-number">3.1.</span> <span class="nav-text">Deep Interest Network</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BPR"><span class="nav-number">4.</span> <span class="nav-text">BPR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

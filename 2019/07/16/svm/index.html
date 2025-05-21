@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="以前常会疑惑：  \begin{equation} w^T\cdot x + b &#x3D; 0 \tag{1} \end{equation}为什么他可以确定一条直线，以及为什么其作为分割面后 &gt; 0 和 &lt;0 就可以作为分类？ 首先我们考虑如何确定一条直线，给定一个法向量$w$，会有无数个直线与其垂直正交，我们要的那一条如何唯一表示呢？其实很简单，找一个点就行，只需要这一个点，再加这一个法向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="svm 随时感想">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/svm/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="以前常会疑惑：  \begin{equation} w^T\cdot x + b &#x3D; 0 \tag{1} \end{equation}为什么他可以确定一条直线，以及为什么其作为分割面后 &gt; 0 和 &lt;0 就可以作为分类？ 首先我们考虑如何确定一条直线，给定一个法向量$w$，会有无数个直线与其垂直正交，我们要的那一条如何唯一表示呢？其实很简单，找一个点就行，只需要这一个点，再加这一个法向">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-16T01:28:31.000Z">
+<meta property="article:modified_time" content="2025-05-19T13:38:29.897Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="svm, machine learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/07/16/svm/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>svm 随时感想 | Vin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/svm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          svm 随时感想
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-16 09:28:31" itemprop="dateCreated datePublished" datetime="2019-07-16T09:28:31+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-19 21:38:29" itemprop="dateModified" datetime="2025-05-19T21:38:29+08:00">2025-05-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以前常会疑惑：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+w^T\cdot x + b = 0 \tag{1}
+\end{equation}</script><p>为什么他可以确定一条直线，以及为什么其作为分割面后 &gt; 0 和 &lt;0 就可以作为分类？</p>
+<p>首先我们考虑如何确定一条直线，给定一个法向量$w$，会有无数个直线与其垂直正交，我们要的那一条如何唯一表示呢？其实很简单，找一个点就行，只需要这一个点，再加这一个法向量，一条直线就完全确定了。</p>
+<p>假设  $a = (a_1, a_2，a_3)^T$ 是三维空间的一个点:</p>
+<script type="math/tex; mode=display">
+w^T\cdot (x-a) = 0 \tag{2}</script><p>可以确定一条直线，这是两个向量的乘积。$w$和$a$都是常量，所以展开后会生成一个常数项，即（1）式的 $b$， 最后形式就是 (1)。</p>
+<p>值得注意的是：n维空间的一个分割超平面是n-1维的，减少了一维的降维打击。即3维立体空间：分割面为2维平面；2维平面：分割面为一维直线，1维直线：分个面为一个点。例如：$y = kx + b$是一维的，原因是$y$受$x$控制。$ax + by + cz = 0$是2维的是因为任选一维都是受另外两维控制，非自由的，这一点和线性代数的最大无关向量组很像。</p>
+<p>接上面的说，对于式子（1），其确定一条直线，两边的点带入要么大于零，要么小于零，直观去想为什么呢？</p>
+<p>其实很简单，对于给定点$a$， 所有<strong>基于a的向量</strong>，可以分为三类：</p>
+<ul>
+<li><p>与$w^T$相乘等于零的，过a点且垂直与法向量$w$</p>
+</li>
+<li><p>与$w^T$相乘小于零的，过a点且与法向量$w$夹角小于90度的，比如说postive sample</p>
+</li>
+<li>与$w^T$相乘大于零的，过a点且与法向量$w$夹角大于90度的，比如说negative sample</li>
+</ul>
+<p>这样就很直观明显了。</p>
+<span id="more"></span>
+<h2 id="Hinge-Loss"><a href="#Hinge-Loss" class="headerlink" title="Hinge Loss"></a>Hinge Loss</h2><p>在机器学习中，<strong>hinge loss</strong>作为一个损失函数(loss function)，通常被用于最大间隔算法。在SVM定义损失函数</p>
+<script type="math/tex; mode=display">
+\ell(y) = \max(0, 1-y \cdot \hat y)</script><p>定义这样的损失函数是因为svm算法有一个需求，<strong>样本被分对且离分割面越远越好</strong>。</p>
+<p>对于分类正确且远离分割面的样本，我们希望损失贡献最小或为0；而对于分类器难以分辨的样本，我们希望其损失贡献最大。基于这些需求，我们采用了hinge loss function.</p>
+<h2 id="Old-Notes-from-zybuluo"><a href="#Old-Notes-from-zybuluo" class="headerlink" title="Old Notes from zybuluo"></a>Old Notes from zybuluo</h2><p>&emsp;当通过最小化损失函数后学习到W，找到一个适合的超平面时，可能会出现无数个符合要求的W矩阵，即任何的$\lambda W$都代表这个平面，然而Loss function却不这样，他会随着$\lambda W$而称量级或倍数改变，例如：当$\lambda =2$ 时，假设一个“正确类”和一个离其最近的“非正确类”的距离$L$是15，由于所有$W$均乘以一个值为2的倍数，导致新距离$L$变为了30，但其实这两个$W$代表的分割面（或超平面）是一个东东。<br>可以在loss function中加入regularization penalty -&gt;R(W)，以去除歧义.</p>
+<script type="math/tex; mode=display">L = \frac{1}{N} \sum_i \sum_{j\neq y_i} \left[ \max(0, f(x_i; W)_j - f(x_i; W)_{y_i} + \Delta) \right] + \lambda \sum_k\sum_l W_{k,l}^2  \tag{1}</script><p>$R(W)$有几类，此处使用了$L2$ norm(应该是$L^2$ <a href="http://en.wikipedia.org/wiki/Norm_%28mathematics%29#Euclidean_norm">norm</a>)<br> &emsp;上式中，对于多分类的SVM加入了一个regularization作为惩罚penalty.从我的理解来看，由于加入了regularization,任何$\lambda &gt;1$的W都将被剔除，因为在 $L$ 函数中，这些同义的$W$会加大regularization因子。<br> &emsp;<em>ps:</em>对于hyperparameter $\lambda$ 的取值需要使用cross-validation来确定。<br> &emsp;The most appealing property is that penalizing large weights tends to improve generalization此段描述不明确？</p>
+<pre><code>#向量化的lost function 
+def L_i_vectorized(x, y, W):
+  &quot;&quot;&quot; 
+  A faster half-vectorized implementation. half-vectorized
+  refers to the fact that for a single example the implementation contains
+  no for loops, but there is still one loop over the examples (outside this function)
+  &quot;&quot;&quot; 
+  delta = 1.0
+  scores = W.dot(x)
+  # compute the margins for all classes in one vector operation
+  margins = np.maximum(0, scores - scores[y] + delta)
+  # on y-th position scores[y] - scores[y] canceled and gave delta. We want
+  # to ignore the y-th position and only consider margin on max wrong class
+  margins[y] = 0 
+  loss_i = np.sum(margins)
+  return loss_i
+</code></pre><p> &emsp;”Additionally, making good predictions on the training set is equivalent to minimizing the loss.”</p>
+<h2 id="Practical-Considerations"><a href="#Practical-Considerations" class="headerlink" title="Practical Considerations"></a>Practical Considerations</h2><h3 id="delta的设置"><a href="#delta的设置" class="headerlink" title="delta的设置"></a>delta的设置</h3><p>&emsp;delta和 $\lambda$ 有些不同,delta的含义是 “the exact value of the margin between the scores.” 在损失函数中，测试$\Delta = 1.0$ or $\Delta = 100.0$并没有太大意义，因为W是可以缩放的，这也导致在表达式中</p>
+<script type="math/tex; mode=display">L_i = \sum_{j\neq y_i} \max(0, w_j^T x_i - w_{y_i}^T x_i + \Delta)</script><p>&emsp;预测值scores的差异量 $w<em>j^T x_i - w</em>{y_i}^T x_i$是可以缩放到任意值的，$\lambda$只是确保了权重W最大可以扩展到什么量级。比如说，当 $\lambda=1$ 时，所有 $\lambda &gt; 1$ 的 $\lambda W$ 取值都会被剔除，而当$\lambda &lt; 1$是可以缩小差异量的，</p>
+<h3 id="和2分类的SVM"><a href="#和2分类的SVM" class="headerlink" title="和2分类的SVM"></a>和2分类的SVM</h3><script type="math/tex; mode=display">L_i = C \max(0, 1 - y_i w^Tx_i) + R(W)</script><p>&emsp;二分类的SVM可以看做是多分类SVM的特例,在这里 $y_i \in { -1,1 }$。上述式子是第i个example的Loss,描述一下，例如，当 $x_i$ 被正确分类是，$y_i$和 $x_i$ 同号，相乘后 $y_i w^Tx_i$ 为正数，从而max()第二项是小于1且应该趋向于零的。在$L_i$中，$C$与(1)中的 $\lambda$ 成反比。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/svm-machine-learning/" rel="tag"># svm, machine learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/13/style-transform/" rel="prev" title="Style tranform">
+      <i class="fa fa-chevron-left"></i> Style tranform
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/19/HMM/" rel="next" title="HMM（Hidden Markov Model)">
+      HMM（Hidden Markov Model) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hinge-Loss"><span class="nav-number">1.</span> <span class="nav-text">Hinge Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Old-Notes-from-zybuluo"><span class="nav-number">2.</span> <span class="nav-text">Old Notes from zybuluo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Practical-Considerations"><span class="nav-number">3.</span> <span class="nav-text">Practical Considerations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#delta%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">delta的设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8C2%E5%88%86%E7%B1%BB%E7%9A%84SVM"><span class="nav-number">3.2.</span> <span class="nav-text">和2分类的SVM</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
