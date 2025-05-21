@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="pyspark APIhttps:&#x2F;&#x2F;spark.apache.org&#x2F;docs&#x2F;2.2.1&#x2F;api&#x2F;python&#x2F;search.html?q&#x3D;dataframe.write 简明教程https:&#x2F;&#x2F;sparkbyexamples.com&#x2F;pyspark&#x2F;pyspark-orderby-and-sort-explained&#x2F;http:&#x2F;&#x2F;www.learnbymarketing.com&#x2F;1100&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spark">
+<meta property="og:url" content="http://yoursite.com/2024/06/04/spark/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="pyspark APIhttps:&#x2F;&#x2F;spark.apache.org&#x2F;docs&#x2F;2.2.1&#x2F;api&#x2F;python&#x2F;search.html?q&#x3D;dataframe.write 简明教程https:&#x2F;&#x2F;sparkbyexamples.com&#x2F;pyspark&#x2F;pyspark-orderby-and-sort-explained&#x2F;http:&#x2F;&#x2F;www.learnbymarketing.com&#x2F;1100&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://spark.apache.org/docs/latest/img/cluster-overview.png">
+<meta property="article:published_time" content="2024-06-04T06:51:08.000Z">
+<meta property="article:modified_time" content="2025-05-19T13:38:29.895Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://spark.apache.org/docs/latest/img/cluster-overview.png">
+
+<link rel="canonical" href="http://yoursite.com/2024/06/04/spark/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>spark | Vin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/06/04/spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spark
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-04 14:51:08" itemprop="dateCreated datePublished" datetime="2024-06-04T14:51:08+08:00">2024-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-19 21:38:29" itemprop="dateModified" datetime="2025-05-19T21:38:29+08:00">2025-05-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="pyspark-API"><a href="#pyspark-API" class="headerlink" title="pyspark API"></a>pyspark API</h2><p><a href="https://spark.apache.org/docs/2.2.1/api/python/search.html?q=dataframe.write">https://spark.apache.org/docs/2.2.1/api/python/search.html?q=dataframe.write</a></p>
+<h2 id="简明教程"><a href="#简明教程" class="headerlink" title="简明教程"></a>简明教程</h2><p><a href="https://sparkbyexamples.com/pyspark/pyspark-orderby-and-sort-explained/">https://sparkbyexamples.com/pyspark/pyspark-orderby-and-sort-explained/</a><br><a href="http://www.learnbymarketing.com/1100/pyspark-joins-by-example/">http://www.learnbymarketing.com/1100/pyspark-joins-by-example/</a></p>
+<span id="more"></span>
+<h2 id="Spark调优"><a href="#Spark调优" class="headerlink" title="Spark调优"></a>Spark调优</h2><p><a href="https://tech.meituan.com/2016/04/29/spark-tuning-basic.html">https://tech.meituan.com/2016/04/29/spark-tuning-basic.html</a><br>资源参数调优<br>了解完了Spark作业运行的基本原理之后，对资源相关的参数就容易理解了。所谓的Spark资源参数调优，其实主要就是对Spark运行过程中各个使用资源的地方，通过调节各种参数，来优化资源使用的效率，从而提升Spark作业的执行性能。以下参数就是Spark中主要的资源参数，每个参数都对应着作业运行原理中的某个部分，我们同时也给出了一个调优的参考值。</p>
+<ul>
+<li>num-executors<br>参数说明：该参数用于设置Spark作业总共要用多少个Executor进程来执行。Driver在向YARN集群管理器申请资源时，YARN集群管理器会尽可能按照你的设置来在集群的各个工作节点上，启动相应数量的Executor进程。这个参数非常之重要，如果不设置的话，默认只会给你启动少量的Executor进程，此时你的Spark作业的运行速度是非常慢的。<br>参数调优建议：每个Spark作业的运行一般设置50~100个左右的Executor进程比较合适，设置太少或太多的Executor进程都不好。设置的太少，无法充分利用集群资源；设置的太多的话，大部分队列可能无法给予充分的资源。</li>
+<li>executor-memory<br>参数说明：该参数用于设置每个Executor进程的内存。Executor内存的大小，很多时候直接决定了Spark作业的性能，而且跟常见的JVM OOM异常，也有直接的关联。<br>参数调优建议：每个Executor进程的内存设置4G~8G较为合适。但是这只是一个参考值，具体的设置还是得根据不同部门的资源队列来定。可以看看自己团队的资源队列的最大内存限制是多少，num-executors乘以executor-memory，是不能超过队列的最大内存量的。此外，如果你是跟团队里其他人共享这个资源队列，那么申请的内存量最好不要超过资源队列最大总内存的1/3~1/2，避免你自己的Spark作业占用了队列所有的资源，导致别的同学的作业无法运行。</li>
+<li>executor-cores<br>参数说明：该参数用于设置每个Executor进程的CPU core数量。这个参数决定了每个Executor进程并行执行task线程的能力。因为每个CPU core同一时间只能执行一个task线程，因此每个Executor进程的CPU core数量越多，越能够快速地执行完分配给自己的所有task线程。<br>参数调优建议：Executor的CPU core数量设置为2~4个较为合适。同样得根据不同部门的资源队列来定，可以看看自己的资源队列的最大CPU core限制是多少，再依据设置的Executor数量，来决定每个Executor进程可以分配到几个CPU core。同样建议，如果是跟他人共享这个队列，那么num-executors * executor-cores不要超过队列总CPU core的1/3~1/2左右比较合适，也是避免影响其他同学的作业运行。</li>
+<li>driver-memory<br>参数说明：该参数用于设置Driver进程的内存。<br>参数调优建议：Driver的内存通常来说不设置，或者设置1G左右应该就够了。唯一需要注意的一点是，如果需要使用collect算子将RDD的数据全部拉取到Driver上进行处理，那么必须确保Driver的内存足够大，否则会出现OOM内存溢出的问题。</li>
+<li>spark.default.parallelism<br>参数说明：该参数用于设置每个stage的默认task数量。这个参数极为重要，如果不设置可能会直接影响你的Spark作业性能。<br>参数调优建议：Spark作业的默认task数量为500~1000个较为合适。很多同学常犯的一个错误就是不去设置这个参数，那么此时就会导致Spark自己根据底层HDFS的block数量来设置task的数量，默认是一个HDFS block对应一个task。通常来说，Spark默认设置的数量是偏少的（比如就几十个task），如果task数量偏少的话，就会导致你前面设置好的Executor的参数都前功尽弃。试想一下，无论你的Executor进程有多少个，内存和CPU有多大，但是task只有1个或者10个，那么90%的Executor进程可能根本就没有task执行，也就是白白浪费了资源！因此Spark官网建议的设置原则是，设置该参数为num-executors * executor-cores的2~3倍较为合适，比如Executor的总CPU core数量为300个，那么设置1000个task是可以的，此时可以充分地利用Spark集群的资源。</li>
+<li>spark.storage.memoryFraction<br>参数说明：该参数用于设置RDD持久化数据在Executor内存中能占的比例，默认是0.6。也就是说，默认Executor 60%的内存，可以用来保存持久化的RDD数据。根据你选择的不同的持久化策略，如果内存不够时，可能数据就不会持久化，或者数据会写入磁盘。<br>参数调优建议：如果Spark作业中，有较多的RDD持久化操作，该参数的值可以适当提高一些，保证持久化的数据能够容纳在内存中。避免内存不够缓存所有的数据，导致数据只能写入磁盘中，降低了性能。但是如果Spark作业中的shuffle类操作比较多，而持久化操作比较少，那么这个参数的值适当降低一些比较合适。此外，如果发现作业由于频繁的gc导致运行缓慢（通过spark web ui可以观察到作业的gc耗时），意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</li>
+<li>spark.shuffle.memoryFraction<br>参数说明：该参数用于设置shuffle过程中一个task拉取到上个stage的task的输出后，进行聚合操作时能够使用的Executor内存的比例，默认是0.2。也就是说，Executor默认只有20%的内存用来进行该操作。shuffle操作在进行聚合时，如果发现使用的内存超出了这个20%的限制，那么多余的数据就会溢写到磁盘文件中去，此时就会极大地降低性能。<br>参数调优建议：如果Spark作业中的RDD持久化操作较少，shuffle操作较多时，建议降低持久化操作的内存占比，提高shuffle操作的内存占比比例，避免shuffle过程中数据过多时内存不够用，必须溢写到磁盘上，降低了性能。此外，如果发现作业由于频繁的gc导致运行缓慢，意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。<br>资源参数的调优，没有一个固定的值，需要同学们根据自己的实际情况（包括Spark作业中的shuffle操作数量、RDD持久化操作数量以及spark web ui中显示的作业gc情况），同时参考本篇文章中给出的原理以及调优建议，合理地设置上述参数。</li>
+</ul>
+<p>资源参数参考示例<br>以下是一份spark-submit命令的示例，大家可以参考一下，并根据自己的实际情况进行调节：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/<span class="built_in">bin</span>/spark-submit \</span><br><span class="line">  --master yarn-cluster \</span><br><span class="line">  --num-executors <span class="number">100</span> \</span><br><span class="line">  --executor-memory 6G \</span><br><span class="line">  --executor-cores <span class="number">4</span> \</span><br><span class="line">  --driver-memory 1G \</span><br><span class="line">  --conf spark.default.parallelism=<span class="number">1000</span> \</span><br><span class="line">  --conf spark.storage.memoryFraction=<span class="number">0.5</span> \</span><br><span class="line">  --conf spark.shuffle.memoryFraction=<span class="number">0.3</span> \</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="spark-本地执行"><a href="#spark-本地执行" class="headerlink" title="spark 本地执行"></a>spark 本地执行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本机4个CPU核心上执行</span></span><br><span class="line">./<span class="built_in">bin</span>/pyspark --master local[<span class="number">4</span>]</span><br><span class="line"><span class="comment"># 本机所有CPU核心上执行</span></span><br><span class="line">./<span class="built_in">bin</span>/pyspark --master local[*]</span><br><span class="line"><span class="comment"># 查看当前的运行模式</span></span><br><span class="line"> sc.master</span><br><span class="line"><span class="comment"># 读取本地文件（路径前用file:///)</span></span><br><span class="line">textFile=sc.textFile(<span class="string">&quot;file:///usr/local/spark/README.md&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="spark-tutorial"><a href="#spark-tutorial" class="headerlink" title="spark tutorial"></a><a href="https://www.tutorialspoint.com/pyspark/pyspark_sparkcontext.htm">spark tutorial</a></h1><p>spark-shell 不用创建sparkContext，默认已经启用了一个，如果再次生成会提示：”ValueError: Cannot run multiple SparkContexts at once”.</p>
+<h1 id="SparkSession和SparkContext的关系"><a href="#SparkSession和SparkContext的关系" class="headerlink" title="SparkSession和SparkContext的关系"></a>SparkSession和SparkContext的关系</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">└── SparkSession</span><br><span class="line">    └── SparkContext</span><br><span class="line">        ├── RDD1</span><br><span class="line">        ├── RDD2</span><br><span class="line">        └── RDD3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>SparkSession是Spark 2.0引入的新概念。SparkSession为用户提供了统一的切入点，来让用户学习spark的各项功能。<br>在spark的早期版本中，SparkContext是spark的主要切入点，由于RDD是主要的API，我们通过SparkContext来创建和操作RDD。对于每个其他的API，我们需要使用不同的context：</p>
+<ul>
+<li>Streaming使用StreamingContext</li>
+<li>sql使用SqlContext</li>
+<li>hive使用HiveContext</li>
+</ul>
+<p>但是随着DataSet和DataFrame的API逐渐成为标准的API，就需要为他们建立接入点。所以在spark2.0中，引入SparkSession作为DataSet和DataFrame API的切入点。<br>SparkSession封装了SparkContext和SQLContext。为了向后兼容，SQLContext和HiveContext也被保存下来。<br>在大多数情况下，我们不需要显式初始化SparkContext; 而尽量通过SparkSession来访问它。<br><a href="https://www.jianshu.com/p/4705988b0c84">https://www.jianshu.com/p/4705988b0c84</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Creating a SparkSession in Python</span></span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line">spark = SparkSession.builder.master(<span class="string">&quot;local&quot;</span>).appName(<span class="string">&quot;Word Count&quot;</span>)\</span><br><span class="line">    .config(<span class="string">&quot;spark.some.config.option&quot;</span>, <span class="string">&quot;some-value&quot;</span>)\</span><br><span class="line">    .getOrCreate()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 上面的spark时SparkSession对象，使用type可以验证</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(spark)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>pyspark.sql.session.SparkSession</span><br></pre></td></tr></table></figure>
+<h1 id="Spark-Cluster-Components"><a href="#Spark-Cluster-Components" class="headerlink" title="Spark Cluster Components"></a><a href="https://spark.apache.org/docs/latest/cluster-overview.html">Spark Cluster Components</a></h1><p><img src="https://spark.apache.org/docs/latest/img/cluster-overview.png" alt="spark cluster components"></p>
+<p>Spark applications run as independent sets of processes on a cluster, coordinated by the SparkContext object in your main program (called the <strong>driver program</strong>).</p>
+<blockquote>
+<p>driver program是协调集群进程的hub，所以当driver不在集群里时（client模式），网络带宽延迟会很影响通信与状态更新。</p>
+</blockquote>
+<ol>
+<li>Specifically, to run on a cluster, the SparkContext can <strong>connect</strong> to several types of <strong>cluster managers</strong> (either Spark’s own standalone cluster manager, Mesos or YARN), which allocate resources across applications.</li>
+<li>Once connected, Spark <strong>acquires executors</strong> on nodes in the cluster, which are <strong>processes</strong> that run computations and store data for your application.</li>
+<li>Next, it <strong>sends your application code</strong> (defined by JAR or Python files passed to SparkContext) <strong>to the executors</strong>.</li>
+<li>Finally, SparkContext <strong>sends tasks</strong> to the executors to run.</li>
+</ol>
+<h1 id="Spark-Config"><a href="#Spark-Config" class="headerlink" title="Spark Config"></a>Spark Config</h1><h2 id="spark-sql-shuffle-partitions"><a href="#spark-sql-shuffle-partitions" class="headerlink" title="spark.sql.shuffle.partitions"></a>spark.sql.shuffle.partitions</h2><p><a href="http://blog.madhukaraphatak.com/dynamic-spark-shuffle-partitions/">http://blog.madhukaraphatak.com/dynamic-spark-shuffle-partitions/</a></p>
+<h1 id="Spark-Submit"><a href="#Spark-Submit" class="headerlink" title="Spark Submit"></a>Spark Submit</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/bin/spark-submit \</span><br><span class="line">--class &lt;main-class&gt; \  # 程序入口，如果是java则是类，java</span><br><span class="line">--master &lt;master-url&gt; \</span><br><span class="line">--deploy-mode &lt;deploy-mode&gt; \ #分为cluster和client两种</span><br><span class="line">--conf &lt;conf-param&gt; \  #一些配置参数</span><br><span class="line">... # other options</span><br><span class="line">&lt;application-jar&gt; \  # 可以是jar或python文件的路径，如果是url则需要所有node可见</span><br><span class="line">[application-arguments] \ 参数</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：当提交spark 任务时，如果jar包有多个，用逗号隔开，<strong>逗号前后不能有空格!,有逗号会导致后续参数解析错误，可能提交的scalar程序提示class notFound!</strong><br>具体的例子参见<a href="https://spark.apache.org/docs/latest/submitting-applications.html#submitting-applications">《Submitting Applications》</a></p>
+<p>python的例子：<br>对于 main.py 依赖的 util.py, module1.py, module2.py，需要先压缩成一个 .zip 文件，再通过 spark-submit 的 —py—files 选项上传到 yarn，mail.py 才能 import 这些子模块。<a href="https://www.jianshu.com/p/92be93cfbb97">命令如下</a>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">spark-submit</span> </span><br><span class="line">--master=yarn \</span><br><span class="line">--deploy-mode=cluster \</span><br><span class="line">--jars elasticsearch-hadoop-5.3.1.jar \</span><br><span class="line">--py-files deps.zip \</span><br><span class="line">main.py</span><br></pre></td></tr></table></figure>
+<h2 id="deploy-mode"><a href="#deploy-mode" class="headerlink" title="deploy-mode"></a>deploy-mode</h2><p>具体参考<a href="https://blog.csdn.net/qq_39131779/article/details/83539608">《standalone mode》</a><br>总结起来就一句话：<strong>culster/client的主要区别就是driver是否在cluster里</strong></p>
+<h3 id="cluster-集群模式"><a href="#cluster-集群模式" class="headerlink" title="cluster 集群模式"></a>cluster 集群模式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/bin/spark-submit \</span><br><span class="line">--master  spark://node01:7077 \</span><br><span class="line">--class org.apache.spark.examples.SparkPi \</span><br><span class="line">../lib/spark-examples-1.6.0-hadoop2.6.0.jar </span><br><span class="line">100</span><br></pre></td></tr></table></figure>
+<ol>
+<li>client模式提交任务后，会在客户端启动Driver进程。</li>
+<li>Driver会向Master申请启动Application启动的资源。</li>
+<li>资源申请成功，Driver端将task发送到worker端执行。</li>
+<li>worker将task执行结果返回到Driver端。(由代码设置)</li>
+</ol>
+<p>总结：client模式适用于测试调试程序。<strong>Driver进程是在客户端启动的</strong>，这里的客户端就是指提交应用程序的当前节点。<strong>在Driver端可以看到task执行的情况。生产环境下不能使用client模式</strong>，是因为：假设要提交100个application到集群运行，Driver每次都会在client端启动，那么就会导致客户端100次网卡流量暴增的问题。（因为要监控task的运行情况，会占用很多端口，如上图的结果图）客户端网卡通信，都被task监控信息占用。<br>集群模式如果是用来本地文件，需要添加—files参数<br>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">此处代码使用了本地文件<span class="string">&#x27;stat.conf&#x27;</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">如果直接使用 deploy-mode=cluster会报错找不到stat.conf</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">所以需要在submit时添加 <span class="string">&quot;--files <span class="variable">$con_file</span>&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">start_day=<span class="string">&#x27;2020-10-01&#x27;</span></span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">end_day=<span class="string">&#x27;2020-10-02&#x27;</span></span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">conf_file=<span class="string">&#x27;./stat.conf&#x27;</span></span></span><br><span class="line"></span><br><span class="line">spark-submit --class com.jd.rec.FeatStat\</span><br><span class="line">   --num-executors 500 \</span><br><span class="line">   --executor-memory 45g \</span><br><span class="line">   --driver-memory 10g \</span><br><span class="line">   --executor-cores 6 \</span><br><span class="line">   --master yarn \</span><br><span class="line">   --deploy-mode cluster \</span><br><span class="line">   --conf spark.sql.catalogImplementation=hive \</span><br><span class="line">   --conf spark.sql.shuffle.partitions=10000 \</span><br><span class="line">   --conf spark.shuffle.consolidateFiles=true\</span><br><span class="line">   --jars protobuf-java-3.5.1.jar,proto-1.10.0.jar \</span><br><span class="line">   --conf spark.executor.userClassPathFirst=true \</span><br><span class="line">   --files $conf_file \ # 注意此处</span><br><span class="line">   tfrecord-hadoop-trans-11.0.0.jar $conffile $start_day $end_day</span><br></pre></td></tr></table></figure>
+<h3 id="client"><a href="#client" class="headerlink" title="client"></a>client</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/bin/spark-submit \</span><br><span class="line">--master spark://node01:7077 \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--class org.apache.spark.examples.SparkPi \</span><br><span class="line">../lib/spark-examples-1.6.0-hadoop2.6.0.jar  </span><br><span class="line">100</span><br></pre></td></tr></table></figure>
+<ol>
+<li>客户端使用命令spark-submit —deploy-mode cluster 后会启动spark-submit进程</li>
+<li>此进程为Driver向Master申请资源，Driver进程默认需要1G内存和1Core，</li>
+<li>Master会<strong>随机选择一台</strong>worker节点来启动Driver进程（这样通信会较近，利于信息、状态收集）</li>
+<li><strong>Driver启动成功后，spark-submit关闭</strong>，然后Driver向Master申请资源</li>
+<li>Master接收到请求后，会在资源充足的worker节点上启动Executor进程</li>
+<li>Driver分发Task到Executor中执行</li>
+</ol>
+<p>总结：这种模式会将单节点的网卡流量激增问题分散到集群中。在客户端看不到task执行情况和结果，要去<strong>webui</strong>中看。cluster模式适用于生产环境，Master模式先启动Driver，再启动Application</p>
+<p><strong>spark shell 模式是以client提交的</strong>(第一种)，所以不能加入—deploy-mode cluster的(第二种) <strong>client方式用于测试环境，用于方便查看结果</strong>，因为 spark shell 模式以client方式提交，所以 spark shell 模式不支持—deploy-mode cluster提</p>
+<h1 id="RDD-and-DataFrame"><a href="#RDD-and-DataFrame" class="headerlink" title="RDD and DataFrame"></a>RDD and DataFrame</h1><h2 id="Transform函数"><a href="#Transform函数" class="headerlink" title="Transform函数"></a>Transform函数</h2><h3 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">df = spark.sql(&quot;select id_feat from table where dt = &#x27;2020-10-01&#x27;&quot;)</span><br><span class="line">df_split = split(df[&#x27;id_feat&#x27;], &#x27;\t&#x27;)</span><br><span class="line">attrs = [&#x27;item_c3&#x27;,&#x27;item_br&#x27;,&#x27;item_c2&#x27;,&#x27;item_sh&#x27;,&#x27;item_pw&#x27;,&#x27;item_sku&#x27;]</span><br><span class="line">#print(&quot;列名：&quot;, attrs)</span><br><span class="line">for index, value in enumerate(attrs):</span><br><span class="line">    df = df.withColumn(value, df_split.getItem(index))</span><br><span class="line">rdd = df.rdd.flatMap(lambda x: fun(x)).reduceByKey(lambda x, y: x+y)</span><br><span class="line">rdd = rdd.map(lambda x: &quot;&#123;0&#125;,&#123;1&#125;,&#123;2&#125;&quot;.format(x[0][0], x[0][1], x[1]))</span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame-速查表"><a href="#DataFrame-速查表" class="headerlink" title="DataFrame 速查表"></a>DataFrame 速查表</h2><p><a href="https://sparkbyexamples.com/pyspark/pyspark-structtype-and-structfield/">https://sparkbyexamples.com/pyspark/pyspark-structtype-and-structfield/</a><br><a href="https://www.cnblogs.com/liaowuhen1314/p/12792202.html">https://www.cnblogs.com/liaowuhen1314/p/12792202.html</a></p>
+<h2 id="DataFrame-Split-列生成新column"><a href="#DataFrame-Split-列生成新column" class="headerlink" title="DataFrame Split 列生成新column"></a>DataFrame Split 列生成新column</h2><p><a href="https://sparkbyexamples.com/spark/spark-split-dataframe-column-into-multiple-columns/">https://sparkbyexamples.com/spark/spark-split-dataframe-column-into-multiple-columns/</a></p>
+<p>[split 教程][2]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df = spark.sql(&quot;select * from xxx where dt = &#x27;2020-10-20&#x27;&quot;)</span><br><span class="line">df[]</span><br><span class="line">df_split = split(df[&#x27;id_feat&#x27;], &#x27;\t&#x27;)</span><br><span class="line">attrs = [&#x27;item_c3&#x27;,&#x27;item_br&#x27;,&#x27;item_c2&#x27;]</span><br><span class="line">for index, value in enumerate(attrs):</span><br><span class="line">    df = df.withColumn(value, df_split.getItem(index))</span><br><span class="line">print(df.select(&#x27;item_br&#x27;).take(3))</span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame-筛选"><a href="#DataFrame-筛选" class="headerlink" title="DataFrame 筛选"></a>DataFrame 筛选</h2><p><a href="https://blog.csdn.net/sinat_26917383/article/details/80500349">https://blog.csdn.net/sinat_26917383/article/details/80500349</a></p>
+<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><p>例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a_rdd = sc.parallelize([(&#x27;a&#x27;, 13132), (&#x27;b&#x27;, 121212),(&#x27;c&#x27;,56577)])</span><br><span class="line">b_rdd = sc.parallelize([(&#x27;a&#x27;, 23232), (&#x27;b&#x27;,333333)])</span><br><span class="line">columns = [&#x27;sku&#x27;, &#x27;feat&#x27;]</span><br><span class="line">df_a = a_rdd.toDF(columns)</span><br><span class="line">df_b = b_rdd.toDF(columns)</span><br><span class="line"></span><br><span class="line">df_a.join(df_b, df_a.sku==df_b.sku, &#x27;left&#x27;).where(df_b.sku.isNull()).select(df_a.sku, df_b.feat).show()</span><br></pre></td></tr></table></figure>
+<h3 id="Where"><a href="#Where" class="headerlink" title="Where"></a>Where</h3><p><a href="https://stackoverflow.com/questions/35870760/filtering-a-pyspark-dataframe-with-sql-like-in-clause">https://stackoverflow.com/questions/35870760/filtering-a-pyspark-dataframe-with-sql-like-in-clause</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">df = sc.parallelize([(1, &quot;foo&quot;), (2, &quot;x&quot;), (3, &quot;bar&quot;)]).toDF((&quot;k&quot;, &quot;v&quot;))</span><br><span class="line">df.registerTempTable(&quot;df&quot;)</span><br><span class="line">sqlContext.sql(&quot;SELECT * FROM df WHERE v IN &#123;0&#125;&quot;.format((&quot;foo&quot;, &quot;bar&quot;))).count()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">from pyspark.sql.functions import col</span><br><span class="line">df.where(col(&quot;v&quot;).isin(&#123;&quot;foo&quot;, &quot;bar&quot;&#125;)).count()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">from pyspark.sql.functions import col</span><br><span class="line">df.where(col(&quot;v&quot;).isin([&quot;foo&quot;, &quot;bar&quot;])).count()</span><br><span class="line"></span><br><span class="line"># example-2</span><br><span class="line">df = df.where((df[&#x27;dt&#x27;] &gt;= &#x27;2020-09-14&#x27;) &amp; (df[&#x27;dt&#x27;] &lt;= &#x27;2020-10-05&#x27;)).groupby(&#x27;dt&#x27;).count()</span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame-统计"><a href="#DataFrame-统计" class="headerlink" title="DataFrame 统计"></a>DataFrame 统计</h2><h3 id="GroupBy"><a href="#GroupBy" class="headerlink" title="GroupBy"></a>GroupBy</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = df.where((df[&#x27;dt&#x27;] &gt;= &#x27;2020-09-14&#x27;) &amp; (df[&#x27;dt&#x27;] &lt;= &#x27;2020-10-05&#x27;)).groupby(&#x27;dt&#x27;).count()</span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame-转-rdd"><a href="#DataFrame-转-rdd" class="headerlink" title="DataFrame 转 rdd"></a>DataFrame 转 rdd</h2><p><a href="https://blog.csdn.net/helloxiaozhe/article/details/89414735">参考资料</a><br>DataFrame的表相关操作不能处理一些问题，例如需要对一些数据利用指定的函数进行计算时，就需要将DataFrame转换为RDD。DataFrame可以直接利用df.rdd获取对应的RDD对象，此RDD对象的每个元素使用Row对象来表示，<strong>每列值会成为Row对象的一个域=&gt;值映射</strong>。例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; lists = [[&#x27;a&#x27;, 1], [&#x27;b&#x27;, 2]]</span><br><span class="line">&gt;&gt;&gt; list_dataframe = sqlContext.createDataFrame(lists,[&#x27;col1&#x27;,&#x27;col2&#x27;])</span><br><span class="line">&gt;&gt;&gt; list_dataframe.show()</span><br><span class="line">+----+----+                                                                     </span><br><span class="line">|col1|col2|</span><br><span class="line">+----+----+</span><br><span class="line">|   a|   1|</span><br><span class="line">|   b|   2|</span><br><span class="line">+----+----+</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; rdd=list_dataframe.rdd</span><br><span class="line">&gt;&gt;&gt; rdd.collect()</span><br><span class="line">[Row(col1=u&#x27;a&#x27;, col2=1), Row(col1=u&#x27;b&#x27;, col2=2)] </span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; rdd.map(lambda x: [x[0], x[1:]]).collect()</span><br><span class="line">[[u&#x27;a&#x27;, (1,)], [u&#x27;b&#x27;, (2,)]]</span><br><span class="line">&gt;&gt;&gt; rdd.map(lambda x: [x[0], x[1]]).collect()</span><br><span class="line">[[u&#x27;a&#x27;, 1], [u&#x27;b&#x27;, 2]]</span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame写Hive表"><a href="#DataFrame写Hive表" class="headerlink" title="DataFrame写Hive表"></a>DataFrame写Hive表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2. 处理数据</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;/user/recsys/recpro/xxx.csv&#x27;</span>)</span><br><span class="line">df = spark.sql(<span class="string">&quot;select * from tmpr.live_person_attributes_yuanwenwu3&quot;</span>)</span><br><span class="line"><span class="comment"># 3. 写hive表</span></span><br><span class="line">sc = spark.sparkContext</span><br><span class="line">hiveContext = HiveContext(sc)</span><br><span class="line">data_to_hive_df = hiveContext.createDataFrame(df)</span><br><span class="line">data_to_hive_df.partitionBy(<span class="string">&#x27;dt&#x27;</span>).write.<span class="built_in">format</span>(<span class="string">&quot;parquet&quot;</span>).mode(<span class="string">&quot;overwrite&quot;</span>).saveAsTable(<span class="string">&quot;tmpr.output_table&quot;</span>) </span><br></pre></td></tr></table></figure>
+<h2 id="rdd-转-dataframe"><a href="#rdd-转-dataframe" class="headerlink" title="rdd 转 dataframe"></a>rdd 转 dataframe</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = sqlContext.createDataFrame(data, schema=None, samplingRatio=None, verifySchema=True)</span><br></pre></td></tr></table></figure>
+<p>schema：DataFrame各列类型信息，在提前知道RDD所有类型信息时设定。例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schema = StructType([StructField(&#x27;col1&#x27;, StringType()), StructField(&#x27;col2&#x27;, IntegerType())])</span><br></pre></td></tr></table></figure>
+<h2 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h2><p><a href="https://zhuanlan.zhihu.com/p/105893298">参考资料1</a><br><a href="https://www.jianshu.com/p/d1f6678db183">参考资料2</a></p>
+<h3 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = spark.read.csv(filepath, sep=&#x27;,&#x27;, header=True, inferSchema=True)</span><br></pre></td></tr></table></figure>
+<h3 id="rdd写文件"><a href="#rdd写文件" class="headerlink" title="rdd写文件"></a>rdd写文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">## 单独一个文件</span><br><span class="line">data.repartition(1).write.csv(writepath,mode=&quot;overwrite&quot;)</span><br><span class="line">data.coalesce(1).write.csv(writepath,mode=&quot;overwrite&quot;)</span><br><span class="line">## 写成特殊格式，去掉括号</span><br><span class="line">data.map(lambda (k,v): &quot;&#123;0&#125; &#123;1&#125;&quot;.format(k,v)).coalesce(1).write.csv(writepath,mode=&quot;overwrite&quot;)</span><br><span class="line">## 分块儿文件</span><br><span class="line">data.repartition(1000).write.csv(writepath,mode=&quot;overwrite&quot;)</span><br><span class="line">data.coalesce(1000).write.csv(writepath,mode=&quot;overwrite&quot;)</span><br></pre></td></tr></table></figure>
+<p>通常rdd直接write到文件，内容会是如下形式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;cat rdd_res.txt</span><br><span class="line">……</span><br><span class="line">(k1,v1)</span><br><span class="line">(k2,v2)</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>rdd想<strong>没有括号</strong>输出到文本文件可以使用如下方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data.map(lambda (k,v): &quot;&#123;0&#125; &#123;1&#125;&quot;.format(k,v)).coalesce(1).write.csv(&#x27;path&#x27;)</span><br><span class="line">#或者转成DataFrame在写</span><br><span class="line">rdd.toDF().write.csv(&quot;path&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="DataFrame写文件"><a href="#DataFrame写文件" class="headerlink" title="DataFrame写文件"></a>DataFrame写文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># dataframe 写csv文件</span><br><span class="line">df.write.format(&quot;csv&quot;).option(&quot;header&quot;, &quot;false&quot;).mode(&quot;overwrite&quot;).save(&quot;hdfs://user/xxx/data.csv&quot;)</span><br><span class="line">hadoop fs -getmerge &quot;hdfs://user/xxx/data.csv&quot; &quot;./data.csv&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>option</strong> 支持参数<br>path: csv文件的路径。支持通配符;<br>header: csv文件的header。默认值是false;<br>delimiter: 分隔符。默认值是’,’;<br>quote: 引号。默认值是””;<br>mode: 解析的模式。支持的选项有：</p>
+<h2 id="dataframe-添加一列"><a href="#dataframe-添加一列" class="headerlink" title="dataframe 添加一列"></a>dataframe 添加一列</h2><p>如果数据很多，想分块处理，以打到如下目的：</p>
+<h3 id="添加-id-选择区间"><a href="#添加-id-选择区间" class="headerlink" title="添加 id 选择区间"></a>添加 id 选择区间</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">sku_img_df = spark.sql(sql)</span><br><span class="line">def flat(l):</span><br><span class="line">    sku_img = l[0]</span><br><span class="line">    index = l[1]</span><br><span class="line">    return (sku_img[0], sku_img[1], index)</span><br><span class="line">## 添加 &#x27;id&#x27; 生成新的dataframe</span><br><span class="line">rdd = sku_img_df.rdd.zipWithIndex()</span><br><span class="line">schema = sku_img_df.schema.add(StructField(&quot;id&quot;, LongType()))</span><br><span class="line">rdd = rdd.map(lambda x: flat(x))</span><br><span class="line">sku_img_df = spark.createDataFrame(rdd, schema)</span><br><span class="line">## 分区间处理dataframe中的行</span><br><span class="line">batch_size = 30000000</span><br><span class="line">start_index = 0</span><br><span class="line">while start_index &lt; total_count:</span><br><span class="line">    if start_index + batch_size &lt; total_count:</span><br><span class="line">        batch_data_num = batch_size</span><br><span class="line">    else:</span><br><span class="line">        batch_data_num = total_count - start_index</span><br><span class="line">    extract_batch(sku_img_df, start_index, batch_data_num)</span><br><span class="line">    start_index = start_index + batch_size</span><br></pre></td></tr></table></figure>
+<h2 id="读取TXT文件"><a href="#读取TXT文件" class="headerlink" title="读取TXT文件"></a>读取TXT文件</h2><ul>
+<li>spark.sparkContext.textFile(file_path)<br>读取到的是<strong>RDD</strong> (pyspark.rdd.RDD)，每一个元素直接是字符串</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; rdd = spark.sparkContext.textFile(file_path)</span><br><span class="line">&gt;&gt; rdd.take(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">[<span class="string">u&#x27;first line&#x27;</span>,</span><br><span class="line"> <span class="string">u&#x27;second line&#x27;</span>,</span><br><span class="line"> <span class="string">u&#x27;third line&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>spark.read.text(file_path)<br>读取到的是<strong>DataFrame</strong> (pyspark.sql.dataframe.DataFrame)，每一个元素是 Row (pyspark.sql.types.Row)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; df = spark.read.text(file_path)</span><br><span class="line">&gt;&gt; rdd = df.rdd</span><br><span class="line">&gt;&gt; rdd.take(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">[Row(value=<span class="string">u&#x27;first line&#x27;</span>),</span><br><span class="line"> Row(value=<span class="string">u&#x27;second line&#x27;</span>),</span><br><span class="line"> Row(value=<span class="string">u&#x27;third line&#x27;</span>)]</span><br></pre></td></tr></table></figure>
+<p>所以这里如果直接rdd.map(lambda line: line.split(“ “)) 会报错，因为操作的元素是Row，Row对象没有split方法。</p>
+<h2 id="DataFrame-写入hive表"><a href="#DataFrame-写入hive表" class="headerlink" title="DataFrame 写入hive表"></a>DataFrame 写入hive表</h2><h3 id="一般步骤"><a href="#一般步骤" class="headerlink" title="一般步骤"></a>一般步骤</h3><p>参考：<a href="https://blog.csdn.net/a2639491403/article/details/80044121">https://blog.csdn.net/a2639491403/article/details/80044121</a></p>
+<h4 id="1-创建数据集的spark-DattaFrame"><a href="#1-创建数据集的spark-DattaFrame" class="headerlink" title="1.创建数据集的spark DattaFrame"></a>1.创建数据集的spark DattaFrame</h4><p><code>df_tmp = spark.createDataFrame(RDD,schema)</code><br>这里schema是由StructFied函数定义的</p>
+<h4 id="2-将数据集的DataFrames格式映射到零时表"><a href="#2-将数据集的DataFrames格式映射到零时表" class="headerlink" title="2.将数据集的DataFrames格式映射到零时表"></a>2.将数据集的DataFrames格式映射到零时表</h4><pre><code class="lang-df_tmp.createOrReplaceTempView(&#39;tempTable&#39;)```">
+#### 3.用spark sql语句将零时表的数据导入hive的tmp_table表中
+
+```sqlContext.sql(&#39;insert overwrite table des_table select *from tempTable&#39;)
+</code></pre>
+<h3 id="写入分区表"><a href="#写入分区表" class="headerlink" title="写入分区表"></a>写入分区表</h3><p>参考：<a href="https://xinancsd.github.io/Python/pyspark_save_hive_table.html">https://xinancsd.github.io/Python/pyspark_save_hive_table.html</a></p>
+<h4 id="df-write-saveAsTable-方法"><a href="#df-write-saveAsTable-方法" class="headerlink" title="df.write.saveAsTable() 方法"></a>df.write.saveAsTable() 方法</h4><p>需要注意的是hive表名<strong>是不明感大小写</strong>的，经历过如下现象：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df = spark.sql(<span class="string">&quot;select tmpr.abc&quot;</span>)</span><br><span class="line">df.write.option(<span class="string">&quot;delimiter&quot;</span>, <span class="string">&#x27;\t&#x27;</span>).saveAsTable(<span class="string">&#x27;tmpr.ABC&#x27;</span>, <span class="built_in">format</span>=<span class="string">&#x27;hive&#x27;</span>, mode=<span class="string">&#x27;append&#x27;</span>, partitionBy=<span class="string">&#x27;dt&#x27;</span>)</span><br><span class="line">会写到原地址，因为如果原地址是：hdfs://xxxx/tmpr.db/abc，在使用新表tmpr.ABC时会从新创建地址，恰好是这一地址，所以数据又写回原地址了</span><br><span class="line"></span><br><span class="line">`mode=’overwrite’ `模式时，会创建新的表，若表名已存在则会被删除，整个表被重写。而 `mode=’append’` 模式会在直接在原有数据增加新数据，这一模式可以写入已存在的表。</span><br><span class="line">当使用overwrite时，saveAsTable 会自动创建hive表，partitionBy指定分区字段，默认存储为 parquet 文件格式。对于从文件生成的DataFrame，字段类型也是自动转换的，有时会转换成不符合要求的类型</span><br><span class="line"><span class="comment">##### format:</span></span><br></pre></td></tr></table></figure>
+<p>hive （hive默认格式，数据文件纯文本无压缩存储）<br>parquet （spark默认采用格式）<br>orc<br>json<br>csv<br>text（若用saveAsTable只能保存只有一个列的df）<br>jdbc<br>libsvm</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.write.saveAsTable(save_table, mode=<span class="string">&#x27;append&#x27;</span>, partitionBy=[<span class="string">&#x27;pt_day&#x27;</span>])</span><br><span class="line">需要自定义字段类型的，可以在创建DataFrame时指定类型：</span><br></pre></td></tr></table></figure>
+<p>from pyspark.sql.types import StringType, StructType, BooleanType, StructField</p>
+<p>schema = StructType([<br>    StructField(“vin”, StringType(), True),<br>    StructField(“cust_id”, StringType(), True),<br>    StructField(“is_maintain”, BooleanType(), True),<br>    StructField(“is_wash”, BooleanType(), True),<br>    StructField(“pt_day”, StringType(), True),<br>  ]<br>)</p>
+<p>data = pd.read_csv(‘/path/to/data.csv’, header=0)<br>df = spark.createDataFrame(data, schema=schema)</p>
+<h1 id="写入hive表时就是指定的数据类型了"><a href="#写入hive表时就是指定的数据类型了" class="headerlink" title="写入hive表时就是指定的数据类型了"></a>写入hive表时就是指定的数据类型了</h1><p>df.write.saveAsTable(save_table, mode=’append’, partitionBy=[‘pt_day’]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### option(&quot;delimiter&quot;, &#x27;\t&#x27;)</span></span><br><span class="line">写入hive表需要指定分割符时可使用如上方式</span><br><span class="line"></span><br><span class="line"><span class="comment">#### df.partitionBy(&#x27;dt&#x27;)和df.saveAsTable(partitionBy=[&#x27;dt&#x27;])的区别</span></span><br><span class="line">https://blog.csdn.net/qq_33536353/article/details/<span class="number">106165924</span></span><br><span class="line">对于两种写回分区表的方法：</span><br><span class="line">第一种：这种会清理hdfs路径，生成新的dt，**以为着重名旧分区会被删除，切记**</span><br></pre></td></tr></table></figure>
+<p>df.write.mode(“overwrite”).format(“orc”).partitionBy(“dt”).saveAsTable(“aicloud.cust_features”)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第二种：这种只会重写覆盖的分区，其他旧分区不会被删除</span><br><span class="line"></span><br><span class="line">df.write.saveAsTable(<span class="string">&quot;aicloud.cust_features&quot;</span>, <span class="built_in">format</span>=<span class="string">&quot;orc&quot;</span>, mode=<span class="string">&quot;overwrite&quot;</span>, partitionBy=<span class="string">&quot;dt&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Scala"><a href="#Scala" class="headerlink" title="Scala"></a>Scala</h2><h3 id="Scala匿名函数不可用return"><a href="#Scala匿名函数不可用return" class="headerlink" title="Scala匿名函数不可用return"></a>Scala匿名函数不可用return</h3><p>Scala - return in anonymous function<br><a href="https://www.jianshu.com/p/2053634328d3">https://www.jianshu.com/p/2053634328d3</a></p>
+<p>  [2]: <a href="https://sparkbyexamples.com/pyspark/pyspark-split-dataframe-column-into-multiple-columns/">https://sparkbyexamples.com/pyspark/pyspark-split-dataframe-column-into-multiple-columns/</a> 2019-12-25 14:26:31<br>vin Javascript &amp; JQuery # Javascript &amp; JQuery</p>
+<p>标签（空格分隔）： javascript</p>
+<hr>
+<h2 id="JQuery选择器"><a href="#JQuery选择器" class="headerlink" title="JQuery选择器"></a>JQuery选择器</h2><p><a href="https://blog.csdn.net/qq_38225558/article/details/83780618">https://blog.csdn.net/qq_38225558/article/details/83780618</a></p>
+<h2 id="chrome-脚本编辑器"><a href="#chrome-脚本编辑器" class="headerlink" title="chrome 脚本编辑器"></a>chrome 脚本编辑器</h2><p><a href="https://www.jianshu.com/p/87adbf88e2e3">https://www.jianshu.com/p/87adbf88e2e3</a><br><a href="https://www.cnblogs.com/liun1994/p/7265828.html">https://www.cnblogs.com/liun1994/p/7265828.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/02/29/conda/" rel="prev" title="conda">
+      <i class="fa fa-chevron-left"></i> conda
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/04/data-process/" rel="next" title="data_process">
+      data_process <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pyspark-API"><span class="nav-number">1.</span> <span class="nav-text">pyspark API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">简明教程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark%E8%B0%83%E4%BC%98"><span class="nav-number">3.</span> <span class="nav-text">Spark调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-%E6%9C%AC%E5%9C%B0%E6%89%A7%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">spark 本地执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spark-tutorial"><span class="nav-number"></span> <span class="nav-text">spark tutorial</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SparkSession%E5%92%8CSparkContext%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number"></span> <span class="nav-text">SparkSession和SparkContext的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-Cluster-Components"><span class="nav-number"></span> <span class="nav-text">Spark Cluster Components</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-Config"><span class="nav-number"></span> <span class="nav-text">Spark Config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-sql-shuffle-partitions"><span class="nav-number">1.</span> <span class="nav-text">spark.sql.shuffle.partitions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-Submit"><span class="nav-number"></span> <span class="nav-text">Spark Submit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#deploy-mode"><span class="nav-number">1.</span> <span class="nav-text">deploy-mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cluster-%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">cluster 集群模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#client"><span class="nav-number">1.2.</span> <span class="nav-text">client</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RDD-and-DataFrame"><span class="nav-number"></span> <span class="nav-text">RDD and DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">Transform函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flatMap"><span class="nav-number">1.1.</span> <span class="nav-text">flatMap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame-%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">DataFrame 速查表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame-Split-%E5%88%97%E7%94%9F%E6%88%90%E6%96%B0column"><span class="nav-number">3.</span> <span class="nav-text">DataFrame Split 列生成新column</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame-%E7%AD%9B%E9%80%89"><span class="nav-number">4.</span> <span class="nav-text">DataFrame 筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#join"><span class="nav-number">4.1.</span> <span class="nav-text">join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Where"><span class="nav-number">4.2.</span> <span class="nav-text">Where</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame-%E7%BB%9F%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">DataFrame 统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GroupBy"><span class="nav-number">5.1.</span> <span class="nav-text">GroupBy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame-%E8%BD%AC-rdd"><span class="nav-number">6.</span> <span class="nav-text">DataFrame 转 rdd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame%E5%86%99Hive%E8%A1%A8"><span class="nav-number">7.</span> <span class="nav-text">DataFrame写Hive表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdd-%E8%BD%AC-dataframe"><span class="nav-number">8.</span> <span class="nav-text">rdd 转 dataframe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6"><span class="nav-number">9.</span> <span class="nav-text">读写文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E6%96%87%E4%BB%B6"><span class="nav-number">9.1.</span> <span class="nav-text">读文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdd%E5%86%99%E6%96%87%E4%BB%B6"><span class="nav-number">9.2.</span> <span class="nav-text">rdd写文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataFrame%E5%86%99%E6%96%87%E4%BB%B6"><span class="nav-number">9.3.</span> <span class="nav-text">DataFrame写文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataframe-%E6%B7%BB%E5%8A%A0%E4%B8%80%E5%88%97"><span class="nav-number">10.</span> <span class="nav-text">dataframe 添加一列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-id-%E9%80%89%E6%8B%A9%E5%8C%BA%E9%97%B4"><span class="nav-number">10.1.</span> <span class="nav-text">添加 id 选择区间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96TXT%E6%96%87%E4%BB%B6"><span class="nav-number">11.</span> <span class="nav-text">读取TXT文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame-%E5%86%99%E5%85%A5hive%E8%A1%A8"><span class="nav-number">12.</span> <span class="nav-text">DataFrame 写入hive表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4"><span class="nav-number">12.1.</span> <span class="nav-text">一般步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84spark-DattaFrame"><span class="nav-number">12.1.1.</span> <span class="nav-text">1.创建数据集的spark DattaFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%B0%86%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84DataFrames%E6%A0%BC%E5%BC%8F%E6%98%A0%E5%B0%84%E5%88%B0%E9%9B%B6%E6%97%B6%E8%A1%A8"><span class="nav-number">12.1.2.</span> <span class="nav-text">2.将数据集的DataFrames格式映射到零时表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">12.2.</span> <span class="nav-text">写入分区表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#df-write-saveAsTable-%E6%96%B9%E6%B3%95"><span class="nav-number">12.2.1.</span> <span class="nav-text">df.write.saveAsTable() 方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%85%A5hive%E8%A1%A8%E6%97%B6%E5%B0%B1%E6%98%AF%E6%8C%87%E5%AE%9A%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BA%86"><span class="nav-number"></span> <span class="nav-text">写入hive表时就是指定的数据类型了</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scala"><span class="nav-number">1.</span> <span class="nav-text">Scala</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scala%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E4%B8%8D%E5%8F%AF%E7%94%A8return"><span class="nav-number">1.1.</span> <span class="nav-text">Scala匿名函数不可用return</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JQuery%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">JQuery选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chrome-%E8%84%9A%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">chrome 脚本编辑器</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
