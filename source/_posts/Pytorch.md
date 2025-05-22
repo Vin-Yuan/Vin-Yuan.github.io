@@ -6,6 +6,10 @@ categories:
 tags: pytorch
 ---
 
+本文档记录了一些pytorch常用操作以及概念
+
+<!-- more -->
+
 ## 1. 构造数据
 
 ```python
@@ -73,4 +77,24 @@ x = torch.randn(10)
 mask = x > 0
 x[mask]                       # 选出正数元素
 
+```
+
+## eval 和 train的切换
+eval和train类似现场保护功能，开关切换switch off
+model.train()
+将模型设置为“训练模式”。这会启用诸如 Dropout 和 BatchNorm 这样的层的训练行为（如参数更新、随机失活等）。通常在训练阶段调用。
+
+model.eval()
+将模型设置为“评估/推理模式”。这会关闭 Dropout、BatchNorm 等层的训练特性，使用固定参数进行推理。通常在验证或测试阶段调用
+```python
+model.eval()
+for split in ['train', 'val']:
+    losses = torch.zeros(eval_iters)
+    for k in range(eval_iters):
+        X, Y = get_batch(split)
+        logits, loss = model(X, Y)
+        losses[k] = loss.item()
+    out[split] = losses.mean()
+model.train()
+return out
 ```

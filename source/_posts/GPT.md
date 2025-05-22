@@ -6,29 +6,15 @@ categories: LLM
 tags: LLM
 ---
 
-
+## cross_entropy的应用
 ```python
 class BigramLanguageModel(nn.Module):
-
-    def __init__(self, vocab_size):
-        super().__init__()
-        # each token directly reads off the logits for the next token from a lookup table
-        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
-
+……
     def forward(self, idx, targets=None):
-
-        # idx and targets are both (B,T) tensor of integers
-        logits = self.token_embedding_table(idx) # (B,T,C)
-
-        if targets is None:
-            loss = None
-        else:
             B, T, C = logits.shape
             logits = logits.view(B*T, C)
             targets = targets.view(B*T)
             loss = F.cross_entropy(logits, targets)
-
-        return logits, loss
 
 m = BigramLanguageModel(vocab_size)
 logits, loss = m(xb, yb)
@@ -46,17 +32,20 @@ loss = F.cross_entropy(logits, targets)
 $$\text{CrossEntropy}(p,y) = -log(p_y)$$
 
 其中：
-$p$ 是 softmax 后的概率分布  
-$y$ 是 ground-truth label (目标token)  
-$p_y$ 是对应ground-truth 类别的概率  
 
-对于这个Loss如果我们想估计一下是什么水平，那就对比随机猜的情况,，这个可以作为baseline
-$$ \text{loss} = -\text{log}(\frac{1}{65}) = \text{log}(65) \approx 4.17 \$$
+$p$ 是 softmax 后的概率分布    
+$y$ 是 ground-truth label (目标token)    
+$p_y$ 是对应ground-truth 类别的概率    
+
+对于这个Loss如果我们想估计一下是什么水平，那就对比随机猜的情况,，这个可以作为baseline  
+
+$$ \text{loss} = -\text{log}(\frac{1}{65}) = \text{log}(65) \approx 4.17 $$
 
 <!-- more -->
+
 如果模型刚初始化，或者毫无学习能力，其交叉熵损失函数就会非常接近这个值
 
-### why loss=4.87 > 4.17
+why loss=4.87 > 4.17 ?
 这是因为：模型还没开始训练（刚初始化），预测可能不均匀分布，而是更糟糕的“错误分布”，这会导致预测目标token概率 $p_y \lt fra$
 
 
@@ -79,7 +68,7 @@ print("Samples:", samples)
 ```
 
 ## temperature
-$$\text{adjusted\_logits} = \frac{logits}{T} $$ 
+$$\text{adjusted logits} = \frac{logits}{T} $$ 
 temperature通过在softmax之前修改logits 来平滑或尖锐logits分布  
 T=1.5：调整后的 logits 更小，概率分布更加平滑，所有类别的概率更加接近。  
 T=0.5：调整后的 logits 更大，概率分布更加尖锐，最高概率的类别更加突出。
@@ -107,4 +96,35 @@ print("Adjusted logits (T=1.5):", adjusted_logits_high)
 print("Adjusted logits (T=0.5):", adjusted_logits_low)
 print("Probs (T=1.5):", probs_high)
 print("Probs (T=0.5):", probs_low)
+```
+
+## weighted sum
+```python
+B, T, C = 2, 4, 2
+x = torch.arange(0, B*T*C, 1, dtype=torch.float32).reshape(B, T, C)
+wei = torch.tril(torch.ones(T,T))
+wei = wei/wei.sum(1, keepdim=True)
+res = wei @ x
+print("wei = ")
+print(wei)
+print("x = ")
+print(x)
+print("res = ")
+print(res)
+```
+能理解到把x的每一行看做一个2维向量， W每一行对4个2维向量加权求和，如果从矩阵乘法角度去推导，用分块矩阵方式如何具象化这一过程？
+关键的地方是只将w分块化，看做行向量的stack, 而x不做分块考虑，这样就直观了
+每一行 output 是对所有 xᵢ（2D 向量）加权求和，权重是 W 的一行，这就是 attention 机制里 “加权求和” 的本质。
+```python
+W =
+⎡ w₀ᵀ ⎤
+⎢ w₁ᵀ ⎥
+⎢ w₂ᵀ ⎥
+⎣ w₃ᵀ ⎦   ∈ ℝ^{4×4}
+
+W @ x =
+⎡ w₀ᵀ @ x ⎤
+⎢ w₁ᵀ @ x ⎥
+⎢ w₂ᵀ @ x ⎥
+⎣ w₃ᵀ @ x ⎦
 ```
