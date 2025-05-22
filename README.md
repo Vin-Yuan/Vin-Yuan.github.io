@@ -95,3 +95,5 @@ git branch --set-upstream-to=origin/master main
 git fetch origin
 git branch -u origin/master
 ```
+### the generated web htmls are all empty
+lost the them/next when generate, you need update the submodule then re generate
