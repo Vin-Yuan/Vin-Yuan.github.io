@@ -21,7 +21,7 @@ $$
 - $\gamma$ ：可学习的缩放参数（scale，类似于权重）
 - $\beta$ ：可学习的偏移参数（bias，偏置）
   
-[![LayerNomr](https://docs.pytorch.org/docs/stable/_images/layer_norm.jpg)](https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html)
+[![LayerNomr](https://i.sstatic.net/E3104.png)](https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html)
 
 <!-- more -->
 
