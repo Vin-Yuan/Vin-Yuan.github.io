@@ -2,69 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2019/03/27/softmax/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/02/19/statistics/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/06/04/spark/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/04/14/structured-learning/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/07/13/style-transform/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/07/16/svm/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/06/04/tensorflow/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/categories/index.html</loc>
     
     <lastmod>2025-05-22</lastmod>
@@ -83,78 +20,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/05/09/function-notaition/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/06/04/data-process/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/02/20/gitNote/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/03/03/hands-on-machine-learning/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/07/20/evaluation-index/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/05/10/hello-world/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/02/20/hexoNote/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/06/04/hive/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/05/14/least-square-method/</loc>
     
     <lastmod>2025-05-22</lastmod>
@@ -164,25 +29,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2024/11/08/integer-solutions/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2024/02/29/linear-algebra/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/02/29/matplotlib/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -209,7 +56,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2024/06/04/photograpy/</loc>
+    <loc>http://yoursite.com/2024/02/29/matplotlib/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -245,25 +92,106 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/2024/06/04/photograpy/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/03/27/softmax/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2024/06/04/spark/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/02/19/statistics/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/07/13/style-transform/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/04/14/structured-learning/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/07/16/svm/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2024/06/04/tensorflow/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2025/02/19/Pytorch/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/03/20/PCA/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/01/22/algorithm/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2024/11/08/compare-csv-file/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/06/04/computer-version/</loc>
-    
-    <lastmod>2025-05-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2024/02/29/conda/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -281,6 +209,42 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/2024/02/29/conda/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2024/06/04/computer-version/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/07/20/evaluation-index/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2024/06/04/data-process/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/07/13/covariance/</loc>
     
     <lastmod>2025-05-22</lastmod>
@@ -290,7 +254,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/03/28/CSE599G1/</loc>
+    <loc>http://yoursite.com/2019/05/09/function-notaition/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -299,7 +263,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/06/10/EM-algorithm/</loc>
+    <loc>http://yoursite.com/2024/02/20/gitNote/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -308,7 +272,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/05/10/Entropy/</loc>
+    <loc>http://yoursite.com/2019/03/03/hands-on-machine-learning/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -317,7 +281,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/05/10/First-Blog/</loc>
+    <loc>http://yoursite.com/2024/02/20/hexoNote/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -326,7 +290,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/03/16/GAN_explaination/</loc>
+    <loc>http://yoursite.com/2024/11/08/integer-solutions/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -335,7 +299,16 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/01/20/ModuloOperation/</loc>
+    <loc>http://yoursite.com/2018/05/10/hello-world/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2024/06/04/hive/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -345,6 +318,15 @@
   
   <url>
     <loc>http://yoursite.com/2025/05/19/Normlization/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/01/20/ModuloOperation/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -371,7 +353,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/03/20/PCA/</loc>
+    <loc>http://yoursite.com/2019/03/16/GAN_explaination/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -380,7 +362,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2025/02/19/Pytorch/</loc>
+    <loc>http://yoursite.com/2018/05/10/First-Blog/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -389,7 +371,25 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/01/22/algorithm/</loc>
+    <loc>http://yoursite.com/2018/05/10/Entropy/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/06/10/EM-algorithm/</loc>
+    
+    <lastmod>2025-05-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/03/28/CSE599G1/</loc>
     
     <lastmod>2025-05-22</lastmod>
     
@@ -423,13 +423,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/deep-learning-batch-normalization/</loc>
-    <lastmod>2025-05-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/em/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -437,14 +430,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/machine-learning/</loc>
+    <loc>http://yoursite.com/tags/deep-learning-batch-normalization/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/deeplearning-LLM/</loc>
+    <loc>http://yoursite.com/tags/machine-learning/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -465,7 +458,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/pac/</loc>
+    <loc>http://yoursite.com/tags/deeplearning-LLM/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -479,7 +472,21 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/tags/pac/</loc>
+    <lastmod>2025-05-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/tags/pandas/</loc>
+    <lastmod>2025-05-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/ROC-AUC-PR/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -507,13 +514,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/ROC-AUC-PR/</loc>
-    <lastmod>2025-05-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/hexo/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -521,14 +521,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/machine-learning-math/</loc>
+    <loc>http://yoursite.com/tags/math-combination/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/math-combination/</loc>
+    <loc>http://yoursite.com/tags/machine-learning-math/</loc>
     <lastmod>2025-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
