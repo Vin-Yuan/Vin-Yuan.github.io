@@ -35,3 +35,13 @@ fatal: CRLF would be replaced by LF in source/_posts/hexoNote.md
 ```
 git config --global core.safecrlf false
 ```
+
+### remote page build failed
+github pages build deployment failed
+"Logging at level: debug Configuration file: /github/workspace./_config.yml Theme: next github-pages 232 | Error: The next theme cound not be found
+```shell
+# local run
+npm install hexo-deployer-git --save
+# then 
+hexo deploy
+```
