@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="常用hexo 命令123456hexo new xxx &#x3D;&#x3D;&gt; hexo n xxx, #新建文章hexo generate &#x3D;&#x3D;&gt; hexo g,  #生成静态页面至public目录hexo server &#x3D;&#x3D;&gt; hexo s,  #开启预览访问端口hexo deploy &#x3D;&#x3D;&gt; hexo d,  #部署到GitHubhexo help  #查看帮助hexo versio">
+  <meta name="description" content="常用hexo 命令 123456hexo new xxx &#x3D;&#x3D;&gt; hexo n xxx, #新建文章hexo generate &#x3D;&#x3D;&gt; hexo g,  #生成静态页面至public目录hexo server &#x3D;&#x3D;&gt; hexo s,  #开启预览访问端口hexo deploy &#x3D;&#x3D;&gt; hexo d,  #部署到GitHubhexo help  #查看帮助hexo vers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexoNote">
 <meta property="og:url" content="http://yoursite.com/2024/02/20/hexoNote/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="常用hexo 命令123456hexo new xxx &#x3D;&#x3D;&gt; hexo n xxx, #新建文章hexo generate &#x3D;&#x3D;&gt; hexo g,  #生成静态页面至public目录hexo server &#x3D;&#x3D;&gt; hexo s,  #开启预览访问端口hexo deploy &#x3D;&#x3D;&gt; hexo d,  #部署到GitHubhexo help  #查看帮助hexo versio">
+<meta property="og:description" content="常用hexo 命令 123456hexo new xxx &#x3D;&#x3D;&gt; hexo n xxx, #新建文章hexo generate &#x3D;&#x3D;&gt; hexo g,  #生成静态页面至public目录hexo server &#x3D;&#x3D;&gt; hexo s,  #开启预览访问端口hexo deploy &#x3D;&#x3D;&gt; hexo d,  #部署到GitHubhexo help  #查看帮助hexo vers">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-20T04:44:32.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.064Z">
@@ -200,20 +200,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="常用hexo-命令"><a href="#常用hexo-命令" class="headerlink" title="常用hexo 命令"></a>常用hexo 命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo new xxx ==&gt; hexo n xxx, #新建文章</span><br><span class="line">hexo generate ==&gt; hexo g,  #生成静态页面至public目录</span><br><span class="line">hexo server ==&gt; hexo s,  #开启预览访问端口</span><br><span class="line">hexo deploy ==&gt; hexo d,  #部署到GitHub</span><br><span class="line">hexo help  #查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
-<h2 id="组合命令"><a href="#组合命令" class="headerlink" title="组合命令"></a>组合命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s -g # 生成本地预览</span><br><span class="line">hexo d -g # 生成并上传</span><br></pre></td></tr></table></figure>
-<h2 id="预览部分文字"><a href="#预览部分文字" class="headerlink" title="预览部分文字"></a>预览部分文字</h2><p>&lt; !— more — &gt; in your article to break your article manually, which is recommended by Hexo.</p>
-<h2 id="遇到hexo-generation-出错处理"><a href="#遇到hexo-generation-出错处理" class="headerlink" title="遇到hexo generation 出错处理"></a>遇到hexo generation 出错处理</h2><p>检查Markedown (vscode markdown语法检查)</p>
+        <h2 id="常用hexo-命令">常用hexo 命令</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo new xxx ==&gt; hexo n xxx, #新建文章</span><br><span class="line">hexo generate ==&gt; hexo g,  #生成静态页面至public目录</span><br><span class="line">hexo server ==&gt; hexo s,  #开启预览访问端口</span><br><span class="line">hexo deploy ==&gt; hexo d,  #部署到GitHub</span><br><span class="line">hexo help  #查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
+<h2 id="组合命令">组合命令</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s -g # 生成本地预览</span><br><span class="line">hexo d -g # 生成并上传</span><br></pre></td></tr></table></figure>
+<h2 id="预览部分文字">预览部分文字</h2>
+<p>&lt; !-- more -- &gt; in your article to break your article manually,
+which is recommended by Hexo.</p>
+<h2 id="遇到hexo-generation-出错处理">遇到hexo generation 出错处理</h2>
+<p>检查Markedown (vscode markdown语法检查)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo --debug</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<h2 id="clone-whole-repository-in-a-new-machine"><a href="#clone-whole-repository-in-a-new-machine" class="headerlink" title="clone whole repository in a new machine"></a>clone whole repository in a new machine</h2><p><a href="https://iphysresearch.github.io/blog/post/programing/git/git_submodule/">https://iphysresearch.github.io/blog/post/programing/git/git_submodule/</a><br>since there is submodule in main repository ( the theme/next)</p>
+<h2 id="clone-whole-repository-in-a-new-machine">clone whole repository
+in a new machine</h2>
+<p><a
+href="https://iphysresearch.github.io/blog/post/programing/git/git_submodule/"
+class="uri">https://iphysresearch.github.io/blog/post/programing/git/git_submodule/</a>
+since there is submodule in main repository ( the theme/next)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone xxxx (main repository)</span><br><span class="line">git submodule init # 初始化子模块</span><br><span class="line">git submodule update # 更新子模块</span><br><span class="line">npm install</span><br><span class="line">hexo generate or hexo s</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调试的时候遇到不名曲问题，可以安装pandoc, https://pandoc.org/installing.html</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这会指示那一个文件的哪一行出错了</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://hexo.io/zh-cn/docs/commands.html">https://hexo.io/zh-cn/docs/commands.html</a></p>
+<p><a href="https://hexo.io/zh-cn/docs/commands.html"
+class="uri">https://hexo.io/zh-cn/docs/commands.html</a></p>
 <span id="more"></span>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>整体配置：<a href="https://learnku.com/articles/45697">https://learnku.com/articles/45697</a></p>
-<p>latex: (<a href="https://www.jianshu.com/p/d95a4795f3a8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">https://www.jianshu.com/p/d95a4795f3a8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation</a>)</p>
-<p>hexo: <a href="https://github.com/next-theme/hexo-theme-next">https://github.com/next-theme/hexo-theme-next</a></p>
-<p>hexo post settings: <a href="https://theme-next.js.org/docs/theme-settings/posts">https://theme-next.js.org/docs/theme-settings/posts</a></p>
-<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>hexo generate编译出错记录<br>markdown 文件有不合法的link, 比如:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">感叹号+[柏松分部 统计出现车辆数](https://newonlinecourses.science.psu.edu/stat414/sites/onlinecourses.science.psu.edu.stat414/files/lesson52/147882_traffic/index.jpg)</span><br><span class="line">[<span class="number">1</span>]. &lt;https://newonlinecourses.science.psu.edu/stat414/node/<span class="number">241</span>/&gt;</span><br><span class="line">大概率是大括号的问题</span><br><span class="line">&lt;200b&gt;符号</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考链接">参考链接</h2>
+<p>整体配置：<a href="https://learnku.com/articles/45697"
+class="uri">https://learnku.com/articles/45697</a></p>
+<p>latex: (<a
+href="https://www.jianshu.com/p/d95a4795f3a8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation"
+class="uri">https://www.jianshu.com/p/d95a4795f3a8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation</a>)</p>
+<p>hexo: <a href="https://github.com/next-theme/hexo-theme-next"
+class="uri">https://github.com/next-theme/hexo-theme-next</a></p>
+<p>hexo post settings: <a
+href="https://theme-next.js.org/docs/theme-settings/posts"
+class="uri">https://theme-next.js.org/docs/theme-settings/posts</a></p>
+<h2 id="qa">Q&amp;A</h2>
+<p>hexo generate编译出错记录 markdown 文件有不合法的link, 比如:
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">感叹号+[柏松分部 统计出现车辆数](https://newonlinecourses.science.psu.edu/stat414/sites/onlinecourses.science.psu.edu.stat414/files/lesson52/147882_traffic/index.jpg)</span><br><span class="line">[<span class="number">1</span>]. &lt;https://newonlinecourses.science.psu.edu/stat414/node/<span class="number">241</span>/&gt;</span><br><span class="line">大概率是大括号的问题</span><br><span class="line">&lt;200b&gt;符号</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -297,7 +317,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8hexo-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用hexo 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">组合命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E8%A7%88%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">预览部分文字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0hexo-generation-%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">遇到hexo generation 出错处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clone-whole-repository-in-a-new-machine"><span class="nav-number">5.</span> <span class="nav-text">clone whole repository in a new machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">7.</span> <span class="nav-text">Q&amp;A</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8hexo-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用hexo 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">组合命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E8%A7%88%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">预览部分文字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0hexo-generation-%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">遇到hexo generation 出错处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clone-whole-repository-in-a-new-machine"><span class="nav-number">5.</span> <span class="nav-text">clone whole repository
+in a new machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qa"><span class="nav-number">7.</span> <span class="nav-text">Q&amp;A</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

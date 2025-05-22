@@ -195,13 +195,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h2><p>$H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) = -\sum_iy_ilog(y_i)$</p>
+          <h2 id="一个例子">一个例子</h2>
+<p><span class="math inline">\(H(y_i) = \sum_i y_ilog(\frac{1}{y_i}) =
+-\sum_iy_ilog(y_i)\)</span></p>
 <p>例子：现在有两枚硬币，抛出有四种情况，正正、正负、负正、负负。如果用熵来计算需要几维表示信息的话，计算如下：</p>
 <ul>
-<li>2进制<br>$H(y_i) = 4.({\frac{1}{4}.log_24}) = 2$，即00，01，10，11就可表示</li>
-<li>4进制<br>$H(y_i) = 4.({\frac{1}{4}.log_44}) = 1$，即1，2，3，4就可表示</li>
+<li>2进制 <span class="math inline">\(H(y_i) = 4.({\frac{1}{4}.log_24})
+= 2\)</span>，即00，01，10，11就可表示</li>
+<li>4进制 <span class="math inline">\(H(y_i) = 4.({\frac{1}{4}.log_44})
+= 1\)</span>，即1，2，3，4就可表示</li>
 </ul>
-<p><a href="http://blog.csdn.net/lanchunhui/article/details/50970625">交叉熵代价函数</a></p>
+<p><a
+href="http://blog.csdn.net/lanchunhui/article/details/50970625">交叉熵代价函数</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/05/10/Entropy/#more" rel="contents">
@@ -274,6 +279,7 @@
 
       
           
+
       
     </div>
 
@@ -337,15 +343,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server -p 5000</span><br></pre></td></tr></table></figure>
+          <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server -p 5000</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/deployment.html">Deployment</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/05/10/hello-world/#more" rel="contents">

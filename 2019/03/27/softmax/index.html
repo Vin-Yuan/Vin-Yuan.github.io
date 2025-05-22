@@ -20,21 +20,18 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Softmax 与梯度下降参考1：http:&#x2F;&#x2F;dlsys.cs.washington.edu&#x2F;schedule lecture3">
+  <meta name="description" content="Softmax 与梯度下降 参考1：http:&#x2F;&#x2F;dlsys.cs.washington.edu&#x2F;schedule lecture3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="softmax">
 <meta property="og:url" content="http://yoursite.com/2019/03/27/softmax/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="Softmax 与梯度下降参考1：http:&#x2F;&#x2F;dlsys.cs.washington.edu&#x2F;schedule lecture3">
+<meta property="og:description" content="Softmax 与梯度下降 参考1：http:&#x2F;&#x2F;dlsys.cs.washington.edu&#x2F;schedule lecture3">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg">
 <meta property="article:published_time" content="2019-03-27T03:30:22.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.080Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2019/03/27/softmax/">
 
@@ -203,42 +200,90 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Softmax-与梯度下降"><a href="#Softmax-与梯度下降" class="headerlink" title="Softmax 与梯度下降"></a>Softmax 与梯度下降</h1><p>参考1：<a href="http://dlsys.cs.washington.edu/schedule">http://dlsys.cs.washington.edu/schedule</a> lecture3</p>
-<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg" alt=""></p>
+        <h1 id="softmax-与梯度下降">Softmax 与梯度下降</h1>
+<p>参考1：http://dlsys.cs.washington.edu/schedule lecture3</p>
+<p><img
+src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h79b85ybj20mg0bc0tm.jpg" /></p>
 <span id="more"></span>
 <p>参考上图的网络结构，输入层，输出层。</p>
-<p>$W_{i,j}$的含义：输出神经元 $a_i$ 关联的第 $j$ 个权重，要从输出神经元的角度去理解，这样比较清楚。</p>
+<p><span class="math inline">\(W_{i,j}\)</span>的含义：输出神经元 <span
+class="math inline">\(a_i\)</span> 关联的第 <span
+class="math inline">\(j\)</span>
+个权重，要从输出神经元的角度去理解，这样比较清楚。</p>
 <p>神经元的构造如下：</p>
-<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg" alt=""></p>
-<p>$z<em>i = w_i \cdot x \rightarrow z_i = \sum_j w</em>{i,j} \cdot x_j $ ，意味着$a_i$ 的每一个权重和输入$x$的相应feature相乘</p>
-<p>$W^T = \begin{bmatrix} -&amp;-&amp; -\-&amp;w_i&amp;- \-&amp;-&amp;- \end{bmatrix} ​$，$x = \begin{bmatrix} | \ x_j\| \end{bmatrix} ​$</p>
+<p><img
+src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg" /></p>
+<p>$z_i = w_i x z_i = <em>j w</em>{i,j} x_j $ ，意味着<span
+class="math inline">\(a_i\)</span> 的每一个权重和输入<span
+class="math inline">\(x\)</span>的相应feature相乘</p>
+<p><span class="math inline">\(W^T = \begin{bmatrix} -&amp;-&amp;
+-\\-&amp;w_i&amp;- \\-&amp;-&amp;- \end{bmatrix} ​\)</span>，<span
+class="math inline">\(x = \begin{bmatrix} | \\ x_j\\| \end{bmatrix}
+​\)</span></p>
 <p>logic regression 的损失函数为</p>
-<script type="math/tex; mode=display">\begin{equation} C = -\sum_i y_i lna_i  \end{equation}​$$ ，注意这里表达的含义，softmax有k个输出，准确的表达式应该是$C = -\sum_k y_k ln(\hat{a}_k) ​$，即对当前输入$x​$，其label为第 $i​$ 个类，则 $y_i​$ 为1，其它为0。所有样本的损失函数如下：
-
-$J(\theta) = -\frac{1}{m}\sum\limits_{i=1}^m \sum\limits_{k=1}^K y^{(i)}_k log(\hat{p}^{(i)}_k) \tag{1}​$
-
- $\hat{p}^{(i)}_k$ 为 $softmax(x^{(i)})$的第$k$个输出，
-
-$\hat{p}_k = \sigma(Z(x))_k = \frac{exp(z_k(x))}{\sum\limits_{j=1}^{K} exp(z_j(x))} \tag{2}$
-
-
-
-$$\begin{equation} \frac{\partial C}{\partial z_i} = a_i - y_i \end{equation}  ​</script><p>损失函数对每个权重$w_{i,j}​$的导数：</p>
-<p>$\frac{\partial C}{\partial w<em>{i,j}} = \frac{\partial C}{\partial z_i} \cdot \frac{\partial z_i}{\partial w</em>{i,j}} = （a_i - y_i)\cdot x_j ​$</p>
-<p>loss function对每个参数的导数构成梯度向量，即<strong>标量对矩阵的求导</strong>：$\frac {\partial L}{\partial W}​$</p>
-<p>在下面的代码中，<code>W_grad = np.dot(batch_xs.T, y_grad)</code> 这一步正是利用的梯度向量。思考这段代码是如何形成两个矩阵相乘形式的。batch_xs 原始布局如下：</p>
-<p>$X = \begin{bmatrix} -&amp;-&amp; -\-&amp;x<em>i&amp;- \-&amp;-&amp;- \end{bmatrix} $，其中 $x_i$为行向量$(x</em>{i,1}, x<em>{i,2}, … , x</em>{i,n})$ （备注：也可以写为 $x_1^{(i)}$，取决于样本 $i$ 的表示方式，用数组numpy表达时为前者）。Loss function是对<strong>所有的本批次样本计算</strong>的，所以 $Loss = \sum_i loss(f(x^i)， y^i)$ ，其中 ​$i$ 为batch_size , 综合(1) 和（2）可以得出Loss要对所有样本loss1 + loss2 + loss3+ …求梯度，所以是一个加和。</p>
+<p><span class="math display">\[\begin{equation} C = -\sum_i y_i
+lna_i  \end{equation}​\]</span>
+，注意这里表达的含义，softmax有k个输出，准确的表达式应该是<span
+class="math inline">\(C = -\sum_k y_k ln(\hat{a}_k)
+​\)</span>，即对当前输入<span
+class="math inline">\(x​\)</span>，其label为第 <span
+class="math inline">\(i​\)</span> 个类，则 <span
+class="math inline">\(y_i​\)</span>
+为1，其它为0。所有样本的损失函数如下：</p>
+<p><span class="math inline">\(J(\theta) =
+-\frac{1}{m}\sum\limits_{i=1}^m \sum\limits_{k=1}^K y^{(i)}_k
+log(\hat{p}^{(i)}_k) \tag{1}​\)</span></p>
+<p><span class="math inline">\(\hat{p}^{(i)}_k\)</span> 为 <span
+class="math inline">\(softmax(x^{(i)})\)</span>的第<span
+class="math inline">\(k\)</span>个输出，</p>
+<p><span class="math inline">\(\hat{p}_k = \sigma(Z(x))_k =
+\frac{exp(z_k(x))}{\sum\limits_{j=1}^{K} exp(z_j(x))}
+\tag{2}\)</span></p>
+<p><span class="math display">\[\begin{equation} \frac{\partial
+C}{\partial z_i} = a_i - y_i \end{equation}  ​\]</span></p>
+<p>损失函数对每个权重<span
+class="math inline">\(w_{i,j}​\)</span>的导数：</p>
+<p><span class="math inline">\(\frac{\partial C}{\partial w_{i,j}} =
+\frac{\partial C}{\partial z_i} \cdot \frac{\partial z_i}{\partial
+w_{i,j}} = （a_i - y_i)\cdot x_j ​\)</span></p>
+<p>loss
+function对每个参数的导数构成梯度向量，即<strong>标量对矩阵的求导</strong>：<span
+class="math inline">\(\frac {\partial L}{\partial W}​\)</span></p>
+<p>在下面的代码中，<code>W_grad = np.dot(batch_xs.T, y_grad)</code>
+这一步正是利用的梯度向量。思考这段代码是如何形成两个矩阵相乘形式的。batch_xs
+原始布局如下：</p>
+$X =
+<span class="math display">\[\begin{bmatrix} -&amp;-&amp;
+-\\-&amp;x_i&amp;- \\-&amp;-&amp;- \end{bmatrix}\]</span>
+<p>$，其中 <span class="math inline">\(x_i\)</span>为行向量<span
+class="math inline">\((x_{i,1}, x_{i,2}, ... , x_{i,n})\)</span>
+（备注：也可以写为 <span
+class="math inline">\(x_1^{(i)}\)</span>，取决于样本 <span
+class="math inline">\(i\)</span>
+的表示方式，用数组numpy表达时为前者）。Loss
+function是对<strong>所有的本批次样本计算</strong>的，所以 <span
+class="math inline">\(Loss = \sum_i loss(f(x^i)， y^i)\)</span> ，其中
+​<span class="math inline">\(i\)</span> 为batch_size , 综合(1)
+和（2）可以得出Loss要对所有样本loss1 + loss2 + loss3+
+...求梯度，所以是一个加和。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tinyflow.datasets <span class="keyword">import</span> get_mnist</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">softmax</span>(<span class="params">x</span>):</span><br><span class="line">x = x - np.<span class="built_in">max</span>(x, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">x = np.exp(x)</span><br><span class="line">x = x / np.<span class="built_in">sum</span>(x, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"><span class="keyword">return</span> x</span><br><span class="line"><span class="comment"># get the mnist dataset</span></span><br><span class="line">mnist = get_mnist(flatten=<span class="literal">True</span>, onehot=<span class="literal">True</span>)</span><br><span class="line">learning_rate = <span class="number">0.5</span> / <span class="number">100</span></span><br><span class="line">W = np.zeros((<span class="number">784</span>, <span class="number">10</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">batch_xs, batch_ys = mnist.train.next_batch(<span class="number">100</span>)</span><br><span class="line"><span class="comment"># forward</span></span><br><span class="line">y = softmax(np.dot(batch_xs, W))</span><br><span class="line"><span class="comment"># backward</span></span><br><span class="line">y_grad = y - batch_ys</span><br><span class="line">W_grad = np.dot(batch_xs.T, y_grad)</span><br><span class="line"><span class="comment"># update</span></span><br><span class="line">W = W - learning_rate * W_grad</span><br></pre></td></tr></table></figure>
 <p>重构程 tensorflow API 方式代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tinyflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tinyflow.datasets <span class="keyword">import</span> get_mnist</span><br><span class="line"><span class="comment"># Create the model</span></span><br><span class="line">x = tf.placeholder(tf.float32, [<span class="literal">None</span>, <span class="number">784</span>])</span><br><span class="line">W = tf.Variable(tf.zeros([<span class="number">784</span>, <span class="number">10</span>]))</span><br><span class="line">y = tf.nn.softmax(tf.matmul(x, W))</span><br><span class="line"><span class="comment"># Define loss and optimizer</span></span><br><span class="line">y_ = tf.placeholder(tf.float32, [<span class="literal">None</span>, <span class="number">10</span>])</span><br><span class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[<span class="number">1</span>]))</span><br><span class="line"><span class="comment"># Update rule</span></span><br><span class="line">learning_rate = <span class="number">0.5</span></span><br><span class="line">W_grad = tf.gradients(cross_entropy, [W])[<span class="number">0</span>]</span><br><span class="line">train_step = tf.assign(W, W - learning_rate * W_grad)</span><br><span class="line"><span class="comment"># Training Loop</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.initialize_all_variables())</span><br><span class="line">mnist = get_mnist(flatten=<span class="literal">True</span>, onehot=<span class="literal">True</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">	batch_xs, batch_ys = mnist.train.next_batch(<span class="number">100</span>)</span><br><span class="line">	sess.run(train_step, feed_dict=&#123;x: batch_xs, y_:batch_ys&#125;) <span class="comment">#Real execution happens here</span></span><br></pre></td></tr></table></figure>
 <p>注释：</p>
 <p><code>cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))</code></p>
 <ul>
-<li>这里面的reduce<em>mean, 第二个参数是reduction_indices，可以这样理解，0 代表对第一个维度规约，即$\sum\limits</em>{i=0}^m a<em>{i,j}$ ,1则代表对第二个维度规约$\sum\limits</em>{j=0}^n a_{i,j}$，以下是tensorflow的官方文档示例：</li>
+<li>这里面的reduce_mean, 第二个参数是reduction_indices，可以这样理解，0
+代表对第一个维度规约，即<span class="math inline">\(\sum\limits_{i=0}^m
+a_{i,j}\)</span> ,1则代表对第二个维度规约<span
+class="math inline">\(\sum\limits_{j=0}^n
+a_{i,j}\)</span>，以下是tensorflow的官方文档示例：</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># &#x27;x&#x27; is [[1,1,1],</span><br><span class="line">			[1,1,1]]</span><br><span class="line">tf.reduce_sum(x) = 6</span><br><span class="line">tf.reduce_sum(x, 0) = [2, 2, 2]</span><br><span class="line">tf.reduce_sum(x, 1) = [3,3]</span><br><span class="line">tf.reduce_sum(x, 1, keep_dims=True) = [[3], [3]]</span><br><span class="line">tf.reduce_sum(x, [0,1]) = 6</span><br></pre></td></tr></table></figure>
 <ul>
-<li>这里的y_ * tf.log(y) 是两个 （m, 10)的矩阵 “点乘” ，区别于矩阵乘法，这里是对应元素相乘。具体参考 [2] <a href="https://www.cnblogs.com/liuq/p/9330134.html">Python 之 numpy 和 tensorflow 中的各种乘法（点乘和矩阵乘）</a></li>
+<li>这里的y_ * tf.log(y) 是两个 （m, 10)的矩阵 “点乘”
+，区别于矩阵乘法，这里是对应元素相乘。具体参考 [2] <a
+href="https://www.cnblogs.com/liuq/p/9330134.html">Python 之 numpy 和
+tensorflow 中的各种乘法（点乘和矩阵乘）</a></li>
 </ul>
 
     </div>
@@ -323,7 +368,7 @@ $$\begin{equation} \frac{\partial C}{\partial z_i} = a_i - y_i \end{equation}  �
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Softmax-%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.</span> <span class="nav-text">Softmax 与梯度下降</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#softmax-%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.</span> <span class="nav-text">Softmax 与梯度下降</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

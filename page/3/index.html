@@ -204,22 +204,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg" alt=""><br>以下术语可以参照图<sup><a href="#fn_1" id="reffn_1">1</a></sup>，一目了然：</p>
+          <p><img
+src="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg" />
+以下术语可以参照图<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>，一目了然：</p>
 <ul>
-<li>Precision(查准率):  $\text{Precision} = \frac{TP}{TP+FP}$</li>
-<li>Recall(查全率):  $\text{Recall} = \frac{TP}{TP+FN} = \text{TPR}$</li>
+<li>Precision(查准率): <span class="math inline">\(\text{Precision} =
+\frac{TP}{TP+FP}\)</span></li>
+<li>Recall(查全率): <span class="math inline">\(\text{Recall} =
+\frac{TP}{TP+FN} = \text{TPR}\)</span></li>
 <li>AUC : area under curve</li>
-<li>ROC : receiver operating characteristic (<strong>TPR</strong> vs FPR)<ul>
-<li>$TPR = \frac{TP}{TP+FN}$ 图[1] 左半部分</li>
-<li>$FPR=\frac{FP}{FP+TN}$ 图[1]右半部分</li>
-<li>$TNR = 1-FPR = \frac{TN}{TN+FP}$</li>
-</ul>
-</li>
+<li>ROC : receiver operating characteristic (<strong>TPR</strong> vs
+FPR)
+<ul>
+<li><span class="math inline">\(TPR = \frac{TP}{TP+FN}\)</span> 图[1]
+左半部分</li>
+<li><span class="math inline">\(FPR=\frac{FP}{FP+TN}\)</span>
+图[1]右半部分</li>
+<li><span class="math inline">\(TNR = 1-FPR =
+\frac{TN}{TN+FP}\)</span></li>
+</ul></li>
 <li>PR: precision vs recall</li>
 </ul>
 <p>如果有人和你说他的model 准确率有91%，那你最好问一下他recall多少！</p>
 <p>查全率的大小也是一个很重要的指标，如果一个分类器准确率很高查全率却很低的是没有意义的。</p>
-<p>例如你有一个行人识别的分类器，来了50个object，你将10个识别为行人，而ground truth中这10个也确定是行人，从准确率来说你会觉得很赞，100%耶:smile:。但是，实际情况是这50个都是行人，如果这是一个自动驾驶的识别系统的话，:scream:那就很糟糕了。形成这样的原因很可能是模型过拟合了。</p>
+<p>例如你有一个行人识别的分类器，来了50个object，你将10个识别为行人，而ground
+truth中这10个也确定是行人，从准确率来说你会觉得很赞，100%耶:smile:。但是，实际情况是这50个都是行人，如果这是一个自动驾驶的识别系统的话，:scream:那就很糟糕了。形成这样的原因很可能是模型过拟合了。</p>
 <p>往往对于一个问题我们的关注点不同，侧重的指标也就不同。</p>
           <!--noindex-->
             <div class="post-button">
@@ -301,28 +311,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>隐马尔科夫模型的一个例子是输入发的提示功能。<br><img src="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g54w8od3o3j20gw02gdfw.jpg" alt=""></p>
+          <p>隐马尔科夫模型的一个例子是输入发的提示功能。 <img
+src="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g54w8od3o3j20gw02gdfw.jpg" /></p>
 <p>其实就是，观测序列越长，模型能得到的信息越多，自然推断的准确性就越高。除了推断隐藏序列，HMM还可用作预测，即给定一段观测序列，预测下一个隐藏序列是什么，拿输入法来说，这就是所谓的联想输入法。不仅如此，HMM还能进一步推断下一个甚至未来多个观测值是什么，只不过这种能力在卡尔曼滤波中应用的比较多，即目标跟踪。</p>
-<h2 id="马尔可夫模型"><a href="#马尔可夫模型" class="headerlink" title="马尔可夫模型"></a>马尔可夫模型</h2><p>了解HMM首先要介绍一下markov model。已知N个有序随机变量，根据贝叶斯定理，他们的联合分布可以写成条件分布的连乘积：，</p>
-<script type="math/tex; mode=display">
-p\left(x_{1}, x_{2}, \cdots, x_{N}\right)=\prod_{n=1}^{N} p\left(x_{n} | x_{n-1}, \cdots, x_{1}\right)        \tag{1}</script><p>注意这只是markov model而非hidden markov model, marlov model是指符合markov特性的模型，markov特性假设序列中的任何一个随机变量在给定它的前一个变量时的分布与更早的变量无关：</p>
-<script type="math/tex; mode=display">
-p\left(x_{n} | x_{n-1}, \cdots, x_{1}\right)=p\left(x_{n} | x_{n-1}\right)</script><p>这样对于联合概率就可以简单处理，变成如下形式：</p>
-<script type="math/tex; mode=display">
-p\left(x_{1}, x_{2}, \cdots, x_{N}\right)=p\left(x_{1}\right) \prod_{n=2}^{N} p\left(x_{n} | x_{n-1}\right)</script><p>这是一阶markov模型的形式，一阶的意思就是当前状态只与之前状态相关。如果我们想将当前状态和更早之前的状态联系起来就需要高阶markov，比如说和前M个状态相关：</p>
-<script type="math/tex; mode=display">
-p\left(x_{n} | x_{n-1}, \cdots, x_{1}\right)=p\left(x_{n} | x_{n-1}, \cdots, x_{n-M}\right)</script><p>但是这样会有一个问题，参数会指数级增加，对于上面这一个M阶模型，如果$x_n$可以取$K$个观察值，其参数个数为：$K^M\cdot(k-1)$</p>
-<p>$k-1$是指条件概率和为$\int_{x_n} p(x_n |…) = 1$，所以最后一个概率可由其他求得。</p>
-<p>$K^M$ 是指条件概率的condition排列组合的可能个数。</p>
+<h2 id="马尔可夫模型">马尔可夫模型</h2>
+<p>了解HMM首先要介绍一下markov
+model。已知N个有序随机变量，根据贝叶斯定理，他们的联合分布可以写成条件分布的连乘积：，
+<span class="math display">\[
+p\left(x_{1}, x_{2}, \cdots, x_{N}\right)=\prod_{n=1}^{N} p\left(x_{n} |
+x_{n-1}, \cdots, x_{1}\right)      \tag{1}
+\]</span> 注意这只是markov model而非hidden markov model, marlov
+model是指符合markov特性的模型，markov特性假设序列中的任何一个随机变量在给定它的前一个变量时的分布与更早的变量无关：
+<span class="math display">\[
+p\left(x_{n} | x_{n-1}, \cdots, x_{1}\right)=p\left(x_{n} |
+x_{n-1}\right)
+\]</span> 这样对于联合概率就可以简单处理，变成如下形式： <span
+class="math display">\[
+p\left(x_{1}, x_{2}, \cdots, x_{N}\right)=p\left(x_{1}\right)
+\prod_{n=2}^{N} p\left(x_{n} | x_{n-1}\right)
+\]</span>
+这是一阶markov模型的形式，一阶的意思就是当前状态只与之前状态相关。如果我们想将当前状态和更早之前的状态联系起来就需要高阶markov，比如说和前M个状态相关：
+<span class="math display">\[
+p\left(x_{n} | x_{n-1}, \cdots, x_{1}\right)=p\left(x_{n} | x_{n-1},
+\cdots, x_{n-M}\right)
+\]</span>
+但是这样会有一个问题，参数会指数级增加，对于上面这一个M阶模型，如果<span
+class="math inline">\(x_n\)</span>可以取<span
+class="math inline">\(K\)</span>个观察值，其参数个数为：<span
+class="math inline">\(K^M\cdot(k-1)\)</span></p>
+<p><span class="math inline">\(k-1\)</span>是指条件概率和为<span
+class="math inline">\(\int_{x_n} p(x_n |...) =
+1\)</span>，所以最后一个概率可由其他求得。</p>
+<p><span class="math inline">\(K^M\)</span>
+是指条件概率的condition排列组合的可能个数。</p>
 <p>对于这样一个指数级爆炸的问题，很显然是不好解决的。</p>
 <p>所以重点来了！为了不割断和之前状态的联系，又想避免指数级参数问题，一个新的模型被提了出来：</p>
-<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g54yi60wrvj20k0069t8y.jpg" alt=""></p>
-<p>该类模型的关键是隐藏变量之间满足如下条件独立性，即在给定$z<em>n$时，$z</em>{n-1}$和$z_{n+1}$ 条件独立 &lt;条件独立参见附录&gt; ：</p>
-<script type="math/tex; mode=display">
+<p><img
+src="http://ww1.sinaimg.cn/large/6bf0a364ly1g54yi60wrvj20k0069t8y.jpg" /></p>
+<p>该类模型的关键是隐藏变量之间满足如下条件独立性，即在给定<span
+class="math inline">\(z_n\)</span>时，<span
+class="math inline">\(z_{n-1}\)</span>和<span
+class="math inline">\(z_{n+1}\)</span> 条件独立 <条件独立参见附录> ：
+<span class="math display">\[
 p(z_{n+1}|z_{n-1}, z_n) = p(z_{n+1}|z_n) \\
-\mathbf{z}_{n+1} \perp \mathbf{z}_{n-1} | \mathbf{z}_{n}</script><p>这样一来，对于(1)就可以化简为：</p>
-<script type="math/tex; mode=display">
-p\left(\boldsymbol{x}_{1}, \cdots, \boldsymbol{x}_{N}, \boldsymbol{z}_{1}, \cdots, \boldsymbol{z}_{N}\right)=p\left(\boldsymbol{z}_{1}\right)\left[\prod_{n=2}^{N} p\left(\boldsymbol{z}_{\boldsymbol{n}} | \boldsymbol{z}_{n-1}\right)\right]\left[\prod_{n=1}^{N} p\left(\boldsymbol{x}_{n} | \boldsymbol{z}_{\boldsymbol{n}}\right)\right]</script>
+\mathbf{z}_{n+1} \perp \mathbf{z}_{n-1} | \mathbf{z}_{n}
+\]</span></p>
+<p>这样一来，对于(1)就可以化简为： <span class="math display">\[
+p\left(\boldsymbol{x}_{1}, \cdots, \boldsymbol{x}_{N},
+\boldsymbol{z}_{1}, \cdots,
+\boldsymbol{z}_{N}\right)=p\left(\boldsymbol{z}_{1}\right)\left[\prod_{n=2}^{N}
+p\left(\boldsymbol{z}_{\boldsymbol{n}} |
+\boldsymbol{z}_{n-1}\right)\right]\left[\prod_{n=1}^{N}
+p\left(\boldsymbol{x}_{n} |
+\boldsymbol{z}_{\boldsymbol{n}}\right)\right]
+\]</span></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/19/HMM/#more" rel="contents">
@@ -394,24 +436,44 @@ p\left(\boldsymbol{x}_{1}, \cdots, \boldsymbol{x}_{N}, \boldsymbol{z}_{1}, \cdot
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>以前常会疑惑：</p>
-<script type="math/tex; mode=display">
+          <p>以前常会疑惑： <span class="math display">\[
 \begin{equation}
 w^T\cdot x + b = 0 \tag{1}
-\end{equation}</script><p>为什么他可以确定一条直线，以及为什么其作为分割面后 &gt; 0 和 &lt;0 就可以作为分类？</p>
-<p>首先我们考虑如何确定一条直线，给定一个法向量$w$，会有无数个直线与其垂直正交，我们要的那一条如何唯一表示呢？其实很简单，找一个点就行，只需要这一个点，再加这一个法向量，一条直线就完全确定了。</p>
-<p>假设  $a = (a_1, a_2，a_3)^T$ 是三维空间的一个点:</p>
-<script type="math/tex; mode=display">
-w^T\cdot (x-a) = 0 \tag{2}</script><p>可以确定一条直线，这是两个向量的乘积。$w$和$a$都是常量，所以展开后会生成一个常数项，即（1）式的 $b$， 最后形式就是 (1)。</p>
-<p>值得注意的是：n维空间的一个分割超平面是n-1维的，减少了一维的降维打击。即3维立体空间：分割面为2维平面；2维平面：分割面为一维直线，1维直线：分个面为一个点。例如：$y = kx + b$是一维的，原因是$y$受$x$控制。$ax + by + cz = 0$是2维的是因为任选一维都是受另外两维控制，非自由的，这一点和线性代数的最大无关向量组很像。</p>
+\end{equation}
+\]</span></p>
+<p>为什么他可以确定一条直线，以及为什么其作为分割面后 &gt; 0 和 &lt;0
+就可以作为分类？</p>
+<p>首先我们考虑如何确定一条直线，给定一个法向量<span
+class="math inline">\(w\)</span>，会有无数个直线与其垂直正交，我们要的那一条如何唯一表示呢？其实很简单，找一个点就行，只需要这一个点，再加这一个法向量，一条直线就完全确定了。</p>
+<p>假设 <span class="math inline">\(a = (a_1, a_2，a_3)^T\)</span>
+是三维空间的一个点: <span class="math display">\[
+w^T\cdot (x-a) = 0 \tag{2}
+\]</span></p>
+<p>可以确定一条直线，这是两个向量的乘积。<span
+class="math inline">\(w\)</span>和<span
+class="math inline">\(a\)</span>都是常量，所以展开后会生成一个常数项，即（1）式的
+<span class="math inline">\(b\)</span>， 最后形式就是 (1)。</p>
+<p>值得注意的是：n维空间的一个分割超平面是n-1维的，减少了一维的降维打击。即3维立体空间：分割面为2维平面；2维平面：分割面为一维直线，1维直线：分个面为一个点。例如：<span
+class="math inline">\(y = kx + b\)</span>是一维的，原因是<span
+class="math inline">\(y\)</span>受<span
+class="math inline">\(x\)</span>控制。<span class="math inline">\(ax +
+by + cz =
+0\)</span>是2维的是因为任选一维都是受另外两维控制，非自由的，这一点和线性代数的最大无关向量组很像。</p>
 <p>接上面的说，对于式子（1），其确定一条直线，两边的点带入要么大于零，要么小于零，直观去想为什么呢？</p>
-<p>其实很简单，对于给定点$a$， 所有<strong>基于a的向量</strong>，可以分为三类：</p>
+<p>其实很简单，对于给定点<span class="math inline">\(a\)</span>，
+所有<strong>基于a的向量</strong>，可以分为三类：</p>
 <ul>
-<li><p>与$w^T$相乘等于零的，过a点且垂直与法向量$w$</p>
-</li>
-<li><p>与$w^T$相乘小于零的，过a点且与法向量$w$夹角小于90度的，比如说postive sample</p>
-</li>
-<li>与$w^T$相乘大于零的，过a点且与法向量$w$夹角大于90度的，比如说negative sample</li>
+<li><p>与<span
+class="math inline">\(w^T\)</span>相乘等于零的，过a点且垂直与法向量<span
+class="math inline">\(w\)</span></p></li>
+<li><p>与<span
+class="math inline">\(w^T\)</span>相乘小于零的，过a点且与法向量<span
+class="math inline">\(w\)</span>夹角小于90度的，比如说postive
+sample</p></li>
+<li><p>与<span
+class="math inline">\(w^T\)</span>相乘大于零的，过a点且与法向量<span
+class="math inline">\(w\)</span>夹角大于90度的，比如说negative
+sample</p></li>
 </ul>
 <p>这样就很直观明显了。</p>
           <!--noindex-->
@@ -485,15 +547,22 @@ w^T\cdot (x-a) = 0 \tag{2}</script><p>可以确定一条直线，这是两个向
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="图像风格迁移"><a href="#图像风格迁移" class="headerlink" title="图像风格迁移"></a>图像风格迁移</h2><p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg" alt="avatar"></p>
-<p>Overview <sup><a href="#fn_1" id="reffn_1">1</a></sup>:</p>
-<ol>
-<li><p>Create a random input image</p>
-</li>
-<li><p>Pass the input through a pretrained backbone architecture say VGG, ResNet(note that this backbone will not be trained during backpropagation).</p>
-</li>
-<li><p>Calculate loss and compute the <strong>gradients w.r.t input image pixels.</strong>Hence only the input pixels are adjusted whereas the weights remain constant.</p>
-</li>
+          <h2 id="图像风格迁移">图像风格迁移</h2>
+<figure>
+<img
+src="http://ww1.sinaimg.cn/large/6bf0a364ly1g4z2aejxixj20g10927g6.jpg"
+alt="avatar" />
+<figcaption aria-hidden="true">avatar</figcaption>
+</figure>
+<p>Overview <a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>: 1. Create a random input image</p>
+<ol start="2" type="1">
+<li><p>Pass the input through a pretrained backbone architecture say
+VGG, ResNet(note that this backbone will not be trained during
+backpropagation).</p></li>
+<li><p>Calculate loss and compute the <strong>gradients w.r.t input
+image pixels.</strong>Hence only the input pixels are adjusted whereas
+the weights remain constant.</p></li>
 </ol>
           <!--noindex-->
             <div class="post-button">
@@ -566,15 +635,23 @@ w^T\cdot (x-a) = 0 \tag{2}</script><p>可以确定一条直线，这是两个向
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="covariance"><a href="#covariance" class="headerlink" title="covariance"></a>covariance</h2><p>协方差：</p>
+          <h2 id="covariance">covariance</h2>
+<p>协方差：</p>
 <blockquote>
 <p>还要考虑一点，每个点的概率是不一样的，因此各个矩形的面积并非是平等的，或者说权重是不一样的，所以需要对面积和进行加权平均，也就是对面积和计算数学期望，这就得到了：</p>
 </blockquote>
-<script type="math/tex; mode=display">
-Cov(X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]</script><h2 id="Variance"><a href="#Variance" class="headerlink" title="Variance"></a>Variance</h2><p>Variance是covariance的特例：</p>
-<script type="math/tex; mode=display">
-Var(X) = Cov(X, X)</script><h2 id="correlation"><a href="#correlation" class="headerlink" title="correlation"></a>correlation</h2><script type="math/tex; mode=display">
-\rho_{X,Y} = \frac{Cov(X,Y)}{\sigma(X) \sigma(Y)}</script><p>对于分母下面的形式，通常我们都知道是消除scale影响的系数，但是为什么这样scale就一样了？</p>
+<p><span class="math display">\[
+Cov(X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]
+\]</span></p>
+<h2 id="variance">Variance</h2>
+<p>Variance是covariance的特例： <span class="math display">\[
+Var(X) = Cov(X, X)
+\]</span></p>
+<h2 id="correlation">correlation</h2>
+<p><span class="math display">\[
+\rho_{X,Y} = \frac{Cov(X,Y)}{\sigma(X) \sigma(Y)}
+\]</span></p>
+<p>对于分母下面的形式，通常我们都知道是消除scale影响的系数，但是为什么这样scale就一样了？</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/13/covariance/#more" rel="contents">
@@ -646,29 +723,54 @@ Var(X) = Cov(X, X)</script><h2 id="correlation"><a href="#correlation" class="he
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="1-MLE-Maximum-likelihood-estimation"><a href="#1-MLE-Maximum-likelihood-estimation" class="headerlink" title="1. MLE (Maximum-likelihood-estimation)"></a>1. MLE (Maximum-likelihood-estimation)</h2><p>最大似然方法：</p>
-<script type="math/tex; mode=display">
+          <h2 id="mle-maximum-likelihood-estimation">1. MLE
+(Maximum-likelihood-estimation)</h2>
+<p>最大似然方法： <span class="math display">\[
 \begin{equation}
 p(X | \theta) =\prod_{i=1}^{N}p(x_i|\theta) = L(\theta|X)
-\end{equation}</script><p>其中，样本: $X = {x_1,…,x_N}$。</p>
-<p>左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（density function)，<strong>注意这是条件概率</strong></p>
-<p>右边的$L(\theta|X)$是关于参数 $\theta$ 的likelihood（在给定数据$X$的情况下)，<strong>注意这是函数</strong></p>
-<p>从公式中可以看出，在给定 $\theta$ (假设参数）的情况下，<strong>对已观测的实验结果用参数形式描述其概率</strong>，在做这一步的时候用到了一个假设，即样本之间的出现是相互独立无关的（<strong>i.i.d</strong>)。鉴于其已经出现在现实世界中，我们有理由相信（无论是大数定律还是什么的）这种可能性是最大的，所以，如何让这种观测结果出 大变成主要目标，这就是我们的使用的max likelihood 的本质。</p>
-<p>最大化（1）便得到最大似然的式子</p>
-<script type="math/tex; mode=display">
-L(\theta) = \mathop{\arg\max}_{\theta} L(\theta|X)</script><p>这里通常会用log函数替换，因为可以使得函数</p>
-<h2 id="2-MAP-Maximum-A-posterior-estimation"><a href="#2-MAP-Maximum-A-posterior-estimation" class="headerlink" title="2. MAP (Maximum A posterior estimation)"></a>2. MAP (Maximum A posterior estimation)</h2><p>根据<strong>Bayes</strong>公式，我们可以得到如下结论</p>
-<script type="math/tex; mode=display">
-P(\theta|X) \propto P(X|\theta) \cdot P(\theta)</script><p>上面的表达式分别是：</p>
-<p>$P(\theta|X)$:<strong>posterior</strong> 后验概率</p>
-<p>$P(X|\theta)$:<strong>likelihood</strong> 似然</p>
-<p>$P(\theta)$:<strong>prior</strong> 先验概率</p>
-<p>即相比较MLE，<strong>在似然后面乘上prior</strong>，然后求最大，便是MAP<sup><a href="#fn_2 " id="reffn_2 ">2 </a></sup></p>
-<p>根据贝叶斯公式会有如下：</p>
-<script type="math/tex; mode=display">
+\end{equation}
+\]</span> 其中，样本: <span class="math inline">\(X =
+{x_1,...,x_N}\)</span>。</p>
+<p>左边的<span class="math inline">\(p(X|\theta)\)</span>是由参数<span
+class="math inline">\(\theta\)</span>支配的密度函数（density
+function)，<strong>注意这是条件概率</strong></p>
+<p>右边的<span class="math inline">\(L(\theta|X)\)</span>是关于参数
+<span class="math inline">\(\theta\)</span>
+的likelihood（在给定数据<span
+class="math inline">\(X\)</span>的情况下)，<strong>注意这是函数</strong></p>
+<p>从公式中可以看出，在给定 <span class="math inline">\(\theta\)</span>
+(假设参数）的情况下，<strong>对已观测的实验结果用参数形式描述其概率</strong>，在做这一步的时候用到了一个假设，即样本之间的出现是相互独立无关的（<strong>i.i.d</strong>)。鉴于其已经出现在现实世界中，我们有理由相信（无论是大数定律还是什么的）这种可能性是最大的，所以，如何让这种观测结果出
+大变成主要目标，这就是我们的使用的max likelihood 的本质。</p>
+<p>最大化（1）便得到最大似然的式子 <span class="math display">\[
+L(\theta) = \mathop{\arg\max}_{\theta} L(\theta|X)
+\]</span></p>
+<p>这里通常会用log函数替换，因为可以使得函数</p>
+<h2 id="map-maximum-a-posterior-estimation">2. MAP (Maximum A posterior
+estimation)</h2>
+<p>根据<strong>Bayes</strong>公式，我们可以得到如下结论 <span
+class="math display">\[
+P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
+\]</span> 上面的表达式分别是：</p>
+<p><span
+class="math inline">\(P(\theta|X)\)</span>:<strong>posterior</strong>
+后验概率</p>
+<p><span
+class="math inline">\(P(X|\theta)\)</span>:<strong>likelihood</strong>
+似然</p>
+<p><span class="math inline">\(P(\theta)\)</span>:<strong>prior</strong>
+先验概率</p>
+<p>即相比较MLE，<strong>在似然后面乘上prior</strong>，然后求最大，便是MAP[^2
+]</p>
+<p>根据贝叶斯公式会有如下： <span class="math display">\[
 \begin{equation}
 P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
-\end{equation}</script><p>$P(\theta|x)$ :<strong>posterior probabiity</strong> 后验概率<br>$P(X|\theta)$ :<strong>likelihood</strong> 似然<br>$P(\theta)$ :<strong>prior</strong> 先验概率</p>
+\end{equation}
+\]</span></p>
+<p><span class="math inline">\(P(\theta|x)\)</span> :<strong>posterior
+probabiity</strong> 后验概率 <span
+class="math inline">\(P(X|\theta)\)</span> :<strong>likelihood</strong>
+似然 <span class="math inline">\(P(\theta)\)</span>
+:<strong>prior</strong> 先验概率</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/06/10/EM-algorithm/#more" rel="contents">
@@ -751,10 +853,17 @@ P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
       
           <p>在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？</p>
 <p>对于这个问题，需要先了解最小二乘法法的原理：</p>
-<p>最小二乘法的由来 <sup><a href="#fn_1 " id="reffn_1 ">1 </a></sup>：</p>
-<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的$y$就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<sup><a href="#fn_2 " id="reffn_2 ">2 </a></sup></p>
-<script type="math/tex; mode=display">
-J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}</script><p>令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <sup><a href="#fn_1 " id="reffn_1 ">1 </a></sup></p>
+<p>最小二乘法的由来 <a
+href="https://www.matongxue.com/madocs/818.htm">^1</a>：</p>
+<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的<span
+class="math inline">\(y\)</span>就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<a
+href="https://blog.csdn.net/u011893609/article/details/80016915">^2</a>
+<span class="math display">\[
+J(\theta)=\frac{1}{2}
+\sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2}
+t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}
+\]</span> 令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <a
+href="https://www.matongxue.com/madocs/818.htm">^1</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/05/14/least-square-method/#more" rel="contents">
@@ -835,8 +944,10 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>  What’s the meaning of “;” in $f(x;\theta)$?<sup><a href="#fn_2" id="reffn_2">2</a></sup></p>
-<p>A value that is already “built in” to a function. </p>
+          <p>What's the meaning of ";" in <span
+class="math inline">\(f(x;\theta)\)</span>?<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>A value that is already "built in" to a function.</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/05/09/function-notaition/#more" rel="contents">
@@ -917,11 +1028,15 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg" alt=""></p>
-<p>感知器的分类函数为 $f(x) = sign(wx + b) $，在阅读书籍时发现有两种update rule：</p>
-<script type="math/tex; mode=display">
-\triangle w = \eta y_ix_i \tag{1}</script><script type="math/tex; mode=display">
-\triangle w = \eta(\hat{y_i}-y_i)x_i \tag{2}</script><p>为什么会产生两种形式呢？</p>
+          <p><img
+src="http://ww1.sinaimg.cn/large/6bf0a364ly1g1h822vi52j20p7094dgb.jpg" /></p>
+<p>感知器的分类函数为 $f(x) = sign(wx + b) <span
+class="math inline">\(，在阅读书籍时发现有两种update rule：\)</span>$ w
+= y_ix_i $$</p>
+<p><span class="math display">\[
+\triangle w = \eta(\hat{y_i}-y_i)x_i \tag{2}
+\]</span></p>
+<p>为什么会产生两种形式呢？</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/04/22/perceptron/#more" rel="contents">

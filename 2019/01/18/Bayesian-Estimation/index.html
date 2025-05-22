@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Bayesian Estimation频率派和贝叶斯派对于参数$\theta$ 的态度区别是：  频率派：$\theta$ 是一个未知的常量  贝叶斯派：$\theta$ 是一个随机变量   贝叶斯估计通过一个example引入： 柏松分部 统计出现车辆数 考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。 泊松分布（Poisson distribut">
+  <meta name="description" content="Bayesian Estimation 频率派和贝叶斯派对于参数\(\theta\) 的态度区别是：  频率派：\(\theta\) 是一个未知的常量 贝叶斯派：\(\theta\) 是一个随机变量  贝叶斯估计通过一个example引入： 柏松分部 统计出现车辆数 考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。 泊松分布">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bayesian Estimation">
 <meta property="og:url" content="http://yoursite.com/2019/01/18/Bayesian-Estimation/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="Bayesian Estimation频率派和贝叶斯派对于参数$\theta$ 的态度区别是：  频率派：$\theta$ 是一个未知的常量  贝叶斯派：$\theta$ 是一个随机变量   贝叶斯估计通过一个example引入： 柏松分部 统计出现车辆数 考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。 泊松分布（Poisson distribut">
+<meta property="og:description" content="Bayesian Estimation 频率派和贝叶斯派对于参数\(\theta\) 的态度区别是：  频率派：\(\theta\) 是一个未知的常量 贝叶斯派：\(\theta\) 是一个随机变量  贝叶斯估计通过一个example引入： 柏松分部 统计出现车辆数 考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。 泊松分布">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-01-18T06:00:00.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.053Z">
@@ -209,41 +209,84 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Bayesian-Estimation"><a href="#Bayesian-Estimation" class="headerlink" title="Bayesian Estimation"></a>Bayesian Estimation</h2><p>频率派和贝叶斯派对于参数$\theta$ 的态度区别是：</p>
+        <h2 id="bayesian-estimation">Bayesian Estimation</h2>
+<p>频率派和贝叶斯派对于参数<span class="math inline">\(\theta\)</span>
+的态度区别是：</p>
 <ul>
-<li><p>频率派：$\theta$ 是一个未知的常量</p>
-</li>
-<li><p>贝叶斯派：$\theta$ 是一个随机变量</p>
-</li>
+<li><p>频率派：<span class="math inline">\(\theta\)</span>
+是一个未知的常量</p></li>
+<li><p>贝叶斯派：<span class="math inline">\(\theta\)</span>
+是一个随机变量</p></li>
 </ul>
 <p>贝叶斯估计通过一个example引入：</p>
-<p><a href="https://newonlinecourses.science.psu.edu/stat414/sites/onlinecourses.science.psu.edu.stat414/files/lesson52/147882_traffic/index.jpg">柏松分部 统计出现车辆数</a></p>
+<p><a
+href="https://newonlinecourses.science.psu.edu/stat414/sites/onlinecourses.science.psu.edu.stat414/files/lesson52/147882_traffic/index.jpg">柏松分部
+统计出现车辆数</a></p>
 <p>考虑一个路口间隔时段T内通过某一区域的车辆数这个样一个问题，这种问题常用到的概率模型是泊松分布。</p>
 <p>泊松分布（Poisson distribution）：</p>
-<script type="math/tex; mode=display">P( \textrm {k  events in interval}) = e^{-r}\frac{\lambda^k}{k!}</script><span id="more"></span>
-<p>其中：$\lambda$ 是平均个事件发生次数 per interval，可以看到这一模型只有<strong>一个参数</strong>$\theta = \lambda$，只要确定了$\lambda$ 就确定了模型。泊松分布有如下性质:</p>
-<p>$\lambda = E(X) = Var(X)$</p>
-<p>如果交通控制工程师认为通过这一区域平均数mean rate $\lambda$ 为3 或5。工程师在收集数据之前可能认为$\lambda = 3$ 比 $\lambda = 5$ 更可能发生先于（这是一个先验知识），先验概率是：</p>
-<p>$P(\lambda = 3) = 0.7$ 和 $P(\lambda = 5) = 0.3$</p>
-<p>某一天，工程师在随机的一个时段T观察到$x = 7$ 辆车通过指定区域。<strong>在这个观察结果下</strong>（即条件概率），$\lambda = 3$ 和 $\lambda = 5$ 的概率是多少？</p>
+<p><span class="math display">\[ P( \textrm {k  events in interval}) =
+e^{-r}\frac{\lambda^k}{k!} \]</span></p>
+<span id="more"></span>
+<p>其中：<span class="math inline">\(\lambda\)</span>
+是平均个事件发生次数 per
+interval，可以看到这一模型只有<strong>一个参数</strong><span
+class="math inline">\(\theta = \lambda\)</span>，只要确定了<span
+class="math inline">\(\lambda\)</span>
+就确定了模型。泊松分布有如下性质:</p>
+<p><span class="math inline">\(\lambda = E(X) = Var(X)\)</span></p>
+<p>如果交通控制工程师认为通过这一区域平均数mean rate <span
+class="math inline">\(\lambda\)</span> 为3
+或5。工程师在收集数据之前可能认为<span class="math inline">\(\lambda =
+3\)</span> 比 <span class="math inline">\(\lambda = 5\)</span>
+更可能发生先于（这是一个先验知识），先验概率是：</p>
+<p><span class="math inline">\(P(\lambda = 3) = 0.7\)</span> 和 <span
+class="math inline">\(P(\lambda = 5) = 0.3\)</span></p>
+<p>某一天，工程师在随机的一个时段T观察到<span class="math inline">\(x =
+7\)</span>
+辆车通过指定区域。<strong>在这个观察结果下</strong>（即条件概率），<span
+class="math inline">\(\lambda = 3\)</span> 和 <span
+class="math inline">\(\lambda = 5\)</span> 的概率是多少？</p>
 <p>通过条件概率我们知道：</p>
-<p>$P(\lambda=3 | X=7) = \frac{P(\lambda=3, X=7)}{P(X=7)}$</p>
+<p><span class="math inline">\(P(\lambda=3 | X=7) = \frac{P(\lambda=3,
+X=7)}{P(X=7)}\)</span></p>
 <p>贝叶斯展开如下：</p>
-<p>$P(\lambda=3 | X=7) = \frac{P(\lambda=3)P(X=7| \lambda=3)}{P(\lambda=3)P(X=7| \lambda=3)+P(\lambda=5)P(X=7| \lambda=5)}$</p>
+<p><span class="math inline">\(P(\lambda=3 | X=7) =
+\frac{P(\lambda=3)P(X=7| \lambda=3)}{P(\lambda=3)P(X=7|
+\lambda=3)+P(\lambda=5)P(X=7| \lambda=5)}\)</span></p>
 <p>通过查询Possion累计分布函数，得到如下结果：</p>
-<p>$P(X=7|\lambda=3)=0.988-0.966=0.022$  和</p>
-<p>$P(X=7|\lambda=5)=0.867-0.762=0.105$</p>
+<p><span
+class="math inline">\(P(X=7|\lambda=3)=0.988-0.966=0.022\)</span> 和</p>
+<p><span
+class="math inline">\(P(X=7|\lambda=5)=0.867-0.762=0.105\)</span></p>
 <p>最后计算得到目标后验概率 <strong>posterior probability</strong>：</p>
-<p>$P(\lambda=3 | X=7)=\frac{(0.7)(0.022)}{(0.7)(0.022)+(0.3)(0.105)}=\frac{0.0154}{0.0154+0.0315}=0.328 $</p>
+<p>$P( | X=7)===0.328 $</p>
 <p>同样得到：</p>
-<p>$P(\lambda=5 | X=7)=\frac{(0.3)(0.105)}{(0.7)(0.022)+(0.3)(0.105)}=\frac{0.0315}{0.0154+0.0315}=0.672$</p>
-<p>对比上面的$P(\lambda = 3) = 0.7$  和 $P(\lambda = 5) = 0.3$ 我们发现，贝叶斯估计“修正“了先验知识，平均出现5辆的可能性更大。</p>
-<p>上面我们关于$p(\lambda) = \widehat{\lambda}$ 的假设就是先验概率$p(\theta)$ , 在这个问题中 $\theta$ 被当作变量来看待，$p(\theta)$是一个关于变量$\theta $ 的p.m.f（离散概率）。$p(\theta) * p(D|\theta) = p(X, \theta)$ ，这是一个联合一个关于变量 $\theta$ 和 $X$ 的joint p.d.f（联合概率分布），通过对$\theta$ 积分，我们可以获取$X$ 的概率分布：</p>
-<script type="math/tex; mode=display">
-p(x)=\int_{-\infty}^{\infty}p(y,\theta)d\theta=\int_{-\infty}^{\infty}p(y|\theta)p(\theta)d\theta</script><p>通过Bayes’s theorem我们可以得到$\theta$的后验概率：</p>
-<p>$p(\theta|y)=\frac{p(y, \theta)}{p(y)}=\frac{p(y|\theta)p(\theta)}{p(y)}$</p>
+<p><span class="math inline">\(P(\lambda=5 |
+X=7)=\frac{(0.3)(0.105)}{(0.7)(0.022)+(0.3)(0.105)}=\frac{0.0315}{0.0154+0.0315}=0.672\)</span></p>
+<p>对比上面的<span class="math inline">\(P(\lambda = 3) = 0.7\)</span>
+和 <span class="math inline">\(P(\lambda = 5) = 0.3\)</span>
+我们发现，贝叶斯估计“修正“了先验知识，平均出现5辆的可能性更大。</p>
+<p>上面我们关于<span class="math inline">\(p(\lambda) =
+\widehat{\lambda}\)</span> 的假设就是先验概率<span
+class="math inline">\(p(\theta)\)</span> , 在这个问题中 <span
+class="math inline">\(\theta\)</span> 被当作变量来看待，<span
+class="math inline">\(p(\theta)\)</span>是一个关于变量$$
+的p.m.f（离散概率）。<span class="math inline">\(p(\theta) * p(D|\theta)
+= p(X, \theta)\)</span> ，这是一个联合一个关于变量 <span
+class="math inline">\(\theta\)</span> 和 <span
+class="math inline">\(X\)</span> 的joint
+p.d.f（联合概率分布），通过对<span class="math inline">\(\theta\)</span>
+积分，我们可以获取<span class="math inline">\(X\)</span>
+的概率分布：</p>
+<p><span class="math display">\[
+p(x)=\int_{-\infty}^{\infty}p(y,\theta)d\theta=\int_{-\infty}^{\infty}p(y|\theta)p(\theta)d\theta
+\]</span></p>
+<p>通过Bayes's theorem我们可以得到<span
+class="math inline">\(\theta\)</span>的后验概率：</p>
+<p><span class="math inline">\(p(\theta|y)=\frac{p(y,
+\theta)}{p(y)}=\frac{p(y|\theta)p(\theta)}{p(y)}\)</span></p>
 <p>参考文献：</p>
-<p><a href="https://newonlinecourses.science.psu.edu/stat414/node/241/">https://newonlinecourses.science.psu.edu/stat414/node/241/</a></p>
+<p>https://newonlinecourses.science.psu.edu/stat414/node/241/</p>
 
     </div>
 
@@ -327,7 +370,7 @@ p(x)=\int_{-\infty}^{\infty}p(y,\theta)d\theta=\int_{-\infty}^{\infty}p(y|\theta
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bayesian-Estimation"><span class="nav-number">1.</span> <span class="nav-text">Bayesian Estimation</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#bayesian-estimation"><span class="nav-number">1.</span> <span class="nav-text">Bayesian Estimation</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
