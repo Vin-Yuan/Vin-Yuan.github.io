@@ -83,3 +83,15 @@ hexo deploy
 
 进入 Settings > Pages  
 设置 Source 为 gh-pages 分支
+
+### git pull 来自于gh-pages 
+when git pull出现如下信息
+ * branch            gh-pages   -> FETCH_HEAD
+Already up to date.
+这说明你本地分支（如 main 或其他）当前的默认“跟踪分支”是远程的 gh-pages，而不是 master。
+```shell
+git branch --set-upstream-to=origin/master main
+# 或者
+git fetch origin
+git branch -u origin/master
+```
