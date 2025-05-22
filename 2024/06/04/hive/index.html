@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="查看表的信息可以看到表的 location, tableType等根据Table Type值可以知道表是内部表还是外部表 12describe extended tablenamedesc formatted tablename; 查看表分区 1&gt;&gt;show partitions $&#123;table_name&#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hive">
+<meta property="og:url" content="http://yoursite.com/2024/06/04/hive/index.html">
+<meta property="og:site_name" content="Vin&#39;s Blog">
+<meta property="og:description" content="查看表的信息可以看到表的 location, tableType等根据Table Type值可以知道表是内部表还是外部表 12describe extended tablenamedesc formatted tablename; 查看表分区 1&gt;&gt;show partitions $&#123;table_name&#125;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-06-04T07:11:19.000Z">
+<meta property="article:modified_time" content="2025-05-22T05:50:40.064Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2024/06/04/hive/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>hive | Vin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Vin's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/06/04/hive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hive
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-04 15:11:19" itemprop="dateCreated datePublished" datetime="2024-06-04T15:11:19+08:00">2024-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-22 13:50:40" itemprop="dateModified" datetime="2025-05-22T13:50:40+08:00">2025-05-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="查看表的信息"><a href="#查看表的信息" class="headerlink" title="查看表的信息"></a>查看表的信息</h2><p>可以看到表的 location, tableType等<br>根据Table Type值可以知道表是内部表还是外部表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">describe extended tablename</span><br><span class="line">desc formatted tablename;</span><br></pre></td></tr></table></figure>
+<p>查看表分区</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;show partitions <span class="variable">$&#123;table_name&#125;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="Hive-输出日志分析"><a href="#Hive-输出日志分析" class="headerlink" title="Hive 输出日志分析"></a>Hive 输出日志分析</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">……</span><br><span class="line">Partition xxx&#123;dt=2019-11-12&#125; stats: [numFiles=6, numRows=15677698, totalSize=1281943134, rawDataSize=1266265436]</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>numRows 是本次hive执行生成的数据量，这里要注意，实际查看这个数字时遇到一个现象：<br>hql-1:   insert overwrite 3 line on partition (dt = ‘2019-11-11’)<br>hql-2:   insert into 2 line on partition (dt = ‘2019-11-11’)<br>在执行hql-2的时候，日志最后显示的numRows=5, 原本的理解时这里应该是2，从我角度理解来看这应该是指hive会重新整理数据，整理的数据包括上一次已经插入表中的3条数据，所以最后产生的数据是5。</p>
+<h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><h3 id="create"><a href="#create" class="headerlink" title="create"></a>create</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> $&#123;prod_stat&#125;;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> $&#123;prod_stat&#125;</span><br><span class="line">(</span><br><span class="line">    sku        string,</span><br><span class="line">    cnt        string</span><br><span class="line">)</span><br><span class="line">PARTITIONED <span class="keyword">BY</span> (dt string)</span><br><span class="line"><span class="type">ROW</span> FORMAT DELIMITED</span><br><span class="line">FIELDS TERMINATED <span class="keyword">BY</span> <span class="string">&#x27;\t&#x27;</span></span><br><span class="line">STORED <span class="keyword">AS</span> orc</span><br><span class="line">LOCATION <span class="string">&#x27;$tbl_hdfs&#x27;</span></span><br><span class="line">TBLPROPERTIES (&quot;orc.compress&quot;<span class="operator">=</span>&quot;SNAPPY&quot;);</span><br></pre></td></tr></table></figure>
+<p>创建双字段分区表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">create table <span class="keyword">if</span> <span class="keyword">not</span> exists $&#123;overlap_table_name&#125;</span><br><span class="line">(</span><br><span class="line">    expo_uv string,</span><br><span class="line">    clk_pv string,</span><br><span class="line">)</span><br><span class="line">partitioned by (dt string, contain_in_skus boolean)</span><br><span class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY <span class="string">&#x27;\t&#x27;</span></span><br><span class="line">location <span class="string">&#x27;hdfs://ns1013/user/recsys/recpro/tmpr.db/xxx&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#插入数据</span></span><br><span class="line"></span><br><span class="line">insert overwrite table $&#123;overlap_table_name&#125; partition(dt=<span class="string">&#x27;$&#123;dt&#125;&#x27;</span>)</span><br><span class="line">select ....</span><br></pre></td></tr></table></figure>
+<h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> table_name;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name <span class="keyword">drop</span> <span class="keyword">partition</span> (partition_name<span class="operator">=</span><span class="string">&#x27;yyyy-mm-dd&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="除hive内部表，不会删除数据的方法探索"><a href="#除hive内部表，不会删除数据的方法探索" class="headerlink" title="除hive内部表，不会删除数据的方法探索"></a>除hive内部表，不会删除数据的方法探索</h4><p><a href="https://blog.csdn.net/qomoman/article/details/50516560">https://blog.csdn.net/qomoman/article/details/50516560</a><br>亲测第一种方法可行</p>
+<h5 id="方法一：将内部表改成外部表"><a href="#方法一：将内部表改成外部表" class="headerlink" title="方法一：将内部表改成外部表"></a>方法一：将内部表改成外部表</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table table_name set TBLPROPERTIES(&#x27;EXTERNAL&#x27;=&#x27;TRUE&#x27;);//内部表转外部表</span><br><span class="line">drop table table_name</span><br></pre></td></tr></table></figure>
+<h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><ol>
+<li>将表的名字改掉<br><code>alter table table_name rename to table_name_temp</code></li>
+<li>将表的数据所存放的目录改掉<br><code>hadoop   fs -mv  /user/hive/warehouse/table_name_temp /user/hive/warehouse/table_name</code></li>
+<li><code>drop table table_name</code></li>
+</ol>
+<h4 id="删除分区"><a href="#删除分区" class="headerlink" title="删除分区"></a>删除分区</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table tmpr.table drop partition(dt&gt;=&#x27;2021-01-05&#x27;, dt&lt;=&#x27;2021-03-08&#x27;)</span><br></pre></td></tr></table></figure>
+<h3 id="内部表和外部表区别"><a href="#内部表和外部表区别" class="headerlink" title="内部表和外部表区别"></a>内部表和外部表区别</h3><p>1 删除内表时，内表数据会一并删除；<br>2 删除外表时，外表数据依旧存在。</p>
+<h3 id="like"><a href="#like" class="headerlink" title="like"></a>like</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hql=<span class="string">&quot;drop table <span class="variable">$&#123;hp_few_sku&#125;</span>;</span></span><br><span class="line"><span class="string">create table <span class="variable">$&#123;hp_few_sku&#125;</span></span></span><br><span class="line"><span class="string">like <span class="variable">$&#123;hp_table&#125;</span></span></span><br><span class="line"><span class="string">location &#x27;<span class="variable">$&#123;location&#125;</span>&#x27;</span></span><br><span class="line"><span class="string">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="alter"><a href="#alter" class="headerlink" title="alter"></a>alter</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> name RENAME <span class="keyword">TO</span> new_name</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> name <span class="keyword">ADD</span> COLUMNS (col_spec[, col_spec ...])</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> name <span class="keyword">DROP</span> [<span class="keyword">COLUMN</span>] column_name</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> name CHANGE column_name new_name new_type</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> name REPLACE COLUMNS (col_spec[, col_spec ...])</span><br></pre></td></tr></table></figure>
+<h3 id="创建表可以包含的关键字"><a href="#创建表可以包含的关键字" class="headerlink" title="创建表可以包含的关键字"></a>创建表可以包含的关键字</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name</span><br><span class="line">   [(col_name data_type [COMMENT col_comment], ...)]:指定表的名称和表的具体列信息。</span><br><span class="line">   [COMMENT table_comment] :表的描述信息。</span><br><span class="line">   [PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]:表的分区信息。</span><br><span class="line">   [CLUSTERED BY (col_name, col_name, ...) </span><br><span class="line">   [SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]:表的桶信息。</span><br><span class="line">   [ROW FORMAT row_format] :表的数据分割信息，格式化信息。</span><br><span class="line">   [STORED AS file_format] :表数据的存储序列化信息。</span><br><span class="line">   [LOCATION hdfs_path] :数据存储的文件夹地址信息。</span><br></pre></td></tr></table></figure>
+<h2 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT OVERWRITE [ LOCAL ] DIRECTORY directory_path</span><br><span class="line">    [ ROW FORMAT row_format ] [ STORED AS file_format ]</span><br><span class="line">    &#123; VALUES ( &#123; value | NULL &#125; [ , ... ] ) [ , ( ... ) ] | query &#125;</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> OVERWRITE [<span class="keyword">LOCAL</span>] DIRECTORY directory1 </span><br><span class="line"><span class="type">ROW</span> FORMAT DELIMITED FIELDS TERMINATED <span class="keyword">BY</span> <span class="string">&#x27;\t&#x27;</span> </span><br><span class="line">select_statement1;</span><br></pre></td></tr></table></figure>
+<h3 id="生成数据常用config"><a href="#生成数据常用config" class="headerlink" title="生成数据常用config"></a>生成数据常用config</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set mapred.max.split.size=524288000;</span><br><span class="line">set mapred.min.split.size=524288000;</span><br><span class="line">set mapred.min.split.size.per.node=524288000;</span><br><span class="line">set mapred.min.split.size.per.rack=524288000;</span><br><span class="line">set hive.input.format=org.apache.hadoop.hive.ql.io.CombineHiveInputFormat;</span><br><span class="line">set hive.merge.mapfiles = true;</span><br><span class="line">set hive.merge.mapredfiles = true;</span><br><span class="line">set hive.merge.size.per.task = 256000000;</span><br><span class="line">set hive.merge.smallfiles.avgsize = 104857600;</span><br></pre></td></tr></table></figure>
+<h2 id="从本地导入数据到表中"><a href="#从本地导入数据到表中" class="headerlink" title="从本地导入数据到表中"></a>从本地导入数据到表中</h2><p>load data inpath ‘filepath’ into table tablename<br>这里的filepath是hdfs路径，而非本地文本文件路径，所以最好将文本文件上传至hdfs目录, 然后再导入<a href="https://blog.csdn.net/xiongbingcool/article/details/82982099">【参考】</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -put &#x27;local_file_path&#x27; &#x27;hdfs://……/user/local/user.login_log&#x27;</span><br></pre></td></tr></table></figure>
+<p>导入本地数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LOAD DATA [LOCAL] INPATH &#x27;filepath&#x27; [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1, partcol2=val2 ...)]</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是如果使用的时：当使用hdf路径时不加local,即：<code>load data inpath hdfs://xxxx/data/</code>，并且在导入数据后会<strong>源地址数据会被删除</strong><br>example</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data inpath &#x27;hdfs://ns1007/user/recsys/recpro/yuanwenwu3/tmpr.feedback_bad_1200_in_15&#x27; overwrite into table tmpr.feedback_bad_1200_in_15 partition(dt=&#x27;2019-09-03&#x27;);</span><br></pre></td></tr></table></figure>
+<h2 id="简略流程"><a href="#简略流程" class="headerlink" title="简略流程"></a>简略流程</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># step-1 创建临时表</span><br><span class="line">create table if not exists zx_user.temp_ly_sentitive_phone(phone STRING)</span><br><span class="line">row format delimited</span><br><span class="line">fields terminated by &#x27;,&#x27;</span><br><span class="line">stored as textfile;</span><br><span class="line"># step-2 将本地数据导入临时表</span><br><span class="line">LOAD DATA local INPATH &#x27;/home/zx_user/fmd5_0916_1021/sentitive_phone.csv&#x27; INTO TABLE zx_user.temp_ly_sentitive_phone</span><br><span class="line"># step-3 验证</span><br><span class="line">select * from zx_user.temp_ly_sentitive_phone_200917 limit 1;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="查询SQL语句"><a href="#查询SQL语句" class="headerlink" title="查询SQL语句"></a>查询SQL语句</h2><h3 id="按照排序截取指定位置的数据"><a href="#按照排序截取指定位置的数据" class="headerlink" title="按照排序截取指定位置的数据"></a>按照排序截取指定位置的数据</h3><p>场景：按照某一字段排序，然后选择第排序1000位置的数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> </span><br><span class="line">(</span><br><span class="line">    <span class="keyword">select</span> name,</span><br><span class="line">    cnt,</span><br><span class="line">    <span class="built_in">row_number</span>() <span class="keyword">over</span> (<span class="keyword">order</span> <span class="keyword">by</span> cnt <span class="keyword">desc</span>) <span class="keyword">as</span> rank </span><br><span class="line">    <span class="keyword">from</span> tmpr.yuan_test</span><br><span class="line">) a </span><br><span class="line"><span class="keyword">where</span> a.rank <span class="operator">=</span> <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put /home/user/train.tar.gz <span class="string">&#x27;hdfs://ns1013/user/.../train&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -get <span class="string">&#x27;hdfs://ns1013/user/.../train&#x27;</span> /home/user/train.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="hadoop-查看文件大小"><a href="#hadoop-查看文件大小" class="headerlink" title="hadoop 查看文件大小"></a>hadoop 查看文件大小</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -<span class="built_in">du</span> -s -h hdfs://ns1013/0530/train/data/</span><br><span class="line"><span class="comment"># -h humanity</span></span><br></pre></td></tr></table></figure>
+<h2 id="hadoop-更改组权限"><a href="#hadoop-更改组权限" class="headerlink" title="hadoop 更改组权限"></a>hadoop 更改组权限</h2><p>hadoop fs -chgrp -R user1</p>
+<h2 id="LEFT-JOIN-后面接AND和接WHERE的区别"><a href="#LEFT-JOIN-后面接AND和接WHERE的区别" class="headerlink" title="LEFT JOIN 后面接AND和接WHERE的区别"></a>LEFT JOIN 后面接AND和接WHERE的区别</h2><p>参考博客<a href="https://blog.csdn.net/henrrywan/article/details/90207961">例子</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[nd1:21000] default&gt; select * from test_user;</span><br><span class="line">+----+------+-----+---------+</span><br><span class="line">| id | name | age | classid | </span><br><span class="line">+----+------+-----+---------+</span><br><span class="line">| 1  | 张三 | 20  | 1       |</span><br><span class="line">| 2  | 李四 | 21  | 1       |</span><br><span class="line">| 3  | 王五 | 22  | 2       | </span><br><span class="line">| 4  | Lucy | 18  | 3       |</span><br><span class="line">| 5  | Jack | 18  | 3       |</span><br><span class="line">| 6  | Tom  | 18  | 3       |</span><br><span class="line">+----+------+-----+---------+</span><br><span class="line"></span><br><span class="line">[nd1:21000] default&gt; select * from test_class;</span><br><span class="line">+----+----------+</span><br><span class="line">| id | classname|</span><br><span class="line">+----+----------+</span><br><span class="line">| 1  | class101 |</span><br><span class="line">| 2  | class102 |</span><br><span class="line">| 3  | class103 |</span><br><span class="line">| 4  | class104 |</span><br><span class="line">+----+----------+</span><br></pre></td></tr></table></figure>
+<h3 id="带ON和AND的SQL查询"><a href="#带ON和AND的SQL查询" class="headerlink" title="带ON和AND的SQL查询"></a>带ON和AND的SQL查询</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">select t1.id,t1.name,t2.classname from test_user t1</span><br><span class="line">left join test_class t2 </span><br><span class="line">on t1.classid=t2.id and t1.id=1</span><br><span class="line"></span><br><span class="line">+----+------+----------+</span><br><span class="line">| id | name | classname|</span><br><span class="line">+----+------+----------+</span><br><span class="line">| 1  | 张三 | class101 | </span><br><span class="line">| 2  | 李四 | NULL     | </span><br><span class="line">| 3  | 王五 | NULL     | </span><br><span class="line">| 4  | Lucy | NULL     |</span><br><span class="line">| 5  | Jack | NULL     | </span><br><span class="line">| 6  | Tom  | NULL     | </span><br><span class="line">+----+------+----------+</span><br><span class="line"></span><br><span class="line">--这里我们把on后面的查询条件放在括号里面，结果一致。</span><br><span class="line">select t1.id,t1.name,t2.classname from test_user t1</span><br><span class="line">left join test_class  t2 </span><br><span class="line">on (t1.classid = t2.id and t1.id = 1)</span><br></pre></td></tr></table></figure>
+<p>对于left join，<strong>on条件是在生成临时表时使用的条件(参照上面的博客，这里用来过滤t2表的数据，而t1的数据全部显示，也就是说关联上了就显示t2数据，关联不上就显示NULL)</strong>，它不管on中的条件是否为真，都会返回左边表中的记录，on后面的只作为关联条件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">select t1.id,t1.name,t2.classname from test_user t1</span><br><span class="line">left join test_class t2</span><br><span class="line">on t1.classid=t2.id</span><br><span class="line">where t1.id=1</span><br><span class="line"></span><br><span class="line">+----+------+----------+</span><br><span class="line">| id | name | classname| </span><br><span class="line">+----+------+----------+</span><br><span class="line">| 1  | 张三 | class101 |</span><br><span class="line">+----+------+----------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部过滤掉</strong><br>其实比较好的写法是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select u.id, u.name, c.classname from (select * from test_user where id = 1) u left join test_class c on u.classid=c.id;</span><br></pre></td></tr></table></figure>
+<p>尽量使用left join-on-where标准写法<strong>，on只出现连接字段</strong>，过滤条件放在where里面。</p>
+<p>对于inner join 则没有这个顾虑，在join的过程正过滤掉数据有利于提高效率<br>主要结论如下：</p>
+<ul>
+<li>LEFT JOIN 后面如果只接ON查询，会显示所有左表的数据，右表中的数据是否显示取决于后面的查询条件</li>
+<li>LEFT JOIN 后面接WHERE查询，会根据WHERE条件先对数据进行过滤</li>
+<li>LEFT JOIN 后面条件查询，条件一定不要恒为真，否则会出现笛卡尔积</li>
+<li>LEFT JOIN 后面条件查询，条件一定不要恒为假，否则查询结果中右表数据始终为NULL</li>
+<li>RIGHT JOIN 和LEFT JOIN 特性相同，INNER JOIN没这个特殊性，不管条件是放在ON中，还是放在WHERE中，返回的结果集是相同的</li>
+</ul>
+<h2 id="Rack-amp-Node-amp-cluster"><a href="#Rack-amp-Node-amp-cluster" class="headerlink" title="Rack &amp; Node &amp; cluster"></a>Rack &amp; Node &amp; cluster</h2><p>参考<a href="https://www.quora.com/What-is-the-rack-in-a-Hadoop-cluster-How-does-it-work">回答</a></p>
+<p>一个node就是一台电脑，一堆nodes的存储空间被称作rack。通常一个rack是30-40个有实际物理存储空间的nodes组成的，且这些nodes位置比较近，且连接于同一个network switch(交换机)。基于这个结构可知：同一rack中的任意两个nodes之间通信的带宽大于不同ranck中的nodes。一个Hadoop Cluster就是racks的集合。</p>
+<blockquote>
+<p>Whenever any data is stored in hdfs ,it is replicated (default 3) in which two copies are in same rack and one outside the rack. So that if whole rack goes down then also data can be retrived.</p>
+</blockquote>
+<p>(上面这一点即Data protection against rack failure）</p>
+<h3 id="Rack-Awareness"><a href="#Rack-Awareness" class="headerlink" title="Rack Awareness"></a>Rack Awareness</h3><p>In a large cluster of Hadoop, in order to improve the network traffic while reading/writing HDFS file, <strong>namenode chooses the datanode which is closer to the same rack or nearby rack to Read/Write request</strong>. Namenode achieves rack information by maintaining the rack id’s of each datanode. This concept that chooses closer datanodes based on the rack information is called <strong>Rack Awareness</strong> in Hadoop.</p>
+<h3 id="node"><a href="#node" class="headerlink" title="node"></a>node</h3><p>A node in hadoop simply means a computer that can be used for processing and storing. There are two types of nodes in hadoop Name node and Data node. It is called as a node as all these computers are interconnected.</p>
+<h3 id="NameNode-and-DataNode"><a href="#NameNode-and-DataNode" class="headerlink" title="NameNode and DataNode"></a><a href="https://www.quora.com/What-is-the-difference-between-Namenode-+-Datanode-Jobtracker-+-Tasktracker-Combiners-Shufflers-and-Mappers+Reducers-in-their-technical-functionality-and-physically-ie-whether-they-are-on-the-same-machine-in-a-cluster-while-running-a-job">NameNode and DataNode</a></h3><p>Technical Sense: NameNode stores MetaData(No of Blocks, On Which Rack which DataNode the data is stored and other details) about the data being stored in DataNodes whereas the DataNode stores the actual Data.</p>
+<p>Physical Sense: In a multinode cluster NameNode and DataNodes are usually on different machines. There is only one NameNode in a cluster and many DataNodes; Thats why we call NameNode as a single point of failure. Although There is a Secondary NameNode (SNN) that can exist on different machine which doesn’t actually act as a NameNode but stores the image of primary NameNode at certain checkpoint and is used as backup to restore NameNode.</p>
+<h3 id="JobTracker-And-TaskTracker"><a href="#JobTracker-And-TaskTracker" class="headerlink" title="JobTracker And TaskTracker"></a>JobTracker And TaskTracker</h3><p>Technical Sense: JobTracker is a master which creates and runs the job. <strong>JobTracker which can run on the NameNode allocates the job to TaskTrackers which run on DataNodes</strong>; TaskTrackers run the tasks and report the status of task to JobTracker.</p>
+<p>Physical Sense: The JobTracker runs on MasterNode aka NameNode whereas TaskTrackers run on DataNodes.</p>
+<h2 id="hive中控制map-reduce数量方法"><a href="#hive中控制map-reduce数量方法" class="headerlink" title="hive中控制map reduce数量方法"></a><a href="https://blog.csdn.net/zhong_han_jun/article/details/50814246">hive中控制map reduce数量方法</a></h2><ul>
+<li>map:</li>
+</ul>
+<p>set mapred.max.split.size=256000000; — 决定每个map处理的最大的文件大小，单位为B<br>set mapred.min.split.size.per.node=1; — 节点中可以处理的最小的文件大小<br>set mapred.min.split.size.per.rack=1; — 机架中可以处理的最小的文件大小</p>
+<p>如果mapred.max.split.size = 240x1024x1024=240M</p>
+<ol>
+<li>假设有两个文件大小分别为(256M,280M)被分配到节点A，那么会启动两个map，剩余的文件大小为10MB和35MB因为每个大小都不足241MB会先做保留</li>
+<li>根据参数set mapred.min.split.size.per.node看剩余的大小情况并进行合并,如果值为1，表示a中每个剩余文件都会自己起一个map，这里会起两个，如果设置为大于45<em>1024</em>1024则会合并成一个块，并产生一个map<br>如果mapred.min.split.size.per.node为10<em>1024</em>1024，那么在这个节点上一共会有4个map，处理的大小为(245MB,245MB,10MB,10MB，10MB，10MB)，余下9MB<br>如果mapred.min.split.size.per.node为45<em>1024</em>1024，那么会有三个map，处理的大小为(245MB,245MB,45MB)<br>实际中mapred.min.split.size.per.node无法准确地设置成45<em>1024</em>1024，会有剩余并保留带下一步进行判断处理</li>
+<li>对2中余出来的文件与其它节点余出来的文件根据mapred.min.split.size.per.rack大小进行判断是否合并，对再次余出来的文件独自产生一个map处理</li>
+</ol>
+<ul>
+<li>reduce:<br>方法1 set mapred.reduce.tasks=10; — 设置reduce的数量<br>方法2 set hive.exec.reducers.bytes.per.reducer=1073741824 — 每个reduce处理的数据量,默认1GB</li>
+</ul>
+<p>其他更细的优化参考下面两个连接未完待续<br><a href="https://www.cnblogs.com/xd502djj/p/3799432.html">资料1</a><br><a href="https://www.cnblogs.com/swordfall/p/11037539.html">资料2</a> 2019-09-04 18:09:24</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/04/data-process/" rel="prev" title="data_process">
+      <i class="fa fa-chevron-left"></i> data_process
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/04/recommendation-system/" rel="next" title="recommendation_system">
+      recommendation_system <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">查看表的信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive-%E8%BE%93%E5%87%BA%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">Hive 输出日志分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">创建表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create"><span class="nav-number">3.1.</span> <span class="nav-text">create</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">删除表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%A4hive%E5%86%85%E9%83%A8%E8%A1%A8%EF%BC%8C%E4%B8%8D%E4%BC%9A%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8E%A2%E7%B4%A2"><span class="nav-number">3.2.1.</span> <span class="nav-text">除hive内部表，不会删除数据的方法探索</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%B0%86%E5%86%85%E9%83%A8%E8%A1%A8%E6%94%B9%E6%88%90%E5%A4%96%E9%83%A8%E8%A1%A8"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">方法一：将内部表改成外部表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">方法二</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%88%86%E5%8C%BA"><span class="nav-number">3.2.2.</span> <span class="nav-text">删除分区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E8%A1%A8%E5%92%8C%E5%A4%96%E9%83%A8%E8%A1%A8%E5%8C%BA%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">内部表和外部表区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#like"><span class="nav-number">3.4.</span> <span class="nav-text">like</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alter"><span class="nav-number">3.5.</span> <span class="nav-text">alter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.6.</span> <span class="nav-text">创建表可以包含的关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Insert"><span class="nav-number">4.</span> <span class="nav-text">Insert</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE%E5%B8%B8%E7%94%A8config"><span class="nav-number">4.1.</span> <span class="nav-text">生成数据常用config</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%9C%AC%E5%9C%B0%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E5%88%B0%E8%A1%A8%E4%B8%AD"><span class="nav-number">5.</span> <span class="nav-text">从本地导入数据到表中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E7%95%A5%E6%B5%81%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">简略流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2SQL%E8%AF%AD%E5%8F%A5"><span class="nav-number">7.</span> <span class="nav-text">查询SQL语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E7%85%A7%E6%8E%92%E5%BA%8F%E6%88%AA%E5%8F%96%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">7.1.</span> <span class="nav-text">按照排序截取指定位置的数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">上传文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="nav-number">9.</span> <span class="nav-text">下载文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-number">10.</span> <span class="nav-text">hadoop 查看文件大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop-%E6%9B%B4%E6%94%B9%E7%BB%84%E6%9D%83%E9%99%90"><span class="nav-number">11.</span> <span class="nav-text">hadoop 更改组权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LEFT-JOIN-%E5%90%8E%E9%9D%A2%E6%8E%A5AND%E5%92%8C%E6%8E%A5WHERE%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">12.</span> <span class="nav-text">LEFT JOIN 后面接AND和接WHERE的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6ON%E5%92%8CAND%E7%9A%84SQL%E6%9F%A5%E8%AF%A2"><span class="nav-number">12.1.</span> <span class="nav-text">带ON和AND的SQL查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rack-amp-Node-amp-cluster"><span class="nav-number">13.</span> <span class="nav-text">Rack &amp; Node &amp; cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rack-Awareness"><span class="nav-number">13.1.</span> <span class="nav-text">Rack Awareness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node"><span class="nav-number">13.2.</span> <span class="nav-text">node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NameNode-and-DataNode"><span class="nav-number">13.3.</span> <span class="nav-text">NameNode and DataNode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JobTracker-And-TaskTracker"><span class="nav-number">13.4.</span> <span class="nav-text">JobTracker And TaskTracker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hive%E4%B8%AD%E6%8E%A7%E5%88%B6map-reduce%E6%95%B0%E9%87%8F%E6%96%B9%E6%B3%95"><span class="nav-number">14.</span> <span class="nav-text">hive中控制map reduce数量方法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
