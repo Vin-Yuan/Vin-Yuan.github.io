@@ -82,4 +82,4 @@ theme: next
 deploy:
   type: git
   repo: git@github.com:Vin-Yuan/Vin-Yuan.github.io.git
-  branch: master
+  branch: hg-pages
