@@ -1,12 +1,12 @@
 ---
-title: GPT
+title: build GPT from scratch
 mathjax: true
 date: 2025-05-21 12:02:14
 categories: LLM
 tags: LLM
 ---
 
-## cross_entropy的应用
+## cross_entropy 损失函数估计
 ```python
 class BigramLanguageModel(nn.Module):
 ……
@@ -127,4 +127,23 @@ W @ x =
 ⎢ w₁ᵀ @ x ⎥
 ⎢ w₂ᵀ @ x ⎥
 ⎣ w₃ᵀ @ x ⎦
+```
+
+## Query * Key
+$\mathrm{res} = \mathrm{Q} \cdot \mathrm{K}^{\top}$ 分块矩阵的理解
+```python
+Q =
+---q1---
+---q2---
+---q3---
+
+K^{T} = 
+  |  |  |
+  k1 k2 k3
+  |  |  |
+
+res = 
+  [w1, w2, w3]
+  ……
+# Q @ K^{T} 是q和K中的emb算sim, 得到weight
 ```
