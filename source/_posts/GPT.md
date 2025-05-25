@@ -147,3 +147,59 @@ res =
   ……
 # Q @ K^{T} 是q和K中的emb算sim, 得到weight
 ```
+
+## attention vs convolution
+- Attention is a **communication mechanism**. Can be seen as nodes in a directed graph looking at each other and aggregating information with a weighted sum from **all nodes that point to them**, with **data-dependent** weights.aggregating at each other.  
+- There is **no notion of space**. Attention simply acts over a set of vectors. This is why we need to positionally encode tokens.  
+想象一下transformer里
+K, Q, V shape is (B, T, C) = (4, 8, 16)  
+weight = K @ $\mathrm{Q}^{\mathrm{T}}$ is (B, T, T)  
+weight @ V = (B, T, C)  
+
+没有space 概念，这也是为什么需要add positin embedding的缘故.
+虽然通过batch做了并行计算，但从始至终都是每个样本各自**independent**通信,没有communicate across batch，每个样本是一个有向图结构，各自通信，同一个batch里样本之间所构成的graph是不通信的  
+- encoder: look all the tokens
+- decoder: only look T-1 tokens
+
+**self**-attention: X -> K, Q, V   
+**cross**-attention: X -> K, others-> Q, V  
+cross attention:
+Cross Attention（交叉注意力）是一种注意力机制，常用于需要处理 两个不同输入源之间的交互 的任务中，比如：  
+图像和文本之间的对齐（如图文生成、视觉问答）  
+编码器-解码器结构（如机器翻译中的Transformer）  
+多模态模型（比如 Qwen-VL 这类处理图像+文本输入的模型）  
+Cross Attention 的核心思想是：  
+一个序列（称为Query）通过注意力机制来关注另一个序列（称为Key和Value）中的关键信息。  
+例如：
+假设你有一段文本：“这张图片上有什么？”  
+同时你有一张图片作为输入。  
+在 cross-attention 中：  
+文本被当作 Query（提问）  
+图像特征被当作 Key 和 Value（知识源）  
+模型会根据文本的每个位置，去图像中找最相关的区域来生成输出  
+
+## divided by sqrt
+$$\mathrm{Attention}(Q,K,V) = \mathrm{sofltmax}(\frac{QK^{T}}{\sqrt{d_k}})V$$
+"Scaled" attention additional divides wei by 1/sqrt(head_size). This makes it so when input Q,K are **unit variance**, wei will be **unit variance** too and Softmax will stay diffuse and not saturate too much. Illustration below
+```python
+B,T,C = 4,8,32 # batch, time, channels
+head_size = 16
+k = torch.randn(B,T,head_size)
+q = torch.randn(B,T,head_size)
+#wei = q @ k.transpose(-2, -1) * head_size**-0.5
+wei = q @ k.transpose(-2, -1)
+
+# sqrt version 方差接近,diffusion
+tensor(1.0752)
+tensor(0.9134)
+tensor(0.9560)
+
+# no sqrt version 方差极端
+tensor(0.9716)
+tensor(1.0322)
+tensor(14.1379)
+```
+这样 Softmax 的输出就会比较“分散”（diffuse），而不会“过度饱和”（saturate too much）。  
+Diffuse" 指 Softmax 输出的分布比较“均匀”，不会只有几个值接近 1，其它都是 0。  
+"Saturate" 是指当输入非常大或非常小，Softmax 的输出趋近于极值（0 或 1），梯度会消失或训练不稳定。  
+如果没有 scale（√d），Q·K 的 dot product 会随 head_size 增大而变大 → 造成 Softmax 输出饱和 → 注意力只盯住很少几个 token → 学不到全局信息。
