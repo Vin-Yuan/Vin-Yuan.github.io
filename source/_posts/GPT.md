@@ -189,7 +189,7 @@ q = torch.randn(B,T,head_size)
 #wei = q @ k.transpose(-2, -1) * head_size**-0.5
 wei = q @ k.transpose(-2, -1)
 
-# sqrt version 方差接近,diffusion
+# sqrt version 方差接近1,diffusion
 tensor(1.0752)
 tensor(0.9134)
 tensor(0.9560)
