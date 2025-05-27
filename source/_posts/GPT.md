@@ -202,4 +202,13 @@ tensor(14.1379)
 这样 Softmax 的输出就会比较“分散”（diffuse），而不会“过度饱和”（saturate too much）。  
 Diffuse" 指 Softmax 输出的分布比较“均匀”，不会只有几个值接近 1，其它都是 0。  
 "Saturate" 是指当输入非常大或非常小，Softmax 的输出趋近于极值（0 或 1），梯度会消失或训练不稳定。  
-如果没有 scale（√d），Q·K 的 dot product 会随 head_size 增大而变大 → 造成 Softmax 输出饱和 → 注意力只盯住很少几个 token → 学不到全局信息。
+如果没有 scale（√d），Q·K 的 dot product 会随 head_size 增大而变大 → 造成 Softmax 输出饱和 → 注意力只盯住很少几个 token → 学不到全局信息。  
+**数学解释**  
+$\mathrm{Var}(QK) = \mathrm{E}[(QK)^2] - (\mathrm{E}[QK])^2 = 1-0 = 1$
+因为Q, K 相互独立，所Q, K的联合概率密度可以表示为他们的边缘概率分布乘积(平方也是)  
+it means:  
+$\mathrm{E}[QK] = \mathrm{E}[Q]\cdot\mathrm{E}[K]$ 
+那么  
+$$Var[S] = Var[\sum_{i=1}^{d_k}Q_iK_i] = \sum_{i=1}^{d_k}1 = d_k$$
+
+所以这是后除以$\sqrt{d_k}$会使得方差恒定，不会变化非常大
