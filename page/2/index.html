@@ -195,7 +195,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="查看表的信息"><a href="#查看表的信息" class="headerlink" title="查看表的信息"></a>查看表的信息</h2><p>可以看到表的 location, tableType等<br>根据Table Type值可以知道表是内部表还是外部表</p>
+          <h2 id="查看表的信息">查看表的信息</h2>
+<p>可以看到表的 location, tableType等 根据Table
+Type值可以知道表是内部表还是外部表</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">describe extended tablename</span><br><span class="line">desc formatted tablename;</span><br></pre></td></tr></table></figure>
 <p>查看表分区</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;show partitions <span class="variable">$&#123;table_name&#125;</span></span><br></pre></td></tr></table></figure>
@@ -270,12 +272,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Byte-KB-MB的笔记"><a href="#Byte-KB-MB的笔记" class="headerlink" title="Byte, KB, MB的笔记"></a>Byte, KB, MB的笔记</h1><p><a href="http://myrepono.com/faq/4">http://myrepono.com/faq/4</a></p>
+          <h1 id="byte-kb-mb的笔记">Byte, KB, MB的笔记</h1>
+<p><a href="http://myrepono.com/faq/4"
+class="uri">http://myrepono.com/faq/4</a></p>
 <blockquote>
-<p>A byte is a sequence of 8 bits (enough to represent one alphanumeric character) processed as a single unit of information. A single letter or character would use one byte of memory (8 bits), two characters would use two bytes (16 bits).</p>
+<p>A byte is a sequence of 8 bits (enough to represent one alphanumeric
+character) processed as a single unit of information. A single letter or
+character would use one byte of memory (8 bits), two characters would
+use two bytes (16 bits).</p>
 </blockquote>
-<p>1024 bytes = 1 KB<br>1024 KB = 1 MB<br>1024 MB = 1 GB<br>1024 GB = 1 TB<br>1024 TB = 1 PB<br>KB = KilobyteM<br>B = MegabyteG<br>B = GigabyteT<br>B = TerabyteP<br>B = Petabyte</p>
-<h2 id="dataframe-估算内存"><a href="#dataframe-估算内存" class="headerlink" title="dataframe 估算内存"></a>dataframe 估算内存</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">memory_usage</span>(<span class="params">df</span>):</span><br><span class="line">    types = df.dtypes</span><br><span class="line">    s = df.memory_usage(deep=<span class="literal">True</span>)</span><br><span class="line">    s = s/<span class="number">1024</span>**<span class="number">2</span></span><br><span class="line">    total_mem = s.<span class="built_in">sum</span>()</span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> df.columns:</span><br><span class="line">        <span class="keyword">if</span> s[column] &lt; <span class="number">0.01</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125; = &#123;&#125; KB,  &#123;&#125;&quot;</span>.<span class="built_in">format</span>(column, s[column] * <span class="number">1024</span>, types[column]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125; = &#123;:1.2f&#125; MB,  &#123;&#125;&quot;</span>.<span class="built_in">format</span>(column, s[column], types[column]))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;totoal memory: &#123;:.2f&#125; MB&quot;</span>.<span class="built_in">format</span>(total_mem))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1024 bytes = 1 KB 1024 KB = 1 MB 1024 MB = 1 GB 1024 GB = 1 TB 1024
+TB = 1 PB KB = KilobyteM B = MegabyteG B = GigabyteT B = TerabyteP B =
+Petabyte</p>
+<h2 id="dataframe-估算内存">dataframe 估算内存</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">memory_usage</span>(<span class="params">df</span>):</span><br><span class="line">    types = df.dtypes</span><br><span class="line">    s = df.memory_usage(deep=<span class="literal">True</span>)</span><br><span class="line">    s = s/<span class="number">1024</span>**<span class="number">2</span></span><br><span class="line">    total_mem = s.<span class="built_in">sum</span>()</span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> df.columns:</span><br><span class="line">        <span class="keyword">if</span> s[column] &lt; <span class="number">0.01</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125; = &#123;&#125; KB,  &#123;&#125;&quot;</span>.<span class="built_in">format</span>(column, s[column] * <span class="number">1024</span>, types[column]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125; = &#123;:1.2f&#125; MB,  &#123;&#125;&quot;</span>.<span class="built_in">format</span>(column, s[column], types[column]))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;totoal memory: &#123;:.2f&#125; MB&quot;</span>.<span class="built_in">format</span>(total_mem))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/06/04/data-process/#more" rel="contents">
@@ -347,8 +357,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="pyspark-API"><a href="#pyspark-API" class="headerlink" title="pyspark API"></a>pyspark API</h2><p><a href="https://spark.apache.org/docs/2.2.1/api/python/search.html?q=dataframe.write">https://spark.apache.org/docs/2.2.1/api/python/search.html?q=dataframe.write</a></p>
-<h2 id="简明教程"><a href="#简明教程" class="headerlink" title="简明教程"></a>简明教程</h2><p><a href="https://sparkbyexamples.com/pyspark/pyspark-orderby-and-sort-explained/">https://sparkbyexamples.com/pyspark/pyspark-orderby-and-sort-explained/</a><br><a href="http://www.learnbymarketing.com/1100/pyspark-joins-by-example/">http://www.learnbymarketing.com/1100/pyspark-joins-by-example/</a></p>
+          <h2 id="pyspark-api">pyspark API</h2>
+<p><a
+href="https://spark.apache.org/docs/2.2.1/api/python/search.html?q=dataframe.write"
+class="uri">https://spark.apache.org/docs/2.2.1/api/python/search.html?q=dataframe.write</a></p>
+<h2 id="简明教程">简明教程</h2>
+<p><a
+href="https://sparkbyexamples.com/pyspark/pyspark-orderby-and-sort-explained/"
+class="uri">https://sparkbyexamples.com/pyspark/pyspark-orderby-and-sort-explained/</a>
+<a href="http://www.learnbymarketing.com/1100/pyspark-joins-by-example/"
+class="uri">http://www.learnbymarketing.com/1100/pyspark-joins-by-example/</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/06/04/spark/#more" rel="contents">
@@ -420,11 +438,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv 的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境</p>
-<h4 id="installation"><a href="#installation" class="headerlink" title="installation"></a>installation</h4><p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart">https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart</a></p>
-<h4 id="在conda中使用pip"><a href="#在conda中使用pip" class="headerlink" title="在conda中使用pip"></a>在conda中使用pip</h4><p>注意：当在conda的虚拟环境中使用Pip安装包时，需要使用<code>pip -V</code>查看Pip所使用的路径，如果conda没有安装Pip，会使用系统默认的pip命令，这种结果使得pip安装的包被安装到了系统库位置，从而在当前虚拟环境中的python下无法使用或找不到。<br>一般conda的虚拟环境中自带pip，如果你是用pip3安装，可能使用的是系统的pip，这一点要注意</p>
+          <p>conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv
+的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境</p>
+<h4 id="installation">installation</h4>
+<p><a
+href="https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart"
+class="uri">https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart</a></p>
+<h4 id="在conda中使用pip">在conda中使用pip</h4>
+<p>注意：当在conda的虚拟环境中使用Pip安装包时，需要使用<code>pip -V</code>查看Pip所使用的路径，如果conda没有安装Pip，会使用系统默认的pip命令，这种结果使得pip安装的包被安装到了系统库位置，从而在当前虚拟环境中的python下无法使用或找不到。
+一般conda的虚拟环境中自带pip，如果你是用pip3安装，可能使用的是系统的pip，这一点要注意</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(face_detector) ➜  ~ pip -V</span><br><span class="line">pip 9.0.1 from /opt/anaconda3/envs/face_detector/lib/python3.5/site-packages (python 3.5)</span><br><span class="line">(face_detector) ➜  ~ pip3 -V</span><br><span class="line">pip 20.0.2 from /usr/local/lib/python3.7/site-packages/pip (python 3.7)</span><br></pre></td></tr></table></figure>
-<p>的开发环境会被默认安装在你conda目录下的envs文件目录下。可以指定一个其他的路径；去通过 conda create -h了解更<br>果我们没有指定安装python的版本，conda会安装我们最初安装conda时所装的那个版本的python。</p>
+<p>的开发环境会被默认安装在你conda目录下的envs文件目录下。可以指定一个其他的路径；去通过
+conda create -h了解更
+果我们没有指定安装python的版本，conda会安装我们最初安装conda时所装的那个版本的python。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列举当前所有环境</span></span><br><span class="line">conda info</span><br><span class="line">conda env <span class="built_in">list</span></span><br><span class="line"><span class="comment"># 创建环境</span></span><br><span class="line">conda create --name new_env_name python=<span class="number">2.7</span><span class="number">.9</span></span><br><span class="line">conda create -n new_env_name python=<span class="number">2.7</span><span class="number">.9</span></span><br><span class="line"><span class="comment"># 克隆环境 (例如当前环境是base, 需要克隆一个copy_base，地址在~/path)</span></span><br><span class="line">conda create -n copy_base --clone ~/path</span><br><span class="line"><span class="comment"># 激活环境</span></span><br><span class="line">source activate snowflakes  <span class="comment">#linux</span></span><br><span class="line">activate new_env_name <span class="comment">#windows</span></span><br><span class="line"><span class="comment"># 释放环境</span></span><br><span class="line">source deactivate <span class="comment">#linux</span></span><br><span class="line">deactivate <span class="comment">#windows</span></span><br><span class="line"><span class="comment"># 移除环境</span></span><br><span class="line">conda remove --name new_env_name --<span class="built_in">all</span></span><br><span class="line">conda remove -n new_env_name --<span class="built_in">all</span></span><br><span class="line"><span class="comment"># 保存环境\分享环境</span></span><br><span class="line">conda env export &gt; environment.yml</span><br><span class="line"><span class="comment"># 恢复环境</span></span><br><span class="line">conda env create -f environment.yml</span><br><span class="line"><span class="comment"># 查看当前环境所有package</span></span><br><span class="line">conda <span class="built_in">list</span></span><br><span class="line"><span class="comment"># 为指定环境安装某个包</span></span><br><span class="line">conda install -n env_name package_name</span><br><span class="line"><span class="comment"># 查找包有哪些版本</span></span><br><span class="line">conda search tensorflow-gpu </span><br><span class="line"><span class="comment"># 将conda放入PATH</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;$(/home/yuanwenwu/anaconda3/bin/conda shell.YOUR_SHELL_NAME hook)&quot;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>在python2.7环境中启动notebook 使kernel变为python3、python2共存</li>
@@ -433,10 +459,16 @@
 <ul>
 <li>问题1：python能找到的包，jupyter notebook找不到</li>
 </ul>
-<p>是因为python执行路径不一致。<br>定位这个问题可以通过sys包</p>
+<p>是因为python执行路径不一致。 定位这个问题可以通过sys包</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="built_in">print</span>(sys.executable)</span><br></pre></td></tr></table></figure>
-<p>往往这个问题是只安装了python，但要使用ipython或jupyter notebook，由于虚拟环境没有，会去主系统找可用版本呢，从而导致启动路径不一致，解决方式是在虚拟环境conda install需要的包（ ipython or jupyter notebook )<br>参考：<a href="https://blog.csdn.net/sunxinyu/article/details/78801534">https://blog.csdn.net/sunxinyu/article/details/78801534</a></p>
-<h4 id="conda-更换源"><a href="#conda-更换源" class="headerlink" title="conda 更换源"></a>conda 更换源</h4><h4 id="conda-安装指定version包"><a href="#conda-安装指定version包" class="headerlink" title="conda 安装指定version包"></a>conda 安装指定version包</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda search tensorflow</span><br><span class="line">conda install tensorflow-gpu==<span class="number">2.0</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<p>往往这个问题是只安装了python，但要使用ipython或jupyter
+notebook，由于虚拟环境没有，会去主系统找可用版本呢，从而导致启动路径不一致，解决方式是在虚拟环境conda
+install需要的包（ ipython or jupyter notebook ) 参考：<a
+href="https://blog.csdn.net/sunxinyu/article/details/78801534"
+class="uri">https://blog.csdn.net/sunxinyu/article/details/78801534</a></p>
+<h4 id="conda-更换源">conda 更换源</h4>
+<h4 id="conda-安装指定version包">conda 安装指定version包</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda search tensorflow</span><br><span class="line">conda install tensorflow-gpu==<span class="number">2.0</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -501,7 +533,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="matplotlib"><a href="#matplotlib" class="headerlink" title="matplotlib"></a>matplotlib</h2><h3 id="pyplot"><a href="#pyplot" class="headerlink" title="pyplot"></a>pyplot</h3><p>&emsp;pyplot负责绘制图像，修饰图像figure。此处应强调的是，其保持matlab的风格，总是跟踪当前figure,绘制函数直接指向当前axes.<br>&emsp;figure()函数负责创建一个图像，默认不用调用此函数，并且一个subplot(111)也会默认被创建如果不手动指定axes的话。figure(i)创建标号为i的figure</p>
+          <h2 id="matplotlib">matplotlib</h2>
+<h3 id="pyplot">pyplot</h3>
+<p> pyplot负责绘制图像，修饰图像figure。此处应强调的是，其保持matlab的风格，总是跟踪当前figure,绘制函数直接指向当前axes.
+ figure()函数负责创建一个图像，默认不用调用此函数，并且一个subplot(111)也会默认被创建如果不手动指定axes的话。figure(i)创建标号为i的figure</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/02/29/matplotlib/#more" rel="contents">
@@ -573,7 +608,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建数组(注意不需要逗号，以空格分隔)</span></span><br><span class="line">array=(1 2 3 4)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取所有元素</span></span><br><span class="line">echo $&#123;array[@]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取第一个元素</span></span><br><span class="line">echo $&#123;array[0]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取数组元素个数</span></span><br><span class="line">echo $&#123;#array[@]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">如果某个元素是字符串，还可以通过指定下标的方式获得该元素的长度，如下所示：</span></span><br><span class="line">echo $&#123;#array[2]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">因为字符串获取长度如下</span></span><br><span class="line">str=&quot;hello world&quot;</span><br><span class="line">echo $&#123;#str&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="数组">数组</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建数组(注意不需要逗号，以空格分隔)</span></span><br><span class="line">array=(1 2 3 4)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取所有元素</span></span><br><span class="line">echo $&#123;array[@]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取第一个元素</span></span><br><span class="line">echo $&#123;array[0]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取数组元素个数</span></span><br><span class="line">echo $&#123;#array[@]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">如果某个元素是字符串，还可以通过指定下标的方式获得该元素的长度，如下所示：</span></span><br><span class="line">echo $&#123;#array[2]&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">因为字符串获取长度如下</span></span><br><span class="line">str=&quot;hello world&quot;</span><br><span class="line">echo $&#123;#str&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/02/29/linux/#more" rel="contents">
@@ -654,21 +690,56 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在学习SVM时，遇到了dot product的问题，一时忘了在algebra下定义的向量内积和在geometry下定义的向量内积为何相等，查找了一下资料，发现很有趣，故记录如下。<br>This operation can be defined either algebraically or geometrically.</p>
+          <p>在学习SVM时，遇到了dot
+product的问题，一时忘了在algebra下定义的向量内积和在geometry下定义的向量内积为何相等，查找了一下资料，发现很有趣，故记录如下。
+This operation can be defined either algebraically or geometrically.</p>
 <ul>
-<li>Algebraically, it is the sum of the products of the corresponding entries of the two sequences of numbers.</li>
-<li>Geometrically, it is the product of the Euclidean magnitudes of the two vectors and the cosine of the angle between them.</li>
+<li>Algebraically, it is the sum of the products of the corresponding
+entries of the two sequences of numbers.</li>
+<li>Geometrically, it is the product of the Euclidean magnitudes of the
+two vectors and the cosine of the angle between them.</li>
 </ul>
-<h2 id="Algebraic-definition"><a href="#Algebraic-definition" class="headerlink" title="Algebraic definition"></a>Algebraic definition</h2><p>The dot product of two vectors A = [A1, A2, …, An] and B = [B1, B2, …, Bn] is defined as:</p>
-<script type="math/tex; mode=display">\mathbf{A}\cdot \mathbf{B} = \sum_{i=1}^n A_iB_i = A_1B_1 + A_2B_2 + \cdots + A_nB_n</script><h2 id="Geometric-definition"><a href="#Geometric-definition" class="headerlink" title="Geometric definition"></a>Geometric definition</h2><p>In Euclidean space, a Euclidean vector is a geometrical object that possesses both a magnitude and a direction. A vector can be pictured as an arrow. Its magnitude is its length, and its direction is the direction that the arrow points. The magnitude of a vector A is denoted by $|\mathbf{A}|$.<br>The dot product of two Euclidean vectors A and B is defined by</p>
-<script type="math/tex; mode=display">\mathbf{A}\cdot\mathbf{B} = |\mathbf{A}||\mathbf{B}|\cos\theta</script><p>where θ is the angle between A and B.</p>
-<h2 id="Equivalence-of-the-definitions"><a href="#Equivalence-of-the-definitions" class="headerlink" title="Equivalence of the definitions"></a>Equivalence of the definitions</h2><p>If e1,…,en are the standard basis vectors in Rn, then we may write</p>
-<script type="math/tex; mode=display">
+<h2 id="algebraic-definition">Algebraic definition</h2>
+<p>The dot product of two vectors A = [A1, A2, ..., An] and B = [B1, B2,
+..., Bn] is defined as: <span class="math display">\[\mathbf{A}\cdot
+\mathbf{B} = \sum_{i=1}^n A_iB_i = A_1B_1 + A_2B_2 + \cdots +
+A_nB_n\]</span></p>
+<h2 id="geometric-definition">Geometric definition</h2>
+<p>In Euclidean space, a Euclidean vector is a geometrical object that
+possesses both a magnitude and a direction. A vector can be pictured as
+an arrow. Its magnitude is its length, and its direction is the
+direction that the arrow points. The magnitude of a vector A is denoted
+by <span class="math inline">\(\|\mathbf{A}\|\)</span>. The dot product
+of two Euclidean vectors A and B is defined by</p>
+<p><span class="math display">\[\mathbf{A}\cdot\mathbf{B} =
+|\mathbf{A}||\mathbf{B}|\cos\theta \]</span></p>
+<p>where θ is the angle between A and B.</p>
+<h2 id="equivalence-of-the-definitions">Equivalence of the
+definitions</h2>
+<p>If e1,...,en are the standard basis vectors in Rn, then we may write
+<span class="math display">\[
 \begin{align}
-\mathbf A &= [A_1,\dots,A_n] = \sum_i A_i\mathbf e_i\\
-\mathbf B &= [B_1,\dots,B_n] = \sum_i B_i\mathbf e_i.
-\end{align}</script><p>The vectors $e_i$ are an orthonormal basis, which means that they have unit length and are at right angles to each other. Hence since these vectors have unit length<br>$\mathbf e_i\cdot\mathbf e_i=1$<br>and since they form right angles with each other, if $i ≠ j$,<br>$\mathbf e_i\cdot\mathbf e_j = 0.$<br>Also, by the geometric definition, for any vector ei and a vector A, we note<br>$\mathbf A\cdot\mathbf e_i = |\mathbf A|\,|\mathbf e_i|\cos\theta = |\mathbf A|\cos\theta = A_i$,<br>where Ai is the component of vector A in the direction of ei.<br>Now applying the distributivity of the geometric version of the dot product gives</p>
-<script type="math/tex; mode=display">\mathbf A\cdot\mathbf B = \mathbf A\cdot\sum_i B_i\mathbf e_i = \sum_i B_i(\mathbf A\cdot\mathbf e_i) = \sum_i B_iA_i</script><p>which is precisely the algebraic definition of the dot product. So the (geometric) dot product equals the (algebraic) dot product.</p>
+\mathbf A &amp;= [A_1,\dots,A_n] = \sum_i A_i\mathbf e_i\\
+\mathbf B &amp;= [B_1,\dots,B_n] = \sum_i B_i\mathbf e_i.
+\end{align}
+\]</span></p>
+<p>The vectors <span class="math inline">\(e_i\)</span> are an
+orthonormal basis, which means that they have unit length and are at
+right angles to each other. Hence since these vectors have unit length
+<span class="math inline">\(\mathbf e_i\cdot\mathbf e_i=1\)</span> and
+since they form right angles with each other, if <span
+class="math inline">\(i ≠ j\)</span>, <span
+class="math inline">\(\mathbf e_i\cdot\mathbf e_j = 0.\)</span> Also, by
+the geometric definition, for any vector ei and a vector A, we note
+<span class="math inline">\(\mathbf A\cdot\mathbf e_i = \|\mathbf
+A\|\,\|\mathbf e_i\|\cos\theta = \|\mathbf A\|\cos\theta = A_i\)</span>,
+where Ai is the component of vector A in the direction of ei. Now
+applying the distributivity of the geometric version of the dot product
+gives <span class="math display">\[\mathbf A\cdot\mathbf B = \mathbf
+A\cdot\sum_i B_i\mathbf e_i = \sum_i B_i(\mathbf A\cdot\mathbf e_i) =
+\sum_i B_iA_i\]</span> which is precisely the algebraic definition of
+the dot product. So the (geometric) dot product equals the (algebraic)
+dot product.</p>
 
       
     </div>
@@ -733,7 +804,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="新建（关联）远程分支"><a href="#新建（关联）远程分支" class="headerlink" title="新建（关联）远程分支"></a>新建（关联）远程分支</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### Git global setup</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">&quot;yuanwenwu3&quot;</span></span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">&quot;yuanwenwu3@jd.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### Create a new repository</span></span><br><span class="line"></span><br><span class="line">git clone git@git.jd.com:yuanwenwu3/draw_tensorboard.git</span><br><span class="line">cd draw_tensorboard</span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m <span class="string">&quot;add README&quot;</span></span><br><span class="line">git push -u origin master</span><br><span class="line"></span><br><span class="line"><span class="comment">### Push an existing folder</span></span><br><span class="line">cd existing_folder</span><br><span class="line">git init</span><br><span class="line">git remote add origin git@git.jd.com:yuanwenwu3/draw_tensorboard.git</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br><span class="line">git push -u origin master</span><br><span class="line"></span><br><span class="line"><span class="comment">### Push an existing Git repository</span></span><br><span class="line">cd existing_repo</span><br><span class="line">git remote rename origin old-origin</span><br><span class="line">git remote add origin git@git.jd.com:yuanwenwu3/draw_tensorboard.git</span><br><span class="line">git push -u origin --<span class="built_in">all</span></span><br><span class="line">git push -u origin --tags</span><br><span class="line"></span><br><span class="line"><span class="comment">### 迁移项目</span></span><br><span class="line"><span class="comment"># 新建一个空的repository, 例如地址为url-destination</span></span><br><span class="line"><span class="comment"># 在当前项目主分支上</span></span><br><span class="line">git remote add destination $&#123;url-destination&#125;</span><br><span class="line">git push -u origin --<span class="built_in">all</span></span><br></pre></td></tr></table></figure>
+          <h2 id="新建关联远程分支">新建（关联）远程分支</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### Git global setup</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">&quot;yuanwenwu3&quot;</span></span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">&quot;yuanwenwu3@jd.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### Create a new repository</span></span><br><span class="line"></span><br><span class="line">git clone git@git.jd.com:yuanwenwu3/draw_tensorboard.git</span><br><span class="line">cd draw_tensorboard</span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m <span class="string">&quot;add README&quot;</span></span><br><span class="line">git push -u origin master</span><br><span class="line"></span><br><span class="line"><span class="comment">### Push an existing folder</span></span><br><span class="line">cd existing_folder</span><br><span class="line">git init</span><br><span class="line">git remote add origin git@git.jd.com:yuanwenwu3/draw_tensorboard.git</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br><span class="line">git push -u origin master</span><br><span class="line"></span><br><span class="line"><span class="comment">### Push an existing Git repository</span></span><br><span class="line">cd existing_repo</span><br><span class="line">git remote rename origin old-origin</span><br><span class="line">git remote add origin git@git.jd.com:yuanwenwu3/draw_tensorboard.git</span><br><span class="line">git push -u origin --<span class="built_in">all</span></span><br><span class="line">git push -u origin --tags</span><br><span class="line"></span><br><span class="line"><span class="comment">### 迁移项目</span></span><br><span class="line"><span class="comment"># 新建一个空的repository, 例如地址为url-destination</span></span><br><span class="line"><span class="comment"># 在当前项目主分支上</span></span><br><span class="line">git remote add destination $&#123;url-destination&#125;</span><br><span class="line">git push -u origin --<span class="built_in">all</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/02/20/gitNote/#more" rel="contents">
@@ -805,14 +877,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="常用hexo-命令"><a href="#常用hexo-命令" class="headerlink" title="常用hexo 命令"></a>常用hexo 命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo new xxx ==&gt; hexo n xxx, #新建文章</span><br><span class="line">hexo generate ==&gt; hexo g,  #生成静态页面至public目录</span><br><span class="line">hexo server ==&gt; hexo s,  #开启预览访问端口</span><br><span class="line">hexo deploy ==&gt; hexo d,  #部署到GitHub</span><br><span class="line">hexo help  #查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
-<h2 id="组合命令"><a href="#组合命令" class="headerlink" title="组合命令"></a>组合命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s -g # 生成本地预览</span><br><span class="line">hexo d -g # 生成并上传</span><br></pre></td></tr></table></figure>
-<h2 id="预览部分文字"><a href="#预览部分文字" class="headerlink" title="预览部分文字"></a>预览部分文字</h2><p>&lt; !— more — &gt; in your article to break your article manually, which is recommended by Hexo.</p>
-<h2 id="遇到hexo-generation-出错处理"><a href="#遇到hexo-generation-出错处理" class="headerlink" title="遇到hexo generation 出错处理"></a>遇到hexo generation 出错处理</h2><p>检查Markedown (vscode markdown语法检查)</p>
+          <h2 id="常用hexo-命令">常用hexo 命令</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo new xxx ==&gt; hexo n xxx, #新建文章</span><br><span class="line">hexo generate ==&gt; hexo g,  #生成静态页面至public目录</span><br><span class="line">hexo server ==&gt; hexo s,  #开启预览访问端口</span><br><span class="line">hexo deploy ==&gt; hexo d,  #部署到GitHub</span><br><span class="line">hexo help  #查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
+<h2 id="组合命令">组合命令</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s -g # 生成本地预览</span><br><span class="line">hexo d -g # 生成并上传</span><br></pre></td></tr></table></figure>
+<h2 id="预览部分文字">预览部分文字</h2>
+<p>&lt; !-- more -- &gt; in your article to break your article manually,
+which is recommended by Hexo.</p>
+<h2 id="遇到hexo-generation-出错处理">遇到hexo generation 出错处理</h2>
+<p>检查Markedown (vscode markdown语法检查)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo --debug</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<h2 id="clone-whole-repository-in-a-new-machine"><a href="#clone-whole-repository-in-a-new-machine" class="headerlink" title="clone whole repository in a new machine"></a>clone whole repository in a new machine</h2><p><a href="https://iphysresearch.github.io/blog/post/programing/git/git_submodule/">https://iphysresearch.github.io/blog/post/programing/git/git_submodule/</a><br>since there is submodule in main repository ( the theme/next)</p>
+<h2 id="clone-whole-repository-in-a-new-machine">clone whole repository
+in a new machine</h2>
+<p><a
+href="https://iphysresearch.github.io/blog/post/programing/git/git_submodule/"
+class="uri">https://iphysresearch.github.io/blog/post/programing/git/git_submodule/</a>
+since there is submodule in main repository ( the theme/next)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone xxxx (main repository)</span><br><span class="line">git submodule init # 初始化子模块</span><br><span class="line">git submodule update # 更新子模块</span><br><span class="line">npm install</span><br><span class="line">hexo generate or hexo s</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调试的时候遇到不名曲问题，可以安装pandoc, https://pandoc.org/installing.html</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这会指示那一个文件的哪一行出错了</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://hexo.io/zh-cn/docs/commands.html">https://hexo.io/zh-cn/docs/commands.html</a></p>
+<p><a href="https://hexo.io/zh-cn/docs/commands.html"
+class="uri">https://hexo.io/zh-cn/docs/commands.html</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/02/20/hexoNote/#more" rel="contents">
@@ -893,18 +976,63 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Fast-RCNN-中region-of-interest的映射"><a href="#Fast-RCNN-中region-of-interest的映射" class="headerlink" title="Fast-RCNN 中region of interest的映射"></a>Fast-RCNN 中region of interest的映射</h2><p>首先在原图上用selective search得到某个推荐框，假设推荐目标在一个区域内，这个区域的左上点坐标为（x1,y1），右下角坐标为（x2,y2）。那么按照ZF-5的网络模型<br>求出 <script type="math/tex">S=2*2*2*2</script> ( 所有stride的连续乘积，在conv5之前，包括conv5 ) <sup><a href="#fn_1" id="reffn_1">1</a></sup><br>所以具体落实到feature map上，就应该是（(x1/16)+1,(y1/16)+1）;（(x2/16)-1,(y2/16)-1）。</p>
-<h3 id="Caffe中的实现"><a href="#Caffe中的实现" class="headerlink" title="Caffe中的实现"></a>Caffe中的实现</h3><p>我们可以打开roi_pooling_layer层：<br>这里的源码是</p>
+          <h2 id="fast-rcnn-中region-of-interest的映射">Fast-RCNN 中region of
+interest的映射</h2>
+<p>首先在原图上用selective
+search得到某个推荐框，假设推荐目标在一个区域内，这个区域的左上点坐标为（x1,y1），右下角坐标为（x2,y2）。那么按照ZF-5的网络模型
+求出 <span class="math display">\[S=2*2*2*2\]</span> (
+所有stride的连续乘积，在conv5之前，包括conv5 ) <a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+所以具体落实到feature
+map上，就应该是（(x1/16)+1,(y1/16)+1）;（(x2/16)-1,(y2/16)-1）。</p>
+<h3 id="caffe中的实现">Caffe中的实现</h3>
+<p>我们可以打开roi_pooling_layer层： 这里的源码是</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> roi_start_w = <span class="built_in">round</span>(bottom_rois[<span class="number">1</span>] * spatial_scale_);</span><br><span class="line"><span class="type">int</span> roi_start_h = <span class="built_in">round</span>(bottom_rois[<span class="number">2</span>] * spatial_scale_);</span><br><span class="line"><span class="type">int</span> roi_end_w = <span class="built_in">round</span>(bottom_rois[<span class="number">3</span>] * spatial_scale_);</span><br><span class="line"><span class="type">int</span> roi_end_h = <span class="built_in">round</span>(bottom_rois[<span class="number">4</span>] * spatial_scale_);</span><br></pre></td></tr></table></figure>
-<p>spatial<em>scale</em>其实就是stride连续乘积的倒数。这里用的这个round()有点意思，得到小数的最邻近整数，就可以理解为四舍五入，并没有像Spp-Net中所述的左上角+1，右下角-1。我认为这两种方式其实都是可行的。+1或-1更多的是代表防止过界（或者是取整方式的不同），关键还是除以S。</p>
+<p>spatial_scale_其实就是stride连续乘积的倒数。这里用的这个round()有点意思，得到小数的最邻近整数，就可以理解为四舍五入，并没有像Spp-Net中所述的左上角+1，右下角-1。我认为这两种方式其实都是可行的。+1或-1更多的是代表防止过界（或者是取整方式的不同），关键还是除以S。</p>
 <p>可以理解为在不同维度上对图像的缩放，而stride正好代表了这个缩放因子（看前面特征图大小的计算），所以相应的roi也需要跟着图像缩小这么多倍。</p>
-<h4 id="示例：2"><a href="#示例：2" class="headerlink" title="示例：2"></a>示例：<sup><a href="#fn_2" id="reffn_2">2</a></sup></h4><p>在使用fast rcnn以及faster rcnn做检测任务的时候，涉及到从图像的roi区域到feature map中roi的映射，然后再进行roi_pooling之类的操作。<br>比如图像的大小是（600,800），在经过一系列的卷积以及pooling操作之后在某一个层中得到的feature map大小是（38,50），那么在原图中roi是（30,40,200,400），<br>在feature map中对应的roi区域应该是</p>
+<h4 id="示例2">示例：<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></h4>
+<p>在使用fast rcnn以及faster
+rcnn做检测任务的时候，涉及到从图像的roi区域到feature
+map中roi的映射，然后再进行roi_pooling之类的操作。
+比如图像的大小是（600,800），在经过一系列的卷积以及pooling操作之后在某一个层中得到的feature
+map大小是（38,50），那么在原图中roi是（30,40,200,400）， 在feature
+map中对应的roi区域应该是</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">roi_start_w = <span class="built_in">round</span>(<span class="number">30</span> * spatial_scale);</span><br><span class="line">roi_start_h = <span class="built_in">round</span>(<span class="number">40</span> * spatial_scale);</span><br><span class="line">roi_end_w = <span class="built_in">round</span>(<span class="number">200</span> * spatial_scale);</span><br><span class="line">roi_end_h = <span class="built_in">round</span>(<span class="number">400</span> * spatial_scale);</span><br></pre></td></tr></table></figure>
-<p>其中spatial_scale的计算方式是spatial_scale=round(38/600)=round(50/800)=0.0625，所以在feature map中的roi区域[roi_start_w,roi_start_h,roi_end_w,roi_end_h]=[2,3,13,25];</p>
-<h2 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h2><p>论文中提到如果用3x3 的 slice window，其对应到原图的感受野(effetctive receptive field)在VGG和ZF模型上分别是228 pixels，171 pixels。<br>对于VGG16来说（图片来源:<a href="https://www.kaggle.com/shivamb/cnn-architectures-vgg-resnet-inception-tl"> kaggle</a>)<br><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g59wophostj20m808bac7.jpg" alt=""><br>In Faster-rcnn, the effective receptive field can be calculated as follow (VGG16):<br>Img-&gt;<br>Conv1(3)-&gt;Conv1(3)-&gt;Pool1(2) ==&gt;<br>Conv2(3)-&gt;Conv2(3)-&gt;Pool2(2) ==&gt;<br>Conv3(3)-&gt;Conv3(3)-&gt;Conv3(3)-&gt;Pool3(2) ==&gt;<br>Conv4(3)-&gt;Conv4(3)-&gt;Conv4(3)-&gt;Pool4(2) ==&gt;<br>Conv5(3)-&gt;Conv5(3)-&gt;Conv5(3) ====&gt;<br>a 3 <em> 3 window in feature map.<br>Lets take one dimension for simplicity. If we derive back from size 3, the original receptive field:<br>1). in the beginning of Conv5: 3 + 2 + 2 + 2 = 9<br>2). in the beginning of Conv4: 9 </em> 2 + 2 + 2 + 2 = 24<br>3). in the beginning of Conv3: 24 <em> 2 + 2 + 2 + 2 = 54<br>4). in the beginning of Conv2: 54 </em> 2 + 2 + 2 = 112<br>5). in the beginning of Conv1 (original input): 112 * 2 + 2 + 2 = 228</p>
-<blockquote id="fn_2">
-<sup>2</sup>. <a href="https://www.cnblogs.com/ymjyqsx/p/7592590.html">https://www.cnblogs.com/ymjyqsx/p/7592590.html</a><a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#8617;</a>
-</blockquote>
+<p>其中spatial_scale的计算方式是spatial_scale=round(38/600)=round(50/800)=0.0625，所以在feature
+map中的roi区域[roi_start_w,roi_start_h,roi_end_w,roi_end_h]=[2,3,13,25];</p>
+<h2 id="faster-r-cnn">Faster R-CNN</h2>
+<p>论文中提到如果用3x3 的 slice window，其对应到原图的感受野(effetctive
+receptive field)在VGG和ZF模型上分别是228 pixels，171 pixels。
+对于VGG16来说（图片来源:<a
+href="https://www.kaggle.com/shivamb/cnn-architectures-vgg-resnet-inception-tl">kaggle</a>)
+<img
+src="http://ww1.sinaimg.cn/large/6bf0a364ly1g59wophostj20m808bac7.jpg" />
+In Faster-rcnn, the effective receptive field can be calculated as
+follow (VGG16): Img-&gt; Conv1(3)-&gt;Conv1(3)-&gt;Pool1(2) ==&gt;
+Conv2(3)-&gt;Conv2(3)-&gt;Pool2(2) ==&gt;
+Conv3(3)-&gt;Conv3(3)-&gt;Conv3(3)-&gt;Pool3(2) ==&gt;
+Conv4(3)-&gt;Conv4(3)-&gt;Conv4(3)-&gt;Pool4(2) ==&gt;
+Conv5(3)-&gt;Conv5(3)-&gt;Conv5(3) ====&gt; a 3 * 3 window in feature
+map. Lets take one dimension for simplicity. If we derive back from size
+3, the original receptive field: 1). in the beginning of Conv5: 3 + 2 +
+2 + 2 = 9 2). in the beginning of Conv4: 9 * 2 + 2 + 2 + 2 = 24 3). in
+the beginning of Conv3: 24 * 2 + 2 + 2 + 2 = 54 4). in the beginning of
+Conv2: 54 * 2 + 2 + 2 = 112 5). in the beginning of Conv1 (original
+input): 112 * 2 + 2 + 2 = 228</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="http://www.voidcn.com/article/p-rrugdtwl-bps.html"
+class="uri">http://www.voidcn.com/article/p-rrugdtwl-bps.html</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.cnblogs.com/ymjyqsx/p/7592590.html"
+class="uri">https://www.cnblogs.com/ymjyqsx/p/7592590.html</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
       
     </div>
