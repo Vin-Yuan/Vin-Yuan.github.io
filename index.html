@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-27 21:51:45" itemprop="dateModified" datetime="2025-05-27T21:51:45+08:00">2025-05-27</time>
+                <time title="Modified: 2025-05-29 08:53:43" itemprop="dateModified" datetime="2025-05-29T08:53:43+08:00">2025-05-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="cross_entropy-损失函数估计">cross_entropy 损失函数估计</h2>
+          <h1 id="build-gpt-from-scratch">build GPT from scratch</h1>
+<h2 id="cross_entropy-损失函数估计">cross_entropy 损失函数估计</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BigramLanguageModel</span>(nn.Module):</span><br><span class="line">……</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, idx, targets=<span class="literal">None</span></span>):</span><br><span class="line">            B, T, C = logits.shape</span><br><span class="line">            logits = logits.view(B*T, C)</span><br><span class="line">            targets = targets.view(B*T)</span><br><span class="line">            loss = F.cross_entropy(logits, targets)</span><br><span class="line"></span><br><span class="line">m = BigramLanguageModel(vocab_size)</span><br><span class="line">logits, loss = m(xb, yb)</span><br><span class="line"><span class="built_in">print</span>(logits.shape)</span><br><span class="line"><span class="built_in">print</span>(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">torch.Size([<span class="number">32</span>, <span class="number">65</span>])</span><br><span class="line">tensor(<span class="number">4.8786</span>, grad_fn=&lt;NllLossBackward0&gt;)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss = F.cross_entropy(logits, targets)</span><br></pre></td></tr></table></figure>
 <p>其实计算的是 <span class="math display">\[\text{CrossEntropy}(p,y) =
@@ -275,7 +276,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-22 22:23:06" itemprop="dateModified" datetime="2025-05-22T22:23:06+08:00">2025-05-22</time>
+                <time title="Modified: 2025-05-27 22:08:20" itemprop="dateModified" datetime="2025-05-27T22:08:20+08:00">2025-05-27</time>
               </span>
 
           
@@ -289,7 +290,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致
+          <h1 id="layer-normalization">Layer Normalization</h1>
+<p>验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致
 LayerNorm默认使用的是bias的整体方差, divided by N
 torch.var默认使用的是无bias的样本方差, devided by N-1</p>
 <p>对于每一个样本的特征向量 <span class="math inline">\(x \in
