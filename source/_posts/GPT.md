@@ -5,7 +5,7 @@ date: 2025-05-21 12:02:14
 categories: LLM
 tags: LLM
 ---
-
+# build GPT from scratch
 ## cross_entropy 损失函数估计
 ```python
 class BigramLanguageModel(nn.Module):
@@ -212,3 +212,21 @@ $\mathrm{E}[QK] = \mathrm{E}[Q]\cdot\mathrm{E}[K]$
 $$Var[S] = Var[\sum_{i=1}^{d_k}Q_iK_i] = \sum_{i=1}^{d_k}1 = d_k$$
 
 所以这是后除以$\sqrt{d_k}$会使得方差恒定，不会变化非常大
+
+
+## register_buffer
+一些不需要train的变量可以注册为buffer, 例如统计量mean, std, mask
+
+
+# Transformer
+[transformer-explainer](https://poloclub.github.io/transformer-explainer/https://docs.python.org/ "transformer-explainer link")  
+## Query, Key, and Value Matrics
+Q, K, V 的生成式并行化的，通过把Weight stack在一起，通过一次矩阵乘法得到  
+```python
+(T, C) @ (C, C*3) -> (T, C*3)
+```
+here T = 6, C = 768
+[![Query,Key,Value Matrics](https://poloclub.github.io/transformer-explainer/article_assets/QKV.png)](https://poloclub.github.io/transformer-explainer/)
+
+
+## 
