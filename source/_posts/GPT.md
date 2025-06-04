@@ -219,7 +219,7 @@ $$Var[S] = Var[\sum_{i=1}^{d_k}Q_iK_i] = \sum_{i=1}^{d_k}1 = d_k$$
 
 
 # Transformer
-[transformer-explainer](https://poloclub.github.io/transformer-explainer/https://docs.python.org/ "transformer-explainer link")  
+[transformer-explainer](https://poloclub.github.io/transformer-explainer/https://docs.python.org/)  
 ## Query, Key, and Value Matrics
 Q, K, V 的生成式并行化的，通过把Weight stack在一起，通过一次矩阵乘法得到  
 ```python
