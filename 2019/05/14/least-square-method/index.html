@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？ 对于这个问题，需要先了解最小二乘法法的原理： 最小二乘法的由来 ^1： 法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的\(y\)就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：^2 \[ J(\theta)&#x3D;">
+  <meta name="description" content="在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？ 对于这个问题，需要先了解最小二乘法法的原理： 最小二乘法的由来 1 ： 法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的$y$就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：2   J(\theta)&#x3D;\frac{1}{">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最小二乘法">
 <meta property="og:url" content="http://yoursite.com/2019/05/14/least-square-method/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？ 对于这个问题，需要先了解最小二乘法法的原理： 最小二乘法的由来 ^1： 法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的\(y\)就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：^2 \[ J(\theta)&#x3D;">
+<meta property="og:description" content="在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？ 对于这个问题，需要先了解最小二乘法法的原理： 最小二乘法的由来 1 ： 法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的$y$就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：2   J(\theta)&#x3D;\frac{1}{">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-05-14T08:00:42.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.080Z">
@@ -211,50 +211,22 @@
       
         <p>在实验曲线拟合数据的时候突然有个想法：是否所有连续的函数都可以通过多项式拟和？</p>
 <p>对于这个问题，需要先了解最小二乘法法的原理：</p>
-<p>最小二乘法的由来 <a
-href="https://www.matongxue.com/madocs/818.htm">^1</a>：</p>
-<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的<span
-class="math inline">\(y\)</span>就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<a
-href="https://blog.csdn.net/u011893609/article/details/80016915">^2</a>
-<span class="math display">\[
-J(\theta)=\frac{1}{2}
-\sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2}
-t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}
-\]</span> 令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <a
-href="https://www.matongxue.com/madocs/818.htm">^1</a></p>
+<p>最小二乘法的由来 <sup><a href="#fn_1 " id="reffn_1 ">1 </a></sup>：</p>
+<p>法国数学家，阿德里安-馬里·勒讓德（1752－1833）提出让总的误差的平方最小的$y$就是真值，这是基于如果误差是随机的，应该围绕真值上下波动。通过他的假设，我们将其应用到一般回归问题上就是如下形式：<sup><a href="#fn_2 " id="reffn_2 ">2 </a></sup></p>
+<script type="math/tex; mode=display">
+J(\theta)=\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}=\frac{1}{2} t r\left[(X \theta-Y)^{T}(X \theta-Y)\right] \tag{1}</script><p>令误差最小的参数就是我们想要的参数。但这样的假设如何证明？ <sup><a href="#fn_1 " id="reffn_1 ">1 </a></sup></p>
 <span id="more"></span>
-<p>高斯通过概率的角度补充了这个假设：所有偏离真实值的误差都是符合高斯分布的。需要拟合的数据都是我们观测到的，那么它出现的概率就应该是最大的（极大似然的角度），具体阅读参考
-<a href="https://www.matongxue.com/madocs/818.htm">^1</a></p>
-<p>最小二乘法就是对上面的式子求解，通过矩阵方式得到解析解，或者说正规方程的解（<strong>Normal
-Equation</strong>)，其结果正是 Ng Andrew的《机器学习》教程中的正规方程。
-<span class="math display">\[
+<p>高斯通过概率的角度补充了这个假设：所有偏离真实值的误差都是符合高斯分布的。需要拟合的数据都是我们观测到的，那么它出现的概率就应该是最大的（极大似然的角度），具体阅读参考 <sup><a href="#fn_1 " id="reffn_1 ">1 </a></sup></p>
+<p>最小二乘法就是对上面的式子求解，通过矩阵方式得到解析解，或者说正规方程的解（<strong>Normal Equation</strong>)，其结果正是 Ng Andrew的《机器学习》教程中的正规方程。</p>
+<script type="math/tex; mode=display">
 \begin{equation}
-\begin{aligned} \frac{\partial J(\theta)}{\partial \theta}
-&amp;=\frac{1}{2} \cdot \frac{\partial \operatorname{tr}\left(\theta^{T}
-X^{T} X \theta-\theta^{T} X^{T} Y-Y^{T} X \theta+Y^{T}
-Y\right)}{\partial \theta} \\\\ &amp;=\frac{1}{2}
-\cdot\left[\frac{\partial \operatorname{tr}\left(\theta I \theta^{T}
-X^{T} X\right)}{\partial \theta}-\frac{\partial
-\operatorname{tr}\left(\theta^{T} X^{T} Y\right)}{\partial
-\theta}-\frac{\partial \operatorname{tr}\left(\theta Y^{T}
-X\right)}{\partial \theta}\right] \\\\ &amp;=\frac{1}{2}
-\cdot\left[X^{T} X \theta I+\left(X^{T} X\right)^{T} \theta I^{T}-X^{T}
-Y-\left(Y^{T} X\right)^{T}\right] \\\\ &amp;=X^{T} X \theta-X^{T} Y
-\end{aligned}
-\end{equation} \tag{2}
-\]</span></p>
-<p>令上式为0，得到解析解，Normal Equation，</p>
-<p><span class="math display">\[
-\theta= {\left( {X^TX} \right)^{ - 1}}{X^T}Y \tag{3}
-\]</span></p>
-<p>(1)最小二乘法和梯度下降法在线性回归问题中的目标函数是一样的(或者说本质相同)，都是通过最小化均方误差来构建拟合曲线。</p>
-<p>(2)二者的不同点可见下图(正规方程就是最小二乘法)：<a
-href="https://www.cnblogs.com/wangkundentisy/p/7505487.html">^3</a></p>
+\begin{aligned} \frac{\partial J(\theta)}{\partial \theta} &=\frac{1}{2} \cdot \frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} X \theta-\theta^{T} X^{T} Y-Y^{T} X \theta+Y^{T} Y\right)}{\partial \theta} \\\\ &=\frac{1}{2} \cdot\left[\frac{\partial \operatorname{tr}\left(\theta I \theta^{T} X^{T} X\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta^{T} X^{T} Y\right)}{\partial \theta}-\frac{\partial \operatorname{tr}\left(\theta Y^{T} X\right)}{\partial \theta}\right] \\\\ &=\frac{1}{2} \cdot\left[X^{T} X \theta I+\left(X^{T} X\right)^{T} \theta I^{T}-X^{T} Y-\left(Y^{T} X\right)^{T}\right] \\\\ &=X^{T} X \theta-X^{T} Y \end{aligned}
+\end{equation} \tag{2}</script><p>令上式为0，得到解析解，Normal Equation，</p>
+<script type="math/tex; mode=display">
+\theta= {\left( {X^TX} \right)^{ - 1}}{X^T}Y \tag{3}</script><p>(1)最小二乘法和梯度下降法在线性回归问题中的目标函数是一样的(或者说本质相同)，都是通过最小化均方误差来构建拟合曲线。</p>
+<p>(2)二者的不同点可见下图(正规方程就是最小二乘法)：<sup><a href="#fn_3 " id="reffn_3 ">3 </a></sup></p>
+<div class="table-container">
 <table>
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 65%" />
-</colgroup>
 <thead>
 <tr>
 <th>梯度下降</th>
@@ -263,7 +235,7 @@ href="https://www.cnblogs.com/wangkundentisy/p/7505487.html">^3</a></p>
 </thead>
 <tbody>
 <tr>
-<td>需要学习率<span class="math inline">\(\alpha\)</span></td>
+<td>需要学习率$\alpha$</td>
 <td>不需要</td>
 </tr>
 <tr>
@@ -271,13 +243,8 @@ href="https://www.cnblogs.com/wangkundentisy/p/7505487.html">^3</a></p>
 <td>一次计算</td>
 </tr>
 <tr>
-<td>当特征数量<span class="math inline">\(n\)</span>
-很大时也能很好适用</td>
-<td>需要计算<span
-class="math inline">\((X^TX)^{-1}\)</span>，如果特征数量<span
-class="math inline">\(n\)</span>
-非常大，运算代价比较大，因为矩阵求逆的时间复杂度为<span
-class="math inline">\(O(n^3)\)</span>，通常来说当n小于10000时还是可以接受的</td>
+<td>当特征数量$n$ 很大时也能很好适用</td>
+<td>需要计算$(X^TX)^{-1}$，如果特征数量$n$ 非常大，运算代价比较大，因为矩阵求逆的时间复杂度为$O(n^3)$，通常来说当n小于10000时还是可以接受的</td>
 </tr>
 <tr>
 <td>适用于大部分模型</td>
@@ -285,6 +252,7 @@ class="math inline">\(O(n^3)\)</span>，通常来说当n小于10000时还是可�
 </tr>
 </tbody>
 </table>
+</div>
 <blockquote>
 <p>需要注意的一点是最小二乘法只适用于<strong>线性模型</strong>(这里一般指<strong>线性回归</strong>)；而梯度下降适用性极强，一般而言，<strong>只要是凸函数</strong>，都可以通过梯度下降法得到全局最优值(对于非凸函数，能够得到局部最优解)。</p>
 </blockquote>
@@ -292,105 +260,80 @@ class="math inline">\(O(n^3)\)</span>，通常来说当n小于10000时还是可�
 <p>相当于给每个样本设置了一个权重，以此来反应样本的重要程度或者对解的影响程度。</p>
 <p>上面所说的只适用先行模型其实是一个广义的含义：</p>
 <p>consider a model:</p>
-<p><span class="math inline">\(y_i = b_0+b_1 x^{n_1}_i + \cdots+
-b_px^{n_p}_i + \epsilon_i.\)</span></p>
-<p>This can be rewritten as: <span class="math display">\[
-y =
+<p>$y_i = b_0+b_1 x^{n_1}_i + \cdots+ b_px^{n_p}_i + \epsilon_i.$</p>
+<p>This can be rewritten as:</p>
+<script type="math/tex; mode=display">
+y = 
 X b + \epsilon;\\\\
 X= \begin{pmatrix}
-  1 &amp; x_{1}^{n_1} &amp; \cdots &amp; x_{1}^{n_p} \\\\
-  1 &amp; x_{2}^{n_1} &amp; \cdots &amp; x_{2}^{n_p} \\\\
-  \vdots  &amp; \vdots  &amp; \ddots &amp; \vdots  \\\\
-  1 &amp; x_{n}^{n_1} &amp; \cdots &amp; x_{n}^{n_p} \\\\
-\end{pmatrix}.
-\]</span> 这也是一种线性模型：polynomial regression is considered a
-special case of multiple linear regression <a
-href="https://stats.stackexchange.com/questions/92065/why-is-polynomial-regression-considered-a-special-case-of-multiple-linear-regres">^4</a></p>
+  1 & x_{1}^{n_1} & \cdots & x_{1}^{n_p} \\\\
+  1 & x_{2}^{n_1} & \cdots & x_{2}^{n_p} \\\\
+  \vdots  & \vdots  & \ddots & \vdots  \\\\
+  1 & x_{n}^{n_1} & \cdots & x_{n}^{n_p} \\\\
+ \end{pmatrix}.</script><p>这也是一种线性模型：polynomial regression is considered a special case of multiple linear regression <sup><a href="#fn_4 " id="reffn_4 ">4 </a></sup></p>
 <p>最小二乘法分为两类：</p>
-<h2 id="linear-least-squares">Linear least squares</h2>
-<p>线性模型是指model通过参数的先行组合构成的 <span
-class="math display">\[
+<h2 id="Linear-least-squares"><a href="#Linear-least-squares" class="headerlink" title="Linear least squares"></a>Linear least squares</h2><p>线性模型是指model通过参数的先行组合构成的</p>
+<script type="math/tex; mode=display">
 \begin{equation}
 f(x, \beta)=\sum_{i=1}^{m} \beta_{j} \phi_{j}(x) \tag{4}
-\end{equation}
-\]</span> 其中 $_j $ 是 <span class="math inline">\(x\)</span>
-的函数，这也是《统计学习方法》第一章拟合非线性曲线用到的：<span
-class="math inline">\(h(x;w) = w_2x^3 +
-w_1x^2+w_0x^0\)</span>形式，通过<span
-class="math inline">\(x\)</span>的不同组合提升feature的维度，进而构成先行模型。如果令<span
-class="math inline">\(\phi _j(x) = x_j\)</span>，通过最小二乘法的Normal
-Equation可以得到(3)的close-form（close-form指可以通过有限的数字组合表示的解<a
-href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a>）。</p>
+\end{equation}</script><p>其中 $\phi_j $ 是 $x$ 的函数，这也是《统计学习方法》第一章拟合非线性曲线用到的：$h(x;w) = w_2x^3 + w_1x^2+w_0x^0$形式，通过$x$的不同组合提升feature的维度，进而构成先行模型。如果令$\phi _j(x) = x_j$，通过最小二乘法的Normal Equation可以得到(3)的close-form（close-form指可以通过有限的数字组合表示的解<sup><a href="#fn_5" id="reffn_5">5</a></sup>）。</p>
 <p>其实<strong>多元高次</strong>组合的多项式依旧是线性组合的特殊形式的：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th><span class="math inline">\(w_0\)</span></th>
-<th><span class="math inline">\(w_1\)</span></th>
-<th><span class="math inline">\(w_2\)</span></th>
-<th><span class="math inline">\(w_3\)</span></th>
-<th><span class="math inline">\(w_4\)</span></th>
+<th>$w_0$</th>
+<th>$w_1$</th>
+<th>$w_2$</th>
+<th>$w_3$</th>
+<th>$w_4$</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><span class="math inline">\(x_0\)</span></td>
-<td><span class="math inline">\(x_1\)</span></td>
-<td><span class="math inline">\(x_2\)</span></td>
-<td><span class="math inline">\(x_3\)</span></td>
-<td><span class="math inline">\(x_4\)</span></td>
+<td>$x_0$</td>
+<td>$x_1$</td>
+<td>$x_2$</td>
+<td>$x_3$</td>
+<td>$x_4$</td>
 </tr>
 <tr>
-<td><span class="math inline">\(x_0\)</span></td>
-<td><span class="math inline">\(x_1\)</span></td>
-<td><span class="math inline">\(x_0 x_1\)</span></td>
-<td><span class="math inline">\(x_0^2\)</span></td>
-<td><span class="math inline">\(x_1^2\)</span></td>
+<td>$x_0$</td>
+<td>$x_1$</td>
+<td>$x_0 x_1$</td>
+<td>$x_0^2$</td>
+<td>$x_1^2$</td>
 </tr>
 </tbody>
 </table>
-<p>高次多项式拟合曲面参照<a href="#fn2" class="footnote-ref" id="fnref2"
-role="doc-noteref"><sup>2</sup></a></p>
-<p>以表格数据直观展现参数<span
-class="math inline">\(W\)</span>在模型变复杂（阶数越来越大）时的变化，在没有正则项的时候scale会越来越大<a
-href="#fn3" class="footnote-ref" id="fnref3"
-role="doc-noteref"><sup>3</sup></a></p>
-<h3 id="polynomial-regression">Polynomial Regression</h3>
-<p>当数据并不符合线性规律而是更复杂的时候，将每一维特征的幂次添加为<strong>新的特征</strong>，再对<strong>所有的特征</strong>进行线性回归分析。这种方法就是
-<strong>多项式回归</strong>。</p>
-<p>当存在多维特征时，多项式回归能够发现特征之间的<strong>相互关系(例如<span
-class="math inline">\(x_1x_2x_3^3\)</span>）</strong>，这是因为在添加新特征的时候，添加的是所有特征的排列组合<a
-href="#fn4" class="footnote-ref" id="fnref4"
-role="doc-noteref"><sup>4</sup></a>。</p>
-<p>多项式回归问题需要考虑<strong>特征维度爆炸</strong>的问题，维度为n，幂数为d的的新特征数共有<span
-class="math inline">\(\frac{(n+d)!}{d!n!}\)</span>个。</p>
-<h2 id="non-linear-least-squares">Non-Linear least squares</h2>
-<p>非线性是指与线性相反，不是通过线性组合构成的，例如：<span
-class="math inline">\(m(x,\theta_i) = \theta_1 +
-\theta_2x^{\theta_3}\)</span>，这种由于构成复杂，无法通过Normal
-equation得到close-form解，所以只有通过迭代方式求解。</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document"
-role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p><a
-href="https://en.wikipedia.org/wiki/Closed-form_expression"
-class="uri">https://en.wikipedia.org/wiki/Closed-form_expression</a><a
-href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a
-href="https://www.cnblogs.com/zzy0471/p/polynomial_regression.html"
-class="uri">https://www.cnblogs.com/zzy0471/p/polynomial_regression.html</a><a
-href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><a href="https://www.jianshu.com/p/eac4c7928b56"
-class="uri">https://www.jianshu.com/p/eac4c7928b56</a><a href="#fnref3"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p><a
-href="https://blog.csdn.net/tsinghuahui/article/details/80229299"
-class="uri">https://blog.csdn.net/tsinghuahui/article/details/80229299</a><a
-href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+</div>
+<p>高次多项式拟合曲面参照<sup><a href="#fn_6" id="reffn_6">6</a></sup></p>
+<p>以表格数据直观展现参数$W$在模型变复杂（阶数越来越大）时的变化，在没有正则项的时候scale会越来越大<sup><a href="#fn_7" id="reffn_7">7</a></sup></p>
+<h3 id="Polynomial-Regression"><a href="#Polynomial-Regression" class="headerlink" title="Polynomial Regression"></a>Polynomial Regression</h3><p>当数据并不符合线性规律而是更复杂的时候，将每一维特征的幂次添加为<strong>新的特征</strong>，再对<strong>所有的特征</strong>进行线性回归分析。这种方法就是 <strong>多项式回归</strong>。</p>
+<p>当存在多维特征时，多项式回归能够发现特征之间的<strong>相互关系(例如$x_1x_2x_3^3$）</strong>，这是因为在添加新特征的时候，添加的是所有特征的排列组合<sup><a href="#fn_8" id="reffn_8">8</a></sup>。</p>
+<p>多项式回归问题需要考虑<strong>特征维度爆炸</strong>的问题，维度为n，幂数为d的的新特征数共有$\frac{(n+d)!}{d!n!}$个。</p>
+<h2 id="Non-Linear-least-squares"><a href="#Non-Linear-least-squares" class="headerlink" title="Non-Linear least squares"></a>Non-Linear least squares</h2><p>非线性是指与线性相反，不是通过线性组合构成的，例如：$m(x,\theta_i) = \theta_1 + \theta_2x^{\theta_3}$，这种由于构成复杂，无法通过Normal equation得到close-form解，所以只有通过迭代方式求解。</p>
+<blockquote id="fn_1 ">
+<sup>1 </sup>. <a href="https://www.matongxue.com/madocs/818.htm">https://www.matongxue.com/madocs/818.htm</a><a href="#reffn_1 " title="Jump back to footnote [1 ] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_3 ">
+<sup>3 </sup>. <a href="https://www.cnblogs.com/wangkundentisy/p/7505487.html">https://www.cnblogs.com/wangkundentisy/p/7505487.html</a><a href="#reffn_3 " title="Jump back to footnote [3 ] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_4 ">
+<sup>4 </sup>. <a href="https://stats.stackexchange.com/questions/92065/why-is-polynomial-regression-considered-a-special-case-of-multiple-linear-regres">https://stats.stackexchange.com/questions/92065/why-is-polynomial-regression-considered-a-special-case-of-multiple-linear-regres</a> <a href="#reffn_4 " title="Jump back to footnote [4 ] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_5">
+<sup>5</sup>. <a href="https://en.wikipedia.org/wiki/Closed-form_expression">https://en.wikipedia.org/wiki/Closed-form_expression</a><a href="#reffn_5" title="Jump back to footnote [5] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_6">
+<sup>6</sup>. <a href="https://www.cnblogs.com/zzy0471/p/polynomial_regression.html">https://www.cnblogs.com/zzy0471/p/polynomial_regression.html</a><a href="#reffn_6" title="Jump back to footnote [6] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_7">
+<sup>7</sup>. <a href="https://www.jianshu.com/p/eac4c7928b56">https://www.jianshu.com/p/eac4c7928b56</a><a href="#reffn_7" title="Jump back to footnote [7] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_8">
+<sup>8</sup>. <a href="https://blog.csdn.net/tsinghuahui/article/details/80229299">https://blog.csdn.net/tsinghuahui/article/details/80229299</a><a href="#reffn_8" title="Jump back to footnote [8] in the text."> &#8617;</a>
+</blockquote>
 
     </div>
 
@@ -474,7 +417,7 @@ href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-least-squares"><span class="nav-number">1.</span> <span class="nav-text">Linear least squares</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#polynomial-regression"><span class="nav-number">1.1.</span> <span class="nav-text">Polynomial Regression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#non-linear-least-squares"><span class="nav-number">2.</span> <span class="nav-text">Non-Linear least squares</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-least-squares"><span class="nav-number">1.</span> <span class="nav-text">Linear least squares</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Polynomial-Regression"><span class="nav-number">1.1.</span> <span class="nav-text">Polynomial Regression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-Linear-least-squares"><span class="nav-number">2.</span> <span class="nav-text">Non-Linear least squares</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -488,18 +431,18 @@ href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

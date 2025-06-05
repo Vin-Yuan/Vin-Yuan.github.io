@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Classification  对数据进行shuffling, 因为某些算法对数据的顺序比较敏感。但有些数据则需要保持这种顺序，比如说股票或天气数据。 np.random.seed(n)，确保每次随机数相同，经过测试，即使关闭python重新打开程序，使用同样的seed情况下，获取到的随机数仍然保持一致，这对于重现实验结果很有帮助，上一次对trian set 如何shuffling，这一">
+  <meta name="description" content="Classification 对数据进行shuffling, 因为某些算法对数据的顺序比较敏感。但有些数据则需要保持这种顺序，比如说股票或天气数据。  np.random.seed(n)，确保每次随机数相同，经过测试，即使关闭python重新打开程序，使用同样的seed情况下，获取到的随机数仍然保持一致，这对于重现实验结果很有帮助，上一次对trian set 如何shuffling，这一次依旧保持">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hands-on-machine-learning">
 <meta property="og:url" content="http://yoursite.com/2019/03/03/hands-on-machine-learning/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="Classification  对数据进行shuffling, 因为某些算法对数据的顺序比较敏感。但有些数据则需要保持这种顺序，比如说股票或天气数据。 np.random.seed(n)，确保每次随机数相同，经过测试，即使关闭python重新打开程序，使用同样的seed情况下，获取到的随机数仍然保持一致，这对于重现实验结果很有帮助，上一次对trian set 如何shuffling，这一">
+<meta property="og:description" content="Classification 对数据进行shuffling, 因为某些算法对数据的顺序比较敏感。但有些数据则需要保持这种顺序，比如说股票或天气数据。  np.random.seed(n)，确保每次随机数相同，经过测试，即使关闭python重新打开程序，使用同样的seed情况下，获取到的随机数仍然保持一致，这对于重现实验结果很有帮助，上一次对trian set 如何shuffling，这一次依旧保持">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g0pvjp780ij30jg08fgm6.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g0pwmrpbghj30b405hmxl.jpg">
 <meta property="article:published_time" content="2019-03-03T08:58:25.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.064Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g0pvjp780ij30jg08fgm6.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2019/03/03/hands-on-machine-learning/">
 
@@ -199,113 +202,49 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="classification">Classification</h1>
-<ul>
-<li><p>对数据进行<strong>shuffling</strong>,
-因为某些算法对数据的顺序比较敏感。但有些数据则需要保持这种顺序，比如说股票或天气数据。</p></li>
-<li><p><strong>np.random.seed(n)</strong>，确保每次随机数相同，经过测试，即使关闭python重新打开程序，使用同样的seed情况下，获取到的随机数仍然保持一致，这对于重现实验结果很有帮助，上一次对trian
-set 如何shuffling，这一次依旧保持一致。</p></li>
-<li><p>样本的标签使用<strong>tuple</strong>保证在处理数据时不被更改。</p></li>
+        <h1 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h1><ul>
+<li><p>对数据进行<strong>shuffling</strong>, 因为某些算法对数据的顺序比较敏感。但有些数据则需要保持这种顺序，比如说股票或天气数据。</p>
+</li>
+<li><p><strong>np.random.seed(n)</strong>，确保每次随机数相同，经过测试，即使关闭python重新打开程序，使用同样的seed情况下，获取到的随机数仍然保持一致，这对于重现实验结果很有帮助，上一次对trian set 如何shuffling，这一次依旧保持一致。</p>
+</li>
+<li><p>样本的标签使用<strong>tuple</strong>保证在处理数据时不被更改。</p>
+</li>
 <li><p><strong>Precision</strong> and <strong>Recall</strong></p>
-<figure>
-<img
-src="https://ws3.sinaimg.cn/large/006tKfTcly1g0pvjp780ij30jg08fgm6.jpg"
-alt="IMG_2551" />
-<figcaption aria-hidden="true">IMG_2551</figcaption>
-</figure></li>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0pvjp780ij30jg08fgm6.jpg" alt="IMG_2551"></p>
+</li>
 </ul>
 <span id="more"></span>
 <p>recall“召回率”这个含义很好理解，例如召回有质量问题汽车这一情况，算法在判别有问题时偏重检测了发动机，因此最后的结果只召回了发动机有问题的样本，而其他零件有问题的没有召回，最后在统计召回率这一指标中便可发现问题。</p>
-<p>权衡准确率和召回率要应对不同问题，比如说过判别疑犯，寻求的是high
-recall，precison低一些没关系，俗话说宁可错杀千万不可漏掉一个便是如此，当然在这个情况中，进一步二次审查即可，通俗点说，即尽可能找出（“召回”）目标正例；再比如判定一个视频是否对儿童安全，重视的是high
-precision，recall低一些没关系。</p>
-<figure>
-<img
-src="https://ws1.sinaimg.cn/large/006tKfTcly1g0pwmrpbghj30b405hmxl.jpg"
-alt="preccision and recall vs threshold" />
-<figcaption aria-hidden="true">preccision and recall vs
-threshold</figcaption>
-</figure>
-<p>关于precison 和
-recall在threshold变化下各自的走向。随着thershold增加，recall降低是因为positive
-samples越累越少，分子分母同时减少相同数值（糖水原理反推，浓度即降低），整体减少。precision则不一定，因为分子分母减少并不一定相同，有可能FP（false
-positive)也减少了。</p>
-<h2 id="performance-measures">Performance Measures</h2>
-<ul>
-<li><p>Confusion Matrix</p></li>
-<li><p>Precision and Recall</p></li>
-<li><p>ROC Curve</p></li>
+<p>权衡准确率和召回率要应对不同问题，比如说过判别疑犯，寻求的是high recall，precison低一些没关系，俗话说宁可错杀千万不可漏掉一个便是如此，当然在这个情况中，进一步二次审查即可，通俗点说，即尽可能找出（“召回”）目标正例；再比如判定一个视频是否对儿童安全，重视的是high precision，recall低一些没关系。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0pwmrpbghj30b405hmxl.jpg" alt="preccision and recall vs threshold"></p>
+<p>关于precison 和 recall在threshold变化下各自的走向。随着thershold增加，recall降低是因为positive samples越累越少，分子分母同时减少相同数值（糖水原理反推，浓度即降低），整体减少。precision则不一定，因为分子分母减少并不一定相同，有可能FP（false positive)也减少了。</p>
+<h2 id="Performance-Measures"><a href="#Performance-Measures" class="headerlink" title="Performance Measures"></a>Performance Measures</h2><ul>
+<li><p>Confusion Matrix</p>
+</li>
+<li><p>Precision and Recall</p>
+</li>
+<li><p>ROC Curve</p>
+</li>
 </ul>
-<h2 id="lasso-group-lasso-ringe">Lasso, Group Lasso, Ringe</h2>
-<p><a href="https://leimao.github.io/blog/Group-Lasso/"
-class="uri">https://leimao.github.io/blog/Group-Lasso/</a> Suppose <span
-class="math inline">\(\beta\)</span> is a collection of parameters.
-<span class="math inline">\(\beta=\left\{\beta_{1}, \beta_{2}, \cdots,
-\beta_{n}\right\}\)</span>, The L0, L1, and L2 norms are denoted as
-<span
-class="math inline">\(\|\beta\|_{0},\|\beta\|_{1},\|\beta\|_{2}\)</span>.
-They are defined as:</p>
-<p><span class="math display">\[
+<h2 id="Lasso-Group-Lasso-Ringe"><a href="#Lasso-Group-Lasso-Ringe" class="headerlink" title="Lasso, Group Lasso, Ringe"></a>Lasso, Group Lasso, Ringe</h2><p><a href="https://leimao.github.io/blog/Group-Lasso/">https://leimao.github.io/blog/Group-Lasso/</a><br>Suppose $\beta$ is a collection of parameters. $\beta=\left{\beta<em>{1}, \beta</em>{2}, \cdots, \beta<em>{n}\right}$, The L0, L1, and L2 norms are denoted as $|\beta|</em>{0},|\beta|<em>{1},|\beta|</em>{2}$. They are defined as:</p>
+<script type="math/tex; mode=display">
 \begin{aligned}
-&amp;\|\beta\|_{0}=\sum_{i=1}^{n} 1\left\{\beta_{i} \neq 0\right\} \\
-&amp;\|\beta\|_{1}=\sum_{i=1}^{n}\left|\beta_{i}\right| \\
-&amp;\|\beta\|_{2}=\left(\sum_{i=1}^{n}
-\beta_{i}^{2}\right)^{\frac{1}{2}}
-\end{aligned}
-\]</span></p>
-<p>Given a dataset <span class="math inline">\(\{X, y\}\)</span> where
-<span class="math inline">\(X\)</span> is the feature and <span
-class="math inline">\(y\)</span> is the label for regression, we simply
-model it as has a linear relationship <span class="math inline">\(y=X
-\beta\)</span>. With regularization, the optimization problem of L0,
-Lasso and Ridge regressions are <span class="math display">\[
+&\|\beta\|_{0}=\sum_{i=1}^{n} 1\left\{\beta_{i} \neq 0\right\} \\
+&\|\beta\|_{1}=\sum_{i=1}^{n}\left|\beta_{i}\right| \\
+&\|\beta\|_{2}=\left(\sum_{i=1}^{n} \beta_{i}^{2}\right)^{\frac{1}{2}}
+\end{aligned}</script><p>Given a dataset ${X, y}$ where $X$ is the feature and $y$ is the label for regression, we simply model it as has a linear relationship $y=X \beta$. With regularization, the optimization problem of L0, Lasso and Ridge regressions are</p>
+<script type="math/tex; mode=display">
 \begin{aligned}
-\beta^{*} &amp;=\underset{\beta}{\operatorname{argmin}}\|y-X
-\beta\|_{2}^{2}+\lambda\|\beta\|_{0} \\
-\beta^{*} &amp;=\underset{\beta}{\operatorname{argmin}}\|y-X
-\beta\|_{2}^{2}+\lambda\|\beta\|_{1} \\
-\beta^{*} &amp;=\underset{\beta}{\operatorname{argmin}}\|y-X
-\beta\|_{2}^{2}+\lambda\|\beta\|_{2}
-\end{aligned}
-\]</span> ![此处输入图片的描述][2]</p>
-<h3 id="group-lasso">Group Lasso</h3>
-<p>Suppose the weights in <span class="math inline">\(\beta\)</span>
-could be grouped, the new weight vector becomes <span
-class="math inline">\(\beta_{G}=\left\{\beta^{(1)}, \beta^{(2)}, \cdots,
-\beta^{(m)}\right\} .\)</span> Each <span
-class="math inline">\(\beta^{(l)}\)</span> for <span
-class="math inline">\(1 \leq l \leq m\)</span> represents a group of
-weights from <span class="math inline">\(\beta\)</span>.</p>
-<p>We further group <span class="math inline">\(X\)</span> accordingly.
-We denote <span class="math inline">\(X^{(l)}\)</span> as the submatrix
-of <span class="math inline">\(\mathrm{X}\)</span> with columns
-corresponding to the weights in <span
-class="math inline">\(\beta^{(l)}\)</span>. The optimization problem
-becomes <span class="math display">\[
-\beta^{*}=\underset{\beta}{\operatorname{argmin}}\left\|y-\sum_{l=1}^{m}
-X^{(l)} \beta^{(l)}\right\|_{2}^{2}+\lambda \sum_{l=1}^{m}
-\sqrt{p_{l}}\left\|\beta^{(l)}\right\|_{2}
-\]</span> where <span class="math inline">\(p_{l}\)</span> represents
-the number of weights in <span
-class="math inline">\(\beta^{(l)}\)</span>. It should be noted that when
-there is only one group, i.e., <span class="math inline">\(m=1\)</span>,
-<strong>Group Lasso is equivalent to Ridge</strong>; when each weight
-forms an independent group, i.e., <span
-class="math inline">\(m=n\)</span>, <strong>Group Lasso becomes
-Lasso</strong>.</p>
-<h3 id="sparsity">Sparsity</h3>
-<p>The most intuitive explanation to the sparsity <strong>caused by
-Lasso is that the non-differentiable corner along the axes in the
-Lasso</strong> <span class="math inline">\(\|\beta\|_{1}\)</span>
-<strong>are more likely to contact with the loss function</strong> <span
-class="math inline">\(\|y-X \beta\|_{2}^{2}\)</span>. In Ridge
-regression, because it is differentiable everywhere in the Ridge <span
-class="math inline">\(\|\beta\|_{2}\)</span>, <strong>the chance of
-contact along the axes is extremely small</strong>.</p>
-<p>[2]: <a
-href="https://leimao.github.io/images/blog/2020-02-13-Group-Lasso/lasso-vs-ridge.png"
-class="uri">https://leimao.github.io/images/blog/2020-02-13-Group-Lasso/lasso-vs-ridge.png</a>
-2020-07-13 16:54:13</p>
+\beta^{*} &=\underset{\beta}{\operatorname{argmin}}\|y-X \beta\|_{2}^{2}+\lambda\|\beta\|_{0} \\
+\beta^{*} &=\underset{\beta}{\operatorname{argmin}}\|y-X \beta\|_{2}^{2}+\lambda\|\beta\|_{1} \\
+\beta^{*} &=\underset{\beta}{\operatorname{argmin}}\|y-X \beta\|_{2}^{2}+\lambda\|\beta\|_{2}
+\end{aligned}</script><p>![此处输入图片的描述][2]</p>
+<h3 id="Group-Lasso"><a href="#Group-Lasso" class="headerlink" title="Group Lasso"></a>Group Lasso</h3><p>Suppose the weights in $\beta$ could be grouped, the new weight vector becomes $\beta_{G}=\left{\beta^{(1)}, \beta^{(2)}, \cdots, \beta^{(m)}\right} .$ Each $\beta^{(l)}$ for $1 \leq l \leq m$ represents a group of weights from $\beta$.</p>
+<p>We further group $X$ accordingly. We denote $X^{(l)}$ as the submatrix of $\mathrm{X}$ with columns corresponding to the weights in $\beta^{(l)}$. The optimization problem becomes</p>
+<script type="math/tex; mode=display">
+\beta^{*}=\underset{\beta}{\operatorname{argmin}}\left\|y-\sum_{l=1}^{m} X^{(l)} \beta^{(l)}\right\|_{2}^{2}+\lambda \sum_{l=1}^{m} \sqrt{p_{l}}\left\|\beta^{(l)}\right\|_{2}</script><p>where $p_{l}$ represents the number of weights in $\beta^{(l)}$.<br>It should be noted that when there is only one group, i.e., $m=1$, <strong>Group Lasso is equivalent to Ridge</strong>; when each weight forms an independent group, i.e., $m=n$, <strong>Group Lasso becomes Lasso</strong>.</p>
+<h3 id="Sparsity"><a href="#Sparsity" class="headerlink" title="Sparsity"></a>Sparsity</h3><p>The most intuitive explanation to the sparsity <strong>caused by Lasso is that the non-differentiable corner along the axes in the Lasso</strong> $|\beta|<em>{1}$ <strong>are more likely to contact with the loss function</strong> $|y-X \beta|</em>{2}^{2}$. In Ridge regression, because it is differentiable everywhere in the Ridge $|\beta|_{2}$, <strong>the chance of contact along the axes is extremely small</strong>.</p>
+<p>  [2]: <a href="https://leimao.github.io/images/blog/2020-02-13-Group-Lasso/lasso-vs-ridge.png">https://leimao.github.io/images/blog/2020-02-13-Group-Lasso/lasso-vs-ridge.png</a> 2020-07-13 16:54:13</p>
 
     </div>
 
@@ -386,7 +325,7 @@ class="uri">https://leimao.github.io/images/blog/2020-02-13-Group-Lasso/lasso-vs
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#classification"><span class="nav-number">1.</span> <span class="nav-text">Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#performance-measures"><span class="nav-number">1.1.</span> <span class="nav-text">Performance Measures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lasso-group-lasso-ringe"><span class="nav-number">1.2.</span> <span class="nav-text">Lasso, Group Lasso, Ringe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#group-lasso"><span class="nav-number">1.2.1.</span> <span class="nav-text">Group Lasso</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sparsity"><span class="nav-number">1.2.2.</span> <span class="nav-text">Sparsity</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Classification"><span class="nav-number">1.</span> <span class="nav-text">Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Performance-Measures"><span class="nav-number">1.1.</span> <span class="nav-text">Performance Measures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lasso-Group-Lasso-Ringe"><span class="nav-number">1.2.</span> <span class="nav-text">Lasso, Group Lasso, Ringe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Group-Lasso"><span class="nav-number">1.2.1.</span> <span class="nav-text">Group Lasso</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sparsity"><span class="nav-number">1.2.2.</span> <span class="nav-text">Sparsity</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -400,18 +339,18 @@ class="uri">https://leimao.github.io/images/blog/2020-02-13-Group-Lasso/lasso-vs
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

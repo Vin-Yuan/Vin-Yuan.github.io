@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv 的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境 installation https:&#x2F;&#x2F;www.digitalocean.com&#x2F;community&#x2F;tutorials&#x2F;how-to-install-anaconda-on-ubuntu-18-04-quickstart 在co">
+  <meta name="description" content="conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv 的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境 installationhttps:&#x2F;&#x2F;www.digitalocean.com&#x2F;community&#x2F;tutorials&#x2F;how-to-install-anaconda-on-ubuntu-18-04-quickstart 在conda中使">
 <meta property="og:type" content="article">
 <meta property="og:title" content="conda">
 <meta property="og:url" content="http://yoursite.com/2024/02/29/conda/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv 的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境 installation https:&#x2F;&#x2F;www.digitalocean.com&#x2F;community&#x2F;tutorials&#x2F;how-to-install-anaconda-on-ubuntu-18-04-quickstart 在co">
+<meta property="og:description" content="conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv 的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境 installationhttps:&#x2F;&#x2F;www.digitalocean.com&#x2F;community&#x2F;tutorials&#x2F;how-to-install-anaconda-on-ubuntu-18-04-quickstart 在conda中使">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-29T11:12:02.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.064Z">
@@ -199,19 +199,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv
-的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境</p>
-<h4 id="installation">installation</h4>
-<p><a
-href="https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart"
-class="uri">https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart</a></p>
-<h4 id="在conda中使用pip">在conda中使用pip</h4>
-<p>注意：当在conda的虚拟环境中使用Pip安装包时，需要使用<code>pip -V</code>查看Pip所使用的路径，如果conda没有安装Pip，会使用系统默认的pip命令，这种结果使得pip安装的包被安装到了系统库位置，从而在当前虚拟环境中的python下无法使用或找不到。
-一般conda的虚拟环境中自带pip，如果你是用pip3安装，可能使用的是系统的pip，这一点要注意</p>
+        <p>conda 是 Anaconda 的工具箱，它是 pip 和 vitualenv 的组合，也就是说他可以像pip来管理包，也可以像vitualenv来切换环境</p>
+<h4 id="installation"><a href="#installation" class="headerlink" title="installation"></a>installation</h4><p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart">https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart</a></p>
+<h4 id="在conda中使用pip"><a href="#在conda中使用pip" class="headerlink" title="在conda中使用pip"></a>在conda中使用pip</h4><p>注意：当在conda的虚拟环境中使用Pip安装包时，需要使用<code>pip -V</code>查看Pip所使用的路径，如果conda没有安装Pip，会使用系统默认的pip命令，这种结果使得pip安装的包被安装到了系统库位置，从而在当前虚拟环境中的python下无法使用或找不到。<br>一般conda的虚拟环境中自带pip，如果你是用pip3安装，可能使用的是系统的pip，这一点要注意</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(face_detector) ➜  ~ pip -V</span><br><span class="line">pip 9.0.1 from /opt/anaconda3/envs/face_detector/lib/python3.5/site-packages (python 3.5)</span><br><span class="line">(face_detector) ➜  ~ pip3 -V</span><br><span class="line">pip 20.0.2 from /usr/local/lib/python3.7/site-packages/pip (python 3.7)</span><br></pre></td></tr></table></figure>
-<p>的开发环境会被默认安装在你conda目录下的envs文件目录下。可以指定一个其他的路径；去通过
-conda create -h了解更
-果我们没有指定安装python的版本，conda会安装我们最初安装conda时所装的那个版本的python。</p>
+<p>的开发环境会被默认安装在你conda目录下的envs文件目录下。可以指定一个其他的路径；去通过 conda create -h了解更<br>果我们没有指定安装python的版本，conda会安装我们最初安装conda时所装的那个版本的python。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列举当前所有环境</span></span><br><span class="line">conda info</span><br><span class="line">conda env <span class="built_in">list</span></span><br><span class="line"><span class="comment"># 创建环境</span></span><br><span class="line">conda create --name new_env_name python=<span class="number">2.7</span><span class="number">.9</span></span><br><span class="line">conda create -n new_env_name python=<span class="number">2.7</span><span class="number">.9</span></span><br><span class="line"><span class="comment"># 克隆环境 (例如当前环境是base, 需要克隆一个copy_base，地址在~/path)</span></span><br><span class="line">conda create -n copy_base --clone ~/path</span><br><span class="line"><span class="comment"># 激活环境</span></span><br><span class="line">source activate snowflakes  <span class="comment">#linux</span></span><br><span class="line">activate new_env_name <span class="comment">#windows</span></span><br><span class="line"><span class="comment"># 释放环境</span></span><br><span class="line">source deactivate <span class="comment">#linux</span></span><br><span class="line">deactivate <span class="comment">#windows</span></span><br><span class="line"><span class="comment"># 移除环境</span></span><br><span class="line">conda remove --name new_env_name --<span class="built_in">all</span></span><br><span class="line">conda remove -n new_env_name --<span class="built_in">all</span></span><br><span class="line"><span class="comment"># 保存环境\分享环境</span></span><br><span class="line">conda env export &gt; environment.yml</span><br><span class="line"><span class="comment"># 恢复环境</span></span><br><span class="line">conda env create -f environment.yml</span><br><span class="line"><span class="comment"># 查看当前环境所有package</span></span><br><span class="line">conda <span class="built_in">list</span></span><br><span class="line"><span class="comment"># 为指定环境安装某个包</span></span><br><span class="line">conda install -n env_name package_name</span><br><span class="line"><span class="comment"># 查找包有哪些版本</span></span><br><span class="line">conda search tensorflow-gpu </span><br><span class="line"><span class="comment"># 将conda放入PATH</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;$(/home/yuanwenwu/anaconda3/bin/conda shell.YOUR_SHELL_NAME hook)&quot;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>在python2.7环境中启动notebook 使kernel变为python3、python2共存</li>
@@ -220,16 +212,10 @@ conda create -h了解更
 <ul>
 <li>问题1：python能找到的包，jupyter notebook找不到</li>
 </ul>
-<p>是因为python执行路径不一致。 定位这个问题可以通过sys包</p>
+<p>是因为python执行路径不一致。<br>定位这个问题可以通过sys包</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="built_in">print</span>(sys.executable)</span><br></pre></td></tr></table></figure>
-<p>往往这个问题是只安装了python，但要使用ipython或jupyter
-notebook，由于虚拟环境没有，会去主系统找可用版本呢，从而导致启动路径不一致，解决方式是在虚拟环境conda
-install需要的包（ ipython or jupyter notebook ) 参考：<a
-href="https://blog.csdn.net/sunxinyu/article/details/78801534"
-class="uri">https://blog.csdn.net/sunxinyu/article/details/78801534</a></p>
-<h4 id="conda-更换源">conda 更换源</h4>
-<h4 id="conda-安装指定version包">conda 安装指定version包</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda search tensorflow</span><br><span class="line">conda install tensorflow-gpu==<span class="number">2.0</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<p>往往这个问题是只安装了python，但要使用ipython或jupyter notebook，由于虚拟环境没有，会去主系统找可用版本呢，从而导致启动路径不一致，解决方式是在虚拟环境conda install需要的包（ ipython or jupyter notebook )<br>参考：<a href="https://blog.csdn.net/sunxinyu/article/details/78801534">https://blog.csdn.net/sunxinyu/article/details/78801534</a></p>
+<h4 id="conda-更换源"><a href="#conda-更换源" class="headerlink" title="conda 更换源"></a>conda 更换源</h4><h4 id="conda-安装指定version包"><a href="#conda-安装指定version包" class="headerlink" title="conda 安装指定version包"></a>conda 安装指定version包</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda search tensorflow</span><br><span class="line">conda install tensorflow-gpu==<span class="number">2.0</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -324,18 +310,18 @@ class="uri">https://blog.csdn.net/sunxinyu/article/details/78801534</a></p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

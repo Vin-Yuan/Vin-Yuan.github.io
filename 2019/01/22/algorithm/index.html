@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="十进制数分成左右两部分 Palindrome[[1]]回文应用：左右镜像 example: 1123613 result: left:112， right:316 这里写出回文Palindrome关键代码，x是目标整数。核心思想是分成左右两部分的位数是一样的，循环截至时一定是righ位数大于left，所以可以界定 when rigntNum &gt; leftNum 即可 1234re">
+  <meta name="description" content="十进制数分成左右两部分Palindrome[[1]]回文应用：左右镜像 example: 1123613 result:  left:112， right:316 这里写出回文Palindrome关键代码，x是目标整数。核心思想是分成左右两部分的位数是一样的，循环截至时一定是righ位数大于left，所以可以界定 when rigntNum &gt; leftNum 即可 1234revertHa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="algorithm">
 <meta property="og:url" content="http://yoursite.com/2019/01/22/algorithm/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="十进制数分成左右两部分 Palindrome[[1]]回文应用：左右镜像 example: 1123613 result: left:112， right:316 这里写出回文Palindrome关键代码，x是目标整数。核心思想是分成左右两部分的位数是一样的，循环截至时一定是righ位数大于left，所以可以界定 when rigntNum &gt; leftNum 即可 1234re">
+<meta property="og:description" content="十进制数分成左右两部分Palindrome[[1]]回文应用：左右镜像 example: 1123613 result:  left:112， right:316 这里写出回文Palindrome关键代码，x是目标整数。核心思想是分成左右两部分的位数是一样的，循环截至时一定是righ位数大于left，所以可以界定 when rigntNum &gt; leftNum 即可 1234revertHa">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-01-22T02:40:40.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.064Z">
@@ -199,12 +199,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="十进制数分成左右两部分">十进制数分成左右两部分</h2>
-<p>Palindrome[[1]]回文应用：左右镜像</p>
+        <h2 id="十进制数分成左右两部分"><a href="#十进制数分成左右两部分" class="headerlink" title="十进制数分成左右两部分"></a>十进制数分成左右两部分</h2><p>Palindrome[[1]]回文应用：左右镜像</p>
 <p>example: 1123613</p>
-<p>result: left:112， right:316</p>
-<p>这里写出回文Palindrome关键代码，x是目标整数。核心思想是分成左右两部分的<strong>位数</strong>是一样的，循环截至时一定是righ<strong>位数</strong>大于left，所以可以界定
-when rigntNum &gt; leftNum 即可</p>
+<p>result:  left:112， right:316</p>
+<p>这里写出回文Palindrome关键代码，x是目标整数。核心思想是分成左右两部分的<strong>位数</strong>是一样的，循环截至时一定是righ<strong>位数</strong>大于left，所以可以界定 when rigntNum &gt; leftNum 即可</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">revertHalfNum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> revertHalfNum &lt; x:</span><br><span class="line">    revertHalfNum = revertHalfNum * <span class="number">10</span> + x % <span class="number">10</span></span><br><span class="line">    x = x // <span class="number">10</span></span><br></pre></td></tr></table></figure>
 <p>注意点：</p>
 <ul>
@@ -212,66 +210,43 @@ when rigntNum &gt; leftNum 即可</p>
 <li>提前过滤关键整数：3， 10， 0等</li>
 </ul>
 <span id="more"></span>
-<h2 id="列出数学式子">列出数学式子</h2>
-<p>有些时候列出数学表达式可以更明了的解决问题</p>
+<h2 id="列出数学式子"><a href="#列出数学式子" class="headerlink" title="列出数学式子"></a>列出数学式子</h2><p>有些时候列出数学表达式可以更明了的解决问题</p>
 <p>对于罗马数字[[2]]这道题：</p>
 <p>XCVII = 97 = -10 + 100 + 5 + 1 + 1</p>
 <p>很明了，循环到当前字符s[i]，查询对应数字如果：</p>
 <p>roma[s[i]] &gt; roma[s[i+1]]， + roma[s[i]]</p>
-<p>roma[s[i]] &lt; roma[s[i+1]]， - roma[s[i]]</p>
-<h2 id="common">common</h2>
-<h3 id="asci-码值">ASCI 码值</h3>
-<p>在一些需要字符加减的地方获取asci码值</p>
+<p>roma[s[i]] &lt; roma[s[i+1]]，  - roma[s[i]]</p>
+<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><h3 id="ASCI-码值"><a href="#ASCI-码值" class="headerlink" title="ASCI 码值"></a>ASCI 码值</h3><p>在一些需要字符加减的地方获取asci码值</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) - <span class="built_in">ord</span>(<span class="string">&#x27;B&#x27;</span>)</span><br><span class="line">&gt;&gt; <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h3 id="map函数">map函数</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">b = <span class="built_in">map</span>(<span class="keyword">lambda</span> x: x ** <span class="number">2</span>, a)</span><br></pre></td></tr></table></figure>
+<h3 id="map函数"><a href="#map函数" class="headerlink" title="map函数"></a>map函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">b = <span class="built_in">map</span>(<span class="keyword">lambda</span> x: x ** <span class="number">2</span>, a)</span><br></pre></td></tr></table></figure>
 <p>b在这里是一个map对象，可迭代对象，如果直接回显变量或print变量是无法看到值的，如果想查看内部值，使用list,这里list更像一个“大散”的操作：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(b)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="sort-and-sorted">sort and sorted</h3>
-<ul>
+<h3 id="sort-and-sorted"><a href="#sort-and-sorted" class="headerlink" title="sort and sorted"></a>sort and sorted</h3><ul>
 <li>sort 原地排序 inplace</li>
+</ul>
+<ul>
 <li>sorted 返回一个新列表</li>
 </ul>
-<h3 id="赋值语句">赋值语句</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># error 不可以这样赋值</span></span><br><span class="line">i = <span class="number">1</span>, j = <span class="number">2</span> <span class="comment">#  SyntaxError: can&#x27;t assign to literal</span></span><br><span class="line"><span class="comment"># right </span></span><br><span class="line">i = <span class="number">1</span> </span><br><span class="line">j = <span class="number">2</span> </span><br></pre></td></tr></table></figure>
-<h3 id="if-条件语句">if 条件语句</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># error python if </span></span><br><span class="line"><span class="keyword">if</span> !s.isnumeric() <span class="keyword">or</span> !s.isalpha():</span><br><span class="line">  ……</span><br><span class="line"><span class="comment"># right python if </span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> s.isnumeric() <span class="keyword">or</span> <span class="keyword">not</span> s.isalpha():</span><br><span class="line">  ……</span><br></pre></td></tr></table></figure>
-<h3 id="bit位操作">bit位操作</h3>
-<h4 id="移位">移位</h4>
-<p>bit &lt;&lt; 1 bit &lt;&lt;= 1</p>
-<h4 id="按位与">按位与</h4>
-<p>bit= 0010000 判断num某一位是否是1要用 if bit &amp; num != 0:
-<strong>不要使用是否等于1作判断</strong>，相关题目剑指 Offer 56 - I.
-数组中数字出现的次数</p>
-<h4 id="按位或">按位或</h4>
-<p>bit|num</p>
-<h4 id="按位亦或">按位亦或</h4>
-<p>bit^num num ^= bit</p>
-<h4 id="结合">结合</h4>
-<p>查看遇到的第一个为1的bit位(
-<strong>注意使用&lt;&lt;=而非&lt;&lt;</strong> )</p>
+<h3 id="赋值语句"><a href="#赋值语句" class="headerlink" title="赋值语句"></a>赋值语句</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># error 不可以这样赋值</span></span><br><span class="line">i = <span class="number">1</span>, j = <span class="number">2</span> <span class="comment">#  SyntaxError: can&#x27;t assign to literal</span></span><br><span class="line"><span class="comment"># right </span></span><br><span class="line">i = <span class="number">1</span> </span><br><span class="line">j = <span class="number">2</span> </span><br></pre></td></tr></table></figure>
+<h3 id="if-条件语句"><a href="#if-条件语句" class="headerlink" title="if 条件语句"></a>if 条件语句</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># error python if </span></span><br><span class="line"><span class="keyword">if</span> !s.isnumeric() <span class="keyword">or</span> !s.isalpha():</span><br><span class="line">  ……</span><br><span class="line"><span class="comment"># right python if </span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> s.isnumeric() <span class="keyword">or</span> <span class="keyword">not</span> s.isalpha():</span><br><span class="line">  ……</span><br></pre></td></tr></table></figure>
+<h3 id="bit位操作"><a href="#bit位操作" class="headerlink" title="bit位操作"></a>bit位操作</h3><h4 id="移位"><a href="#移位" class="headerlink" title="移位"></a>移位</h4><p>bit &lt;&lt; 1<br>bit &lt;&lt;= 1</p>
+<h4 id="按位与"><a href="#按位与" class="headerlink" title="按位与"></a>按位与</h4><p>bit= 0010000<br>判断num某一位是否是1要用<br>if bit &amp; num != 0:<br><strong>不要使用是否等于1作判断</strong>，相关题目剑指 Offer 56 - I. 数组中数字出现的次数</p>
+<h4 id="按位或"><a href="#按位或" class="headerlink" title="按位或"></a>按位或</h4><p>bit|num</p>
+<h4 id="按位亦或"><a href="#按位亦或" class="headerlink" title="按位亦或"></a>按位亦或</h4><p>bit^num<br>num ^= bit</p>
+<h4 id="结合"><a href="#结合" class="headerlink" title="结合"></a>结合</h4><p>查看遇到的第一个为1的bit位( <strong>注意使用&lt;&lt;=而非&lt;&lt;</strong> )</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit = 1</span><br><span class="line">num = 10</span><br><span class="line">while num &amp; bit == 0:</span><br><span class="line">    bit &lt;&lt;= 1</span><br></pre></td></tr></table></figure>
-<p>12 = 00001100 12 &amp; 00000001 = 0 12 &amp; 00000010 = 0 <strong>12
-&amp; 00000100 = 4</strong></p>
-<h3 id="循环完毕的标志">循环完毕的标志</h3>
-<p>如果需要判断子串是否比较完毕，可以使用while i &lt;
-len(s)，这样当都比较完的时候，i就越界了，然后可以拿 i == len(s)
-来判断是否比较完毕，这里使用for i in range(0, len(s)) 不合适。参见28</p>
-<h3 id="python-bit-操作">python bit 操作</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按位与 AND</span></span><br><span class="line">a &amp; b</span><br><span class="line"><span class="comment"># 按位或 OR</span></span><br><span class="line">a | b</span><br><span class="line"><span class="comment"># 按位异或 XOR</span></span><br><span class="line">a ^ b</span><br><span class="line"><span class="comment"># 按位取反</span></span><br><span class="line">~ a</span><br></pre></td></tr></table></figure>
-<h3 id="python-二维数组">python 二维数组</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n = 3</span><br><span class="line">m = 3</span><br><span class="line">dp = [[0 for i in range(n)] for j in range(m)]</span><br></pre></td></tr></table></figure>
-<p>arr2 = [arr1] *
-3操作中，只是创建3个指向arr1的引用，所以一旦arr1改变，arr2中3个list也会随之改变，故这种方式不合适。</p>
-<h3 id="双段队列">双段队列</h3>
-<p>参照 剑指 Offer 59 - I. 滑动窗口的最大值 调整双端队列时：</p>
+<p>12 = 00001100<br>12 &amp; 00000001 = 0<br>12 &amp; 00000010 = 0<br><strong>12 &amp; 00000100 = 4</strong></p>
+<h3 id="循环完毕的标志"><a href="#循环完毕的标志" class="headerlink" title="循环完毕的标志"></a>循环完毕的标志</h3><p>如果需要判断子串是否比较完毕，可以使用while i &lt; len(s)，这样当都比较完的时候，i就越界了，然后可以拿 i == len(s) 来判断是否比较完毕，这里使用for i in range(0, len(s)) 不合适。参见28</p>
+<h3 id="python-bit-操作"><a href="#python-bit-操作" class="headerlink" title="python bit 操作"></a>python bit 操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按位与 AND</span></span><br><span class="line">a &amp; b</span><br><span class="line"><span class="comment"># 按位或 OR</span></span><br><span class="line">a | b</span><br><span class="line"><span class="comment"># 按位异或 XOR</span></span><br><span class="line">a ^ b</span><br><span class="line"><span class="comment"># 按位取反</span></span><br><span class="line">~ a</span><br></pre></td></tr></table></figure>
+<h3 id="python-二维数组"><a href="#python-二维数组" class="headerlink" title="python 二维数组"></a>python 二维数组</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n = 3</span><br><span class="line">m = 3</span><br><span class="line">dp = [[0 for i in range(n)] for j in range(m)]</span><br></pre></td></tr></table></figure>
+<p>arr2 = [arr1] * 3操作中，只是创建3个指向arr1的引用，所以一旦arr1改变，arr2中3个list也会随之改变，故这种方式不合适。</p>
+<h3 id="双段队列"><a href="#双段队列" class="headerlink" title="双段队列"></a>双段队列</h3><p>参照 剑指 Offer 59 - I. 滑动窗口的最大值<br>调整双端队列时：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while len(deque) &gt; 0 and &#x27;不满足条件&#x27;：</span><br><span class="line">    deque.pop()</span><br><span class="line">队列调整完毕，可以放入当前元素</span><br></pre></td></tr></table></figure>
-<h3 id="双指针解法快慢指针">双指针解法(快慢指针）</h3>
-<p>设计题目： 5. 3sum 11. Container With Most Water
-这种题目的特点是涉及到求两个数组元素的函数<span
-class="math inline">\(f(a_i, a_j)\)</span>（和，max等）
-可以使用左右指针向中间移动，<strong>符合趋向预期目标的指针移动</strong>
-剑指offer 22</p>
+<h3 id="双指针解法-快慢指针）"><a href="#双指针解法-快慢指针）" class="headerlink" title="双指针解法(快慢指针）"></a>双指针解法(快慢指针）</h3><p>设计题目：</p>
+<ol>
+<li>3sum</li>
+<li>Container With Most Water<br>这种题目的特点是涉及到求两个数组元素的函数$f(a_i, a_j)$（和，max等）<br>可以使用左右指针向中间移动，<strong>符合趋向预期目标的指针移动</strong><br>剑指offer 22</li>
+</ol>
 <ul>
 <li>左右指针</li>
 </ul>
@@ -280,57 +255,29 @@ class="math inline">\(f(a_i, a_j)\)</span>（和，max等）
 <li>快慢指针</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> low = <span class="number">0</span>, fast = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (fast &lt; nums.size()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums[fast] &amp; <span class="number">1</span>) &#123;</span><br><span class="line">        swap(nums[low], nums[fast]);</span><br><span class="line">        low ++;</span><br><span class="line">    &#125;</span><br><span class="line">    fast ++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="快排">快排</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">partition</span>(<span class="params">nums, start, end</span>):</span><br><span class="line">    index = random(start, end)</span><br><span class="line">    swap(nums[index], nums[end])</span><br><span class="line">    small = start-<span class="number">1</span></span><br><span class="line">    index = start</span><br><span class="line">    <span class="keyword">while</span> index &lt; end:</span><br><span class="line">        <span class="keyword">if</span> nums[index] &lt; nums[end]:</span><br><span class="line">            small += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> small != index:</span><br><span class="line">                swap(nums[small], nums[index])</span><br><span class="line">        index += <span class="number">1</span></span><br><span class="line">    small += <span class="number">1</span></span><br><span class="line">    swap(nums[small], nums[index])</span><br><span class="line">    <span class="keyword">return</span> small</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">quickSort</span>(<span class="params">nums, start, end</span>):</span><br><span class="line">    index = partition(nums, start, end)</span><br><span class="line">    <span class="keyword">if</span> index &gt; start:</span><br><span class="line">        quickSort(nums, start, index-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> index &lt; end:</span><br><span class="line">        quickSort(nums, index+<span class="number">1</span>, end)</span><br></pre></td></tr></table></figure>
-<h3 id="可以hash的类型">可以hash的类型</h3>
-<p>tuple可以作为hash的键值（set等数据结构）,list
-不可以，<strong>不可变等可以作为hasn的键值</strong>
-defaultdict可以在没有的时候返回默认值</p>
+<h4 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">partition</span>(<span class="params">nums, start, end</span>):</span><br><span class="line">    index = random(start, end)</span><br><span class="line">    swap(nums[index], nums[end])</span><br><span class="line">    small = start-<span class="number">1</span></span><br><span class="line">    index = start</span><br><span class="line">    <span class="keyword">while</span> index &lt; end:</span><br><span class="line">        <span class="keyword">if</span> nums[index] &lt; nums[end]:</span><br><span class="line">            small += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> small != index:</span><br><span class="line">                swap(nums[small], nums[index])</span><br><span class="line">        index += <span class="number">1</span></span><br><span class="line">    small += <span class="number">1</span></span><br><span class="line">    swap(nums[small], nums[index])</span><br><span class="line">    <span class="keyword">return</span> small</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">quickSort</span>(<span class="params">nums, start, end</span>):</span><br><span class="line">    index = partition(nums, start, end)</span><br><span class="line">    <span class="keyword">if</span> index &gt; start:</span><br><span class="line">        quickSort(nums, start, index-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> index &lt; end:</span><br><span class="line">        quickSort(nums, index+<span class="number">1</span>, end)</span><br></pre></td></tr></table></figure>
+<h3 id="可以hash的类型"><a href="#可以hash的类型" class="headerlink" title="可以hash的类型"></a>可以hash的类型</h3><p>tuple可以作为hash的键值（set等数据结构）,list 不可以，<strong>不可变等可以作为hasn的键值</strong><br>defaultdict可以在没有的时候返回默认值</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = collecitons.defaultdict()</span><br></pre></td></tr></table></figure>
-<h3 id="集合的排序">集合的排序</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = [[<span class="number">1</span>,<span class="number">3</span>],[<span class="number">2</span>,<span class="number">6</span>],[<span class="number">8</span>,<span class="number">10</span>],[<span class="number">15</span>,<span class="number">18</span>]]</span><br><span class="line">x.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
-<h3 id="栈和队列">栈和队列</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 栈</span></span><br><span class="line">stack = []</span><br><span class="line">stack.append(<span class="number">1</span>)</span><br><span class="line">top = stack.pop()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 队列1</span></span><br><span class="line">queue = []</span><br><span class="line">queue.append(<span class="number">1</span>)</span><br><span class="line">forehead = queue.pop(<span class="number">0</span>)</span><br><span class="line"><span class="comment"># 队列2</span></span><br><span class="line">queue = collections.deque()</span><br><span class="line">queue.append(root)</span><br><span class="line">node = queue.popleft()</span><br><span class="line"><span class="built_in">len</span>(queue) == <span class="number">0</span>判断是否为空</span><br></pre></td></tr></table></figure>
-<h3 id="树">树</h3>
-<p>二叉树的遍历分为前序、后序、中序：</p>
-<h4 id="前序遍历">1.前序遍历</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> stack:</span><br><span class="line">    root = stack.pop()</span><br><span class="line">    <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        output.append(root.val)</span><br><span class="line">        <span class="keyword">if</span> root.right <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            stack.append(root.right)</span><br><span class="line">        <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            stack.append(root.left)</span><br></pre></td></tr></table></figure>
-<h4 id="后续遍历">2.后续遍历</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> stack:</span><br><span class="line">    root = stack.pop()</span><br><span class="line">    output.append(root.val)</span><br><span class="line">    <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        stack.append(root.left)</span><br><span class="line">    <span class="keyword">if</span> root.right <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        stack.append(root.right)</span><br><span class="line"><span class="keyword">return</span> output[::-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-<h4 id="中序遍历">3.中序遍历</h4>
-<p>值得注意的几个点：</p>
+<h3 id="集合的排序"><a href="#集合的排序" class="headerlink" title="集合的排序"></a>集合的排序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = [[<span class="number">1</span>,<span class="number">3</span>],[<span class="number">2</span>,<span class="number">6</span>],[<span class="number">8</span>,<span class="number">10</span>],[<span class="number">15</span>,<span class="number">18</span>]]</span><br><span class="line">x.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="栈和队列"><a href="#栈和队列" class="headerlink" title="栈和队列"></a>栈和队列</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 栈</span></span><br><span class="line">stack = []</span><br><span class="line">stack.append(<span class="number">1</span>)</span><br><span class="line">top = stack.pop()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 队列1</span></span><br><span class="line">queue = []</span><br><span class="line">queue.append(<span class="number">1</span>)</span><br><span class="line">forehead = queue.pop(<span class="number">0</span>)</span><br><span class="line"><span class="comment"># 队列2</span></span><br><span class="line">queue = collections.deque()</span><br><span class="line">queue.append(root)</span><br><span class="line">node = queue.popleft()</span><br><span class="line"><span class="built_in">len</span>(queue) == <span class="number">0</span>判断是否为空</span><br></pre></td></tr></table></figure>
+<h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><p>二叉树的遍历分为前序、后序、中序：</p>
+<h4 id="1-前序遍历"><a href="#1-前序遍历" class="headerlink" title="1.前序遍历"></a>1.前序遍历</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> stack:</span><br><span class="line">    root = stack.pop()</span><br><span class="line">    <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        output.append(root.val)</span><br><span class="line">        <span class="keyword">if</span> root.right <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            stack.append(root.right)</span><br><span class="line">        <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            stack.append(root.left)</span><br></pre></td></tr></table></figure>
+<h4 id="2-后续遍历"><a href="#2-后续遍历" class="headerlink" title="2.后续遍历"></a>2.后续遍历</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> stack:</span><br><span class="line">    root = stack.pop()</span><br><span class="line">    output.append(root.val)</span><br><span class="line">    <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        stack.append(root.left)</span><br><span class="line">    <span class="keyword">if</span> root.right <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        stack.append(root.right)</span><br><span class="line"><span class="keyword">return</span> output[::-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="3-中序遍历"><a href="#3-中序遍历" class="headerlink" title="3.中序遍历"></a>3.中序遍历</h4><p>值得注意的几个点：</p>
 <ul>
 <li>判断条件设置为只要<strong>栈不空或者当前节点不为空</strong>，则继续<strong>while</strong>循环</li>
 <li>刚开始栈为空，初始化cur = root</li>
-<li>中序遍历和其他两个遍历稍有不同，分为两个condition:
-如果当前节点为空，说明要弹出栈顶元素；如果不为空，就一直压栈其left节点</li>
+<li>中序遍历和其他两个遍历稍有不同，分为两个condition: 如果当前节点为空，说明要弹出栈顶元素；如果不为空，就一直压栈其left节点</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">stack = []</span><br><span class="line">cur = root</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(stack) &gt; <span class="number">0</span> <span class="keyword">or</span> cur != <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">while</span> cur != <span class="literal">None</span>:</span><br><span class="line">        stack.append(cur)</span><br><span class="line">        cur = cur.left</span><br><span class="line">    cur = stack.pop()</span><br><span class="line">    <span class="comment"># visited current node</span></span><br><span class="line">    cur = cur.right</span><br><span class="line"><span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>涉及到的题目： <a
-href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal">94.
-二叉树的中序遍历</a> <a
-href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/">230.
-二叉搜索树中第K小的元素</a> <a
-href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/">144.
-二叉树的前序遍历</a> <a
-href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal">145.
-145. 二叉树的后序遍历</a></p>
-<h3 id="深度优先搜索">深度优先搜索</h3>
-<p>1.dfs 2.dfs + 剪枝</p>
+<p>涉及到的题目：<br><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal">94. 二叉树的中序遍历</a><br><a href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/">230. 二叉搜索树中第K小的元素</a><br><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/">144. 二叉树的前序遍历</a><br><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal">145. 145. 二叉树的后序遍历</a></p>
+<h3 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h3><p>1.dfs<br>2.dfs + 剪枝</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dfs(i,j):</span><br><span class="line">    if 终止条件（越界or不符合探测条件)</span><br><span class="line">        return False</span><br><span class="line">    if 找到解</span><br><span class="line">        return True</span><br><span class="line">    set flag[i][j] = use</span><br><span class="line">    res = 对i,j的相邻结点做dfs</span><br><span class="line">    set flag[i][j] = free</span><br><span class="line">    return </span><br></pre></td></tr></table></figure>
 <p>剑指offer 12,13,14</p>
-<h3 id="动态规划">动态规划</h3>
-<p>动态规划通常用来求最优解。能用动态规划解决的求最优解问题，必须满足最优解的每个<strong>局部解也都是最优的</strong></p>
-<h3
-id="递归回溯深度优先层次优先树的遍历">递归（回溯，深度优先，层次优先，树的遍历）</h3>
-<h4 id="不需要返回值">1. 不需要返回值</h4>
-<p>递归的过程只应对当前处理元素，比较独立，不涉及到前面和后面递归的结果
-字符串全排列 最小k个数 快排</p>
-<h4 id="需要返回值">2. 需要返回值</h4>
-<h2 id="problem">Problem</h2>
-<h3 id="add-two-numbers">2. Add Two Numbers</h3>
-<p>注意点：</p>
-<ol type="1">
+<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><p>动态规划通常用来求最优解。能用动态规划解决的求最优解问题，必须满足最优解的每个<strong>局部解也都是最优的</strong></p>
+<h3 id="递归（回溯，深度优先，层次优先，树的遍历）"><a href="#递归（回溯，深度优先，层次优先，树的遍历）" class="headerlink" title="递归（回溯，深度优先，层次优先，树的遍历）"></a>递归（回溯，深度优先，层次优先，树的遍历）</h3><h4 id="1-不需要返回值"><a href="#1-不需要返回值" class="headerlink" title="1. 不需要返回值"></a>1. 不需要返回值</h4><p>递归的过程只应对当前处理元素，比较独立，不涉及到前面和后面递归的结果<br>字符串全排列<br>最小k个数<br>快排</p>
+<h4 id="2-需要返回值"><a href="#2-需要返回值" class="headerlink" title="2. 需要返回值"></a>2. 需要返回值</h4><h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><h3 id="2-Add-Two-Numbers"><a href="#2-Add-Two-Numbers" class="headerlink" title="2. Add Two Numbers"></a>2. Add Two Numbers</h3><p>注意点：</p>
+<ol>
 <li>迭代方式，head节点只作为记录标志，不存储实际值</li>
 <li>链表已到头则操作数设置为0，可以避免判断链表是否已经到头</li>
 <li><strong>每生成一个结果存储一个节点，处理的是currentNode</strong></li>
@@ -339,42 +286,25 @@ id="递归回溯深度优先层次优先树的遍历">递归（回溯，深度�
 <li>返回的是实际节点，head节点要丢弃</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>  p != <span class="literal">None</span> <span class="keyword">and</span> q != <span class="literal">None</span>:</span><br><span class="line">    <span class="built_in">sum</span> = (p.val + q.val + carry)</span><br><span class="line">    carry = (<span class="number">1</span> <span class="keyword">if</span> <span class="built_in">sum</span> // <span class="number">10</span> &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line">    node.<span class="built_in">next</span> = ListNode(<span class="built_in">sum</span> % <span class="number">10</span>)</span><br><span class="line">    node = node.<span class="built_in">next</span></span><br><span class="line">    p = p.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
-<h3 id="longest-substring-without-repeating-characters">3. Longest
-Substring Without Repeating Characters</h3>
-<p>两个条件分支要明确功能，（1）在Map表里的做什么，（2）不在Map表里的做什么
-并且在各自分支中又要分成什么功能等等。 （1）
-<strong>只更新在滑动窗口里的值</strong> （2）比较最长结果
-python的解法：</p>
-<ol type="1">
+<h3 id="3-Longest-Substring-Without-Repeating-Characters"><a href="#3-Longest-Substring-Without-Repeating-Characters" class="headerlink" title="3. Longest Substring Without Repeating Characters"></a>3. Longest Substring Without Repeating Characters</h3><p>两个条件分支要明确功能，（1）在Map表里的做什么，（2）不在Map表里的做什么<br>并且在各自分支中又要分成什么功能等等。<br>（1） <strong>只更新在滑动窗口里的值</strong><br>（2）比较最长结果<br>python的解法：</p>
+<ol>
 <li>set对象存储不重复字符子串，方便之处是可以直接删除指定字符而不需要只到具体位置，因为set是无序的</li>
 <li>依次遍历的是right字符串，核查重复的条件也是right字符串，调整窗口大小的是left，如果不使用set而是list，需从头部删除字符，还需要一个变量记录子串的index</li>
 </ol>
-<h3 id="最长回文子串">5. 最长回文子串</h3>
-<p>如果使用更新dp二维数组，需要考虑动态规划的边界条件 dp[i, j] =
-(df[i+1, j-1]) and (s[i]==s[j]) 中的递归项：df[i+1, j-1]
-试着画一下图，看一下那些递归时出现问题，明显会看到dp[i,i+1]递归项是invalid的，因为我们只初始化了右上角元素，左下角元素是invalid的，不能作为判断条件</p>
-<h3 id="z字形变换">6. Z字形变换</h3>
-<p>注意点： 一个flag控制+1还是-1，初始flag是True还是False 考虑边界情况：
-（1）行数为1或行数为2 （2）字符数小于行数</p>
-<h3 id="整数反转">7. 整数反转</h3>
-<p>重点：需要考虑边界值
-由于python的求余数在负数的时候有所不同，可以考虑将x转换成整数abs(x)然后分正负号判断处理是否溢出
-一个很好的点子：求余数以的过程类似栈的弹出</p>
+<h3 id="5-最长回文子串"><a href="#5-最长回文子串" class="headerlink" title="5. 最长回文子串"></a>5. 最长回文子串</h3><p>如果使用更新dp二维数组，需要考虑动态规划的边界条件<br>dp[i, j] = (df[i+1, j-1]) and (s[i]==s[j])<br>中的递归项：df[i+1, j-1]<br>试着画一下图，看一下那些递归时出现问题，明显会看到dp[i,i+1]递归项是invalid的，因为我们只初始化了右上角元素，左下角元素是invalid的，不能作为判断条件</p>
+<h3 id="6-Z字形变换"><a href="#6-Z字形变换" class="headerlink" title="6. Z字形变换"></a>6. Z字形变换</h3><p>注意点：<br>一个flag控制+1还是-1，初始flag是True还是False<br>考虑边界情况：<br>（1）行数为1或行数为2<br>（2）字符数小于行数</p>
+<h3 id="7-整数反转"><a href="#7-整数反转" class="headerlink" title="7. 整数反转"></a>7. 整数反转</h3><p>重点：需要考虑边界值<br>由于python的求余数在负数的时候有所不同，可以考虑将x转换成整数abs(x)然后分正负号判断处理是否溢出<br>一个很好的点子：求余数以的过程类似栈的弹出</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//pop operation:</span><br><span class="line">pop = x % 10;</span><br><span class="line">x /= 10;</span><br><span class="line"></span><br><span class="line">//push operation:</span><br><span class="line">ans = ans * 10 + pop;</span><br></pre></td></tr></table></figure>
-<h3 id="字符串转换整数-atoi">8. 字符串转换整数 (atoi)</h3>
-<p>当涉及到读字符然后分情况处理时可以考虑状态机 状态机要素：
-（1）状态：start, sign, digital, end （2）事件：读到字符char
-（3）动作：遇到字符char后需要做的动作，0：空字符，1：正负号，2：数字，3：其他字符
-（4）状态转移矩阵：action 0转移到那个状态，action 1转移到那个状态……</p>
+<h3 id="8-字符串转换整数-atoi"><a href="#8-字符串转换整数-atoi" class="headerlink" title="8. 字符串转换整数 (atoi)"></a>8. 字符串转换整数 (atoi)</h3><p>当涉及到读字符然后分情况处理时可以考虑状态机<br>状态机要素：<br>（1）状态：start, sign, digital, end<br>（2）事件：读到字符char<br>（3）动作：遇到字符char后需要做的动作，0：空字符，1：正负号，2：数字，3：其他字符<br>（4）状态转移矩阵：action 0转移到那个状态，action 1转移到那个状态……</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>action</th>
-<th>' '</th>
+<th>‘ ‘</th>
 <th>+/-</th>
 <th>number</th>
 <th>other</th>
-<th></th>
 </tr>
 </thead>
 <tbody>
@@ -384,7 +314,6 @@ python的解法：</p>
 <td>signed</td>
 <td>in_number</td>
 <td>end</td>
-<td></td>
 </tr>
 <tr>
 <td>signed</td>
@@ -392,7 +321,6 @@ python的解法：</p>
 <td>end</td>
 <td>in_number</td>
 <td>end</td>
-<td></td>
 </tr>
 <tr>
 <td>in_number</td>
@@ -400,7 +328,6 @@ python的解法：</p>
 <td>end</td>
 <td>in_number</td>
 <td>end</td>
-<td></td>
 </tr>
 <tr>
 <td>end</td>
@@ -408,150 +335,89 @@ python的解法：</p>
 <td>end</td>
 <td>end</td>
 <td>end</td>
-<td></td>
 </tr>
 </tbody>
 </table>
-<h3 id="sum">15. 3Sum</h3>
-<ol type="1">
-<li>当产生循环的时候，每一个if条件都要记得更新指针 i, j
-等，注意边界条件</li>
+</div>
+<h3 id="15-3Sum"><a href="#15-3Sum" class="headerlink" title="15. 3Sum"></a>15. 3Sum</h3><ol>
+<li>当产生循环的时候，每一个if条件都要记得更新指针 i, j 等，注意边界条件</li>
 <li>题目要求要明确，唯一的triplets!</li>
-<li>可以证明寻求 num[l]+num[r] = num[i]
-的2sum要开始于i的下一个元素i+1而不是i=1，因为已经排序了，从头开始会有重复</li>
-<li>考虑重复问题不仅要考虑开头元素num[i],还要靠后面两个元素num[l],
-nums[r]都可能出现重复元素！</li>
+<li>可以证明寻求 num[l]+num[r] = num[i] 的2sum要开始于i的下一个元素i+1而不是i=1，因为已经排序了，从头开始会有重复</li>
+<li>考虑重复问题不仅要考虑开头元素num[i],还要靠后面两个元素num[l], nums[r]都可能出现重复元素！</li>
 </ol>
-<h3 id="valid-parentheses">20 Valid Parentheses</h3>
-<p>最后要检查stack是否为空，空才是合法的。</p>
-<p>也可以往栈里放 "), ], }"，只判断closed character</p>
+<h3 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20 Valid Parentheses"></a>20 Valid Parentheses</h3><p>最后要检查stack是否为空，空才是合法的。</p>
+<p>也可以往栈里放 “), ], }”，只判断closed character</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span> = [<span class="string">&quot;(&quot;</span>:<span class="string">&quot;)&quot;</span>, <span class="string">&quot;&#123;&quot;</span>:<span class="string">&quot;&#125;&quot;</span>, <span class="string">&quot;[&quot;</span>:<span class="string">&quot;]&quot;</span>]</span><br><span class="line"><span class="comment"># 遍历、查看索引直接用 </span></span><br><span class="line"><span class="comment"># for x in map</span></span><br><span class="line"><span class="comment"># if x in map ...</span></span><br></pre></td></tr></table></figure>
-<h3 id="generate-parentheses">22. Generate Parentheses</h3>
-<p>注意一点，右括号一定要小于左括号个数，对于这种序列
-"())(()"是可以剪枝避免的</p>
-<h3 id="implement-strstr">28. Implement strStr()</h3>
-<p>如果需要判断子串是否比较完毕，可以使用<code>while i &lt; len(s)</code>，这样当都比较完的时候，i就越界了，然后可以拿
-i == len(s)
-来判断是否比较完毕，这里使用<code>for i in range(0, len(s))</code>不合适。</p>
-<h3 id="divide-two-integers">29. Divide Two Integers</h3>
-<p>dvd = dvs * n + remain
-原始的想法是从1开始直到n次来用dvs减去dvd，直到dvd &lt; dvs后,
-这时候已经不够减，商也就得到了。
-但是优化的角度去想，n其实可以用指数逼近（这样会将问题减少一半）
-如果迭代到 <span class="math inline">\(n &gt; 2^k \text{ and } n &lt;
-2^{(k+1)}\)</span> 这时候， <span class="math inline">\(n-2^k\)</span>
-大致会减少一半，可以理解成二分法，这样分治策略后达到简化问题的目的。</p>
+<h3 id="22-Generate-Parentheses"><a href="#22-Generate-Parentheses" class="headerlink" title="22. Generate Parentheses"></a>22. Generate Parentheses</h3><p>注意一点，右括号一定要小于左括号个数，对于这种序列<br>“())(()”是可以剪枝避免的</p>
+<h3 id="28-Implement-strStr"><a href="#28-Implement-strStr" class="headerlink" title="28. Implement strStr()"></a>28. Implement strStr()</h3><p>如果需要判断子串是否比较完毕，可以使用<code>while i &lt; len(s)</code>，这样当都比较完的时候，i就越界了，然后可以拿 i == len(s) 来判断是否比较完毕，这里使用<code>for i in range(0, len(s))</code>不合适。</p>
+<h3 id="29-Divide-Two-Integers"><a href="#29-Divide-Two-Integers" class="headerlink" title="29. Divide Two Integers"></a>29. Divide Two Integers</h3><p>dvd = dvs * n + remain<br>原始的想法是从1开始直到n次来用dvs减去dvd，直到dvd &lt;  dvs后, 这时候已经不够减，商也就得到了。<br>但是优化的角度去想，n其实可以用指数逼近（这样会将问题减少一半）<br>如果迭代到 $n &gt; 2^k \text{ and } n &lt; 2^{(k+1)}$ 这时候， $n-2^k$ 大致会减少一半，可以理解成二分法，这样分治策略后达到简化问题的目的。</p>
 <p>减去一般后在同样进行如此操作（是一个递归过程，不过可以用循环去做)</p>
 <p>溢出只有一种情况：当被除数是最小负数，除数是-1时。</p>
 <p><strong>移位操作一定要赋值!</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">i = i &lt;&lt; <span class="number">1</span></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">i &lt;&lt;= <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>另外判断分子分母是否同号可以如下，很巧妙：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">isNegative = (up &gt; <span class="number">0</span>) == (down &gt; <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="search-in-rotated-sorted-array">33. Search in Rotated Sorted
-Array</h3>
-<p>注意边界条件！ 题目中已经声明没有重复元素
-可能有等号的情况一定要注意！如果遗漏会使得元素被跳过引发错误
-注意分类细节：
-每一个if分支，首先要明确主要矛盾，确定mid的位置区域是首要任务，然后再确定target的未知区域，不要混淆了先后！
-再次做题更新的领悟点：
-主要两个，且这些都是基于题目的约束条件，<strong>nums中的每个值都独一无二</strong></p>
-<ol type="1">
+<h3 id="33-Search-in-Rotated-Sorted-Array"><a href="#33-Search-in-Rotated-Sorted-Array" class="headerlink" title="33. Search in Rotated Sorted Array"></a>33. Search in Rotated Sorted Array</h3><p>注意边界条件！<br>题目中已经声明没有重复元素<br>可能有等号的情况一定要注意！如果遗漏会使得元素被跳过引发错误<br>注意分类细节：<br>每一个if分支，首先要明确主要矛盾，确定mid的位置区域是首要任务，然后再确定target的未知区域，不要混淆了先后！<br>再次做题更新的领悟点：<br>主要两个，且这些都是基于题目的约束条件，<strong>nums中的每个值都独一无二</strong></p>
+<ol>
 <li>mid位置是在左边还是右边</li>
 <li>target是在左有序部分还是右有序部分</li>
 </ol>
 <p>例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if nums[0] &lt;= target and target &lt;= nums[mid]:</span><br><span class="line">    r = mid-1</span><br><span class="line">else:</span><br><span class="line">    l = mid+1</span><br></pre></td></tr></table></figure>
 <p>这个条件，成立target则在mid左面，<strong>不成立则target一定在mid右边</strong>，不是因为别的，只因为这两个情况是互斥的，同时nums中每个值独一无二。</p>
-<h3 id="find-first-and-last-position-of-element-in-sorted-array">34.
-Find First and Last Position of Element in Sorted Array</h3>
-<p>这道题巧妙的地方在于我们寻求的目的：寻找边界。
-所以二分查找并不是为了target的位置，而是begin和end 另外</p>
+<h3 id="34-Find-First-and-Last-Position-of-Element-in-Sorted-Array"><a href="#34-Find-First-and-Last-Position-of-Element-in-Sorted-Array" class="headerlink" title="34. Find First and Last Position of Element in Sorted Array"></a>34. Find First and Last Position of Element in Sorted Array</h3><p>这道题巧妙的地方在于我们寻求的目的：寻找边界。<br>所以二分查找并不是为了target的位置，而是begin和end<br>另外</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这种方式求得中间值是下取整</span></span><br><span class="line">mid = (low + high) // <span class="number">2</span></span><br><span class="line">(<span class="number">2</span>+<span class="number">5</span>)//<span class="number">2</span> = <span class="number">3</span></span><br><span class="line">(<span class="number">2</span>+<span class="number">4</span>)//<span class="number">2</span> = <span class="number">3</span></span><br><span class="line"><span class="comment"># 这种方式求得中间值是上取整</span></span><br><span class="line">mid = (low + high + <span class="number">1</span>) // <span class="number">2</span></span><br><span class="line">(<span class="number">2</span>+<span class="number">5</span>+<span class="number">1</span>)//<span class="number">2</span> = <span class="number">4</span></span><br><span class="line">(<span class="number">2</span>+<span class="number">4</span>+<span class="number">1</span>)//<span class="number">2</span> = <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<h3 id="permute">46. permute</h3>
-<h4 id="回溯算法">回溯算法</h4>
-<p>回溯算法：通过探索所有可能的候选解来找出问题的解。
-回溯会在每一步进行一些改变，尝试递归到下一步：
-如果是可行解，便将其加入结果集。 如果不是则回溯尝试下一个改变。
-至于回退的方式也会分两种：1.值传递 2.恢复现场</p>
-<h5 id="值传递">1. 值传递</h5>
-<p>值传递的好处是不用恢复由于回溯而造成的修改，缺点是调用传递参数拷贝所带来的效率问题，这里要注意<strong>不要传递对象的引用</strong></p>
+<h3 id="46-permute"><a href="#46-permute" class="headerlink" title="46. permute"></a>46. permute</h3><h4 id="回溯算法"><a href="#回溯算法" class="headerlink" title="回溯算法"></a>回溯算法</h4><p>回溯算法：通过探索所有可能的候选解来找出问题的解。<br>回溯会在每一步进行一些改变，尝试递归到下一步：<br>如果是可行解，便将其加入结果集。<br>如果不是则回溯尝试下一个改变。<br>至于回退的方式也会分两种：1.值传递 2.恢复现场</p>
+<h5 id="1-值传递"><a href="#1-值传递" class="headerlink" title="1. 值传递"></a>1. 值传递</h5><p>值传递的好处是不用恢复由于回溯而造成的修改，缺点是调用传递参数拷贝所带来的效率问题，这里要注意<strong>不要传递对象的引用</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">changeSth(trySolution)</span><br><span class="line">backtracking(solution=trySolution)</span><br><span class="line">unchangeSth(trySolution)</span><br></pre></td></tr></table></figure>
-<p>有两种回溯选择，虽然回溯的本质一样，但可以看到第二种，内存使用会小一些，同时由于是在change
-in place，传参数的时候效率更高一些
-回溯递归一定要注意传参数，回溯的本质就是向下探索可能的道路，所以有些变量是需要传值，生成新的变量，而不是在原有变量上作改动。</p>
+<p>有两种回溯选择，虽然回溯的本质一样，但可以看到第二种，内存使用会小一些，同时由于是在change in place，传参数的时候效率更高一些<br>回溯递归一定要注意传参数，回溯的本质就是向下探索可能的道路，所以有些变量是需要传值，生成新的变量，而不是在原有变量上作改动。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">enumerate</span>(remain):</span><br><span class="line"> self.backtracking(path+[v], remain[:i]+remain[i+<span class="number">1</span>:], res)</span><br></pre></td></tr></table></figure>
 <p>和下面这种结果会是截然相反的！</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">enumerate</span>(remain):</span><br><span class="line"> path.append(v)</span><br><span class="line"> self.backtracking(path, remain[:i]+remain[i+<span class="number">1</span>:], res)</span><br></pre></td></tr></table></figure>
-<h5 id="恢复现场">2.恢复现场</h5>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nums[index], nums[i] = nums[i], nums[index]</span><br><span class="line">self.backtracking(index+<span class="number">1</span>, nums)</span><br><span class="line">nums[index], nums[i] = nums[i], nums[index]</span><br></pre></td></tr></table></figure>
-<p>恢复现场在共享对象上作了恢复现场的处理，这也意味着在保存找到的解上要格外注意，要保存副本而不是共享对象，因为如果保存的对象则会导致结果是一样的。
-下面这种：</p>
+<h5 id="2-恢复现场"><a href="#2-恢复现场" class="headerlink" title="2.恢复现场"></a>2.恢复现场</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nums[index], nums[i] = nums[i], nums[index]</span><br><span class="line">self.backtracking(index+<span class="number">1</span>, nums)</span><br><span class="line">nums[index], nums[i] = nums[i], nums[index]</span><br></pre></td></tr></table></figure>
+<p>恢复现场在共享对象上作了恢复现场的处理，这也意味着在保存找到的解上要格外注意，要保存副本而不是共享对象，因为如果保存的对象则会导致结果是一样的。<br>下面这种：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> index == n-<span class="number">1</span>:</span><br><span class="line">  self.res.append(nums)</span><br><span class="line">  <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
-<p>是有问题的，这样每次保存的是同一个共享对象，所有递归都会更改着个nums对象，导致最后发现结果都是一个解：最后一次修改的结果！
-正确的做法应该是使用：</p>
+<p>是有问题的，这样每次保存的是同一个共享对象，所有递归都会更改着个nums对象，导致最后发现结果都是一个解：最后一次修改的结果！<br>正确的做法应该是使用：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.res.append(nums)</span><br></pre></td></tr></table></figure>
-<h3 id="rotate-image">48. rotate image</h3>
-<h4 id="旋转矩阵">旋转矩阵</h4>
-<p>有两种方法，一种是先转置，然后垂直镜像；另一种是直观的顺时针旋转，但其实这两种后面的数学本质是一样的：</p>
-<h4 id="转置镜像">1.转置+镜像</h4>
-<p>经历了两次函数变换<span class="math inline">\(f=\text{transposition},
-g=\text{mirroring}\)</span> <span class="math display">\[
-(i,j)\xrightarrow{f}(j,i)\xrightarrow{g}(j,n-1-i)
-\]</span></p>
-<h4 id="直观旋转">2.直观旋转</h4>
-<p><span class="math display">\[\begin{align}
-t &amp;= m_{i,\;j} \\
-m_{i,\;j} &amp;= m_{n-1-j,\; i} \\
-m_{n-i-j,\;i} &amp;= m_{n-1-i,\;n-1-j} \\
-m_{n-1-i,\;n-1-j} &amp;= m_{j,\;n-1-i} \\
-m_{j,\;n-1-i} &amp;= t
-\end{align}
-\]</span> 对比发现其实两者是一样的</p>
-<h3 id="字母异位词分组">49. 字母异位词分组</h3>
-<p>目的是让“abc", "acb", "bac" 放入同一个集合
-做到这样需要一个hash方法，将字母异位词映射到同一个hash值 <span
-class="math display">\[
-f(\text{&quot;abc&quot;}) = f(\text{&quot;bac&quot;}) = \text{sth}
-\]</span></p>
-<ul>
-<li>bag of character 对于bag of
-character，相当于统计了字母的“字频”，形成了一个唯一的向量来表示hash的键值</li>
-<li>code(abc) 唯一
-给每一个字母一个编码，对每个单词字母编码进行运算能保证唯一<span
-class="math inline">\(g(h(&#39;a&#39;), h(&#39;b&#39;),
-h(&#39;c&#39;))\)</span>，这里用到素数相关的“正整数的唯一分解定理”：</li>
+<h3 id="48-rotate-image"><a href="#48-rotate-image" class="headerlink" title="48. rotate image"></a>48. rotate image</h3><h4 id="旋转矩阵"><a href="#旋转矩阵" class="headerlink" title="旋转矩阵"></a>旋转矩阵</h4><p>有两种方法，一种是先转置，然后垂直镜像；另一种是直观的顺时针旋转，但其实这两种后面的数学本质是一样的：</p>
+<h4 id="1-转置-镜像"><a href="#1-转置-镜像" class="headerlink" title="1.转置+镜像"></a>1.转置+镜像</h4><p>经历了两次函数变换$f=\text{transposition}, g=\text{mirroring}$</p>
+<script type="math/tex; mode=display">
+(i,j)\xrightarrow{f}(j,i)\xrightarrow{g}(j,n-1-i)</script><h4 id="2-直观旋转"><a href="#2-直观旋转" class="headerlink" title="2.直观旋转"></a>2.直观旋转</h4><script type="math/tex; mode=display">\begin{align}
+t &= m_{i,\;j} \\
+m_{i,\;j} &= m_{n-1-j,\; i} \\
+m_{n-i-j,\;i} &= m_{n-1-i,\;n-1-j} \\
+m_{n-1-i,\;n-1-j} &= m_{j,\;n-1-i} \\
+m_{j,\;n-1-i} &= t
+\end{align}</script><p>对比发现其实两者是一样的</p>
+<h3 id="49-字母异位词分组"><a href="#49-字母异位词分组" class="headerlink" title="49. 字母异位词分组"></a>49. 字母异位词分组</h3><p>目的是让“abc”, “acb”, “bac” 放入同一个集合<br>做到这样需要一个hash方法，将字母异位词映射到同一个hash值</p>
+<script type="math/tex; mode=display">
+f(\text{"abc"}) = f(\text{"bac"}) = \text{sth}</script><ul>
+<li>bag of character<br>对于bag of character，相当于统计了字母的“字频”，形成了一个唯一的向量来表示hash的键值</li>
+<li>code(abc) 唯一<br>给每一个字母一个编码，对每个单词字母编码进行运算能保证唯一$g(h(‘a’), h(‘b’), h(‘c’))$，这里用到素数相关的“正整数的唯一分解定理”：</li>
 </ul>
 <blockquote>
 <p>算术基本定理，又称为正整数的唯一分解定理，即：每个大于1的自然数，要么本身就是质数，要么可以写为2个或以上的质数的积，而且这些质因子按大小排列之后，写法仅有一种方式。</p>
 </blockquote>
-<h3 id="powx-n">50. Pow(x, n)</h3>
-<p><span class="math inline">\(x^n = x^{(n)_2} = x^{110...1}\)</span>
-其中 <span class="math inline">\(n = a_k\cdot2^k + a_{k-1}\cdot2^{k-1} +
-...+a_0\cdot2^0\)</span>
-<strong>这样就将一个问题吹处理成循环所有bit位，而数字n刚好有<span
-class="math inline">\(\log
-n\)</span>位bit，所以问题的规模也就变成了<span
-class="math inline">\(O(\log n)\)</span></strong>
-值得注意的是递归式子（草稿纸上写好数学表达式会非常有帮助，例如roate
-image)： <span class="math display">\[
-f(k) = X^{2^{k+1}} = X^{(2^k\cdot 2)} = (X^{2^k})^2 = f^2(k-1)
-\]</span></p>
-<h3 id="maximum-subarray">53. Maximum Subarray</h3>
-<p>求最大和连续子序列，考虑动态规划的思想 $$ f(i)={</p>
-<span class="math display">\[\begin{aligned}
+<h3 id="50-Pow-x-n"><a href="#50-Pow-x-n" class="headerlink" title="50. Pow(x, n)"></a>50. Pow(x, n)</h3><p>$x^n = x^{(n)<em>2} = x^{110…1}$<br>其中<br>$n = a_k\cdot2^k + a</em>{k-1}\cdot2^{k-1} + …+a_0\cdot2^0$<br><strong>这样就将一个问题吹处理成循环所有bit位，而数字n刚好有$\log n$位bit，所以问题的规模也就变成了$O(\log n)$</strong><br>值得注意的是递归式子（草稿纸上写好数学表达式会非常有帮助，例如roate image)：</p>
+<script type="math/tex; mode=display">
+f(k) = X^{2^{k+1}} = X^{(2^k\cdot 2)} = (X^{2^k})^2 = f^2(k-1)</script><h3 id="53-Maximum-Subarray"><a href="#53-Maximum-Subarray" class="headerlink" title="53. Maximum Subarray"></a>53. Maximum Subarray</h3><p>求最大和连续子序列，考虑动态规划的思想</p>
+<script type="math/tex; mode=display">
+f(i)=\left\{
 
-&amp;data[i] &amp;i = 0 \text{ 或者 } f(i-1) \le 0\\
+\begin{aligned}
 
-&amp;data[i] + f(i-1) &amp;i &gt; 0 \text{并且} f(i-1) &gt; 0\\
+&data[i] &i = 0 \text{ 或者 } f(i-1) \le 0\\
 
-\end{aligned}\]</span>
-<p>. $$ 并且，由于只使用f(i-1),
-所以我们可以只声明一个变量来存f(i-1)，而不必申请一个数组来存动态规划的值。</p>
-<h3 id="spiral-matrix">54. Spiral Matrix</h3>
-<p>注意边界条件，内部最后一圈：</p>
+&data[i] + f(i-1) &i > 0 \text{并且} f(i-1) > 0\\
+
+\end{aligned}
+
+\right.</script><p>并且，由于只使用f(i-1), 所以我们可以只声明一个变量来存f(i-1)，而不必申请一个数组来存动态规划的值。</p>
+<h3 id="54-Spiral-Matrix"><a href="#54-Spiral-Matrix" class="headerlink" title="54. Spiral Matrix"></a>54. Spiral Matrix</h3><p>注意边界条件，内部最后一圈：</p>
 <ul>
 <li>情况1</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -573,9 +439,11 @@ f(k) = X^{2^{k+1}} = X^{(2^k\cdot 2)} = (X^{2^k})^2 = f^2(k-1)
 </tr>
 </tbody>
 </table>
+</div>
 <ul>
 <li>情况2</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -600,9 +468,11 @@ f(k) = X^{2^{k+1}} = X^{(2^k\cdot 2)} = (X^{2^k})^2 = f^2(k-1)
 </tr>
 </tbody>
 </table>
+</div>
 <ul>
 <li>情况3</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -629,9 +499,8 @@ f(k) = X^{2^{k+1}} = X^{(2^k\cdot 2)} = (X^{2^k})^2 = f^2(k-1)
 </tr>
 </tbody>
 </table>
-<h3 id="jump-game">55. Jump Game</h3>
-<p>这是一个动态规划问题，通常解决并理解一个动态规划问题需要以下 4
-个步骤：</p>
+</div>
+<h3 id="55-Jump-Game"><a href="#55-Jump-Game" class="headerlink" title="55. Jump Game"></a>55. Jump Game</h3><p>这是一个动态规划问题，通常解决并理解一个动态规划问题需要以下 4 个步骤：</p>
 <ul>
 <li>利用递归回溯解决问题</li>
 <li>利用记忆表优化（自顶向下的动态规划）</li>
@@ -639,218 +508,140 @@ f(k) = X^{2^{k+1}} = X^{(2^k\cdot 2)} = (X^{2^k})^2 = f^2(k-1)
 <li>使用技巧减少时间和空间复杂度</li>
 </ul>
 <blockquote>
-<p>一个快速的优化方法是我们可以从右到左的检查 nextposition
-，理论上最坏的时间复杂度复杂度是一样的。但实际情况下，对于一些简单场景，这个代码可能跑得更快一些。<strong>直觉上，就是我们每次选择最大的步数去跳跃，这样就可以更快的到达终点</strong>。</p>
-</blockquote>
-<blockquote>
+<p>一个快速的优化方法是我们可以从右到左的检查 nextposition ，理论上最坏的时间复杂度复杂度是一样的。但实际情况下，对于一些简单场景，这个代码可能跑得更快一些。<strong>直觉上，就是我们每次选择最大的步数去跳跃，这样就可以更快的到达终点</strong>。</p>
 <p>底向上和自顶向下动态规划的区别就是消除了回溯，在实际使用中，自底向下的方法有更好的时间效率因为我们不再需要栈空间，可以节省很多缓存开销。更重要的事，这可以让之后更有优化的空间。回溯通常是通过反转动态规划的步骤来实现的。</p>
 </blockquote>
-<p>从自顶向下到自底向上到优化过程中会发现： &gt;
-底向上和自顶向下动态规划的区别就是消除了回溯，在实际使用中，自底向下的方法有更好的时间效率因为我们不再需要栈空间，可以节省很多缓存开销。更重要的事，这可以让之后更有优化的空间。<strong>回溯通常是通过反转动态规划的步骤来实现的</strong>。
-这是由于我们每次只会向右跳动，意味着如果我们从右边开始动态规划，每次查询右边节点的信息，都是已经计算过了的，不再需要额外的递归开销，因为我们每次在
-memo 表中都可以找到结果。</p>
-<p>实际试验时：不优化的自顶向下会超时，但自底向上会accept，
-贪心算法可能一时不会想到，动态规划可以一步步优化攻破。</p>
+<p>从自顶向下到自底向上到优化过程中会发现：</p>
+<blockquote>
+<p>底向上和自顶向下动态规划的区别就是消除了回溯，在实际使用中，自底向下的方法有更好的时间效率因为我们不再需要栈空间，可以节省很多缓存开销。更重要的事，这可以让之后更有优化的空间。<strong>回溯通常是通过反转动态规划的步骤来实现的</strong>。<br>这是由于我们每次只会向右跳动，意味着如果我们从右边开始动态规划，每次查询右边节点的信息，都是已经计算过了的，不再需要额外的递归开销，因为我们每次在 memo 表中都可以找到结果。</p>
+</blockquote>
+<p>实际试验时：不优化的自顶向下会超时，但自底向上会accept，<br>贪心算法可能一时不会想到，动态规划可以一步步优化攻破。</p>
 <p><strong>这个问题是不是动态规划问题？</strong></p>
-<ol type="1">
-<li>问题的最优解包含子问题的最优解(从这道题看出，<strong>最优</strong>不需要太严格）
-当前点在其可到达范围内的点是否有能到达终点的？</li>
+<ol>
+<li>问题的最优解包含子问题的最优解(从这道题看出，<strong>最优</strong>不需要太严格）<br>当前点在其可到达范围内的点是否有能到达终点的？</li>
 <li>重叠子问题</li>
 </ol>
-<p><span class="math display">\[
-\text{OPT[i]} = \{ \text{OPT(i+1)},...,\text{OPT(i+maxStep)} \}\;
-\text{if has True}
-\]</span></p>
-<h3 id="merge-intervals">56. Merge Intervals</h3>
-<p>python可迭代对象排序</p>
+<script type="math/tex; mode=display">
+\text{OPT[i]} = \{ \text{OPT(i+1)},...,\text{OPT(i+maxStep)} \}\; \text{if has True}</script><h3 id="56-Merge-Intervals"><a href="#56-Merge-Intervals" class="headerlink" title="56. Merge Intervals"></a>56. Merge Intervals</h3><p>python可迭代对象排序</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = [[<span class="number">1</span>,<span class="number">3</span>],[<span class="number">2</span>,<span class="number">6</span>],[<span class="number">8</span>,<span class="number">10</span>],[<span class="number">15</span>,<span class="number">18</span>]]</span><br><span class="line">intervals.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
-<h3 id="plus-one">66. Plus One</h3>
-<p>在纸上演示一下情况，然后判断变化条件，模拟思维流程，只要不进位（小于9）就结束，否则，一直进位下去。</p>
+<h3 id="66-Plus-One"><a href="#66-Plus-One" class="headerlink" title="66. Plus One"></a>66. Plus One</h3><p>在纸上演示一下情况，然后判断变化条件，模拟思维流程，只要不进位（小于9）就结束，否则，一直进位下去。</p>
 <p>反向便利数组、或实现<code>for(int i = n-1; i &gt;= 0; i—)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取负数，python中可以使用负数索引，代表倒数第几个。</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(digits)):</span><br><span class="line">  <span class="keyword">if</span> digits[~i] &lt; <span class="number">9</span>:</span><br><span class="line">    digits[~i] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> digits</span><br><span class="line">  digits[~i] = <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<h3 id="sqrtx">69. Sqrt(x)</h3>
-<p>Newton 迭代法的原理其实是直线逼近曲线的方法：[^1]</p>
-<p>直线方程：知道斜率k，一点<span class="math inline">\((x_0,
-y_0)\)</span>，求直线方程： <span class="math display">\[
+<h3 id="69-Sqrt-x"><a href="#69-Sqrt-x" class="headerlink" title="69. Sqrt(x)"></a>69. Sqrt(x)</h3><p>Newton 迭代法的原理其实是直线逼近曲线的方法：<sup><a href="#fn_1" id="reffn_1">1</a></sup></p>
+<p>直线方程：知道斜率k，一点$(x_0, y_0)$，求直线方程：</p>
+<script type="math/tex; mode=display">
 \begin{aligned}
 y = k(x - x_0) + y_0
-\end{aligned}
-\]</span></p>
-<p>方法是 <span class="math inline">\(k(x - x_0) = y - y_0 \\\)</span>
-将斜率等式化即可。</p>
-<h3 id="sort-colors">75. Sort Colors</h3>
-<p>用两个指针p0, p2实现的时候要注意, curr在移动的时候
-----p0------p2----- p0左面是0， p2右面是2，<strong><span
-class="math inline">\(A_i\)</span> 发现是0到时候不光移动p0，还需要移动
-<span class="math inline">\(i\)</span></strong>, 这里面值得注意的是
-<span class="math inline">\(A_i =
-1\)</span>的时候不作关注，处理的只是0和2</p>
-<h3 id="subsets">78. Subsets</h3>
-<p>两个方法：</p>
-<ol type="1">
+\end{aligned}</script><p>方法是 $k(x - x_0) = y - y_0 \$ 将斜率等式化即可。</p>
+<h3 id="75-Sort-Colors"><a href="#75-Sort-Colors" class="headerlink" title="75. Sort Colors"></a>75. Sort Colors</h3><p>用两个指针p0, p2实现的时候要注意, curr在移动的时候<br>——p0———p2——-<br>p0左面是0， p2右面是2，<strong>$A_i$ 发现是0到时候不光移动p0，还需要移动 $i$</strong>, 这里面值得注意的是 $A_i = 1$的时候不作关注，处理的只是0和2</p>
+<h3 id="78-Subsets"><a href="#78-Subsets" class="headerlink" title="78. Subsets"></a>78. Subsets</h3><p>两个方法：</p>
+<ol>
 <li>backtracking</li>
-<li>枚举
-<strong>需要注意的是，如果写成下面会形成死循环</strong>，需要借助一个临时变量！</li>
+<li>枚举<br><strong>需要注意的是，如果写成下面会形成死循环</strong>，需要借助一个临时变量！</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> res:</span><br><span class="line">   res.append(c+x)</span><br></pre></td></tr></table></figure>
 <p>谨慎对待循环修改自身的情况</p>
-<h3 id="word-search">79. Word Search</h3>
-<p>注意几点：
-上下左右递归之前可以筛掉一些，过滤不必要的递归，虽然递归之后有条件判断会返回，但递归进函数也是调用效率的浪费。</p>
-<p>返回条件一定要想全了，如果直到word没有了才返回就要注意了，如果最后一个字符word[cur]
-判断成功，在递归cur+1的时候要先判断word的cur而不是越界了，然后才是
-i,j是否合法。</p>
+<h3 id="79-Word-Search"><a href="#79-Word-Search" class="headerlink" title="79. Word Search"></a>79. Word Search</h3><p>注意几点：<br>上下左右递归之前可以筛掉一些，过滤不必要的递归，虽然递归之后有条件判断会返回，但递归进函数也是调用效率的浪费。</p>
+<p>返回条件一定要想全了，如果直到word没有了才返回就要注意了，如果最后一个字符word[cur] 判断成功，在递归cur+1的时候要先判断word的cur而不是越界了，然后才是 i,j是否合法。</p>
 <ul>
-<li><p><strong>递归的首要条件是cur是否已经到判断完了，所以递归出口的第一个条件一定要判断cur
-&gt;= len(word)</strong>，主次之分要明确，然后才是i, j 合法性！</p></li>
-<li><p>还有就是当上下左右只要有一个可行，就立马返回true,不需要递归下面的尝试，问题性质：<strong>只有所有都不行才返回False,
-只要有一个可行就返回True</strong> 的可以用如下结构</p></li>
+<li><p><strong>递归的首要条件是cur是否已经到判断完了，所以递归出口的第一个条件一定要判断cur &gt;= len(word)</strong>，主次之分要明确，然后才是i, j 合法性！</p>
+</li>
+<li><p>还有就是当上下左右只要有一个可行，就立马返回true,不需要递归下面的尝试，问题性质：<strong>只有所有都不行才返回False, 只要有一个可行就返回True</strong><br>的可以用如下结构</p>
+</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i, j <span class="keyword">in</span> attemp_set:</span><br><span class="line"> <span class="keyword">if</span> backtracking(i,j...):</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"><span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>设置访问标志后一定要记得恢复现场！</li>
 </ul>
-<h3 id="merge-sorted-array">88. Merge Sorted Array</h3>
-<p>原地置换，合并排序。还是遵循while循环每一次只做一件事，当两个序列都没截止时一直比较。边界条件时退出，额外处理剩余子序列，剩余子序列替换可以使用<code>nums1[:n] = nums2[:n]</code></p>
-<h3 id="decode-ways">91. Decode Ways</h3>
-<p>特殊点需要仔细观察处理：分情况明确，最好在纸上把条件逐步分细致了，不要担心代码过长。
-0 x 1 00 x 01 x 10 - 20 - 26 27 30 x</p>
+<h3 id="88-Merge-Sorted-Array"><a href="#88-Merge-Sorted-Array" class="headerlink" title="88. Merge Sorted Array"></a>88. Merge Sorted Array</h3><p>原地置换，合并排序。还是遵循while循环每一次只做一件事，当两个序列都没截止时一直比较。边界条件时退出，额外处理剩余子序列，剩余子序列替换可以使用<code>nums1[:n] = nums2[:n]</code></p>
+<h3 id="91-Decode-Ways"><a href="#91-Decode-Ways" class="headerlink" title="91. Decode Ways"></a>91. Decode Ways</h3><p>特殊点需要仔细观察处理：分情况明确，最好在纸上把条件逐步分细致了，不要担心代码过长。<br>0  x<br>1<br>00 x<br>01 x<br>10 -<br>20 -<br>26<br>27<br>30 x</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> s[i-<span class="number">1</span>] == <span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> s[i] == <span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        = step[i-<span class="number">1</span>]</span><br><span class="line"><span class="keyword">elif</span> s[i-<span class="number">1</span>] == <span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> s[i] == <span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">        = step[i-<span class="number">2</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        = step[i-<span class="number">2</span>] + step[i-<span class="number">1</span>]</span><br><span class="line"><span class="keyword">elif</span> s[i-<span class="number">1</span>] == <span class="string">&#x27;2&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> s[i] == <span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">        = step[i-<span class="number">2</span>]</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">int</span>(s[i]) &lt;= <span class="number">6</span>:</span><br><span class="line">        = step[i-<span class="number">2</span>] + step[i-<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        = step[i-<span class="number">1</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">if</span> s[i] == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        = step[i-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="construct-binary-tree-from-preorder-and-inorder-traversal">105.
-Construct Binary Tree from Preorder and Inorder Traversal</h3>
-<p>根据前序和中序序列来构建二叉树： (1,2,4,3,5,6,7) preorder ^ l l r r r
-r (4,2,1,5,3,7,6) inorder l l ^ r r r r
-在中序序列中找到根节点后，左右子树的size也就知道了，分别是mid和n-1-mid+1=n-mid,
-对应到前序序列里是可以界定哪部分是左子树，哪部分是右子树。</p>
+<h3 id="105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal"><a href="#105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal" class="headerlink" title="105. Construct Binary Tree from Preorder and Inorder Traversal"></a>105. Construct Binary Tree from Preorder and Inorder Traversal</h3><p>根据前序和中序序列来构建二叉树：<br>(1,2,4,3,5,6,7)            preorder<br> ^ l l r r r r<br>(4,2,1,5,3,7,6)            inorder<br> l l ^ r r r r<br> 在中序序列中找到根节点后，左右子树的size也就知道了，分别是mid和n-1-mid+1=n-mid, 对应到前序序列里是可以界定哪部分是左子树，哪部分是右子树。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root.left = self.buildTree(preorder[<span class="number">1</span>:mid+<span class="number">1</span>], inorder[<span class="number">0</span>:mid])</span><br><span class="line">root.right = self.buildTree(preorder[mid+<span class="number">1</span>:], inorder[mid+<span class="number">1</span>:])   </span><br></pre></td></tr></table></figure>
-<h3 id="best-time-to-buy-and-sell-stock">121. <a
-href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock">Best
-Time to Buy and Sell Stock</a></h3>
-<p>动态规划可以这样想： <span class="math display">\[
+<h3 id="121-Best-Time-to-Buy-and-Sell-Stock"><a href="#121-Best-Time-to-Buy-and-Sell-Stock" class="headerlink" title="121. Best Time to Buy and Sell Stock"></a>121. <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock">Best Time to Buy and Sell Stock</a></h3><p>动态规划可以这样想：</p>
+<script type="math/tex; mode=display">
 OPT(i) =
 \left\{
 \begin{aligned}
-&amp;\text{prices}[i]-min(\text{prices}[0:i]),&amp;\text{sell}\
-\text{stock}[i] \\
-&amp;OPT(i-1),&amp; \text{do nothing}
+&\text{prices}[i]-min(\text{prices}[0:i]),&\text{sell}\ \text{stock}[i] \\
+&OPT(i-1),& \text{do nothing}
 \end{aligned}
-\right.
-\]</span></p>
-<h3 id="valid-palindrome">125. Valid Palindrome</h3>
-<p>判断是数字和字符</p>
+\right.</script><h3 id="125-Valid-Palindrome"><a href="#125-Valid-Palindrome" class="headerlink" title="125. Valid Palindrome"></a>125. Valid Palindrome</h3><p>判断是数字和字符</p>
 <p>python</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&quot;123AbcD&quot;</span></span><br><span class="line">x = s[<span class="number">0</span>]</span><br><span class="line">a.isalnum() <span class="comment"># 字母or数字</span></span><br><span class="line">a.isnumeric() <span class="comment"># 数字</span></span><br><span class="line">a.isalpha() <span class="comment"># 字母</span></span><br><span class="line">a.lower() <span class="comment"># 转换小写</span></span><br><span class="line">a.upper() <span class="comment"># 转换大写</span></span><br></pre></td></tr></table></figure>
 <p>java</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Character.isLetterOrDigit(s.charAt(l))</span><br><span class="line">Character.toLowerCase(s.charAt(l))</span><br></pre></td></tr></table></figure>
-<p>对于这类问题，一个大的while
-里面做循环，<strong>每次循环只做一个操作</strong></p>
-<ol type="1">
+<p>对于这类问题，一个大的while 里面做循环，<strong>每次循环只做一个操作</strong></p>
+<ol>
 <li>非数字、字符，右移</li>
 <li>非数字、字符，左移</li>
 <li>可比较，比较</li>
 </ol>
 <p>这样就不必考虑while(++ch)知道遇到可比较字符的问题，条理清晰一些</p>
-<h3 id="word-ladder">127. Word Ladder</h3>
-<p>对于广度优先搜索 BFS(breadth first
-search)来说，但虽然都是使用队列来辅助搜索，视问题不同代码逻辑稍有不同：</p>
-<h4 id="需要对同一层做批次操作">1. 需要对同一层做批次操作</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> queue <span class="keyword">is</span> <span class="keyword">not</span> empty:</span><br><span class="line">    level_next = []</span><br><span class="line">    <span class="keyword">for</span> node <span class="keyword">in</span> queue:</span><br><span class="line">        <span class="comment">#process...</span></span><br><span class="line">        level_next.append(node.relate_nodes())</span><br><span class="line">    queue = level_next</span><br></pre></td></tr></table></figure>
-<p>相关题目 102. Binary Tree Level Order Traversal 116. Populating Next
-Right Pointers in Each Node</p>
-<h4 id="仅仅是遍历">2. 仅仅是遍历</h4>
-<p>例如本题以及二叉树层次遍历</p>
+<h3 id="127-Word-Ladder"><a href="#127-Word-Ladder" class="headerlink" title="127. Word Ladder"></a>127. Word Ladder</h3><p>对于广度优先搜索 BFS(breadth first search)来说，但虽然都是使用队列来辅助搜索，视问题不同代码逻辑稍有不同：</p>
+<h4 id="1-需要对同一层做批次操作"><a href="#1-需要对同一层做批次操作" class="headerlink" title="1. 需要对同一层做批次操作"></a>1. 需要对同一层做批次操作</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> queue <span class="keyword">is</span> <span class="keyword">not</span> empty:</span><br><span class="line">    level_next = []</span><br><span class="line">    <span class="keyword">for</span> node <span class="keyword">in</span> queue:</span><br><span class="line">        <span class="comment">#process...</span></span><br><span class="line">        level_next.append(node.relate_nodes())</span><br><span class="line">    queue = level_next</span><br></pre></td></tr></table></figure>
+<p>相关题目</p>
+<ol>
+<li>Binary Tree Level Order Traversal</li>
+<li>Populating Next Right Pointers in Each Node</li>
+</ol>
+<h4 id="2-仅仅是遍历"><a href="#2-仅仅是遍历" class="headerlink" title="2. 仅仅是遍历"></a>2. 仅仅是遍历</h4><p>例如本题以及二叉树层次遍历</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> queue <span class="keyword">is</span> <span class="keyword">not</span> empty:</span><br><span class="line">    top = queue.pop()</span><br><span class="line">    <span class="comment"># process top</span></span><br><span class="line">    <span class="comment"># 必要时需要visited判断是否访问过top</span></span><br><span class="line">    queue.append(top.relate_nodes())</span><br></pre></td></tr></table></figure>
-<p>当然本题也可以用上面对批次处理，这样处理一层depth+1，省去每次将深度存入queue里。
-初始做这道题时会有个疑问，遍历某一层时如果将其中一个元素visited置为访问过，那之后是否需要释放？不释放的话如果后来的节点可以到达此节点不是不能用了吗？其实不然，广度优先搜索的特点就是不可能出现这样情况，可以用反证法来证明：如果有的话那就不是最短路径了！</p>
-<h3 id="palindrome-partitioning">131. Palindrome Partitioning</h3>
-<p>草稿纸上画一下回溯递归的过程</p>
+<p>当然本题也可以用上面对批次处理，这样处理一层depth+1，省去每次将深度存入queue里。<br>初始做这道题时会有个疑问，遍历某一层时如果将其中一个元素visited置为访问过，那之后是否需要释放？不释放的话如果后来的节点可以到达此节点不是不能用了吗？其实不然，广度优先搜索的特点就是不可能出现这样情况，可以用反证法来证明：如果有的话那就不是最短路径了！</p>
+<h3 id="131-Palindrome-Partitioning"><a href="#131-Palindrome-Partitioning" class="headerlink" title="131. Palindrome Partitioning"></a>131. Palindrome Partitioning</h3><p>草稿纸上画一下回溯递归的过程</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&quot;aab&quot;</span></span><br><span class="line">a|ab</span><br><span class="line">a|a|b</span><br><span class="line">aa|b</span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;aaa&quot;</span></span><br><span class="line">aaa</span><br><span class="line">a|aa</span><br><span class="line">a|a|a</span><br><span class="line">aa|a</span><br></pre></td></tr></table></figure>
 <p>即使当前字符串已经valid加入结果集后，还需要对其划分</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> reamin <span class="keyword">is</span> Palindrome:</span><br><span class="line">(<span class="number">1</span>). valid + remain</span><br><span class="line">(<span class="number">2</span>). valid + partition(remain)</span><br></pre></td></tr></table></figure>
 <p>valid是一样的，但后半段的划分也是解的一部分，直接在（1）返回会丢失解。</p>
-<h3 id="gas-station">134. Gas Station</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: </span><br><span class="line">gas  = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">cost = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
-<p>注意题目 cost[i]代表从i到i+1的油量消耗 定义：<span
-class="math inline">\(\alpha_i = \text{gas}[i]-\text{cost}[i]\)</span>
-证明：如果一个数组和大于 <span class="math display">\[
-\sum_{t=0}^{n}\alpha_t &gt;= 0 \tag{1}
-\]</span>
-令其作为环形，那么一定可以找到一个起点，从此起点开始转一圈，连续和大于零。
-<strong>证明如下</strong>： 首先一定可以找到一段<span
-class="math inline">\(i\)</span>到<span
-class="math inline">\(j\)</span>和是最大的而且是连续的（反证法，如果<span
-class="math inline">\(i\)</span>到中间某点<span
-class="math inline">\(k\)</span>累计和小于零，那么丢弃前半段<span
-class="math inline">\(i\)</span>～<span
-class="math inline">\(k\)</span>，后半段<span
-class="math inline">\(k\)</span>+1<sub><span
-class="math inline">\(j\)</span>一定大于<span
-class="math inline">\(i\)</span></sub><span
-class="math inline">\(j\)</span>,矛盾）</p>
-<p><span class="math display">\[
-i,j = \arg \max_{a,b} \sum_{t=a}^{b}\alpha_t \tag{2}
-\]</span></p>
-<p>这样从<span class="math inline">\(i\)</span>出发到达<span
-class="math inline">\(j\)</span>是可行的。假设到达<span
-class="math inline">\(m\)</span>的时候和小于零: <span
-class="math display">\[
-\sum_{t=i}^{m}\alpha_t &lt; 0 \tag{3}
-\]</span> 那么根据总和(1)大于0，可以得出 <span class="math display">\[
-\sum_{t=m+1}^{n-1}\alpha_t + \sum_{t=0}^{i-1}\alpha_t  &gt; 0 \tag{4}
-\]</span> 这样一来，会得出(<span class="math inline">\(j\)</span>~<span
-class="math inline">\(i\)</span>是循环折返的区间)： <span
-class="math display">\[
-j,i = \arg \max_{a,b} \sum_{t=a}^{b}\alpha_t \tag{5}
-\]</span> 这和（2）是矛盾的。</p>
-<h3 id="find-peak-element">162. Find Peak Element</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> i &lt; j:</span><br><span class="line">    mid = (i + j)//<span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> nums[mid] &lt; nums[mid+<span class="number">1</span>]:</span><br><span class="line">        i = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        j = mid</span><br><span class="line">    <span class="built_in">print</span>(i,j,mid)</span><br></pre></td></tr></table></figure>
+<h3 id="134-Gas-Station"><a href="#134-Gas-Station" class="headerlink" title="134. Gas Station"></a>134. Gas Station</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: </span><br><span class="line">gas  = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">cost = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<p>注意题目 cost[i]代表从i到i+1的油量消耗<br>定义：$\alpha_i = \text{gas}[i]-\text{cost}[i]$<br>证明：如果一个数组和大于</p>
+<script type="math/tex; mode=display">
+\sum_{t=0}^{n}\alpha_t >= 0 \tag{1}</script><p>令其作为环形，那么一定可以找到一个起点，从此起点开始转一圈，连续和大于零。<br><strong>证明如下</strong>：<br>首先一定可以找到一段$i$到$j$和是最大的而且是连续的（反证法，如果$i$到中间某点$k$累计和小于零，那么丢弃前半段$i$～$k$，后半段$k$+1~$j$一定大于$i$~$j$,矛盾）</p>
+<script type="math/tex; mode=display">
+i,j = \arg \max_{a,b} \sum_{t=a}^{b}\alpha_t \tag{2}</script><p>这样从$i$出发到达$j$是可行的。假设到达$m$的时候和小于零:</p>
+<script type="math/tex; mode=display">
+\sum_{t=i}^{m}\alpha_t < 0 \tag{3}</script><p>那么根据总和(1)大于0，可以得出</p>
+<script type="math/tex; mode=display">
+\sum_{t=m+1}^{n-1}\alpha_t + \sum_{t=0}^{i-1}\alpha_t  > 0 \tag{4}</script><p>这样一来，会得出($j$~$i$是循环折返的区间)：</p>
+<script type="math/tex; mode=display">
+j,i = \arg \max_{a,b} \sum_{t=a}^{b}\alpha_t \tag{5}</script><p>这和（2）是矛盾的。</p>
+<h3 id="162-Find-Peak-Element"><a href="#162-Find-Peak-Element" class="headerlink" title="162. Find Peak Element"></a>162. Find Peak Element</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> i &lt; j:</span><br><span class="line">    mid = (i + j)//<span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> nums[mid] &lt; nums[mid+<span class="number">1</span>]:</span><br><span class="line">        i = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        j = mid</span><br><span class="line">    <span class="built_in">print</span>(i,j,mid)</span><br></pre></td></tr></table></figure>
 <p>因为是和nums[i+1]比较大小：</p>
 <ul>
-<li>if nums[mid] &gt;
-nums[mid+1]，<strong>mid位置可能是峰值</strong></li>
+<li>if nums[mid] &gt; nums[mid+1]，<strong>mid位置可能是峰值</strong></li>
 <li>if nums[mid] &lt; nums[mid+1]，<strong>mid一定不是峰值</strong></li>
 </ul>
-<h3 id="reverse-bits">190. Reverse Bits</h3>
-<p>bit操作，可以循环<code>n&amp;1</code>来获取某一位是否为1</p>
+<h3 id="190-Reverse-Bits"><a href="#190-Reverse-Bits" class="headerlink" title="190. Reverse Bits"></a>190. Reverse Bits</h3><p>bit操作，可以循环<code>n&amp;1</code>来获取某一位是否为1</p>
 <p>这道题相当于流水线，先准备位置，然后放置值</p>
-<p>1 ( ) 结果左移1</p>
-<p>1 (1) 放置此位置应该有的值</p>
-<p>1 1 ( ) 结果左移1</p>
+<p>1 (  )  结果左移1</p>
+<p>1 (1)  放置此位置应该有的值</p>
+<p>1 1 (  ) 结果左移1</p>
 <p>1 1 (0) 放置此位置应该有的值</p>
-<h3 id="word-break">139. Word Break</h3>
+<h3 id="139-Word-Break"><a href="#139-Word-Break" class="headerlink" title="139. Word Break"></a>139. Word Break</h3><p>&gt;</p>
 <blockquote>
-<p>Input: s = "leetcode", wordDict = ["leet", "code"] Output: true
-Explanation: Return true because "leetcode" can be segmented as "leet
-code".</p>
+<p>Input: s = “leetcode”, wordDict = [“leet”, “code”]<br>Output: true<br>Explanation: Return true because “leetcode” can be segmented as “leet code”.</p>
 </blockquote>
-<p>dfs：(回溯法)带记忆的回溯，时间复杂度是<span
-class="math inline">\(O(n^2)\)</span>，
-bfs：宽度优先搜索可以用来找最小划分90. Reverse Bits</p>
+<p>dfs：(回溯法)带记忆的回溯，时间复杂度是$O(n^2)$，<br>bfs：宽度优先搜索可以用来找最小划分90. Reverse Bits</p>
 <p>bit操作，可以循环<code>n&amp;1</code>来获取某一位是否为1</p>
 <p>这道题相当于流水线，先准备位置，然后放置值</p>
-<p>1 ( ) 结果左移1</p>
-<p>1 (1) 放置此位置应该有的值</p>
-<p>1 1 ( ) 结果左移1</p>
+<p>1 (  )  结果左移1</p>
+<p>1 (1)  放置此位置应该有的值</p>
+<p>1 1 (  ) 结果左移1</p>
 <p>1 1 (0) 放置此位置应该有的值</p>
-<h3 id="count-primes">204. Count Primes</h3>
-<ol type="1">
+<h3 id="204-Count-Primes"><a href="#204-Count-Primes" class="headerlink" title="204. Count Primes"></a>204. Count Primes</h3><ol>
 <li>构造标质数组 notPrimes[n]</li>
 <li>初始化，令p = 2 (最小Prime Number)</li>
 <li>枚举 2p, 3p, 4p, ……, Mark them int array，notPrimes[kp] = True</li>
-<li>找大于p 的第一个没有marked数字（<strong>即下一个Prime Number，
-略过合数！</strong>)，如果没有stop;有的话令p =
-这个新数字，重复第三步。</li>
+<li>找大于p 的第一个没有marked数字（<strong>即下一个Prime Number， 略过合数！</strong>)，如果没有stop;有的话令p = 这个新数字，重复第三步。</li>
 </ol>
-<h3 id="reverse-linked-list">206. Reverse Linked List</h3>
-<p>反转链表的递归算法：</p>
+<h3 id="206-Reverse-Linked-List"><a href="#206-Reverse-Linked-List" class="headerlink" title="206. Reverse Linked List"></a>206. Reverse Linked List</h3><p>反转链表的递归算法：</p>
 <p>起初考虑递归函数如下写：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node = reverseList(head.<span class="built_in">next</span>)</span><br><span class="line">node.<span class="built_in">next</span> = head</span><br><span class="line"><span class="keyword">return</span> ?</span><br></pre></td></tr></table></figure>
 <p>发现return的时候没法返回了，其实可以换一个思路，既然最后要返回反转后链表的头节点，那我们也可以同样对待递归函数。<strong>这里要注意在递归时我们传入节点head.next，这是不会影响当前节点的next指向的。这一层关联并未断掉</strong>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">newHead = reverseList(head.<span class="built_in">next</span>)</span><br><span class="line">head.<span class="built_in">next</span>.<span class="built_in">next</span> = head</span><br><span class="line">head.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"><span class="keyword">return</span> newHead</span><br></pre></td></tr></table></figure>
-<h3 id="sum-of-two-integers">371. Sum of Two Integers</h3>
-<p>&amp; 运算后是carry进位，如果没有进位，直接异或即可,
-只要有进位，就递归调加法运算</p>
-<p>关键点：对于负数运算来说： -1+2 = ?</p>
+<h3 id="371-Sum-of-Two-Integers"><a href="#371-Sum-of-Two-Integers" class="headerlink" title="371. Sum of Two Integers"></a>371. Sum of Two Integers</h3><p>&amp; 运算后是carry进位，如果没有进位，直接异或即可, 只要有进位，就递归调加法运算</p>
+<p>关键点：对于负数运算来说：<br>-1+2 = ?</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -911,64 +702,34 @@ bfs：宽度优先搜索可以用来找最小划分90. Reverse Bits</p>
 </tr>
 </tbody>
 </table>
-<p>可以发现进位数字carry是越来越大的,
-python的二进制可能没有限制，如果一直这样下去会出现超时溢出，所以要使用0xffffffff来限制最大迭代次数，且要限制在carry上。</p>
-<h2 id="剑指offer">剑指offer</h2>
-<h3 id="剑指-offer-07.-重建二叉树">剑指 Offer 07. 重建二叉树</h3>
-<p>关键点：</p>
-<ol type="1">
+</div>
+<p>可以发现进位数字carry是越来越大的, python的二进制可能没有限制，如果一直这样下去会出现超时溢出，所以要使用0xffffffff来限制最大迭代次数，且要限制在carry上。</p>
+<h2 id="剑指offer"><a href="#剑指offer" class="headerlink" title="剑指offer"></a>剑指offer</h2><h3 id="剑指-Offer-07-重建二叉树"><a href="#剑指-Offer-07-重建二叉树" class="headerlink" title="剑指 Offer 07. 重建二叉树"></a>剑指 Offer 07. 重建二叉树</h3><p>关键点：</p>
+<ol>
 <li>前序遍历的理解（先root,后<strong>left子树</strong>,right子树)，特别区分开层次遍历(先root,后<strong>left子节点</strong>,right子节点)</li>
-<li>需要一种数据结构，<strong>定位先序列表中某一节点在中序列表中的位置</strong>,
-即k,v反置，hashMap或dict</li>
+<li>需要一种数据结构，<strong>定位先序列表中某一节点在中序列表中的位置</strong>, 即k,v反置，hashMap或dict</li>
 <li>递归调用划分左右子树时右子树传入参数的理解</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.right = recursive(root+i-left+<span class="number">1</span>, i+<span class="number">1</span>, right)</span><br><span class="line"><span class="comment"># root+i-left+1: 根节点索引 + 左子树长度 + 1</span></span><br></pre></td></tr></table></figure>
-<h3 id="剑指-offer-11.-旋转数组的最小数字">剑指 Offer 11.
-旋转数组的最小数字</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mid = (low+high)/<span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> numbers[mid] &lt; numbers[high]:</span><br><span class="line">    high = mid</span><br><span class="line"><span class="keyword">elif</span> numbers[mid] &gt; numbers[high]:</span><br><span class="line">    low = mid+<span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    high = high-<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>此题主要一个点，nums[high]是个分界点
-1.numbers[mid]大于nums[high]，一定在左边
-2.numbers[mid]小于nums[high]，一定在右边 3.numbers[mid]等于nums[high],
-<strong>不确定</strong>，既然不确定，可以看low,high有没调整的可能</p>
-<h3 id="剑指-offer-12.-矩阵中的路径">剑指 Offer 12. 矩阵中的路径</h3>
-<p>要注意递归边界情况的先后顺序</p>
-<ol type="1">
+<h3 id="剑指-Offer-11-旋转数组的最小数字"><a href="#剑指-Offer-11-旋转数组的最小数字" class="headerlink" title="剑指 Offer 11. 旋转数组的最小数字"></a>剑指 Offer 11. 旋转数组的最小数字</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mid = (low+high)/<span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> numbers[mid] &lt; numbers[high]:</span><br><span class="line">    high = mid</span><br><span class="line"><span class="keyword">elif</span> numbers[mid] &gt; numbers[high]:</span><br><span class="line">    low = mid+<span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    high = high-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>此题主要一个点，nums[high]是个分界点<br>1.numbers[mid]大于nums[high]，一定在左边<br>2.numbers[mid]小于nums[high]，一定在右边<br>3.numbers[mid]等于nums[high], <strong>不确定</strong>，既然不确定，可以看low,high有没调整的可能</p>
+<h3 id="剑指-Offer-12-矩阵中的路径"><a href="#剑指-Offer-12-矩阵中的路径" class="headerlink" title="剑指 Offer 12. 矩阵中的路径"></a>剑指 Offer 12. 矩阵中的路径</h3><p>要注意递归边界情况的先后顺序</p>
+<ol>
 <li>（i, j 不合法）或（board[i][j] != word[k]）返回false</li>
-<li>剩下的情况一定是<strong>合法且符合匹配</strong>的，<strong>这时候才检验k是否已到头</strong>
-tips:</li>
+<li>剩下的情况一定是<strong>合法且符合匹配</strong>的，<strong>这时候才检验k是否已到头</strong><br>tips:</li>
 </ol>
-<p><span class="math display">\[
-\begin{align} A &amp;= i, j 不合法 \notag \\
-B &amp;= board[i][j] 不等于 word[k] \notag \\
-\overline{A\vee B} &amp;= \overline{A}\wedge\overline{B} \notag
-\end{align}
-\]</span></p>
-<ol start="3" type="1">
+<script type="math/tex; mode=display">
+\begin{align} A &= i, j 不合法 \notag \\
+B &= board[i][j] 不等于 word[k] \notag \\
+\overline{A\vee B} &= \overline{A}\wedge\overline{B} \notag
+\end{align}</script><ol>
 <li>递归深度搜索可行解</li>
 </ol>
-<h3 id="剑指-offer-13.-机器人的运动范围">剑指 Offer 13.
-机器人的运动范围</h3>
-<p>此题一个重要理解的点：
-1.这是一个<strong>搜索可到达点个数的题，而非有多少种解的题</strong>
-2.向下和向右即可覆盖题解，无需考虑向上向左
-3.python可以使用set来做访问记录</p>
-<h3 id="剑指-offer-14--i.-剪绳子">剑指 Offer 14- I. 剪绳子</h3>
-<p>最优质子结构</p>
-<h3 id="剑指-offer-16.-数值的整数次方">剑指 Offer 16.
-数值的整数次方</h3>
-<p><span class="math display">\[
-x^n = {(x^2)}^{n/2}
-\]</span> 二分推导，可通过循环 <span class="math inline">\(x :=
-x^2\)</span> 操作，每次把幂从 <span class="math inline">\(n\)</span>
-降至 <span class="math inline">\(n//2\)</span>,直至将幂降为0
-这样理解，每次 <span class="math inline">\(x := x^2\)</span> 都会导致
-<span class="math inline">\(n\)</span> 减少一半，直到 <span
-class="math inline">\(n\)</span> 减少到0
-这里有个小技巧：通过判断<code>n&amp;1</code>来确认是否为奇数，只有奇数需要单独乘上一个<span
-class="math inline">\(x\)</span></p>
-<h3 id="剑指-offer-21.-调整数组顺序使奇数位于偶数前面">剑指 Offer 21.
-调整数组顺序使奇数位于偶数前面</h3>
-<ul>
+<h3 id="剑指-Offer-13-机器人的运动范围"><a href="#剑指-Offer-13-机器人的运动范围" class="headerlink" title="剑指 Offer 13. 机器人的运动范围"></a>剑指 Offer 13. 机器人的运动范围</h3><p>此题一个重要理解的点：<br>1.这是一个<strong>搜索可到达点个数的题，而非有多少种解的题</strong><br>2.向下和向右即可覆盖题解，无需考虑向上向左<br>3.python可以使用set来做访问记录</p>
+<h3 id="剑指-Offer-14-I-剪绳子"><a href="#剑指-Offer-14-I-剪绳子" class="headerlink" title="剑指 Offer 14- I. 剪绳子"></a>剑指 Offer 14- I. 剪绳子</h3><p>最优质子结构</p>
+<h3 id="剑指-Offer-16-数值的整数次方"><a href="#剑指-Offer-16-数值的整数次方" class="headerlink" title="剑指 Offer 16. 数值的整数次方"></a>剑指 Offer 16. 数值的整数次方</h3><script type="math/tex; mode=display">
+x^n = {(x^2)}^{n/2}</script><p>二分推导，可通过循环 $x := x^2$ 操作，每次把幂从 $n$ 降至 $n//2$,直至将幂降为0<br>这样理解，每次 $x := x^2$ 都会导致 $n$ 减少一半，直到 $n$ 减少到0<br>这里有个小技巧：通过判断<code>n&amp;1</code>来确认是否为奇数，只有奇数需要单独乘上一个$x$</p>
+<h3 id="剑指-Offer-21-调整数组顺序使奇数位于偶数前面"><a href="#剑指-Offer-21-调整数组顺序使奇数位于偶数前面" class="headerlink" title="剑指 Offer 21. 调整数组顺序使奇数位于偶数前面"></a>剑指 Offer 21. 调整数组顺序使奇数位于偶数前面</h3><ul>
 <li>快慢指针的用法模板</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> low = <span class="number">0</span>, fast = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (fast &lt; nums.size()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums[fast] &amp; <span class="number">1</span>) &#123;</span><br><span class="line">        swap(nums[low], nums[fast]);</span><br><span class="line">        low ++;</span><br><span class="line">    &#125;</span><br><span class="line">    fast ++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -977,101 +738,59 @@ class="math inline">\(x\)</span></p>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> left &lt; right:</span><br><span class="line">    <span class="keyword">if</span> nums[left] &amp; <span class="number">1</span> == <span class="number">1</span>:</span><br><span class="line">        left += <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> nums[right] &amp; <span class="number">1</span> == <span class="number">0</span>:</span><br><span class="line">        right -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    tmp = nums[left]</span><br><span class="line">    nums[left] = nums[right]</span><br><span class="line">    nums[right] = tmp</span><br><span class="line">    left += <span class="number">1</span></span><br><span class="line">    right -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>注意此处的代码，左右指针在移动时只移动一步，不要试想在里面多次移动来增加逻辑的复杂性</p>
-<h3 id="剑指-offer-31.-栈的压入弹出序列">剑指 Offer 31.
-栈的压入、弹出序列</h3>
-<p>典型题 给定一个压入序列 pushedpushed 和弹出序列 poppedpopped
-，<strong>则压入和 弹出操作的顺序（即排列）是唯一确定的</strong>。
-写逻辑手动模拟入栈出栈的过程，需要用到一个辅助栈。如果合法，基于上面出入栈序列唯一的结论，最后栈中元素一定正好全部弹出。</p>
-<h3 id="剑指-offer-32---iii.-从上到下打印二叉树-iii">剑指 Offer 32 -
-III. 从上到下打印二叉树 III</h3>
-<p>标准的层次遍历or广度遍历BFS</p>
+<h3 id="剑指-Offer-31-栈的压入、弹出序列"><a href="#剑指-Offer-31-栈的压入、弹出序列" class="headerlink" title="剑指 Offer 31. 栈的压入、弹出序列"></a>剑指 Offer 31. 栈的压入、弹出序列</h3><p>典型题<br>给定一个压入序列 pushedpushed 和弹出序列 poppedpopped ，<strong>则压入和 弹出操作的顺序（即排列）是唯一确定的</strong>。<br>写逻辑手动模拟入栈出栈的过程，需要用到一个辅助栈。如果合法，基于上面出入栈序列唯一的结论，最后栈中元素一定正好全部弹出。</p>
+<h3 id="剑指-Offer-32-III-从上到下打印二叉树-III"><a href="#剑指-Offer-32-III-从上到下打印二叉树-III" class="headerlink" title="剑指 Offer 32 - III. 从上到下打印二叉树 III"></a>剑指 Offer 32 - III. 从上到下打印二叉树 III</h3><p>标准的层次遍历or广度遍历BFS</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">queue = collections.deque()</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(queue) != <span class="number">0</span>:</span><br><span class="line">    node = queue.pop()</span><br><span class="line">    <span class="comment"># 处理node .....</span></span><br><span class="line">    <span class="keyword">if</span> node.left <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        queue.append(node.left) </span><br><span class="line">    <span class="keyword">if</span> node.right <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        queue.append(node.right)</span><br></pre></td></tr></table></figure>
-<p>如果涉及到对单独一层顺序的改变，我们可以使用len(queue)控制个数来只操作一层，因为每次进入while循环，<strong>队列里当前存放的就是上一层的所有节点</strong>，通过个数我们就能卡到只属于上一层的节点而不用担心本层节点的加入。
-tips: 注意变换奇偶性的时候使用~或not来反转！</p>
-<h3 id="剑指-offer-33.-二叉搜索树的后序遍历序列">剑指 Offer 33.
-二叉搜索树的后序遍历序列</h3>
-<p>后续遍历：左子节点→右子节点→根节点
-二叉搜索树：左子树的值&lt;根节点&lt;右子树的值
-判断后续遍历序列中某一根节点是否合法：即对当前节点，右子树的所有节点都大于当前节点，左子树的所有节点都小于当前节点，这里的关键点即是<strong>找这个节点的左右子树序列</strong>
-<a
-href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/solution/di-gui-he-zhan-liang-chong-fang-shi-jie-jue-zui-ha/"
-class="uri">https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/solution/di-gui-he-zhan-liang-chong-fang-shi-jie-jue-zui-ha/</a></p>
-<h3 id="剑指-offer-35.-复杂链表的复制">剑指 Offer 35.
-复杂链表的复制</h3>
-<p>链表有next指针和random指针，<strong>其实可以看作一个图</strong>，如果看作图则可以考虑</p>
-<ol type="1">
+<p>如果涉及到对单独一层顺序的改变，我们可以使用len(queue)控制个数来只操作一层，因为每次进入while循环，<strong>队列里当前存放的就是上一层的所有节点</strong>，通过个数我们就能卡到只属于上一层的节点而不用担心本层节点的加入。<br>tips:<br>注意变换奇偶性的时候使用~或not来反转！</p>
+<h3 id="剑指-Offer-33-二叉搜索树的后序遍历序列"><a href="#剑指-Offer-33-二叉搜索树的后序遍历序列" class="headerlink" title="剑指 Offer 33. 二叉搜索树的后序遍历序列"></a>剑指 Offer 33. 二叉搜索树的后序遍历序列</h3><p>后续遍历：左子节点→右子节点→根节点<br>二叉搜索树：左子树的值<a href="根节点&lt;右子树的值
+判断后续遍历序列中某一根节点是否合法：即对当前节点，右子树的所有节点都大于当前节点，左子树的所有节点都小于当前节点，这里的关键点即是**找这个节点的左右子树序列**
+&lt;https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/solution/di-gui-he-zhan-liang-chong-fang-shi-jie-jue-zui-ha/">根节点&lt;右子树的值
+判断后续遍历序列中某一根节点是否合法：即对当前节点，右子树的所有节点都大于当前节点，左子树的所有节点都小于当前节点，这里的关键点即是**找这个节点的左右子树序列**
+&lt;https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/solution/di-gui-he-zhan-liang-chong-fang-shi-jie-jue-zui-ha/</a></p>
+<h3 id="剑指-Offer-35-复杂链表的复制"><a href="#剑指-Offer-35-复杂链表的复制" class="headerlink" title="剑指 Offer 35. 复杂链表的复制"></a>剑指 Offer 35. 复杂链表的复制</h3><p>链表有next指针和random指针，<strong>其实可以看作一个图</strong>，如果看作图则可以考虑</p>
+<ol>
 <li>深度优先遍历</li>
-<li>广度优先遍历
-两种遍历的过程中均会涉及到记录是否访问过的操作，即visited的hashMap，这是一个标准的图遍历算法</li>
+<li>广度优先遍历<br>两种遍历的过程中均会涉及到记录是否访问过的操作，即visited的hashMap，这是一个标准的图遍历算法</li>
 </ol>
-<h3 id="剑指-offer-36.-二叉搜索树与双向链表">剑指 Offer 36.
-二叉搜索树与双向链表</h3>
-<p>递归的理解：
-中序遍历的时候，很自然会想到用递归返回之后选出来右子树最小元素，curNode.right可以递归调用来返回，即<code>curNode.right = inorder(curNode.right)</code>关键点就在curNode.left去连接谁？貌似信息丢掉了
-其实理解方式是不对的，要把中序遍历写出来仔细观察，<strong>每一次调用并不需要返回值</strong>。</p>
+<h3 id="剑指-Offer-36-二叉搜索树与双向链表"><a href="#剑指-Offer-36-二叉搜索树与双向链表" class="headerlink" title="剑指 Offer 36. 二叉搜索树与双向链表"></a>剑指 Offer 36. 二叉搜索树与双向链表</h3><p>递归的理解：<br>中序遍历的时候，很自然会想到用递归返回之后选出来右子树最小元素，curNode.right可以递归调用来返回，即<code>curNode.right = inorder(curNode.right)</code>关键点就在curNode.left去连接谁？貌似信息丢掉了<br>其实理解方式是不对的，要把中序遍历写出来仔细观察，<strong>每一次调用并不需要返回值</strong>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">inorder</span>(<span class="params">curNode</span>):</span><br><span class="line">    <span class="keyword">if</span> curNode <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    inorder(curNode.left)</span><br><span class="line">    <span class="built_in">print</span>(curNode.val)</span><br><span class="line">    inorder(curNode.right)</span><br></pre></td></tr></table></figure>
-<p>上面是中序遍历，符合递增排序数组，可以看到这种递归方式是<strong>只处理当前节点</strong>
-我们只需要只到，当前节点已遍历到，<strong>把其连接到前一个节点</strong>，就可以了，至于前一个节点怎么获取，<strong>可以使用全局变量
-self.pre</strong></p>
-<h3 id="剑指-offer-48.-最长不含重复字符的子字符串">剑指 Offer 48.
-最长不含重复字符的子字符串</h3>
-<p>滑动窗口的应用, i, j分别为左右窗口，循环遍历的时候检查i-j的最大值
-这里需要注意的点：</p>
+<p>上面是中序遍历，符合递增排序数组，可以看到这种递归方式是<strong>只处理当前节点</strong><br>我们只需要只到，当前节点已遍历到，<strong>把其连接到前一个节点</strong>，就可以了，至于前一个节点怎么获取，<strong>可以使用全局变量 self.pre</strong></p>
+<h3 id="剑指-Offer-48-最长不含重复字符的子字符串"><a href="#剑指-Offer-48-最长不含重复字符的子字符串" class="headerlink" title="剑指 Offer 48. 最长不含重复字符的子字符串"></a>剑指 Offer 48. 最长不含重复字符的子字符串</h3><p>滑动窗口的应用, i, j分别为左右窗口，循环遍历的时候检查i-j的最大值<br>这里需要注意的点：</p>
 <ul>
 <li>边界条件：str是一个字符的情况</li>
-<li>i的初始值 i的初始值可以考虑loop invariant: 左闭右开 [-1,0) [i, j)
-loop invariant: [i,j)是目前不含重复字符的最长子串？</li>
+<li>i的初始值<br>i的初始值可以考虑loop invariant:<br>左闭右开<br>[-1,0)<br>[i, j)<br>loop invariant: [i,j)是目前不含重复字符的最长子串？</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">index = &#123;&#125;</span><br><span class="line">res = <span class="number">0</span></span><br><span class="line">i = -<span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)):</span><br><span class="line">    <span class="keyword">if</span> s[j] <span class="keyword">in</span> index:</span><br><span class="line">        i = <span class="built_in">max</span>(i, index[s[j]])</span><br><span class="line">    index[s[j]] = j</span><br><span class="line">    res = <span class="built_in">max</span>(res, j-i)</span><br><span class="line"><span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 <ul>
 <li>左窗口i的调整策略</li>
 </ul>
-<h3 id="剑指-offer-56---i.-数组中数字出现的次数">剑指 Offer 56 - I.
-数组中数字出现的次数</h3>
-<p>判断第一个不为0的bit</p>
+<h3 id="剑指-Offer-56-I-数组中数字出现的次数"><a href="#剑指-Offer-56-I-数组中数字出现的次数" class="headerlink" title="剑指 Offer 56 - I. 数组中数字出现的次数"></a>剑指 Offer 56 - I. 数组中数字出现的次数</h3><p>判断第一个不为0的bit</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pivot = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> res &amp; pivot == <span class="number">0</span>:</span><br><span class="line">    pivot &lt;&lt;= <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>注意：if (num &amp; pivot) != 0 pivot=<span
-class="math inline">\((0000100000)_2\)</span>
-这个pivot和任意一个数字取&amp;, <strong>需要用 != 0判断，不可以使用 !=
-1</strong></p>
-<h3 id="剑指-offer-59---i.-滑动窗口的最大值">剑指 Offer 59 - I.
-滑动窗口的最大值</h3>
-<ol type="1">
-<li>判断当前要移出的nums[i-1]是否位队列最大元素（与deque[0]判等)
-若为最大则popleft()</li>
+<p>注意：if (num &amp; pivot) != 0<br>pivot=$(0000100000)_2$<br>这个pivot和任意一个数字取&amp;, <strong>需要用 != 0判断，不可以使用 != 1</strong></p>
+<h3 id="剑指-Offer-59-I-滑动窗口的最大值"><a href="#剑指-Offer-59-I-滑动窗口的最大值" class="headerlink" title="剑指 Offer 59 - I. 滑动窗口的最大值"></a>剑指 Offer 59 - I. 滑动窗口的最大值</h3><ol>
+<li>判断当前要移出的nums[i-1]是否位队列最大元素（与deque[0]判等)<br>若为最大则popleft()</li>
 <li>将当前right = i+k-1 放入递减队列合适位置</li>
 <li>找到当前窗口最大值</li>
 </ol>
-<h2 id="取模运算">取模运算</h2>
-<p>余数在数学上的定义始终是大于等于零，即按照Euclidean
-division的定义：</p>
-<p>给定两个整数 <span class="math inline">\(a\)</span> 和 <span
-class="math inline">\(b\)</span>, 其中 <span class="math inline">\(b
-\neq 0\)</span>，存在<strong>唯一</strong>的整数 <span
-class="math inline">\(q\)</span> 和 <span
-class="math inline">\(r\)</span>使得：</p>
-<p>​ <span class="math inline">\(a = bq + r\)</span> 和</p>
-<p>​ <span class="math inline">\(0 \leq r &lt; |b|\)</span> 成立</p>
-<p>取模运算(Modulo
-operation)类似数学上求余数（reminder)的过程，但丁略有不同，一般满足下面的式子：</p>
-<p>​ <span class="math inline">\(q \in Z​\)</span></p>
-<p>​ <span class="math inline">\(a = nq + r​\)</span></p>
-<p>​ <span class="math inline">\(|r| &lt; |n|​\)</span></p>
+<h2 id="取模运算"><a href="#取模运算" class="headerlink" title="取模运算"></a>取模运算</h2><p>余数在数学上的定义始终是大于等于零，即按照Euclidean division的定义：</p>
+<p>给定两个整数 $a$ 和 $b$, 其中 $b \neq 0$，存在<strong>唯一</strong>的整数 $q$ 和 $r$使得：</p>
+<p>​ $a = bq + r$ 和</p>
+<p>​ $0 \leq r &lt; |b|$ 成立</p>
+<p>取模运算(Modulo operation)类似数学上求余数（reminder)的过程，但丁略有不同，一般满足下面的式子：</p>
+<p>​   $q \in Z​$</p>
+<p>​   $a = nq + r​$</p>
+<p>​   $|r| &lt; |n|​$</p>
 <p>对比数学上的定义，由于最后一个约束的不同，会造成两种计算结果：</p>
-<h3 id="truncate">1. truncate</h3>
-<p>截断小数部分，取整数部分，<u>C/C++，JAVA，
-C#等语言中，"%"是取余运算</u>。</p>
-<p>​ <span class="math inline">\(r = a -
-n\  \textrm{trunc}(\frac{a}{b})​\)</span></p>
+<h3 id="1-truncate"><a href="#1-truncate" class="headerlink" title="1. truncate"></a>1. truncate</h3><p>截断小数部分，取整数部分，<u>C/C++，JAVA， C#等语言中，”%”是取余运算</u>。</p>
+<p>​  $r = a - n\  \textrm{trunc}(\frac{a}{b})​$</p>
 <p>比如3/2 = 1 , -3/2 = -1</p>
 <p>C 和 JAVA 使用的是 truncate 的方式，所以计算 -6 % 5如下：</p>
 <blockquote>
 <p>-6 - (5<em>trunc(-6/5))= -6 - (5 </em> -1) = -1</p>
 </blockquote>
-<h3 id="floor">2. floor</h3>
-<p>向下取整，在正数的时候和truncate一样，但是在<strong>负数</strong>的时候，向下取整就会出现和truncate不一样的结果。</p>
-<p><u>Python 中 "%" 是取模运算</u>。</p>
-<p>​ $ r = a = n ​$</p>
+<h3 id="2-floor"><a href="#2-floor" class="headerlink" title="2. floor"></a>2. floor</h3><p>向下取整，在正数的时候和truncate一样，但是在<strong>负数</strong>的时候，向下取整就会出现和truncate不一样的结果。</p>
+<p><u>Python 中 “%” 是取模运算</u>。</p>
+<p>​        $ r = a = n\lfloor \frac{a}{n} \rfloor​$</p>
 <p>比如：3/2 = 1 -3/2 = -2</p>
 <p>python使用的floor除法的方式</p>
 <blockquote>
@@ -1081,12 +800,10 @@ n\  \textrm{trunc}(\frac{a}{b})​\)</span></p>
 <p>简单来说，求余的结果应该与a的符号保持一致；而取模的结果应该与b的符号保持一致。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python　　　　a%n的符号与n相同</span><br><span class="line">-<span class="number">11</span>//<span class="number">4</span>          <span class="comment">#值为-3</span></span><br><span class="line">-<span class="number">11</span>%<span class="number">4</span>  -&gt;  (-<span class="number">11</span>) -<span class="number">4</span>*(-<span class="number">11</span>//<span class="number">4</span>) =<span class="number">1</span>     <span class="comment">#值为1</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C语言　　　　　　a%n的符号与a相同</span><br><span class="line"><span class="number">-11</span>/<span class="number">4</span>         <span class="comment">//值为-2</span></span><br><span class="line"><span class="number">-11</span>%<span class="number">4</span>      (<span class="number">-11</span>) - <span class="number">4</span>*(<span class="number">-11</span>/<span class="number">4</span>) =<span class="number">-3</span>   <span class="comment">//值为-3</span></span><br></pre></td></tr></table></figure>
-<h3 id="辗转相除法">辗转相除法</h3>
-<p>辗转相除法是用来计算两个整数的最大公约数。假设两个整数为<code>a</code>和<code>b</code>，他们的公约数可以表示为<code>gcd(a,b)</code>。如果<code>gcd(a,b) = c</code>,则必然<code>a = mc</code>和<code>b = nc</code>。a除以b得商和余数，余数r可以表示为<code>r = a - bk</code>，<code>k</code>这里是系数。因为<code>c</code>为
-<code>a</code>和<code>b</code>的最大公约数，所以<code>c</code>也一定是<code>r</code>的最大公约数，因为<code>r = mc - nck = (m-nk)c</code>。</p>
+<h3 id="辗转相除法"><a href="#辗转相除法" class="headerlink" title="辗转相除法"></a>辗转相除法</h3><p>辗转相除法是用来计算两个整数的最大公约数。假设两个整数为<code>a</code>和<code>b</code>，他们的公约数可以表示为<code>gcd(a,b)</code>。如果<code>gcd(a,b) = c</code>,则必然<code>a = mc</code>和<code>b = nc</code>。a除以b得商和余数，余数r可以表示为<code>r = a - bk</code>，<code>k</code>这里是系数。因为<code>c</code>为 <code>a</code>和<code>b</code>的最大公约数，所以<code>c</code>也一定是<code>r</code>的最大公约数，因为<code>r = mc - nck = (m-nk)c</code>。</p>
 <p>因此<code>gcd(a,b) = gcd(b,r)</code>，相当于把较大的一个整数用一个较小的余数替换了，这样不断地迭代，直到余数为0，则找到最大公约数。</p>
-<p>[1].https://blog.csdn.net/hk2291976/article/details/52775299</p>
-<p>[2].https://www.jianshu.com/p/7876eb2dff89</p>
+<p>[1].<a href="https://blog.csdn.net/hk2291976/article/details/52775299">https://blog.csdn.net/hk2291976/article/details/52775299</a></p>
+<p>[2].<a href="https://www.jianshu.com/p/7876eb2dff89">https://www.jianshu.com/p/7876eb2dff89</a></p>
 
     </div>
 
@@ -1167,24 +884,7 @@ n\  \textrm{trunc}(\frac{a}{b})​\)</span></p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E5%88%86%E6%88%90%E5%B7%A6%E5%8F%B3%E4%B8%A4%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">十进制数分成左右两部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E6%95%B0%E5%AD%A6%E5%BC%8F%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">列出数学式子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#common"><span class="nav-number">3.</span> <span class="nav-text">common</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#asci-%E7%A0%81%E5%80%BC"><span class="nav-number">3.1.</span> <span class="nav-text">ASCI 码值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">map函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-and-sorted"><span class="nav-number">3.3.</span> <span class="nav-text">sort and sorted</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.4.</span> <span class="nav-text">赋值语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.5.</span> <span class="nav-text">if 条件语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bit%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">3.6.</span> <span class="nav-text">bit位操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E4%BD%8D"><span class="nav-number">3.6.1.</span> <span class="nav-text">移位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E4%B8%8E"><span class="nav-number">3.6.2.</span> <span class="nav-text">按位与</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E6%88%96"><span class="nav-number">3.6.3.</span> <span class="nav-text">按位或</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E4%BA%A6%E6%88%96"><span class="nav-number">3.6.4.</span> <span class="nav-text">按位亦或</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E5%90%88"><span class="nav-number">3.6.5.</span> <span class="nav-text">结合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%AE%8C%E6%AF%95%E7%9A%84%E6%A0%87%E5%BF%97"><span class="nav-number">3.7.</span> <span class="nav-text">循环完毕的标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-bit-%E6%93%8D%E4%BD%9C"><span class="nav-number">3.8.</span> <span class="nav-text">python bit 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-number">3.9.</span> <span class="nav-text">python 二维数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%AE%B5%E9%98%9F%E5%88%97"><span class="nav-number">3.10.</span> <span class="nav-text">双段队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E8%A7%A3%E6%B3%95%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88"><span class="nav-number">3.11.</span> <span class="nav-text">双指针解法(快慢指针）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E6%8E%92"><span class="nav-number">3.11.1.</span> <span class="nav-text">快排</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5hash%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.12.</span> <span class="nav-text">可以hash的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">3.13.</span> <span class="nav-text">集合的排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97"><span class="nav-number">3.14.</span> <span class="nav-text">栈和队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91"><span class="nav-number">3.15.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">3.15.1.</span> <span class="nav-text">1.前序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E9%81%8D%E5%8E%86"><span class="nav-number">3.15.2.</span> <span class="nav-text">2.后续遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">3.15.3.</span> <span class="nav-text">3.中序遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="nav-number">3.16.</span> <span class="nav-text">深度优先搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">3.17.</span> <span class="nav-text">动态规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E5%9B%9E%E6%BA%AF%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E5%B1%82%E6%AC%A1%E4%BC%98%E5%85%88%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">3.18.</span> <span class="nav-text">递归（回溯，深度优先，层次优先，树的遍历）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">3.18.1.</span> <span class="nav-text">1. 不需要返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">3.18.2.</span> <span class="nav-text">2. 需要返回值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#problem"><span class="nav-number">4.</span> <span class="nav-text">Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#add-two-numbers"><span class="nav-number">4.1.</span> <span class="nav-text">2. Add Two Numbers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#longest-substring-without-repeating-characters"><span class="nav-number">4.2.</span> <span class="nav-text">3. Longest
-Substring Without Repeating Characters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2"><span class="nav-number">4.3.</span> <span class="nav-text">5. 最长回文子串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2"><span class="nav-number">4.4.</span> <span class="nav-text">6. Z字形变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC"><span class="nav-number">4.5.</span> <span class="nav-text">7. 整数反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi"><span class="nav-number">4.6.</span> <span class="nav-text">8. 字符串转换整数 (atoi)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sum"><span class="nav-number">4.7.</span> <span class="nav-text">15. 3Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#valid-parentheses"><span class="nav-number">4.8.</span> <span class="nav-text">20 Valid Parentheses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generate-parentheses"><span class="nav-number">4.9.</span> <span class="nav-text">22. Generate Parentheses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#implement-strstr"><span class="nav-number">4.10.</span> <span class="nav-text">28. Implement strStr()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#divide-two-integers"><span class="nav-number">4.11.</span> <span class="nav-text">29. Divide Two Integers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#search-in-rotated-sorted-array"><span class="nav-number">4.12.</span> <span class="nav-text">33. Search in Rotated Sorted
-Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-first-and-last-position-of-element-in-sorted-array"><span class="nav-number">4.13.</span> <span class="nav-text">34.
-Find First and Last Position of Element in Sorted Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#permute"><span class="nav-number">4.14.</span> <span class="nav-text">46. permute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95"><span class="nav-number">4.14.1.</span> <span class="nav-text">回溯算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-number">4.14.1.1.</span> <span class="nav-text">1. 值传递</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E7%8E%B0%E5%9C%BA"><span class="nav-number">4.14.1.2.</span> <span class="nav-text">2.恢复现场</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rotate-image"><span class="nav-number">4.15.</span> <span class="nav-text">48. rotate image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">4.15.1.</span> <span class="nav-text">旋转矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AC%E7%BD%AE%E9%95%9C%E5%83%8F"><span class="nav-number">4.15.2.</span> <span class="nav-text">1.转置+镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E8%A7%82%E6%97%8B%E8%BD%AC"><span class="nav-number">4.15.3.</span> <span class="nav-text">2.直观旋转</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D%E5%88%86%E7%BB%84"><span class="nav-number">4.16.</span> <span class="nav-text">49. 字母异位词分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#powx-n"><span class="nav-number">4.17.</span> <span class="nav-text">50. Pow(x, n)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maximum-subarray"><span class="nav-number">4.18.</span> <span class="nav-text">53. Maximum Subarray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spiral-matrix"><span class="nav-number">4.19.</span> <span class="nav-text">54. Spiral Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jump-game"><span class="nav-number">4.20.</span> <span class="nav-text">55. Jump Game</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge-intervals"><span class="nav-number">4.21.</span> <span class="nav-text">56. Merge Intervals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plus-one"><span class="nav-number">4.22.</span> <span class="nav-text">66. Plus One</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sqrtx"><span class="nav-number">4.23.</span> <span class="nav-text">69. Sqrt(x)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-colors"><span class="nav-number">4.24.</span> <span class="nav-text">75. Sort Colors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subsets"><span class="nav-number">4.25.</span> <span class="nav-text">78. Subsets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#word-search"><span class="nav-number">4.26.</span> <span class="nav-text">79. Word Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge-sorted-array"><span class="nav-number">4.27.</span> <span class="nav-text">88. Merge Sorted Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decode-ways"><span class="nav-number">4.28.</span> <span class="nav-text">91. Decode Ways</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#construct-binary-tree-from-preorder-and-inorder-traversal"><span class="nav-number">4.29.</span> <span class="nav-text">105.
-Construct Binary Tree from Preorder and Inorder Traversal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#best-time-to-buy-and-sell-stock"><span class="nav-number">4.30.</span> <span class="nav-text">121. Best
-Time to Buy and Sell Stock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#valid-palindrome"><span class="nav-number">4.31.</span> <span class="nav-text">125. Valid Palindrome</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#word-ladder"><span class="nav-number">4.32.</span> <span class="nav-text">127. Word Ladder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E5%AF%B9%E5%90%8C%E4%B8%80%E5%B1%82%E5%81%9A%E6%89%B9%E6%AC%A1%E6%93%8D%E4%BD%9C"><span class="nav-number">4.32.1.</span> <span class="nav-text">1. 需要对同一层做批次操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%85%E4%BB%85%E6%98%AF%E9%81%8D%E5%8E%86"><span class="nav-number">4.32.2.</span> <span class="nav-text">2. 仅仅是遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#palindrome-partitioning"><span class="nav-number">4.33.</span> <span class="nav-text">131. Palindrome Partitioning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gas-station"><span class="nav-number">4.34.</span> <span class="nav-text">134. Gas Station</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-peak-element"><span class="nav-number">4.35.</span> <span class="nav-text">162. Find Peak Element</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reverse-bits"><span class="nav-number">4.36.</span> <span class="nav-text">190. Reverse Bits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#word-break"><span class="nav-number">4.37.</span> <span class="nav-text">139. Word Break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count-primes"><span class="nav-number">4.38.</span> <span class="nav-text">204. Count Primes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reverse-linked-list"><span class="nav-number">4.39.</span> <span class="nav-text">206. Reverse Linked List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sum-of-two-integers"><span class="nav-number">4.40.</span> <span class="nav-text">371. Sum of Two Integers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87offer"><span class="nav-number">5.</span> <span class="nav-text">剑指offer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-07.-%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">5.1.</span> <span class="nav-text">剑指 Offer 07. 重建二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-11.-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97"><span class="nav-number">5.2.</span> <span class="nav-text">剑指 Offer 11.
-旋转数组的最小数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-12.-%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="nav-number">5.3.</span> <span class="nav-text">剑指 Offer 12. 矩阵中的路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-13.-%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E8%BF%90%E5%8A%A8%E8%8C%83%E5%9B%B4"><span class="nav-number">5.4.</span> <span class="nav-text">剑指 Offer 13.
-机器人的运动范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-14--i.-%E5%89%AA%E7%BB%B3%E5%AD%90"><span class="nav-number">5.5.</span> <span class="nav-text">剑指 Offer 14- I. 剪绳子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-16.-%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9"><span class="nav-number">5.6.</span> <span class="nav-text">剑指 Offer 16.
-数值的整数次方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-21.-%E8%B0%83%E6%95%B4%E6%95%B0%E7%BB%84%E9%A1%BA%E5%BA%8F%E4%BD%BF%E5%A5%87%E6%95%B0%E4%BD%8D%E4%BA%8E%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2"><span class="nav-number">5.7.</span> <span class="nav-text">剑指 Offer 21.
-调整数组顺序使奇数位于偶数前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-31.-%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97"><span class="nav-number">5.8.</span> <span class="nav-text">剑指 Offer 31.
-栈的压入、弹出序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-32---iii.-%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91-iii"><span class="nav-number">5.9.</span> <span class="nav-text">剑指 Offer 32 -
-III. 从上到下打印二叉树 III</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-33.-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97"><span class="nav-number">5.10.</span> <span class="nav-text">剑指 Offer 33.
-二叉搜索树的后序遍历序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-35.-%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="nav-number">5.11.</span> <span class="nav-text">剑指 Offer 35.
-复杂链表的复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-36.-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8"><span class="nav-number">5.12.</span> <span class="nav-text">剑指 Offer 36.
-二叉搜索树与双向链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-48.-%E6%9C%80%E9%95%BF%E4%B8%8D%E5%90%AB%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">5.13.</span> <span class="nav-text">剑指 Offer 48.
-最长不含重复字符的子字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-56---i.-%E6%95%B0%E7%BB%84%E4%B8%AD%E6%95%B0%E5%AD%97%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="nav-number">5.14.</span> <span class="nav-text">剑指 Offer 56 - I.
-数组中数字出现的次数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-offer-59---i.-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="nav-number">5.15.</span> <span class="nav-text">剑指 Offer 59 - I.
-滑动窗口的最大值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E6%A8%A1%E8%BF%90%E7%AE%97"><span class="nav-number">6.</span> <span class="nav-text">取模运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#truncate"><span class="nav-number">6.1.</span> <span class="nav-text">1. truncate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#floor"><span class="nav-number">6.2.</span> <span class="nav-text">2. floor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%97%E8%BD%AC%E7%9B%B8%E9%99%A4%E6%B3%95"><span class="nav-number">6.3.</span> <span class="nav-text">辗转相除法</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E5%88%86%E6%88%90%E5%B7%A6%E5%8F%B3%E4%B8%A4%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">十进制数分成左右两部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E6%95%B0%E5%AD%A6%E5%BC%8F%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">列出数学式子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#common"><span class="nav-number">3.</span> <span class="nav-text">common</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASCI-%E7%A0%81%E5%80%BC"><span class="nav-number">3.1.</span> <span class="nav-text">ASCI 码值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">map函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-and-sorted"><span class="nav-number">3.3.</span> <span class="nav-text">sort and sorted</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.4.</span> <span class="nav-text">赋值语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.5.</span> <span class="nav-text">if 条件语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bit%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">3.6.</span> <span class="nav-text">bit位操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E4%BD%8D"><span class="nav-number">3.6.1.</span> <span class="nav-text">移位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E4%B8%8E"><span class="nav-number">3.6.2.</span> <span class="nav-text">按位与</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E6%88%96"><span class="nav-number">3.6.3.</span> <span class="nav-text">按位或</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E4%BA%A6%E6%88%96"><span class="nav-number">3.6.4.</span> <span class="nav-text">按位亦或</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E5%90%88"><span class="nav-number">3.6.5.</span> <span class="nav-text">结合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%AE%8C%E6%AF%95%E7%9A%84%E6%A0%87%E5%BF%97"><span class="nav-number">3.7.</span> <span class="nav-text">循环完毕的标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-bit-%E6%93%8D%E4%BD%9C"><span class="nav-number">3.8.</span> <span class="nav-text">python bit 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-number">3.9.</span> <span class="nav-text">python 二维数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%AE%B5%E9%98%9F%E5%88%97"><span class="nav-number">3.10.</span> <span class="nav-text">双段队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E8%A7%A3%E6%B3%95-%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88%EF%BC%89"><span class="nav-number">3.11.</span> <span class="nav-text">双指针解法(快慢指针）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E6%8E%92"><span class="nav-number">3.11.1.</span> <span class="nav-text">快排</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5hash%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.12.</span> <span class="nav-text">可以hash的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">3.13.</span> <span class="nav-text">集合的排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97"><span class="nav-number">3.14.</span> <span class="nav-text">栈和队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91"><span class="nav-number">3.15.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">3.15.1.</span> <span class="nav-text">1.前序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%90%8E%E7%BB%AD%E9%81%8D%E5%8E%86"><span class="nav-number">3.15.2.</span> <span class="nav-text">2.后续遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">3.15.3.</span> <span class="nav-text">3.中序遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="nav-number">3.16.</span> <span class="nav-text">深度优先搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">3.17.</span> <span class="nav-text">动态规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%EF%BC%88%E5%9B%9E%E6%BA%AF%EF%BC%8C%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%EF%BC%8C%E5%B1%82%E6%AC%A1%E4%BC%98%E5%85%88%EF%BC%8C%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%EF%BC%89"><span class="nav-number">3.18.</span> <span class="nav-text">递归（回溯，深度优先，层次优先，树的遍历）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%B8%8D%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">3.18.1.</span> <span class="nav-text">1. 不需要返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">3.18.2.</span> <span class="nav-text">2. 需要返回值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">4.</span> <span class="nav-text">Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">4.1.</span> <span class="nav-text">2. Add Two Numbers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">4.2.</span> <span class="nav-text">3. Longest Substring Without Repeating Characters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2"><span class="nav-number">4.3.</span> <span class="nav-text">5. 最长回文子串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2"><span class="nav-number">4.4.</span> <span class="nav-text">6. Z字形变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC"><span class="nav-number">4.5.</span> <span class="nav-text">7. 整数反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi"><span class="nav-number">4.6.</span> <span class="nav-text">8. 字符串转换整数 (atoi)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-3Sum"><span class="nav-number">4.7.</span> <span class="nav-text">15. 3Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-Valid-Parentheses"><span class="nav-number">4.8.</span> <span class="nav-text">20 Valid Parentheses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-Generate-Parentheses"><span class="nav-number">4.9.</span> <span class="nav-text">22. Generate Parentheses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28-Implement-strStr"><span class="nav-number">4.10.</span> <span class="nav-text">28. Implement strStr()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29-Divide-Two-Integers"><span class="nav-number">4.11.</span> <span class="nav-text">29. Divide Two Integers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-Search-in-Rotated-Sorted-Array"><span class="nav-number">4.12.</span> <span class="nav-text">33. Search in Rotated Sorted Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#34-Find-First-and-Last-Position-of-Element-in-Sorted-Array"><span class="nav-number">4.13.</span> <span class="nav-text">34. Find First and Last Position of Element in Sorted Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#46-permute"><span class="nav-number">4.14.</span> <span class="nav-text">46. permute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95"><span class="nav-number">4.14.1.</span> <span class="nav-text">回溯算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-number">4.14.1.1.</span> <span class="nav-text">1. 值传递</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%81%A2%E5%A4%8D%E7%8E%B0%E5%9C%BA"><span class="nav-number">4.14.1.2.</span> <span class="nav-text">2.恢复现场</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#48-rotate-image"><span class="nav-number">4.15.</span> <span class="nav-text">48. rotate image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">4.15.1.</span> <span class="nav-text">旋转矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%BD%AC%E7%BD%AE-%E9%95%9C%E5%83%8F"><span class="nav-number">4.15.2.</span> <span class="nav-text">1.转置+镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%9B%B4%E8%A7%82%E6%97%8B%E8%BD%AC"><span class="nav-number">4.15.3.</span> <span class="nav-text">2.直观旋转</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#49-%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D%E5%88%86%E7%BB%84"><span class="nav-number">4.16.</span> <span class="nav-text">49. 字母异位词分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#50-Pow-x-n"><span class="nav-number">4.17.</span> <span class="nav-text">50. Pow(x, n)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#53-Maximum-Subarray"><span class="nav-number">4.18.</span> <span class="nav-text">53. Maximum Subarray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#54-Spiral-Matrix"><span class="nav-number">4.19.</span> <span class="nav-text">54. Spiral Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#55-Jump-Game"><span class="nav-number">4.20.</span> <span class="nav-text">55. Jump Game</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#56-Merge-Intervals"><span class="nav-number">4.21.</span> <span class="nav-text">56. Merge Intervals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#66-Plus-One"><span class="nav-number">4.22.</span> <span class="nav-text">66. Plus One</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#69-Sqrt-x"><span class="nav-number">4.23.</span> <span class="nav-text">69. Sqrt(x)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#75-Sort-Colors"><span class="nav-number">4.24.</span> <span class="nav-text">75. Sort Colors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#78-Subsets"><span class="nav-number">4.25.</span> <span class="nav-text">78. Subsets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#79-Word-Search"><span class="nav-number">4.26.</span> <span class="nav-text">79. Word Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#88-Merge-Sorted-Array"><span class="nav-number">4.27.</span> <span class="nav-text">88. Merge Sorted Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#91-Decode-Ways"><span class="nav-number">4.28.</span> <span class="nav-text">91. Decode Ways</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal"><span class="nav-number">4.29.</span> <span class="nav-text">105. Construct Binary Tree from Preorder and Inorder Traversal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#121-Best-Time-to-Buy-and-Sell-Stock"><span class="nav-number">4.30.</span> <span class="nav-text">121. Best Time to Buy and Sell Stock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#125-Valid-Palindrome"><span class="nav-number">4.31.</span> <span class="nav-text">125. Valid Palindrome</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#127-Word-Ladder"><span class="nav-number">4.32.</span> <span class="nav-text">127. Word Ladder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%9C%80%E8%A6%81%E5%AF%B9%E5%90%8C%E4%B8%80%E5%B1%82%E5%81%9A%E6%89%B9%E6%AC%A1%E6%93%8D%E4%BD%9C"><span class="nav-number">4.32.1.</span> <span class="nav-text">1. 需要对同一层做批次操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BB%85%E4%BB%85%E6%98%AF%E9%81%8D%E5%8E%86"><span class="nav-number">4.32.2.</span> <span class="nav-text">2. 仅仅是遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#131-Palindrome-Partitioning"><span class="nav-number">4.33.</span> <span class="nav-text">131. Palindrome Partitioning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#134-Gas-Station"><span class="nav-number">4.34.</span> <span class="nav-text">134. Gas Station</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#162-Find-Peak-Element"><span class="nav-number">4.35.</span> <span class="nav-text">162. Find Peak Element</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#190-Reverse-Bits"><span class="nav-number">4.36.</span> <span class="nav-text">190. Reverse Bits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#139-Word-Break"><span class="nav-number">4.37.</span> <span class="nav-text">139. Word Break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#204-Count-Primes"><span class="nav-number">4.38.</span> <span class="nav-text">204. Count Primes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#206-Reverse-Linked-List"><span class="nav-number">4.39.</span> <span class="nav-text">206. Reverse Linked List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#371-Sum-of-Two-Integers"><span class="nav-number">4.40.</span> <span class="nav-text">371. Sum of Two Integers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87offer"><span class="nav-number">5.</span> <span class="nav-text">剑指offer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-07-%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">5.1.</span> <span class="nav-text">剑指 Offer 07. 重建二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-11-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97"><span class="nav-number">5.2.</span> <span class="nav-text">剑指 Offer 11. 旋转数组的最小数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-12-%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="nav-number">5.3.</span> <span class="nav-text">剑指 Offer 12. 矩阵中的路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-13-%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E8%BF%90%E5%8A%A8%E8%8C%83%E5%9B%B4"><span class="nav-number">5.4.</span> <span class="nav-text">剑指 Offer 13. 机器人的运动范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-14-I-%E5%89%AA%E7%BB%B3%E5%AD%90"><span class="nav-number">5.5.</span> <span class="nav-text">剑指 Offer 14- I. 剪绳子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-16-%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9"><span class="nav-number">5.6.</span> <span class="nav-text">剑指 Offer 16. 数值的整数次方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-21-%E8%B0%83%E6%95%B4%E6%95%B0%E7%BB%84%E9%A1%BA%E5%BA%8F%E4%BD%BF%E5%A5%87%E6%95%B0%E4%BD%8D%E4%BA%8E%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2"><span class="nav-number">5.7.</span> <span class="nav-text">剑指 Offer 21. 调整数组顺序使奇数位于偶数前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-31-%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97"><span class="nav-number">5.8.</span> <span class="nav-text">剑指 Offer 31. 栈的压入、弹出序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-32-III-%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91-III"><span class="nav-number">5.9.</span> <span class="nav-text">剑指 Offer 32 - III. 从上到下打印二叉树 III</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-33-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97"><span class="nav-number">5.10.</span> <span class="nav-text">剑指 Offer 33. 二叉搜索树的后序遍历序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-35-%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="nav-number">5.11.</span> <span class="nav-text">剑指 Offer 35. 复杂链表的复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-36-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8"><span class="nav-number">5.12.</span> <span class="nav-text">剑指 Offer 36. 二叉搜索树与双向链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-48-%E6%9C%80%E9%95%BF%E4%B8%8D%E5%90%AB%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">5.13.</span> <span class="nav-text">剑指 Offer 48. 最长不含重复字符的子字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-56-I-%E6%95%B0%E7%BB%84%E4%B8%AD%E6%95%B0%E5%AD%97%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="nav-number">5.14.</span> <span class="nav-text">剑指 Offer 56 - I. 数组中数字出现的次数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-59-I-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="nav-number">5.15.</span> <span class="nav-text">剑指 Offer 59 - I. 滑动窗口的最大值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E6%A8%A1%E8%BF%90%E7%AE%97"><span class="nav-number">6.</span> <span class="nav-text">取模运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-truncate"><span class="nav-number">6.1.</span> <span class="nav-text">1. truncate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-floor"><span class="nav-number">6.2.</span> <span class="nav-text">2. floor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%97%E8%BD%AC%E7%9B%B8%E9%99%A4%E6%B3%95"><span class="nav-number">6.3.</span> <span class="nav-text">辗转相除法</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1198,18 +898,18 @@ III. 从上到下打印二叉树 III</span></a></li><li class="nav-item nav-leve
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

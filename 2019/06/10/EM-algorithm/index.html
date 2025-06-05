@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1. MLE (Maximum-likelihood-estimation) 最大似然方法： \[ \begin{equation} p(X | \theta) &#x3D;\prod_{i&#x3D;1}^{N}p(x_i|\theta) &#x3D; L(\theta|X) \end{equation} \] 其中，样本: \(X &#x3D; {x_1,...,x_N}\)。 左边的\(p(X|\theta)\)是">
+  <meta name="description" content="1. MLE (Maximum-likelihood-estimation)最大似然方法：  \begin{equation} p(X | \theta) &#x3D;\prod_{i&#x3D;1}^{N}p(x_i|\theta) &#x3D; L(\theta|X) \end{equation}其中，样本: $X &#x3D; {x_1,…,x_N}$。 左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（de">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EM_algorithm">
 <meta property="og:url" content="http://yoursite.com/2019/06/10/EM-algorithm/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="1. MLE (Maximum-likelihood-estimation) 最大似然方法： \[ \begin{equation} p(X | \theta) &#x3D;\prod_{i&#x3D;1}^{N}p(x_i|\theta) &#x3D; L(\theta|X) \end{equation} \] 其中，样本: \(X &#x3D; {x_1,...,x_N}\)。 左边的\(p(X|\theta)\)是">
+<meta property="og:description" content="1. MLE (Maximum-likelihood-estimation)最大似然方法：  \begin{equation} p(X | \theta) &#x3D;\prod_{i&#x3D;1}^{N}p(x_i|\theta) &#x3D; L(\theta|X) \end{equation}其中，样本: $X &#x3D; {x_1,…,x_N}$。 左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（de">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-06-10T07:54:04.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.055Z">
@@ -200,192 +200,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="mle-maximum-likelihood-estimation">1. MLE
-(Maximum-likelihood-estimation)</h2>
-<p>最大似然方法： <span class="math display">\[
+        <h2 id="1-MLE-Maximum-likelihood-estimation"><a href="#1-MLE-Maximum-likelihood-estimation" class="headerlink" title="1. MLE (Maximum-likelihood-estimation)"></a>1. MLE (Maximum-likelihood-estimation)</h2><p>最大似然方法：</p>
+<script type="math/tex; mode=display">
 \begin{equation}
 p(X | \theta) =\prod_{i=1}^{N}p(x_i|\theta) = L(\theta|X)
-\end{equation}
-\]</span> 其中，样本: <span class="math inline">\(X =
-{x_1,...,x_N}\)</span>。</p>
-<p>左边的<span class="math inline">\(p(X|\theta)\)</span>是由参数<span
-class="math inline">\(\theta\)</span>支配的密度函数（density
-function)，<strong>注意这是条件概率</strong></p>
-<p>右边的<span class="math inline">\(L(\theta|X)\)</span>是关于参数
-<span class="math inline">\(\theta\)</span>
-的likelihood（在给定数据<span
-class="math inline">\(X\)</span>的情况下)，<strong>注意这是函数</strong></p>
-<p>从公式中可以看出，在给定 <span class="math inline">\(\theta\)</span>
-(假设参数）的情况下，<strong>对已观测的实验结果用参数形式描述其概率</strong>，在做这一步的时候用到了一个假设，即样本之间的出现是相互独立无关的（<strong>i.i.d</strong>)。鉴于其已经出现在现实世界中，我们有理由相信（无论是大数定律还是什么的）这种可能性是最大的，所以，如何让这种观测结果出
-大变成主要目标，这就是我们的使用的max likelihood 的本质。</p>
-<p>最大化（1）便得到最大似然的式子 <span class="math display">\[
-L(\theta) = \mathop{\arg\max}_{\theta} L(\theta|X)
-\]</span></p>
-<p>这里通常会用log函数替换，因为可以使得函数</p>
-<h2 id="map-maximum-a-posterior-estimation">2. MAP (Maximum A posterior
-estimation)</h2>
-<p>根据<strong>Bayes</strong>公式，我们可以得到如下结论 <span
-class="math display">\[
-P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
-\]</span> 上面的表达式分别是：</p>
-<p><span
-class="math inline">\(P(\theta|X)\)</span>:<strong>posterior</strong>
-后验概率</p>
-<p><span
-class="math inline">\(P(X|\theta)\)</span>:<strong>likelihood</strong>
-似然</p>
-<p><span class="math inline">\(P(\theta)\)</span>:<strong>prior</strong>
-先验概率</p>
-<p>即相比较MLE，<strong>在似然后面乘上prior</strong>，然后求最大，便是MAP[^2
-]</p>
-<p>根据贝叶斯公式会有如下： <span class="math display">\[
+\end{equation}</script><p>其中，样本: $X = {x_1,…,x_N}$。</p>
+<p>左边的$p(X|\theta)$是由参数$\theta$支配的密度函数（density function)，<strong>注意这是条件概率</strong></p>
+<p>右边的$L(\theta|X)$是关于参数 $\theta$ 的likelihood（在给定数据$X$的情况下)，<strong>注意这是函数</strong></p>
+<p>从公式中可以看出，在给定 $\theta$ (假设参数）的情况下，<strong>对已观测的实验结果用参数形式描述其概率</strong>，在做这一步的时候用到了一个假设，即样本之间的出现是相互独立无关的（<strong>i.i.d</strong>)。鉴于其已经出现在现实世界中，我们有理由相信（无论是大数定律还是什么的）这种可能性是最大的，所以，如何让这种观测结果出 大变成主要目标，这就是我们的使用的max likelihood 的本质。</p>
+<p>最大化（1）便得到最大似然的式子</p>
+<script type="math/tex; mode=display">
+L(\theta) = \mathop{\arg\max}_{\theta} L(\theta|X)</script><p>这里通常会用log函数替换，因为可以使得函数</p>
+<h2 id="2-MAP-Maximum-A-posterior-estimation"><a href="#2-MAP-Maximum-A-posterior-estimation" class="headerlink" title="2. MAP (Maximum A posterior estimation)"></a>2. MAP (Maximum A posterior estimation)</h2><p>根据<strong>Bayes</strong>公式，我们可以得到如下结论</p>
+<script type="math/tex; mode=display">
+P(\theta|X) \propto P(X|\theta) \cdot P(\theta)</script><p>上面的表达式分别是：</p>
+<p>$P(\theta|X)$:<strong>posterior</strong> 后验概率</p>
+<p>$P(X|\theta)$:<strong>likelihood</strong> 似然</p>
+<p>$P(\theta)$:<strong>prior</strong> 先验概率</p>
+<p>即相比较MLE，<strong>在似然后面乘上prior</strong>，然后求最大，便是MAP<sup><a href="#fn_2 " id="reffn_2 ">2 </a></sup></p>
+<p>根据贝叶斯公式会有如下：</p>
+<script type="math/tex; mode=display">
 \begin{equation}
 P(\theta|X) \propto P(X|\theta) \cdot P(\theta)
-\end{equation}
-\]</span></p>
-<p><span class="math inline">\(P(\theta|x)\)</span> :<strong>posterior
-probabiity</strong> 后验概率 <span
-class="math inline">\(P(X|\theta)\)</span> :<strong>likelihood</strong>
-似然 <span class="math inline">\(P(\theta)\)</span>
-:<strong>prior</strong> 先验概率</p>
+\end{equation}</script><p>$P(\theta|x)$ :<strong>posterior probabiity</strong> 后验概率<br>$P(X|\theta)$ :<strong>likelihood</strong> 似然<br>$P(\theta)$ :<strong>prior</strong> 先验概率</p>
 <span id="more"></span>
-<h2 id="gussian-mixture">2 Gussian Mixture</h2>
-<p>参照讲解[^1]，里面有一高斯混合的例子。（有几个峰值并不代表有几个高斯模型，如下图）</p>
-<p>高斯混合模型的讲解[^3 ]</p>
-<h3 id="single-gussian-model">2.1. Single Gussian Model</h3>
-<p>对于单个高斯模型:</p>
-<p><span class="math display">\[
+<h2 id="2-Gussian-Mixture"><a href="#2-Gussian-Mixture" class="headerlink" title="2 Gussian Mixture"></a>2 Gussian Mixture</h2><p>参照讲解<sup><a href="#fn_1" id="reffn_1">1</a></sup>，里面有一高斯混合的例子。（有几个峰值并不代表有几个高斯模型，如下图）</p>
+<p>高斯混合模型的讲解<sup><a href="#fn_3 " id="reffn_3 ">3 </a></sup></p>
+<h3 id="2-1-Single-Gussian-Model"><a href="#2-1-Single-Gussian-Model" class="headerlink" title="2.1. Single Gussian Model"></a>2.1. Single Gussian Model</h3><p>对于单个高斯模型:</p>
+<script type="math/tex; mode=display">
 \begin{equation}
-\arg\min_\theta L(\theta|X) =
-\arg\min_{\theta}[\sum_{i=1}^Nlog(N(x_i|\mu,\sigma))]
-\end{equation}
-\]</span></p>
-<p>参数是 <span class="math inline">\(\theta = \{\mu, \sigma\}\)</span>,
-我们对<span class="math inline">\(log\)</span>似然函数(log
-likelihood)求极值后便可得到最大似然估计：</p>
-<p><span class="math inline">\(\mu_{MLE}  = \frac{\partial L(\mu,
-\sigma|X)}{\partial \mu} 0\)</span></p>
-<h3 id="gussian-mixture-model">2.2. Gussian Mixture Model</h3>
-<p>对于多个高斯的混合模型：</p>
-<p><span class="math display">\[
+\arg\min_\theta L(\theta|X) = \arg\min_{\theta}[\sum_{i=1}^Nlog(N(x_i|\mu,\sigma))]
+\end{equation}</script><p>参数是 $\theta = {\mu, \sigma}$, 我们对$log$似然函数(log likelihood)求极值后便可得到最大似然估计：</p>
+<p>$\mu_{MLE}  = \frac{\partial L(\mu, \sigma|X)}{\partial \mu} 0$</p>
+<h3 id="2-2-Gussian-Mixture-Model"><a href="#2-2-Gussian-Mixture-Model" class="headerlink" title="2.2. Gussian Mixture Model"></a>2.2. Gussian Mixture Model</h3><p>对于多个高斯的混合模型：</p>
+<script type="math/tex; mode=display">
 \begin{equation}
 \begin{gathered}
 P(X|\theta) = \sum_{k=1}^{K}\alpha_{k}N(X|\mu_k, \sigma_k) \ ,\\
 \sum_{k=1}^K \alpha_k = 1
 \end{gathered}
-\end{equation}
-\]</span> 需要指出，为什么使用<span
-class="math inline">\(\alpha_k\)</span>这种形式来构建混合模型，而非使用<span
-class="math inline">\(\frac{1}{k}\)</span>着各种形式？</p>
-<p>参照上图，加上数据由两个高斯模型混合而成，这是后使用<span
-class="math inline">\(\frac{1}{k}\)</span>
-直接的效果是均分了每一个高斯的贡献度，这是不合理的，从图中看出对于3.5处的点，很明显第二个模型贡献的概率大一些。所以，基于此，我们采用了<span
-class="math inline">\(\alpha_k\)</span> 这种结构，同时约束<span
-class="math inline">\(\sum_{k=1}^K \alpha_k = 1\)</span></p>
-<p>对于gussian 混合模型，我们可以看到，对于含有隐变量的问题来讲，<span
-class="math inline">\(\alpha_k\)</span>便是隐变量，这样一来，参数就是如下：</p>
-<p><span class="math inline">\(\theta  =
-\{\mu_1\cdot\cdot\cdot\mu_k,  \sigma_1\cdot\cdot\cdot\sigma_k,
-\alpha_1\cdot\cdot\cdot\alpha_{k-1}\}\)</span> ，这里考虑一下为什么<span
-class="math inline">\(\alpha\)</span>是只到<span
-class="math inline">\(\alpha_{k-1}\)</span>，即<span
-class="math inline">\(\alpha\)</span> 自由度是k-1？[^2]</p>
-<p><span class="math display">\[
+\end{equation}</script><p>需要指出，为什么使用$\alpha_k$这种形式来构建混合模型，而非使用$\frac{1}{k}$着各种形式？</p>
+<p>参照上图，加上数据由两个高斯模型混合而成，这是后使用$\frac{1}{k}$ 直接的效果是均分了每一个高斯的贡献度，这是不合理的，从图中看出对于3.5处的点，很明显第二个模型贡献的概率大一些。所以，基于此，我们采用了$\alpha<em>k$ 这种结构，同时约束$\sum</em>{k=1}^K \alpha_k = 1$</p>
+<p>对于gussian 混合模型，我们可以看到，对于含有隐变量的问题来讲，$\alpha_k$便是隐变量，这样一来，参数就是如下：</p>
+<p>$\theta  = {\mu<em>1\cdot\cdot\cdot\mu_k,  \sigma_1\cdot\cdot\cdot\sigma_k, \alpha_1\cdot\cdot\cdot\alpha</em>{k-1}}$ ，这里考虑一下为什么$\alpha$是只到$\alpha_{k-1}$，即$\alpha$ 自由度是k-1？<sup><a href="#fn_2" id="reffn_2">2</a></sup></p>
+<script type="math/tex; mode=display">
 \begin{equation}
-\theta_{MLE} =\arg\min_{\theta}L(\theta|X) = \arg\min_{\theta}
-\sum_{i=1}^{N}log[\sum_{j=1}^K \alpha_jN(X|\mu_j, \sigma_j)]
-\end{equation}
-\]</span></p>
-<p>这是后我们发现如果用极大似然求解会非常麻烦，不能得到close-form的解析解，因为log
-likelihood中出现了高斯模型的加和<span
-class="math inline">\(log(A+B+C)\)</span>。</p>
+\theta_{MLE} =\arg\min_{\theta}L(\theta|X) = \arg\min_{\theta} \sum_{i=1}^{N}log[\sum_{j=1}^K \alpha_jN(X|\mu_j, \sigma_j)]
+\end{equation}</script><p>这是后我们发现如果用极大似然求解会非常麻烦，不能得到close-form的解析解，因为log likelihood中出现了高斯模型的加和$log(A+B+C)$。</p>
 <p>基于此，我们采用了迭代求解的方式，即我们提到的EM算法。</p>
-<h3 id="gussian-混合模型求解">2.3 Gussian 混合模型求解</h3>
-<p>参照板书[^3 ]，采用迭代的方式，就要构建上一次和这次迭代的“关系”:
-<span class="math display">\[
-\theta^{(i+1)} = \arg \min_{\theta} \int \log P(X,Z|\theta)\cdot
-P(Z|X,\theta^{(i)})
-\]</span> 对于这个式子，我们引入了隐变量<span
-class="math inline">\(Z\)</span>，引入隐变量的原则有一条：<strong>对其边缘概率（margin）积分后不影响原概率</strong>，其起到隐藏、辅助的功能：</p>
-<p><span class="math display">\[
-P(x_i) = \int_{z_i}P_{\theta}(x_i|z_i)\cdot P_{\theta}(z_i)d{z_i}
-\]</span></p>
-<p>放到高斯混合模型的问题上(上面公式<span
-class="math inline">\(P_{\theta}..\)</span>代表受参数<span
-class="math inline">\(\theta\)</span> 支配）： <span
-class="math display">\[
-= \sum_{z_i}^k \alpha_{z_i}N(x_i|\mu_{z_i},\sigma_{z_i})
-\]</span> 发现正好是混合模型的样子，所以这个隐变量$Z <span
-class="math inline">\(（即\)</span>$ ）是可行的。</p>
-<p>对于普通的问题，我们有最大似然方式求解，现在要换成EM算法，我们要寻求等效。我们的目的是求：
-$$ <span class="math display">\[\begin{gather}
+<h3 id="2-3-Gussian-混合模型求解"><a href="#2-3-Gussian-混合模型求解" class="headerlink" title="2.3 Gussian 混合模型求解"></a>2.3 Gussian 混合模型求解</h3><p>参照板书<sup><a href="#fn_3 " id="reffn_3 ">3 </a></sup>，采用迭代的方式，就要构建上一次和这次迭代的“关系”:</p>
+<script type="math/tex; mode=display">
+\theta^{(i+1)} = \arg \min_{\theta} \int \log P(X,Z|\theta)\cdot P(Z|X,\theta^{(i)})</script><p>对于这个式子，我们引入了隐变量$Z$，引入隐变量的原则有一条：<strong>对其边缘概率（margin）积分后不影响原概率</strong>，其起到隐藏、辅助的功能：</p>
+<script type="math/tex; mode=display">
+P(x_i) = \int_{z_i}P_{\theta}(x_i|z_i)\cdot P_{\theta}(z_i)d{z_i}</script><p>放到高斯混合模型的问题上(上面公式$P_{\theta}..$代表受参数$\theta$ 支配）：</p>
+<script type="math/tex; mode=display">
+= \sum_{z_i}^k \alpha_{z_i}N(x_i|\mu_{z_i},\sigma_{z_i})</script><p>发现正好是混合模型的样子，所以这个隐变量$Z $（即$\alpha$ ）是可行的。</p>
+<p>对于普通的问题，我们有最大似然方式求解，现在要换成EM算法，我们要寻求等效。我们的目的是求：</p>
+<script type="math/tex; mode=display">
+\begin{gather}
 
 \hat{\theta}_{MLE}= \arg\min_{\theta}\log P(X|\theta) \\
 
 \log P(X|\theta) =\log P(X,Z|\theta) - log P(Z|X,\theta)
-\end{gather}\]</span> $$</p>
-<p>原本使用最大似然
-（9）即可求解，但由于无法求解，所以我们寻求与其相等的等式（10）来寻求突破，公式（10）来自于Bayes公式。</p>
-<p>对（10）两遍求期望，求期望的时候我们要考虑<strong>基于哪个分布</strong>，在这里我们使用<span
-class="math inline">\(P(Z|X,\theta)\)</span>，为什么呢？这是因为左边基于此概率求期望不改变原表达式，因为其不含<span
-class="math inline">\(Z\)</span>，直接积分为1。 <span
-class="math display">\[
-E_z(\log P(X|\theta)) = \log P(X|\theta)\cdot\int_zP(z|X,\theta)dz =
-\log P(X|\theta)\cdot1
-\]</span> 同时，对右边求期望： <span class="math display">\[
+\end{gather}</script><p>原本使用最大似然 （9）即可求解，但由于无法求解，所以我们寻求与其相等的等式（10）来寻求突破，公式（10）来自于Bayes公式。</p>
+<p>对（10）两遍求期望，求期望的时候我们要考虑<strong>基于哪个分布</strong>，在这里我们使用$P(Z|X,\theta)$，为什么呢？这是因为左边基于此概率求期望不改变原表达式，因为其不含$Z$，直接积分为1。</p>
+<script type="math/tex; mode=display">
+E_z(\log P(X|\theta)) = \log P(X|\theta)\cdot\int_zP(z|X,\theta)dz = \log P(X|\theta)\cdot1</script><p>同时，对右边求期望：</p>
+<script type="math/tex; mode=display">
 \begin{aligned}
-&amp;= \int_z\log P(X,z|\theta)\cdot P(z|X,\theta^{(i)})dz-\int_z\log
-P(z|X,\theta)\cdot P(z|X,\theta))dz \\
-&amp;= Q(\theta, \theta^{(i)}) - H(\theta,\theta^{(i)})
-\end{aligned}
-\]</span></p>
-<p>现在我们将其分解为两部分：<span
-class="math inline">\(Q\)</span>和<span
-class="math inline">\(H\)</span>，总体目的是求得使似然函数最大的<span
-class="math inline">\(\theta\)</span> ，如果我们能证明在迭代中：<span
-class="math inline">\(Q \uparrow、 H \downarrow\)</span>,
-那就完美的解决了问题，
-<strong>并且，得到这样的证明后，我们可以只最大化<span
-class="math inline">\(Q\)</span>, 而不去理会<span
-class="math inline">\(H\)</span>。</strong>由于我们的算法本质是最大化Q函数，所以只需证明H随着变小即可。</p>
-<h3 id="终极目的证明hi1-hi">2.4 终极目的证明H(i+1) &lt; H(i)</h3>
-<h2 id="em-algorithm">3. EM algorithm</h2>
-<p>首先看常用的一个图（来自于Chuong B Do &amp; Serafim Batzoglou, What
-is the expectation maximization algorithm?)，硬币实验的一个例子。</p>
-<p><span class="math inline">\(E\)</span> (Evidence）:
-我们已经观察到的结果</p>
-<p><span class="math inline">\(A\)</span> : 选择A硬币</p>
-<p><span class="math inline">\(\bar{A}\)</span> ：选择B硬币</p>
-<h3 id="e-step">E-Step</h3>
-<p>在E- step: 我们使用Bayes公式获取latent
-varible（隐变量）的估计值：</p>
-<p><span class="math display">\[
-P(A|E) = \frac{P(E,A)}{P(E)} = \frac{P(E|A)*P(A)}{P(E,A) +
-P(E,\bar{A})}= \frac{P(E|A) * P(A)}{P(E|A)*P(A) +
-P(E|\bar{A})*P(\bar{A})}
-\]</span></p>
-<p><span class="math inline">\(P(E|A)\)</span> 是什么？</p>
+ &= \int_z\log P(X,z|\theta)\cdot P(z|X,\theta^{(i)})dz-\int_z\log P(z|X,\theta)\cdot P(z|X,\theta))dz \\
+ &= Q(\theta, \theta^{(i)}) - H(\theta,\theta^{(i)})
+ \end{aligned}</script><p>现在我们将其分解为两部分：$Q$和$H$，总体目的是求得使似然函数最大的$\theta$ ，如果我们能证明在迭代中：$Q \uparrow、 H \downarrow$, 那就完美的解决了问题， <strong>并且，得到这样的证明后，我们可以只最大化$Q$, 而不去理会$H$。</strong>由于我们的算法本质是最大化Q函数，所以只需证明H随着变小即可。</p>
+<h3 id="2-4-终极目的证明H-i-1-lt-H-i"><a href="#2-4-终极目的证明H-i-1-lt-H-i" class="headerlink" title="2.4 终极目的证明H(i+1) &lt; H(i)"></a>2.4 终极目的证明H(i+1) &lt; H(i)</h3><h2 id="3-EM-algorithm"><a href="#3-EM-algorithm" class="headerlink" title="3. EM algorithm"></a>3. EM algorithm</h2><p>首先看常用的一个图（来自于Chuong B Do &amp; Serafim Batzoglou, What is the expectation maximization algorithm?)，硬币实验的一个例子。</p>
+<p>$E$ (Evidence）: 我们已经观察到的结果</p>
+<p>$A$ : 选择A硬币</p>
+<p>$\bar{A}$ ：选择B硬币</p>
+<h3 id="E-Step"><a href="#E-Step" class="headerlink" title="E-Step"></a>E-Step</h3><p>在E- step: 我们使用Bayes公式获取latent varible（隐变量）的估计值：</p>
+<script type="math/tex; mode=display">
+P(A|E) = \frac{P(E,A)}{P(E)} = \frac{P(E|A)*P(A)}{P(E,A) + P(E,\bar{A})}= \frac{P(E|A) * P(A)}{P(E|A)*P(A) + P(E|\bar{A})*P(\bar{A})}</script><p>$P(E|A)$ 是什么？</p>
 <p>在选择A硬币的情况下，出现E这个evidence的概率，即用A模型生成E这种观测结果，什么样子的呢：</p>
-<p>对于第二行，9次正面，1次反面的实验结果：$P(E|A) = (_A)^9 * (1-_A)^1
-$，<strong>正如上面所说，用假设的参数模型去描述现实中发生的结果</strong>。</p>
-<p><span class="math inline">\(P(A)\)</span>和<span
-class="math inline">\(P(\bar{A})\)</span> 这里假设相等，为
-0.5，选A选B是随机。</p>
+<p>对于第二行，9次正面，1次反面的实验结果：$P(E|A) = (\hat{\theta}_A)^9 <em> (1-\hat{\theta}_A)^1 $，<em>*正如上面所说，用假设的参数模型去描述现实中发生的结果</em></em>。</p>
+<p>$P(A)$和$P(\bar{A})$ 这里假设相等，为 0.5，选A选B是随机。</p>
 <p>以此采用这种方式获取5次实验选择硬币A，硬币B的概率（在试验结果下的<strong>条件概率</strong>）</p>
 <p>由于选择哪一枚硬币是一个隐变量，所以我们可以将每次实验观测到的结果看作是两个模型的混合。以第二行为例子，9次正面，1次反面，9次正面是如何形成的？是两个硬币“混合”形成的，A硬币contribute了0.8，B硬币贡献了0.2，计算后就是A贡献了7.2次，B贡献了1.8次。</p>
 <p>最后，统计A总共贡献多少次Head/Tail, B贡献多少次Head/Tail。</p>
-<h3 id="m-step">M-Step</h3>
-<p>在max
-likelihood阶段，按照上文所说，最大似然就是让概率模型偏向于最能呈现实验现象的方法。对最大似然求解后便会得到公式
-$ = $，计算就不细说了，图中有说明。</p>
-<h2 id="附录">附录</h2>
-<p>图1代码：</p>
+<h3 id="M-Step"><a href="#M-Step" class="headerlink" title="M-Step"></a>M-Step</h3><p>在max likelihood阶段，按照上文所说，最大似然就是让概率模型偏向于最能呈现实验现象的方法。对最大似然求解后便会得到公式 $\hat{\theta} = \frac{H}{H+T} $，计算就不细说了，图中有说明。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>图1代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> scipy.stats <span class="keyword">as</span> stats</span><br><span class="line">N = <span class="number">100</span></span><br><span class="line">mu_1 = <span class="number">3</span></span><br><span class="line">mu_2 = <span class="number">3.5</span></span><br><span class="line">sigma_1 = <span class="number">0.3</span></span><br><span class="line">sigma_2 = <span class="number">0.5</span></span><br><span class="line">scape = <span class="number">3</span></span><br><span class="line">np.random.seed(<span class="number">0</span>)</span><br><span class="line">x1 = np.random.normal(mu_1, sigma_1, N)</span><br><span class="line">x2 = np.random.normal(mu_2, sigma_2, N)</span><br><span class="line">y1 = np.zeros(N)</span><br><span class="line">y2 = np.zeros(N) + <span class="number">0.1</span></span><br><span class="line"><span class="comment"># guass 1</span></span><br><span class="line">plt.scatter(x1, y1, alpha = <span class="number">0.9</span>, marker = <span class="string">&quot;x&quot;</span>, label = <span class="string">r&quot;$\mu = &#123;&#125;, \sigma = &#123;&#125;$&quot;</span>.<span class="built_in">format</span>(mu_1, sigma_1))</span><br><span class="line">plt.legend()</span><br><span class="line">guass1 = stats.norm.pdf(np.linspace(mu_1-scape*sigma_1,mu_1+scape*sigma,<span class="number">100</span>), loc = mu_1, scale = sigma_1)</span><br><span class="line">plt.plot(np.linspace(mu_1-scape*sigma_1,mu_1+scape*sigma_1,<span class="number">100</span>),guass1) </span><br><span class="line"><span class="comment"># guass 2</span></span><br><span class="line">plt.scatter(x2, y2, alpha = <span class="number">0.9</span>, marker = <span class="string">&quot;*&quot;</span>, label = <span class="string">r&quot;$\mu = &#123;&#125;, \sigma = &#123;&#125;$&quot;</span>.<span class="built_in">format</span>(mu_2, sigma_2))</span><br><span class="line">plt.legend()</span><br><span class="line">guass2 = stats.norm.pdf(np.linspace(mu_2-scape*sigma_2,mu_2+scape*sigma_2,<span class="number">100</span>), loc = mu_2, scale = sigma_2)</span><br><span class="line">plt.plot(np.linspace(mu_2-scape*sigma_2,mu_2+scape*sigma_2,N), guass2) </span><br><span class="line"><span class="comment"># sum</span></span><br><span class="line"><span class="built_in">sum</span> = guass1 + guass2</span><br><span class="line">plt.plot(np.linspace(mu_1-scape*sigma_1,mu_2+scape*sigma_2,N),<span class="built_in">sum</span>, label=<span class="string">&quot;sum&quot;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h2 id="为什么使用loglikelihood">为什么使用loglikelihood?</h2>
-<p>参看图片[^4] [^1]: 清华大学 公开课《数据挖掘：理论与算法》 [^3 ]:
-徐亦达机器学习：Expectation Maximization EM算法 【2015年版-全集】
-[^4]:<a href="https://www.cnblogs.com/en-heng/p/5994192.html"
-class="uri">https://www.cnblogs.com/en-heng/p/5994192.html</a></p>
+<h2 id="为什么使用loglikelihood"><a href="#为什么使用loglikelihood" class="headerlink" title="为什么使用loglikelihood?"></a>为什么使用loglikelihood?</h2><p>参看图片<sup><a href="#fn_4" id="reffn_4">4</a></sup><br><sup><a href="#fn_1" id="reffn_1">1</a></sup>: 清华大学 公开课《数据挖掘：理论与算法》<br><sup><a href="#fn_3 " id="reffn_3 ">3 </a></sup>: 徐亦达机器学习：Expectation Maximization EM算法 【2015年版-全集】</p>
 
     </div>
 
@@ -469,9 +371,7 @@ class="uri">https://www.cnblogs.com/en-heng/p/5994192.html</a></p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mle-maximum-likelihood-estimation"><span class="nav-number">1.</span> <span class="nav-text">1. MLE
-(Maximum-likelihood-estimation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map-maximum-a-posterior-estimation"><span class="nav-number">2.</span> <span class="nav-text">2. MAP (Maximum A posterior
-estimation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gussian-mixture"><span class="nav-number">3.</span> <span class="nav-text">2 Gussian Mixture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#single-gussian-model"><span class="nav-number">3.1.</span> <span class="nav-text">2.1. Single Gussian Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gussian-mixture-model"><span class="nav-number">3.2.</span> <span class="nav-text">2.2. Gussian Mixture Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gussian-%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E6%B1%82%E8%A7%A3"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 Gussian 混合模型求解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%88%E6%9E%81%E7%9B%AE%E7%9A%84%E8%AF%81%E6%98%8Ehi1-hi"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 终极目的证明H(i+1) &lt; H(i)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#em-algorithm"><span class="nav-number">4.</span> <span class="nav-text">3. EM algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#e-step"><span class="nav-number">4.1.</span> <span class="nav-text">E-Step</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#m-step"><span class="nav-number">4.2.</span> <span class="nav-text">M-Step</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8loglikelihood"><span class="nav-number">6.</span> <span class="nav-text">为什么使用loglikelihood?</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MLE-Maximum-likelihood-estimation"><span class="nav-number">1.</span> <span class="nav-text">1. MLE (Maximum-likelihood-estimation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MAP-Maximum-A-posterior-estimation"><span class="nav-number">2.</span> <span class="nav-text">2. MAP (Maximum A posterior estimation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Gussian-Mixture"><span class="nav-number">3.</span> <span class="nav-text">2 Gussian Mixture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Single-Gussian-Model"><span class="nav-number">3.1.</span> <span class="nav-text">2.1. Single Gussian Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Gussian-Mixture-Model"><span class="nav-number">3.2.</span> <span class="nav-text">2.2. Gussian Mixture Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Gussian-%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E6%B1%82%E8%A7%A3"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 Gussian 混合模型求解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E7%BB%88%E6%9E%81%E7%9B%AE%E7%9A%84%E8%AF%81%E6%98%8EH-i-1-lt-H-i"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 终极目的证明H(i+1) &lt; H(i)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-EM-algorithm"><span class="nav-number">4.</span> <span class="nav-text">3. EM algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#E-Step"><span class="nav-number">4.1.</span> <span class="nav-text">E-Step</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#M-Step"><span class="nav-number">4.2.</span> <span class="nav-text">M-Step</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8loglikelihood"><span class="nav-number">6.</span> <span class="nav-text">为什么使用loglikelihood?</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -485,18 +385,18 @@ estimation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

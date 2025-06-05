@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="安装 64-bit镜像： https:&#x2F;&#x2F;downloads.raspberrypi.org&#x2F;raspios_lite_arm64&#x2F;images&#x2F;raspios_lite_arm64-2021-05-28&#x2F; 获取树莓派ip 树莓派在接入路由器后是动态分配的，需要使用路由器的管理界面查看链接设备的MAC和ip地址 另外一种方式是扫描当前局域网的设备信息，比如可以使用IOS的Fing App">
+  <meta name="description" content="安装64-bit镜像：https:&#x2F;&#x2F;downloads.raspberrypi.org&#x2F;raspios_lite_arm64&#x2F;images&#x2F;raspios_lite_arm64-2021-05-28&#x2F; 获取树莓派ip树莓派在接入路由器后是动态分配的，需要使用路由器的管理界面查看链接设备的MAC和ip地址另外一种方式是扫描当前局域网的设备信息，比如可以使用IOS的Fing App去发现当前连接设备">
 <meta property="og:type" content="article">
 <meta property="og:title" content="raspberry">
 <meta property="og:url" content="http://yoursite.com/2024/06/04/raspberry/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="安装 64-bit镜像： https:&#x2F;&#x2F;downloads.raspberrypi.org&#x2F;raspios_lite_arm64&#x2F;images&#x2F;raspios_lite_arm64-2021-05-28&#x2F; 获取树莓派ip 树莓派在接入路由器后是动态分配的，需要使用路由器的管理界面查看链接设备的MAC和ip地址 另外一种方式是扫描当前局域网的设备信息，比如可以使用IOS的Fing App">
+<meta property="og:description" content="安装64-bit镜像：https:&#x2F;&#x2F;downloads.raspberrypi.org&#x2F;raspios_lite_arm64&#x2F;images&#x2F;raspios_lite_arm64-2021-05-28&#x2F; 获取树莓派ip树莓派在接入路由器后是动态分配的，需要使用路由器的管理界面查看链接设备的MAC和ip地址另外一种方式是扫描当前局域网的设备信息，比如可以使用IOS的Fing App去发现当前连接设备">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-06-04T07:19:57.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.080Z">
@@ -199,57 +199,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="安装">安装</h2>
-<p>64-bit镜像： <a
-href="https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2021-05-28/"
-class="uri">https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2021-05-28/</a></p>
-<h2 id="获取树莓派ip">获取树莓派ip</h2>
-<p>树莓派在接入路由器后是动态分配的，需要使用路由器的管理界面查看链接设备的MAC和ip地址
-另外一种方式是扫描当前局域网的设备信息，比如可以使用IOS的Fing
-App去发现当前连接设备，一般树莓派的设备名称是Raspberry开头的</p>
-<h2 id="挂载移动硬盘">挂载移动硬盘</h2>
-<p><a
-href="https://shumeipai.nxez.com/2013/09/08/raspberry-pi-to-mount-the-removable-hard-disk.html"
-class="uri">https://shumeipai.nxez.com/2013/09/08/raspberry-pi-to-mount-the-removable-hard-disk.html</a></p>
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>64-bit镜像：<br><a href="https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2021-05-28/">https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2021-05-28/</a></p>
+<h2 id="获取树莓派ip"><a href="#获取树莓派ip" class="headerlink" title="获取树莓派ip"></a>获取树莓派ip</h2><p>树莓派在接入路由器后是动态分配的，需要使用路由器的管理界面查看链接设备的MAC和ip地址<br>另外一种方式是扫描当前局域网的设备信息，比如可以使用IOS的Fing App去发现当前连接设备，一般树莓派的设备名称是Raspberry开头的</p>
+<h2 id="挂载移动硬盘"><a href="#挂载移动硬盘" class="headerlink" title="挂载移动硬盘"></a>挂载移动硬盘</h2><p><a href="https://shumeipai.nxez.com/2013/09/08/raspberry-pi-to-mount-the-removable-hard-disk.html">https://shumeipai.nxez.com/2013/09/08/raspberry-pi-to-mount-the-removable-hard-disk.html</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -o uid=pi,gid=pi /dev/sda1 /mnt/1GB_USB_flash</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-<h2 id="安装samba">安装samba</h2>
-<p><a href="https://www.cnblogs.com/xiaowuyi/p/4051238.html"
-class="uri">https://www.cnblogs.com/xiaowuyi/p/4051238.html</a></p>
-<h2 id="dlna">DLNA</h2>
-<p><a
-href="https://shumeipai.nxez.com/2015/07/12/raspberry-pi-install-dlna-streaming-media-server.html"
-class="uri">https://shumeipai.nxez.com/2015/07/12/raspberry-pi-install-dlna-streaming-media-server.html</a></p>
-<h2 id="开机执行指定脚本">开机执行指定脚本</h2>
-<p>例如脚本路径/home/pi/Documents/start.sh</p>
+<h2 id="安装samba"><a href="#安装samba" class="headerlink" title="安装samba"></a>安装samba</h2><p><a href="https://www.cnblogs.com/xiaowuyi/p/4051238.html">https://www.cnblogs.com/xiaowuyi/p/4051238.html</a></p>
+<h2 id="DLNA"><a href="#DLNA" class="headerlink" title="DLNA"></a>DLNA</h2><p><a href="https://shumeipai.nxez.com/2015/07/12/raspberry-pi-install-dlna-streaming-media-server.html">https://shumeipai.nxez.com/2015/07/12/raspberry-pi-install-dlna-streaming-media-server.html</a></p>
+<h2 id="开机执行指定脚本"><a href="#开机执行指定脚本" class="headerlink" title="开机执行指定脚本"></a>开机执行指定脚本</h2><p>例如脚本路径/home/pi/Documents/start.sh</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">mount -o uid=pi,gid=pi /dev/sda1 /home/pi/Share</span><br><span class="line">/etc/init.d/smbd restart</span><br><span class="line">/etc/init.d/nmbd restart</span><br></pre></td></tr></table></figure>
-<p>然后修改文件：/etc/rc.local sudo vi /etc/rc.local 在exit
-0之前添加要执行脚本的命令即可，例如</p>
+<p>然后修改文件：/etc/rc.local<br>sudo vi /etc/rc.local<br>在exit 0之前添加要执行脚本的命令即可，例如</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/rc.local</span></span><br><span class="line">……</span><br><span class="line">sh /home/pi/Documents/start.sh</span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-<h2 id="格式化u盘">格式化U盘</h2>
-<p>格式化硬盘（U盘） 1.树莓派成功识别硬盘 sudo fdisk -l | grep '^Disk'
-2.查看硬盘格式 sudo blkid 3.格式化为ext4 sudo mkfs.ext4 /dev/sda
-挂载硬盘（U盘） 1.建立挂载点 sudo mkdir /media/xxx
-#xxx代表你的挂载点名称，可以自定义 2.设置目录的所有人和所有组 sudo chown
-pi:pi /media/xxx 3.挂载 sudo mount -t ext4 /dev/sda /media/xxx
-4.确认挂载 cd /media/xxx 5.卸载 sudo umount /media/xxx 6.开机自动挂载
-查看UUID：sudo blkid 记下UUID：将UUID复制下来（不要带引号）
-备份文件：sudo cp /etc/fstab /etc/fstab.bakup 编辑文件：sudo nano
-/etc/fstab 最后行加上： UUID=@@@ （@@<span class="citation"
-data-cites="表示刚刚复制下来的UUID">@表示刚刚复制下来的UUID</span>）（注意此处有一个空格）/media/xxx
-ext4 defaults 0 0</p>
-<h2 id="to-be-continue">To Be Continue</h2>
-<p>安装<a href="https://pigallery2.herokuapp.com/gallery/"
-class="uri">https://pigallery2.herokuapp.com/gallery/</a> <a
-href="https://github.com/bpatrik/pigallery2/blob/master/docker/README.md"
-class="uri">https://github.com/bpatrik/pigallery2/blob/master/docker/README.md</a>
-<a href="https://github.com/bpatrik/pigallery2"
-class="uri">https://github.com/bpatrik/pigallery2</a></p>
-<h2 id="出现问题">出现问题</h2>
-<p>docker 安装完成后测试hello-world出现问题（Unable to find image
-'hello-world:latest' locally） <a
-href="https://blog.csdn.net/wireless911/article/details/88989620"
-class="uri">https://blog.csdn.net/wireless911/article/details/88989620</a></p>
+<h2 id="格式化U盘"><a href="#格式化U盘" class="headerlink" title="格式化U盘"></a>格式化U盘</h2><p>格式化硬盘（U盘）<br>1.树莓派成功识别硬盘<br>sudo fdisk -l | grep ‘^Disk’<br>2.查看硬盘格式<br>sudo blkid<br>3.格式化为ext4<br>sudo mkfs.ext4 /dev/sda<br>挂载硬盘（U盘）<br>1.建立挂载点<br>sudo mkdir /media/xxx        #xxx代表你的挂载点名称，可以自定义<br>2.设置目录的所有人和所有组<br>sudo chown pi:pi /media/xxx<br>3.挂载<br>sudo mount -t ext4 /dev/sda /media/xxx<br>4.确认挂载<br>cd /media/xxx<br>5.卸载<br>sudo umount /media/xxx<br>6.开机自动挂载<br>查看UUID：sudo blkid<br>记下UUID：将UUID复制下来（不要带引号）<br>备份文件：sudo cp /etc/fstab /etc/fstab.bakup<br>编辑文件：sudo nano /etc/fstab<br>最后行加上： UUID=@@@ （@@@表示刚刚复制下来的UUID）（注意此处有一个空格）/media/xxx ext4 defaults 0 0</p>
+<h2 id="To-Be-Continue"><a href="#To-Be-Continue" class="headerlink" title="To Be Continue"></a>To Be Continue</h2><p>安装<a href="https://pigallery2.herokuapp.com/gallery/">https://pigallery2.herokuapp.com/gallery/</a><br><a href="https://github.com/bpatrik/pigallery2/blob/master/docker/README.md">https://github.com/bpatrik/pigallery2/blob/master/docker/README.md</a><br><a href="https://github.com/bpatrik/pigallery2">https://github.com/bpatrik/pigallery2</a></p>
+<h2 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h2><p>docker 安装完成后测试hello-world出现问题（Unable to find image ‘hello-world:latest’ locally）<br><a href="https://blog.csdn.net/wireless911/article/details/88989620">https://blog.csdn.net/wireless911/article/details/88989620</a></p>
 
     </div>
 
@@ -330,7 +293,7 @@ class="uri">https://blog.csdn.net/wireless911/article/details/88989620</a></p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%A0%91%E8%8E%93%E6%B4%BEip"><span class="nav-number">2.</span> <span class="nav-text">获取树莓派ip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E7%A7%BB%E5%8A%A8%E7%A1%AC%E7%9B%98"><span class="nav-number">3.</span> <span class="nav-text">挂载移动硬盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85samba"><span class="nav-number">4.</span> <span class="nav-text">安装samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dlna"><span class="nav-number">5.</span> <span class="nav-text">DLNA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA%E6%89%A7%E8%A1%8C%E6%8C%87%E5%AE%9A%E8%84%9A%E6%9C%AC"><span class="nav-number">6.</span> <span class="nav-text">开机执行指定脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96u%E7%9B%98"><span class="nav-number">7.</span> <span class="nav-text">格式化U盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#to-be-continue"><span class="nav-number">8.</span> <span class="nav-text">To Be Continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98"><span class="nav-number">9.</span> <span class="nav-text">出现问题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%A0%91%E8%8E%93%E6%B4%BEip"><span class="nav-number">2.</span> <span class="nav-text">获取树莓派ip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E7%A7%BB%E5%8A%A8%E7%A1%AC%E7%9B%98"><span class="nav-number">3.</span> <span class="nav-text">挂载移动硬盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85samba"><span class="nav-number">4.</span> <span class="nav-text">安装samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DLNA"><span class="nav-number">5.</span> <span class="nav-text">DLNA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA%E6%89%A7%E8%A1%8C%E6%8C%87%E5%AE%9A%E8%84%9A%E6%9C%AC"><span class="nav-number">6.</span> <span class="nav-text">开机执行指定脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96U%E7%9B%98"><span class="nav-number">7.</span> <span class="nav-text">格式化U盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#To-Be-Continue"><span class="nav-number">8.</span> <span class="nav-text">To Be Continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98"><span class="nav-number">9.</span> <span class="nav-text">出现问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -344,18 +307,18 @@ class="uri">https://blog.csdn.net/wireless911/article/details/88989620</a></p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

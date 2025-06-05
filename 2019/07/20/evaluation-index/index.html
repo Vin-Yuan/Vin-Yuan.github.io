@@ -20,18 +20,21 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="以下术语可以参照图1，一目了然：  Precision(查准率): \(\text{Precision} &#x3D; \frac{TP}{TP+FP}\) Recall(查全率): \(\text{Recall} &#x3D; \frac{TP}{TP+FN} &#x3D; \text{TPR}\) AUC : area under curve ROC : receiver operating charac">
+  <meta name="description" content="以下术语可以参照图1，一目了然：  Precision(查准率):  $\text{Precision} &#x3D; \frac{TP}{TP+FP}$ Recall(查全率):  $\text{Recall} &#x3D; \frac{TP}{TP+FN} &#x3D; \text{TPR}$ AUC : area under curve ROC : receiver operating characteristic (T">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习评价指标">
 <meta property="og:url" content="http://yoursite.com/2019/07/20/evaluation-index/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="以下术语可以参照图1，一目了然：  Precision(查准率): \(\text{Precision} &#x3D; \frac{TP}{TP+FP}\) Recall(查全率): \(\text{Recall} &#x3D; \frac{TP}{TP+FN} &#x3D; \text{TPR}\) AUC : area under curve ROC : receiver operating charac">
+<meta property="og:description" content="以下术语可以参照图1，一目了然：  Precision(查准率):  $\text{Precision} &#x3D; \frac{TP}{TP+FP}$ Recall(查全率):  $\text{Recall} &#x3D; \frac{TP}{TP+FN} &#x3D; \text{TPR}$ AUC : area under curve ROC : receiver operating characteristic (T">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6bf0a364ly1g56bsodiryj20kf0djq4e.jpg">
 <meta property="article:published_time" content="2019-07-20T05:40:09.000Z">
 <meta property="article:modified_time" content="2025-05-22T05:50:40.064Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="ROC,  AUC, PR">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2019/07/20/evaluation-index/">
 
@@ -209,89 +212,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img
-src="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg" />
-以下术语可以参照图<a href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a>，一目了然：</p>
+        <p><img src="http://ww1.sinaimg.cn/mw690/6bf0a364ly1g5692r9t8fj20b40k7jtd.jpg" alt=""><br>以下术语可以参照图<sup><a href="#fn_1" id="reffn_1">1</a></sup>，一目了然：</p>
 <ul>
-<li>Precision(查准率): <span class="math inline">\(\text{Precision} =
-\frac{TP}{TP+FP}\)</span></li>
-<li>Recall(查全率): <span class="math inline">\(\text{Recall} =
-\frac{TP}{TP+FN} = \text{TPR}\)</span></li>
+<li>Precision(查准率):  $\text{Precision} = \frac{TP}{TP+FP}$</li>
+<li>Recall(查全率):  $\text{Recall} = \frac{TP}{TP+FN} = \text{TPR}$</li>
 <li>AUC : area under curve</li>
-<li>ROC : receiver operating characteristic (<strong>TPR</strong> vs
-FPR)
-<ul>
-<li><span class="math inline">\(TPR = \frac{TP}{TP+FN}\)</span> 图[1]
-左半部分</li>
-<li><span class="math inline">\(FPR=\frac{FP}{FP+TN}\)</span>
-图[1]右半部分</li>
-<li><span class="math inline">\(TNR = 1-FPR =
-\frac{TN}{TN+FP}\)</span></li>
-</ul></li>
+<li>ROC : receiver operating characteristic (<strong>TPR</strong> vs FPR)<ul>
+<li>$TPR = \frac{TP}{TP+FN}$ 图[1] 左半部分</li>
+<li>$FPR=\frac{FP}{FP+TN}$ 图[1]右半部分</li>
+<li>$TNR = 1-FPR = \frac{TN}{TN+FP}$</li>
+</ul>
+</li>
 <li>PR: precision vs recall</li>
 </ul>
 <p>如果有人和你说他的model 准确率有91%，那你最好问一下他recall多少！</p>
 <p>查全率的大小也是一个很重要的指标，如果一个分类器准确率很高查全率却很低的是没有意义的。</p>
-<p>例如你有一个行人识别的分类器，来了50个object，你将10个识别为行人，而ground
-truth中这10个也确定是行人，从准确率来说你会觉得很赞，100%耶:smile:。但是，实际情况是这50个都是行人，如果这是一个自动驾驶的识别系统的话，:scream:那就很糟糕了。形成这样的原因很可能是模型过拟合了。</p>
+<p>例如你有一个行人识别的分类器，来了50个object，你将10个识别为行人，而ground truth中这10个也确定是行人，从准确率来说你会觉得很赞，100%耶:smile:。但是，实际情况是这50个都是行人，如果这是一个自动驾驶的识别系统的话，:scream:那就很糟糕了。形成这样的原因很可能是模型过拟合了。</p>
 <p>往往对于一个问题我们的关注点不同，侧重的指标也就不同。</p>
 <span id="more"></span>
 <p>垃圾邮件的识别过滤，有时候会更关注查全率，再加之与用户甄别。但如果准确率太低，把重要邮件过滤掉，那就不妙了:joy:</p>
 <p>就癌症识别的初步阶段来说，我们更关注查全率，以起到防患于未然，毕竟世界上最美好的事情莫过于虚惊一场。</p>
 <p>“宁可错杀一千也不放过一个”这句话也是更关注查全率。</p>
 <p>所以，问题不同，侧重的也会不同。</p>
-<p>基于precision和recall，我们可以绘制一个曲线，即PR曲线，基于TPR和FPR可以绘制ROC曲线，如下图<a
-href="#fn2" class="footnote-ref" id="fnref2"
-role="doc-noteref"><sup>2</sup></a>：</p>
-<p><img
-src="http://ww1.sinaimg.cn/large/6bf0a364ly1g56bsodiryj20kf0djq4e.jpg" /></p>
+<p>基于precision和recall，我们可以绘制一个曲线，即PR曲线，基于TPR和FPR可以绘制ROC曲线，如下图<sup><a href="#fn_2" id="reffn_2">2</a></sup>：</p>
+<p><img src="http://ww1.sinaimg.cn/large/6bf0a364ly1g56bsodiryj20kf0djq4e.jpg" alt=""></p>
 <p>PR曲线横轴是precision纵轴是recall。</p>
-<p>AUC 并不是指某种指标，而是指曲线下面的面积（Area Under
-Curve)，所以对于PR曲线，ROC曲线，都有相对应的AUC，即</p>
+<p>AUC 并不是指某种指标，而是指曲线下面的面积（Area Under Curve)，所以对于PR曲线，ROC曲线，都有相对应的AUC，即</p>
 <p>PR-AUC, ROC-AUC。</p>
-<p>ROC
-越靠左上角模型效果越好，PR则是右上角，同时两种趋向也会使得AUC接近1。</p>
-<p>通过观察PR曲线的表达式，发现PR指标更<strong>关注正例（Focus
-Positive)</strong>，如果样本不均衡则更关注正例。</p>
+<p>ROC 越靠左上角模型效果越好，PR则是右上角，同时两种趋向也会使得AUC接近1。</p>
+<p>通过观察PR曲线的表达式，发现PR指标更<strong>关注正例（Focus Positive)</strong>，如果样本不均衡则更关注正例。</p>
 <p>在观察ROC曲线的表达式，发现ROC同时考虑了正例和负例，比较公平均衡。</p>
-<p>e.g. 举了个例子，(比如说positive 20, negative 1000),
-负例增加了10倍，ROC曲线没有改变，而PR曲线则变了很多。作者认为这是ROC曲线的优点，即具有鲁棒性，在类别分布发生明显改变的情况下依然能客观地识别出较好的分类器
-(可以画个图更直观)。</p>
-<h2 id="总结">总结</h2>
-<p>ROC同时考虑了postivie和negative,
-适用于评估整体分类器的性能，而PR则更侧重于positive</p>
-<p>如果有多份数据且存在<strong>不同</strong>的类别分布，比如信用卡欺诈问题中每个月正例和负例的比例可能都不相同，这时候如果只想单纯地比较分类器的性能且剔除类别分布改变的影响，则ROC曲线比较适合，因为类别分布改变可能使得PR曲线发生变化时好时坏，这种时候难以进行模型比较；反之，如果想测试不同类别分布下对分类器的性能的影响，则PR曲线比较适合<a
-href="#fn3" class="footnote-ref" id="fnref3"
-role="doc-noteref"><sup>3</sup></a></p>
+<p>e.g.<br>举了个例子，(比如说positive 20, negative 1000), 负例增加了10倍，ROC曲线没有改变，而PR曲线则变了很多。作者认为这是ROC曲线的优点，即具有鲁棒性，在类别分布发生明显改变的情况下依然能客观地识别出较好的分类器 (可以画个图更直观)。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>ROC同时考虑了postivie和negative, 适用于评估整体分类器的性能，而PR则更侧重于positive</p>
+<p>如果有多份数据且存在<strong>不同</strong>的类别分布，比如信用卡欺诈问题中每个月正例和负例的比例可能都不相同，这时候如果只想单纯地比较分类器的性能且剔除类别分布改变的影响，则ROC曲线比较适合，因为类别分布改变可能使得PR曲线发生变化时好时坏，这种时候难以进行模型比较；反之，如果想测试不同类别分布下对分类器的性能的影响，则PR曲线比较适合<sup><a href="#fn_3" id="reffn_3">3</a></sup></p>
 <p>如果想要评估在同一分布下正例的预测情况，选PR曲线。</p>
 <p>类别不平衡问题中，ROC曲线通常会给出一个乐观的效果估计，所以大部分时候还是PR曲线更好。</p>
-<p>最后可以根据具体的应用，在曲线上找到最优的点，得到相对应的precision，recall，f1
-score等指标，去调整模型的阈值，从而得到一个符合具体应用的模型<a
-href="#fn4" class="footnote-ref" id="fnref4"
-role="doc-noteref"><sup>4</sup></a>。</p>
-<p>如果你关注positive多于negative，则使用PR，otherwise 使用 ROC<a
-href="#fn5" class="footnote-ref" id="fnref5"
-role="doc-noteref"><sup>5</sup></a></p>
-<section id="footnotes" class="footnotes footnotes-end-of-document"
-role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>https://en.wikipedia.org/wiki/F1_score<a href="#fnref1"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a
-href="http://pages.cs.wisc.edu/~jdavis/davisgoadrichcamera2.pdf">The
-Relationship Between Precision-Recall and ROC Curves</a><a
-href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>https://www.imooc.com/article/48072&gt;<a href="#fnref3"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>https://www.imooc.com/article/48072&gt;<a href="#fnref4"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Hands-On Machine Learning with Scikit-Learn &amp;
-TensorFlow p92<a href="#fnref5" class="footnote-back"
-role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+<p>最后可以根据具体的应用，在曲线上找到最优的点，得到相对应的precision，recall，f1 score等指标，去调整模型的阈值，从而得到一个符合具体应用的模型<sup><a href="#fn_3" id="reffn_3">3</a></sup>。</p>
+<p>如果你关注positive多于negative，则使用PR，otherwise 使用 ROC<sup><a href="#fn_4" id="reffn_4">4</a></sup></p>
+<blockquote id="fn_1">
+<sup>1</sup>. <a href="https://en.wikipedia.org/wiki/F1_score">https://en.wikipedia.org/wiki/F1_score</a><a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
+</blockquote>
+<p><sup><a href="#fn_2" id="reffn_2">2</a></sup>:<a href="http://pages.cs.wisc.edu/~jdavis/davisgoadrichcamera2.pdf">The Relationship Between Precision-Recall and ROC Curves</a></p>
+<blockquote id="fn_3">
+<sup>3</sup>. <a href="https://www.imooc.com/article/48072&gt;">https://www.imooc.com/article/48072&gt;</a><a href="#reffn_3" title="Jump back to footnote [3] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_4">
+<sup>4</sup>. Hands-On Machine Learning with Scikit-Learn &amp; TensorFlow p92<a href="#reffn_4" title="Jump back to footnote [4] in the text."> &#8617;</a>
+</blockquote>
 
     </div>
 
@@ -389,18 +356,18 @@ role="doc-backlink">↩︎</a></p></li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

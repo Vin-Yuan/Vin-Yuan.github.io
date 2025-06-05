@@ -20,18 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致 LayerNorm默认使用的是bias的整体方差, divided by N torch.var默认使用的是无bias的样本方差, devided by N-1 对于每一个样本的特征向量 \(x \in \mathbb{R}^d\) ，LayerNorm 执行以下操作： \[ \operat">
+  <meta name="description" content="Layer Normalization验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致LayerNorm默认使用的是bias的整体方差, divided by Ntorch.var默认使用的是无bias的样本方差, devided by N-1 对于每一个样本的特征向量 $x \in \mathbb{R}^d$ ，LayerNorm 执行以下操作：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Normlization">
 <meta property="og:url" content="http://yoursite.com/2025/05/19/Normlization/index.html">
 <meta property="og:site_name" content="Vin&#39;s Blog">
-<meta property="og:description" content="验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致 LayerNorm默认使用的是bias的整体方差, divided by N torch.var默认使用的是无bias的样本方差, devided by N-1 对于每一个样本的特征向量 \(x \in \mathbb{R}^d\) ，LayerNorm 执行以下操作： \[ \operat">
+<meta property="og:description" content="Layer Normalization验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致LayerNorm默认使用的是bias的整体方差, divided by Ntorch.var默认使用的是无bias的样本方差, devided by N-1 对于每一个样本的特征向量 $x \in \mathbb{R}^d$ ，LayerNorm 执行以下操作：">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0257ddec-b348-41d7-905d-5bc2b54fd557_1280x720.png">
 <meta property="article:published_time" content="2025-05-19T04:05:44.000Z">
-<meta property="article:modified_time" content="2025-05-22T06:38:40.361Z">
+<meta property="article:modified_time" content="2025-06-04T10:04:56.305Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="deeplearning LLM">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0257ddec-b348-41d7-905d-5bc2b54fd557_1280x720.png">
 
 <link rel="canonical" href="http://yoursite.com/2025/05/19/Normlization/">
 
@@ -186,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-22 14:38:40" itemprop="dateModified" datetime="2025-05-22T14:38:40+08:00">2025-05-22</time>
+                <time title="Modified: 2025-06-04 18:04:56" itemprop="dateModified" datetime="2025-06-04T18:04:56+08:00">2025-06-04</time>
               </span>
 
           
@@ -200,77 +202,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致
-LayerNorm默认使用的是bias的整体方差, divided by N
-torch.var默认使用的是无bias的样本方差, devided by N-1</p>
-<p>对于每一个样本的特征向量 <span class="math inline">\(x \in
-\mathbb{R}^d\)</span> ，LayerNorm 执行以下操作：</p>
-<p><span class="math display">\[
-\operatorname{LayerNorm}(x)=\gamma \cdot
-\frac{x-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\mu, \sigma^2\)</span>
-：当前样本的均值和方差（仅用于归一化）</li>
-<li><span class="math inline">\(\gamma\)</span>
-：可学习的缩放参数（scale，类似于权重）</li>
-<li><span class="math inline">\(\beta\)</span>
-：可学习的偏移参数（bias，偏置）</li>
+        <h1 id="Layer-Normalization"><a href="#Layer-Normalization" class="headerlink" title="Layer Normalization"></a>Layer Normalization</h1><p>验证LayerNorm的，通过使用torch.mean和torch.var复现的时候发现不一致<br>LayerNorm默认使用的是bias的整体方差, divided by N<br>torch.var默认使用的是无bias的样本方差, devided by N-1</p>
+<p>对于每一个样本的特征向量 $x \in \mathbb{R}^d$ ，LayerNorm 执行以下操作：</p>
+<script type="math/tex; mode=display">
+\operatorname{LayerNorm}(x)=\gamma \cdot \frac{x-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta</script><ul>
+<li>$\mu, \sigma^2$ ：当前样本的均值和方差（仅用于归一化）</li>
+<li>$\gamma$ ：可学习的缩放参数（scale，类似于权重）</li>
+<li>$\beta$ ：可学习的偏移参数（bias，偏置）</li>
 </ul>
-<p><a
-href="https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html"><img
-src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0257ddec-b348-41d7-905d-5bc2b54fd557_1280x720.png"
-alt="LayerNomr" /></a></p>
+<p><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0257ddec-b348-41d7-905d-5bc2b54fd557_1280x720.png" alt="LayerNomr"></a></p>
 <span id="more"></span>
-<p>对于这两个偏移参数如何更新，探究了一下底层实现 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"></span><br><span class="line">layer_norm = nn.LayerNorm(<span class="number">2</span>)</span><br><span class="line">x = torch.tensor([[<span class="number">1.0</span>, <span class="number">2.0</span>], [<span class="number">2.0</span>, <span class="number">3.0</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">target = torch.tensor([[<span class="number">0.0</span>, <span class="number">0.0</span>], [<span class="number">0.0</span>, <span class="number">0.0</span>]])  <span class="comment"># 目标全为 0</span></span><br><span class="line"></span><br><span class="line">optimizer = optim.SGD(layer_norm.parameters(), lr=<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    out = layer_norm(x)</span><br><span class="line">    loss = ((out - target)**<span class="number">2</span>).mean()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Step <span class="subst">&#123;i&#125;</span>, beta: <span class="subst">&#123;layer_norm.bias.data&#125;</span>&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p><span class="math inline">\(\gamma\)</span> 和 <span
-class="math inline">\(\beta\)</span> 的维度是 (batch_size, seq_len)
-<span class="math inline">\(\sigma\)</span> 以及 <span
-class="math inline">\(\mu\)</span> 的维度是 (batch_size, seq_len,
-feature_dim), 在完成标准化后，这两个会以向量的形式 例如: <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = [[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>],</span><br><span class="line">     [<span class="number">5.0</span>, <span class="number">6.0</span>, <span class="number">7.0</span>, <span class="number">8.0</span>]]</span><br><span class="line"></span><br><span class="line">LayerNorm 会对每一行做标准化：</span><br><span class="line">=&gt; 每行变成均值=<span class="number">0</span>，方差=<span class="number">1</span> 的向量</span><br><span class="line"></span><br><span class="line">gamma, beta = [γ<span class="number">1</span>, γ<span class="number">2</span>, γ<span class="number">3</span>, γ<span class="number">4</span>], [β<span class="number">1</span>, β<span class="number">2</span>, β<span class="number">3</span>, β<span class="number">4</span>]</span><br><span class="line"></span><br><span class="line">最后输出 = normalized * gamma + beta</span><br></pre></td></tr></table></figure>
-底层在相乘的时候，一般会向量化 $ * {}^{T} + $ 其中 <span
-class="math inline">\(\hat{x} ,\gamma, \beta \in
-\mathbb{R}^d\)</span></p>
-<p><span class="math inline">\(\hat{x} =
-\frac{x-\mu}{\sqrt{\sigma^2}}\)</span> $ y = + $ 对于<span
-class="math inline">\(\beta\)</span>, 反向传播的梯度： <span
-class="math inline">\(\frac{\partial L}{\partial \beta}=\frac{\partial
-L}{\partial y}\)</span> 对于<span class="math inline">\(\gamma\)</span>,
-反向传播梯度： <span class="math inline">\(\frac{\partial L}{\partial
-\gamma}=\frac{\partial L}{\partial y} \cdot \hat{x}\)</span></p>
-<p>那么，为什么 γ 和 β 要共享？ ### 1.
-归一化后丢失了尺度和偏移信息，需要 γ、β 来恢复表达能力
-归一化本质上是把数据变成了零均值、单位方差。</p>
+<p>对于这两个偏移参数如何更新，探究了一下底层实现<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"></span><br><span class="line">layer_norm = nn.LayerNorm(<span class="number">2</span>)</span><br><span class="line">x = torch.tensor([[<span class="number">1.0</span>, <span class="number">2.0</span>], [<span class="number">2.0</span>, <span class="number">3.0</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">target = torch.tensor([[<span class="number">0.0</span>, <span class="number">0.0</span>], [<span class="number">0.0</span>, <span class="number">0.0</span>]])  <span class="comment"># 目标全为 0</span></span><br><span class="line"></span><br><span class="line">optimizer = optim.SGD(layer_norm.parameters(), lr=<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    out = layer_norm(x)</span><br><span class="line">    loss = ((out - target)**<span class="number">2</span>).mean()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Step <span class="subst">&#123;i&#125;</span>, beta: <span class="subst">&#123;layer_norm.bias.data&#125;</span>&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>$\gamma$ 和 $\beta$ 的维度是 (batch_size, seq_len)<br>$\sigma$ 以及 $\mu$ 的维度是 (batch_size, seq_len, feature_dim), 在完成标准化后，这两个会以向量的形式<br>例如:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = [[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>],</span><br><span class="line">     [<span class="number">5.0</span>, <span class="number">6.0</span>, <span class="number">7.0</span>, <span class="number">8.0</span>]]</span><br><span class="line"></span><br><span class="line">LayerNorm 会对每一行做标准化：</span><br><span class="line">=&gt; 每行变成均值=<span class="number">0</span>，方差=<span class="number">1</span> 的向量</span><br><span class="line"></span><br><span class="line">gamma, beta = [γ<span class="number">1</span>, γ<span class="number">2</span>, γ<span class="number">3</span>, γ<span class="number">4</span>], [β<span class="number">1</span>, β<span class="number">2</span>, β<span class="number">3</span>, β<span class="number">4</span>]</span><br><span class="line"></span><br><span class="line">最后输出 = normalized * gamma + beta</span><br></pre></td></tr></table></figure><br>底层在相乘的时候，一般会向量化<br>$ \hat{x} * {\gamma}^{T} + \beta$<br>其中 $\hat{x} ,\gamma, \beta \in \mathbb{R}^d$</p>
+<p>$\hat{x} = \frac{x-\mu}{\sqrt{\sigma^2}}$<br>$ y = \hat{x} \cdot \gamma + \beta $<br>对于$\beta$, 反向传播的梯度： $\frac{\partial L}{\partial \beta}=\frac{\partial L}{\partial y}$<br>对于$\gamma$, 反向传播梯度： $\frac{\partial L}{\partial \gamma}=\frac{\partial L}{\partial y} \cdot \hat{x}$</p>
+<p>那么，为什么 γ 和 β 要共享？</p>
+<h3 id="1-归一化后丢失了尺度和偏移信息，需要-γ、β-来恢复表达能力"><a href="#1-归一化后丢失了尺度和偏移信息，需要-γ、β-来恢复表达能力" class="headerlink" title="1. 归一化后丢失了尺度和偏移信息，需要 γ、β 来恢复表达能力"></a>1. 归一化后丢失了尺度和偏移信息，需要 γ、β 来恢复表达能力</h3><p>归一化本质上是把数据变成了零均值、单位方差。</p>
 <p>这样虽然有助于稳定训练，但会损失一些特征的表达能力（例如，“这个神经元原本输出很大是有意义的”）。</p>
-<p>所以通过引入 γ 和 β 这两个
-可学习参数，网络可以在训练中学习“是否需要放大某些维度”或“整体平移”，以恢复这种表达能力。</p>
-<p>🎯 关键点：γ 和 β 是
-模型的一部分，并不是用来适配每个样本，而是学习一种在所有样本上都有效的变换方式，这符合深度学习模型“共享参数”的理念。
-### 2. 不对每个样本单独学习 γ 和 β 是为了避免过拟合 + 保持参数效率 如果
-γ 和 β 对每个样本都有独立的一套，那意味着参数量将随着 batch size
-成倍增长。</p>
+<p>所以通过引入 γ 和 β 这两个 可学习参数，网络可以在训练中学习“是否需要放大某些维度”或“整体平移”，以恢复这种表达能力。</p>
+<p>🎯 关键点：γ 和 β 是 模型的一部分，并不是用来适配每个样本，而是学习一种在所有样本上都有效的变换方式，这符合深度学习模型“共享参数”的理念。</p>
+<h3 id="2-不对每个样本单独学习-γ-和-β-是为了避免过拟合-保持参数效率"><a href="#2-不对每个样本单独学习-γ-和-β-是为了避免过拟合-保持参数效率" class="headerlink" title="2. 不对每个样本单独学习 γ 和 β 是为了避免过拟合 + 保持参数效率"></a>2. 不对每个样本单独学习 γ 和 β 是为了避免过拟合 + 保持参数效率</h3><p>如果 γ 和 β 对每个样本都有独立的一套，那意味着参数量将随着 batch size 成倍增长。</p>
 <p>这会：</p>
 <p>大幅增加计算和内存负担</p>
 <p>破坏模型的泛化能力（相当于为每个样本定制归一化，可能会过拟合）</p>
 <p>所以：共享 γ 和 β 是一种在保持模型表达能力和计算效率之间的权衡。</p>
-<h3 id="与-batchnorm-的区别也体现出这种设计哲学">3. 与 BatchNorm
-的区别也体现出这种设计哲学</h3>
-<p>BatchNorm 使用的是 batch
-内的统计量（跨样本统计），适用于图像等同分布样本。</p>
-<p>LayerNorm 使用的是 样本内的统计量，避免依赖 batch 大小（适合
-Transformer 这种序列建模）。</p>
-<p>但无论哪种归一化，γ 和 β
-始终是共享的参数，因为它们是模型本身的一部分，不依赖于输入样本。</p>
-<p>🧪 举个比喻： 你有一个归一化后的图像数据集，每张图都被标准化成亮度为
-0，标准差为
-1。但你知道有些图像本该亮一些、有些本该暗一些。于是你训练一个“亮度增益”和“亮度偏移”参数，用来统一地调整所有图像。你不会为每张图学一个增益，而是找出一组对所有图都适用的参数。</p>
-<p>✅ 总结： 问题 解释 为什么 γ 和 β 要 batch 共享？
-因为它们是模型的一部分，用于恢复表达能力，不是输入的一部分；共享可以减少参数量、避免过拟合
-为什么不对每个样本独立学习 γ 和 β？
-这样会大大增加参数、容易过拟合，并且不符合深度学习“参数共享”的核心设计哲学
-γ 和 β 的作用是什么？
-恢复归一化过程丢失的尺度和偏移信息，使模型保留学习能力</p>
-
+<h3 id="3-与-BatchNorm-的区别也体现出这种设计哲学"><a href="#3-与-BatchNorm-的区别也体现出这种设计哲学" class="headerlink" title="3. 与 BatchNorm 的区别也体现出这种设计哲学"></a>3. 与 BatchNorm 的区别也体现出这种设计哲学</h3><p>BatchNorm 使用的是 batch 内的统计量（跨样本统计），适用于图像等同分布样本。</p>
+<p>LayerNorm 使用的是 样本内的统计量，避免依赖 batch 大小（适合 Transformer 这种序列建模）。</p>
+<p>但无论哪种归一化，γ 和 β 始终是共享的参数，因为它们是模型本身的一部分，不依赖于输入样本。</p>
+<p>🧪 举个比喻：<br>你有一个归一化后的图像数据集，每张图都被标准化成亮度为 0，标准差为 1。但你知道有些图像本该亮一些、有些本该暗一些。于是你训练一个“亮度增益”和“亮度偏移”参数，用来统一地调整所有图像。你不会为每张图学一个增益，而是找出一组对所有图都适用的参数。</p>
+<p>✅ 总结：<br>问题    解释<br>为什么 γ 和 β 要 batch 共享？    因为它们是模型的一部分，用于恢复表达能力，不是输入的一部分；共享可以减少参数量、避免过拟合<br>为什么不对每个样本独立学习 γ 和 β？    这样会大大增加参数、容易过拟合，并且不符合深度学习“参数共享”的核心设计哲学<br>γ 和 β 的作用是什么？    恢复归一化过程丢失的尺度和偏移信息，使模型保留学习能力</p>
+<h1 id="Batch-Normliazation"><a href="#Batch-Normliazation" class="headerlink" title="Batch Normliazation"></a>Batch Normliazation</h1><p>Batch Normalization（批量归一化）中的一个重要概念：运行统计量（running statistics） 的更新和使用。在训练过程中，Batch Normalization 会计算每个批次的均值和方差，并用这些统计量来归一化当前批次的数据。然而，这些批次内的统计量并不直接用于最终的归一化，而是用来更新运行统计量，这些运行统计量会在推理（inference）阶段使用。</p>
+<h2 id="1-计算当前批次的均值和方差"><a href="#1-计算当前批次的均值和方差" class="headerlink" title="1. 计算当前批次的均值和方差"></a>1. 计算当前批次的均值和方差</h2><script type="math/tex; mode=display">
+\begin{aligned}
+&\mu_B=\frac{1}{m} \sum_{i=1}^m x_i\\
+&\sigma_B^2=\frac{1}{m} \sum_{i=1}^m\left(x_i-\mu_B\right)^2
+\end{aligned}</script><h2 id="2-归一化当前批次的数据"><a href="#2-归一化当前批次的数据" class="headerlink" title="2. 归一化当前批次的数据"></a>2. 归一化当前批次的数据</h2><script type="math/tex; mode=display">
+\hat{x}_i=\frac{x_i-\mu_B}{\sqrt{\sigma_B^2+\epsilon}}</script><h2 id="3-更新运行统计量："><a href="#3-更新运行统计量：" class="headerlink" title="3. 更新运行统计量："></a>3. 更新运行统计量：</h2><script type="math/tex; mode=display">
+\begin{aligned}
+&\mu_{\text {running }}=(1-\alpha) \mu_{\text {running }}+\alpha \mu_B\\
+&\sigma_{\text {running }}^2=(1-\alpha) \sigma_{\text {running }}^2+\alpha \sigma_B^2
+\end{aligned}</script><p>其中，α 是动量参数（momentum），通常设置为 0.1, 可以看出来这是小范围递增的更新运行统计量，old 占比0.9， $\delta$ 占比0.1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomBatchNorm</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num_features, momentum=<span class="number">0.1</span>, eps=<span class="number">1e-5</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.momentum = momentum</span><br><span class="line">        self.eps = eps</span><br><span class="line">        self.running_mean = torch.zeros(num_features)</span><br><span class="line">        self.running_var = torch.ones(num_features)</span><br><span class="line">        self.gamma = nn.Parameter(torch.ones(num_features))</span><br><span class="line">        self.beta = nn.Parameter(torch.zeros(num_features))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">if</span> self.training:</span><br><span class="line">            <span class="comment"># 计算当前批次的均值和方差</span></span><br><span class="line">            batch_mean = x.mean(dim=<span class="number">0</span>)</span><br><span class="line">            batch_var = x.var(dim=<span class="number">0</span>, unbiased=<span class="literal">False</span>)</span><br><span class="line">            <span class="comment"># 更新运行统计量</span></span><br><span class="line">            self.running_mean = (<span class="number">1</span> - self.momentum) * self.running_mean + self.momentum * batch_mean</span><br><span class="line">            self.running_var = (<span class="number">1</span> - self.momentum) * self.running_var + self.momentum * batch_var</span><br><span class="line">            <span class="comment"># 归一化当前批次的数据</span></span><br><span class="line">            x_norm = (x - batch_mean) / torch.sqrt(batch_var + self.eps)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 使用运行统计量归一化数据</span></span><br><span class="line">            x_norm = (x - self.running_mean) / torch.sqrt(self.running_var + self.eps)</span><br><span class="line">        <span class="comment"># 应用缩放和偏移</span></span><br><span class="line">        <span class="keyword">return</span> self.gamma * x_norm + self.beta</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -292,8 +263,8 @@ Transformer 这种序列建模）。</p>
       <i class="fa fa-chevron-left"></i> Pytorch常用例子
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/05/21/GPT/" rel="next" title="GPT">
-      GPT <i class="fa fa-chevron-right"></i>
+    <a href="/2025/05/21/GPT/" rel="next" title="build GPT from scratch">
+      build GPT from scratch <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -353,8 +324,7 @@ Transformer 这种序列建模）。</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-batchnorm-%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B9%9F%E4%BD%93%E7%8E%B0%E5%87%BA%E8%BF%99%E7%A7%8D%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6"><span class="nav-number">1.</span> <span class="nav-text">3. 与 BatchNorm
-的区别也体现出这种设计哲学</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Layer-Normalization"><span class="nav-number">1.</span> <span class="nav-text">Layer Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BD%92%E4%B8%80%E5%8C%96%E5%90%8E%E4%B8%A2%E5%A4%B1%E4%BA%86%E5%B0%BA%E5%BA%A6%E5%92%8C%E5%81%8F%E7%A7%BB%E4%BF%A1%E6%81%AF%EF%BC%8C%E9%9C%80%E8%A6%81-%CE%B3%E3%80%81%CE%B2-%E6%9D%A5%E6%81%A2%E5%A4%8D%E8%A1%A8%E8%BE%BE%E8%83%BD%E5%8A%9B"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 归一化后丢失了尺度和偏移信息，需要 γ、β 来恢复表达能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%8D%E5%AF%B9%E6%AF%8F%E4%B8%AA%E6%A0%B7%E6%9C%AC%E5%8D%95%E7%8B%AC%E5%AD%A6%E4%B9%A0-%CE%B3-%E5%92%8C-%CE%B2-%E6%98%AF%E4%B8%BA%E4%BA%86%E9%81%BF%E5%85%8D%E8%BF%87%E6%8B%9F%E5%90%88-%E4%BF%9D%E6%8C%81%E5%8F%82%E6%95%B0%E6%95%88%E7%8E%87"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 不对每个样本单独学习 γ 和 β 是为了避免过拟合 + 保持参数效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%8E-BatchNorm-%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B9%9F%E4%BD%93%E7%8E%B0%E5%87%BA%E8%BF%99%E7%A7%8D%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 与 BatchNorm 的区别也体现出这种设计哲学</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Batch-Normliazation"><span class="nav-number">2.</span> <span class="nav-text">Batch Normliazation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E5%BD%93%E5%89%8D%E6%89%B9%E6%AC%A1%E7%9A%84%E5%9D%87%E5%80%BC%E5%92%8C%E6%96%B9%E5%B7%AE"><span class="nav-number">2.1.</span> <span class="nav-text">1. 计算当前批次的均值和方差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%BD%92%E4%B8%80%E5%8C%96%E5%BD%93%E5%89%8D%E6%89%B9%E6%AC%A1%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2. 归一化当前批次的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%9B%B4%E6%96%B0%E8%BF%90%E8%A1%8C%E7%BB%9F%E8%AE%A1%E9%87%8F%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">3. 更新运行统计量：</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -368,18 +338,18 @@ Transformer 这种序列建模）。</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
